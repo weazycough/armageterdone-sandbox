@@ -1,4 +1,3 @@
-[canary-cry-website-issues.md](https://github.com/user-attachments/files/33614638/canary-cry-website-issues.md)
 # Canary Cry Website: Issues from Beta Feedback
 
 Source: tester feedback from Tracie, with Stefan's responses, refined into the issues below.
