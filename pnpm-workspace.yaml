@@ -1,0 +1,10 @@
+# Supply-chain guards (see docs/ARCHITECTURE.md, "Dependencies").
+# Every package, direct or transitive, must be at least 7 days old
+# (minutes). A package that patches a high-risk CVE may be listed in
+# minimumReleaseAgeExclude, with the advisory id in a comment.
+minimumReleaseAge: 10080
+minimumReleaseAgeExclude: []
+
+# No dependency runs install scripts. pnpm 10 blocks them by default;
+# listing none here keeps it that way explicitly.
+onlyBuiltDependencies: []

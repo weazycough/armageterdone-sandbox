@@ -1,0 +1,13 @@
+{
+  "slug": "art-audio-upload",
+  "title": "Art Audio Upload",
+  "html": "<p> </p><h2>Listen to the Sweet Sounds of Canary Cry!</h2><figure class=\"kg-card kg-embed-card\"><p class=\"embed-placeholder\">Embedded player from w.soundcloud.com: <a href=\"https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/1399555342&amp;color=%23ff5500&amp;auto_play=true&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;show_teaser=true\" rel=\"noopener noreferrer\">open it there</a>.</p></figure><p><a href=\"https://soundcloud.com/canarycrymixtape\" rel=\"noopener noreferrer\">Canary Cry Mixtape</a> · <a href=\"https://soundcloud.com/canarycrymixtape/sets/canary-cry-mixtape\" rel=\"noopener noreferrer\">Canary Cry Mixtape</a>  </p>",
+  "excerpt": "Listen to the Sweet Sounds of Canary Cry! Embedded player from w.soundcloud.com: open it there. Canary Cry Mixtape · Canary Cry Mixtape",
+  "removedEmbeds": [
+    {
+      "host": "w.soundcloud.com",
+      "src": "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/1399555342&amp;color=%23ff5500&amp;auto_play=true&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false&amp;show_teaser=true"
+    }
+  ],
+  "updatedAt": "2026-06-22 08:06:19"
+}

@@ -49,8 +49,16 @@ two and fails if they're broken.
    the site's own `public/` files, or `assets-inbox/` (copy them in; files in
    `assets-inbox/` are not published on their own).
 4. **Real content where it matters.** Use real episode titles, real art and
-   the site's real colours and fonts (see the site's design tokens), so the
-   team judges the design, not placeholder text.
+   the site's real colours and fonts, so the team judges the design, not
+   placeholder text. The design tokens are at the top of
+   `app/styles/theme.css`: the `:root` block under "Tokens: dark (default)"
+   (colours, the `--font-display` / `--font-body` / `--font-serif` stacks,
+   spacing, radii) and the "Tokens: light theme overrides" block after it.
+   Copy the custom properties you need into the lab's `<style>`. The fonts
+   (Jost, Inter, Source Serif 4) are self-hosted: copy the `.woff2` files you
+   need from `node_modules/@fontsource/<font>/files/` into the lab folder
+   and add an `@font-face` for each. Episode art may load from
+   `static.libsyn.com` (the feed's own art host, which the gate allows).
 5. **Works on a phone.** Most reviewers will open the link on a phone. Check a
    narrow width (about 390px) as well as desktop.
 
@@ -73,36 +81,74 @@ two and fails if they're broken.
 ```html
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="robots" content="noindex, nofollow, noarchive">
-  <title>Lab #12: Community page map</title>
-  <style>
-    body { font-family: system-ui, sans-serif; margin: 0; padding: 1.5rem; line-height: 1.5; }
-    header { max-width: 70rem; margin: 0 auto 2rem; }
-    .status { display: inline-block; padding: .2rem .6rem; border-radius: 999px; background: #fde68a; }
-    .options { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr)); max-width: 70rem; margin: 0 auto; }
-    .option { border: 1px solid #ccc; border-radius: .75rem; padding: 1rem; }
-    .option h2 { margin-top: 0; }
-    .ask { max-width: 70rem; margin: 2rem auto 0; padding: 1rem; border-left: 4px solid #f59e0b; }
-  </style>
-</head>
-<body>
-  <header>
-    <p class="status">Open for feedback</p>
-    <h1>Community page: how should the meetup map look?</h1>
-    <p>Issue: <a href="https://github.com/stucny/Armageterdone/issues/12">#12</a> · 2026-10-24</p>
-  </header>
-  <main class="options">
-    <section class="option"><h2>Option A</h2><p>One line on what's different.</p><!-- the design --></section>
-    <section class="option"><h2>Option B</h2><p>One line on what's different.</p><!-- the design --></section>
-  </main>
-  <section class="ask">
-    <h2>What we need from you</h2>
-    <p>Which option should we build? Comment on the issue with your pick and any changes.</p>
-  </section>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow, noarchive" />
+    <title>Lab #12: Community page map</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        margin: 0;
+        padding: 1.5rem;
+        line-height: 1.5;
+      }
+      header {
+        max-width: 70rem;
+        margin: 0 auto 2rem;
+      }
+      .status {
+        display: inline-block;
+        padding: 0.2rem 0.6rem;
+        border-radius: 999px;
+        background: #fde68a;
+      }
+      .options {
+        display: grid;
+        gap: 1.5rem;
+        grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+        max-width: 70rem;
+        margin: 0 auto;
+      }
+      .option {
+        border: 1px solid #ccc;
+        border-radius: 0.75rem;
+        padding: 1rem;
+      }
+      .option h2 {
+        margin-top: 0;
+      }
+      .ask {
+        max-width: 70rem;
+        margin: 2rem auto 0;
+        padding: 1rem;
+        border-left: 4px solid #f59e0b;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <p class="status">Open for feedback</p>
+      <h1>Community page: how should the meetup map look?</h1>
+      <p>Issue: <a href="https://github.com/stucny/Armageterdone/issues/12">#12</a> · 2026-10-24</p>
+    </header>
+    <main class="options">
+      <section class="option">
+        <h2>Option A</h2>
+        <p>One line on what's different.</p>
+        <!-- the design -->
+      </section>
+      <section class="option">
+        <h2>Option B</h2>
+        <p>One line on what's different.</p>
+        <!-- the design -->
+      </section>
+    </main>
+    <section class="ask">
+      <h2>What we need from you</h2>
+      <p>Which option should we build? Comment on the issue with your pick and any changes.</p>
+    </section>
+  </body>
 </html>
 ```
 
@@ -114,8 +160,10 @@ robots tag) and a plain list of links: `#12 Community page map — Open`.
 1. **Start from an issue.** Every lab belongs to an issue. If there isn't one,
    create it first (label `design`), describing the decision to be made.
 2. Build the lab on a branch, check it locally (open the file in a browser, or
-   run the site's dev server and visit `/Armageterdone/labs/<folder>/`), at
-   phone and desktop widths.
+   run the site's dev server with `pnpm dev` and visit
+   `/Armageterdone/labs/<folder>/` at the address it prints), at phone and
+   desktop widths. `pnpm build && pnpm preview` shows the built site exactly
+   as GitHub Pages will serve it.
 3. Run the gate (`pnpm gate`) and the build. Fix anything it flags.
 4. Merge to `main` (pull request referencing the issue, e.g. "Lab for #12").
    Don't write `Fixes #12` for a lab; the issue stays open until the real
