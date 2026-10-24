@@ -1,0 +1,12 @@
+/node_modules/
+# React Router build output and generated route types
+/build/
+/.react-router/
+# The published site (assembled from build/client by scripts/assemble-dist.ts)
+/dist/
+# Local copy of the Libsyn feed and the parsed episode list (rebuilt every CI run)
+/.cache/
+/coverage/
+*.log
+.env
+.env.*
