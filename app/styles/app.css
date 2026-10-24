@@ -100,3 +100,11 @@
     display: none;
   }
 }
+
+/* Tailwind has a `container` utility of its own (a max-width per breakpoint,
+   in the utilities layer), which would beat the theme's .container and make
+   pages wider than the theme at 1280px+ and narrower at tablet widths. This
+   rule is outside every layer, so the theme's width wins. */
+.container {
+  max-width: var(--max-w);
+}
