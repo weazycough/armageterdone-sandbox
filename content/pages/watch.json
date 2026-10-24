@@ -1,0 +1,17 @@
+{
+  "slug": "watch",
+  "title": "Watch The Show",
+  "html": "<p> </p><h2> Watch</h2><h3>Watch the livestream or archived episodes</h3><p><a href=\"https://www.youtube.com/@CanaryCryNewsTalk/streams\" rel=\"noopener noreferrer\">Youtube</a><a href=\"https://rumble.com/c/CanaryCryNewsTalk\" rel=\"noopener noreferrer\">RUMBLE</a><a href=\"https://dlive.tv/canarycryradio\" rel=\"noopener noreferrer\">DLive</a><a href=\"https://rokfin.com/CCNT\" rel=\"noopener noreferrer\">ROKFIN</a></p><figure class=\"kg-card kg-embed-card\"><p class=\"embed-placeholder\">Embedded player from player.twitch.tv: <a href=\"https://player.twitch.tv/?channel=canarycryradio&amp;parent=www.canarycrynewstalk.com\" rel=\"noopener noreferrer\">open it there</a>.</p></figure><figure class=\"kg-card kg-embed-card\"><p class=\"embed-placeholder\">Embedded player from www.twitch.tv: <a href=\"https://www.twitch.tv/embed/canarycryradio/chat?parent=www.canarycrynewstalk.com\" rel=\"noopener noreferrer\">open it there</a>.</p></figure>",
+  "excerpt": "Watch Watch the livestream or archived episodes YoutubeRUMBLEDLiveROKFIN Embedded player from player.twitch.tv: open it there. Embedded player from www.twitch.tv: open it there.",
+  "removedEmbeds": [
+    {
+      "host": "player.twitch.tv",
+      "src": "https://player.twitch.tv/?channel=canarycryradio&amp;parent=www.canarycrynewstalk.com"
+    },
+    {
+      "host": "www.twitch.tv",
+      "src": "https://www.twitch.tv/embed/canarycryradio/chat?parent=www.canarycrynewstalk.com"
+    }
+  ],
+  "updatedAt": "2026-06-22 08:07:13"
+}
