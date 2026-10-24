@@ -1,0 +1,102 @@
+/* app.css — the site stylesheet: Tailwind, the self-hosted fonts, the ported
+   theme, and the Tailwind colour/font tokens mapped onto the theme's
+   variables (so `bg-background`, `text-primary`… follow light/dark). */
+
+@import "tailwindcss";
+
+/* Fonts are self-hosted (Fontsource, OFL-1.1): no request to a font CDN. */
+@import "@fontsource/jost/latin-400.css";
+@import "@fontsource/jost/latin-500.css";
+@import "@fontsource/jost/latin-600.css";
+@import "@fontsource/jost/latin-700.css";
+@import "@fontsource/jost/latin-800.css";
+@import "@fontsource/inter/latin-400.css";
+@import "@fontsource/inter/latin-500.css";
+@import "@fontsource/inter/latin-600.css";
+@import "@fontsource/inter/latin-700.css";
+@import "@fontsource/source-serif-4/latin-500-italic.css";
+
+@import "./theme.css" layer(components);
+
+/* The theme's toggle sets data-theme on <html>; Tailwind's `dark:` follows it,
+   and the OS setting when nothing is saved. */
+@custom-variant dark {
+  &:where([data-theme="dark"], [data-theme="dark"] *) {
+    @slot;
+  }
+  @media (prefers-color-scheme: dark) {
+    &:where(:root:not([data-theme]), :root:not([data-theme]) *) {
+      @slot;
+    }
+  }
+}
+
+@theme inline {
+  --color-background: var(--bg-canvas);
+  --color-foreground: var(--fg-primary);
+  --color-card: var(--bg-surface);
+  --color-card-foreground: var(--fg-primary);
+  --color-muted: var(--bg-elevated);
+  --color-muted-foreground: var(--fg-secondary);
+  --color-primary: var(--accent);
+  --color-primary-foreground: #0a0a0a;
+  --color-secondary: var(--bg-elevated);
+  --color-secondary-foreground: var(--fg-primary);
+  --color-accent: var(--accent-on-bg);
+  --color-shield: var(--shield);
+  --color-border: var(--line);
+  --color-input: var(--line-strong);
+  --color-ring: var(--accent-on-bg);
+  --color-hover: var(--bg-elevated);
+  --color-error: #c2410c;
+
+  --font-sans: var(--font-body);
+  --font-display: var(--font-display);
+  --font-serif: var(--font-serif);
+  --font-mono: var(--font-mono);
+}
+
+@layer components {
+  /* Tailwind's reset strips list markers; show-note and page lists keep them. */
+  .prose ul {
+    list-style: disc;
+  }
+  .prose ol {
+    list-style: decimal;
+  }
+
+  /* An embed the content import replaced with a link (scripts/extract-ghost.ts). */
+  .embed-placeholder {
+    padding: var(--space-4);
+    border: 1px dashed var(--line-strong);
+    border-radius: var(--radius-md);
+    color: var(--fg-secondary);
+    font-size: 0.9375rem;
+  }
+
+  /* Forms on the preview submit nowhere; say so where the form is. */
+  .preview-note {
+    margin-top: var(--space-3);
+    font-size: 0.8125rem;
+    color: var(--fg-tertiary);
+  }
+}
+
+@layer components {
+  /* The episode page's player, under the artwork. */
+  .episode-player {
+    max-width: 720px;
+    margin: var(--space-5) auto 0;
+  }
+  .episode-player audio {
+    width: 100%;
+  }
+}
+
+@layer components {
+  /* 404.html runs without the app's scripts (scripts/assemble-dist.ts). */
+  .static-page .theme-toggle,
+  .static-page .nav-toggle {
+    display: none;
+  }
+}
