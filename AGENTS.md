@@ -87,8 +87,11 @@ Everything merged to `main` is published to a public website.
   pnpm build
   ```
 
-  `pnpm gate` runs formatting, type-aware lint, type checks and tests.
-  Don't push a failing build; `main` deploys automatically.
+  `pnpm gate` runs type-aware lint and type checks, the unit tests, and the
+  build with its site checks (noindex, leak scan, no trackers, links).
+  Formatting is not a gate: run `pnpm fmt` to tidy code. Don't push a
+  failing build; `main` deploys automatically.
+
 - TypeScript strict. Validate external data (the RSS feed, content files) with
   Zod, don't cast it.
 - Match the existing style: read nearby code before writing new code.
