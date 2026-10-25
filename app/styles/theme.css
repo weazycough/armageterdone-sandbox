@@ -11,7 +11,9 @@
      the name shows from 1600px (was 1200px);
    - on narrow phones a long one-word episode title wraps instead of
      pushing the home hero (and the support row) wider than the screen;
-   - the Ghost custom-font hooks (--gh-font-*) are gone.
+   - the Ghost custom-font hooks (--gh-font-*) are gone;
+   - on phones (under 768px) the latest-episode ticker is one still line
+     with the title cut short, not a marquee that starts off-screen.
    ========================================================================= */
 
 /* ---------- Tokens: dark (default) ---------- */
@@ -2521,6 +2523,26 @@ p {
 }
 .ticker__sep {
   opacity: 0.5;
+}
+.ticker__extra {
+  display: contents;
+}
+/* Phones: one still line, the title cut short, instead of a marquee that
+   starts off-screen. */
+@media (max-width: 767px) {
+  .ticker__row {
+    animation: none;
+    gap: var(--space-2);
+    padding: 0 var(--space-4);
+  }
+  .ticker__title {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .ticker__extra {
+    display: none;
+  }
 }
 @keyframes ticker {
   from {
