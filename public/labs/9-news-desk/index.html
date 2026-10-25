@@ -1,0 +1,817 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow, noarchive" />
+    <meta name="referrer" content="no-referrer" />
+    <title>Lab #9: Shows page news desk</title>
+    <style>
+      /* Fonts: copied from the site's Fontsource packages (SIL OFL 1.1, see NOTICE.md). */
+      @font-face {
+        font-family: "Jost";
+        font-weight: 600;
+        font-display: swap;
+        src: url("jost-latin-600-normal.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Jost";
+        font-weight: 700;
+        font-display: swap;
+        src: url("jost-latin-700-normal.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Inter";
+        font-weight: 400;
+        font-display: swap;
+        src: url("inter-latin-400-normal.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Inter";
+        font-weight: 600;
+        font-display: swap;
+        src: url("inter-latin-600-normal.woff2") format("woff2");
+      }
+
+      /* Site tokens, copied from app/styles/theme.css (dark set). */
+      :root {
+        --bg-canvas: #0a0a0a;
+        --bg-surface: #141414;
+        --bg-elevated: #1f1f1f;
+        --fg-primary: #f5efe2;
+        --fg-secondary: #c9c2b3;
+        --fg-tertiary: #8b867a;
+        --fg-inverse: #0a0a0a;
+        --accent: #e6b40f;
+        --accent-2: #f0ab1a;
+        --accent-deep: #a37a00;
+        --shield: #1e3a8a;
+        --line: #2a2a2a;
+        --line-strong: #3a3a3a;
+        --accent-on-bg: var(--accent);
+        --font-display: "Jost", "Futura PT", "Futura", "Helvetica Neue", Arial, sans-serif;
+        --font-body: "Inter", "Proxima Nova", "Helvetica Neue", Arial, sans-serif;
+        --radius-sm: 2px;
+        --radius-md: 4px;
+        --radius-lg: 8px;
+        color-scheme: dark;
+      }
+
+      /* ---------- Lab page (same frame as the other labs) ---------- */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 1.5rem;
+        background: var(--bg-canvas);
+        color: var(--fg-primary);
+        font-family: var(--font-body);
+        line-height: 1.55;
+      }
+      a {
+        color: var(--accent);
+      }
+      :focus-visible {
+        outline: 3px solid var(--accent);
+        outline-offset: 3px;
+      }
+      h1,
+      h2 {
+        font-family: var(--font-display);
+        line-height: 1.15;
+      }
+      .lab-head,
+      .controls,
+      .ask,
+      .lab-foot {
+        max-width: 76rem;
+        margin: 0 auto 2rem;
+      }
+      .lab-head h1 {
+        font-size: clamp(1.75rem, 4vw, 2.5rem);
+        margin: 0.5rem 0;
+      }
+      .lab-head p {
+        margin: 0.25rem 0;
+        color: var(--fg-secondary);
+        max-width: 48rem;
+      }
+      .lab-head .status {
+        display: inline-block;
+        padding: 0.2rem 0.7rem;
+        border-radius: 999px;
+        background: var(--accent);
+        color: var(--fg-inverse);
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 0.85rem;
+      }
+      .controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem 2rem;
+      }
+      .controls fieldset {
+        border: 1px solid var(--line-strong);
+        border-radius: var(--radius-lg);
+        padding: 0.5rem 0.9rem 0.7rem;
+        margin: 0;
+      }
+      .controls legend {
+        padding: 0 0.3rem;
+        font-family: var(--font-display);
+        font-weight: 600;
+        color: var(--fg-secondary);
+      }
+      .controls label {
+        margin-right: 1rem;
+        cursor: pointer;
+      }
+      .controls input {
+        accent-color: var(--accent);
+      }
+      .options {
+        display: grid;
+        gap: 3rem;
+        max-width: 76rem;
+        margin: 0 auto;
+      }
+      .option {
+        min-width: 0;
+      }
+      .option > h2 {
+        margin: 0 0 0.25rem;
+        font-size: 1.6rem;
+      }
+      .option > h2 .tag {
+        color: var(--accent);
+      }
+      .option > .diff {
+        margin: 0 0 1rem;
+        color: var(--fg-secondary);
+      }
+      .notes {
+        margin-top: 1rem;
+        padding: 0.75rem 1rem;
+        border: 1px solid var(--line-strong);
+        border-radius: var(--radius-lg);
+        font-size: 0.9rem;
+        color: var(--fg-secondary);
+      }
+      .notes ul {
+        margin: 0;
+        padding-left: 1.1rem;
+      }
+      .notes strong {
+        color: var(--fg-primary);
+      }
+      .ask {
+        margin-top: 3rem;
+        padding: 1rem 1.25rem;
+        border-left: 4px solid var(--accent);
+        background: var(--bg-surface);
+      }
+      .ask h2 {
+        margin-top: 0;
+      }
+      .lab-foot {
+        font-size: 0.875rem;
+        color: var(--fg-tertiary);
+      }
+
+      /* View switches: radio buttons + :has(), no script. */
+      @media (min-width: 64rem) {
+        body:has(#width-phone:checked) .options {
+          grid-template-columns: repeat(3, minmax(0, 390px));
+          justify-content: center;
+          gap: 1.5rem;
+        }
+        body:has(#width-phone:checked) .option > h2,
+        body:has(#width-phone:checked) .option > .diff {
+          min-height: 2.5em;
+        }
+      }
+      @media (max-width: 63.99rem) {
+        .width-switch {
+          display: none;
+        }
+      }
+
+      /* ---------- Previews: a slice of the Shows page ---------- */
+      .preview {
+        container: stage / inline-size;
+        border: 1px solid var(--line-strong);
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        background: var(--bg-canvas);
+        color: var(--fg-primary);
+        --label: #f5efe2;
+      }
+      body:has(#theme-light:checked) .preview {
+        --bg-canvas: #fdf8eb;
+        --bg-surface: #f5edd6;
+        --bg-elevated: #ebe0c2;
+        --fg-primary: #14110a;
+        --fg-secondary: #4a3f33;
+        --fg-tertiary: #6b5d4d;
+        --accent-on-bg: var(--accent-deep);
+        --line: #d6c89e;
+        --line-strong: #b8a673;
+        color-scheme: light;
+      }
+      .mock-nav {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        padding: 0.7rem 1rem;
+        border-bottom: 1px solid var(--line);
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 0.85rem;
+      }
+      .mock-nav img {
+        width: 28px;
+        height: 28px;
+      }
+      .mock-nav .where {
+        margin-left: auto;
+        color: var(--fg-tertiary);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        font-size: 0.75rem;
+      }
+      .page-title {
+        margin: 0;
+        padding: 1.25rem 1.25rem 0.75rem;
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 1.6rem;
+      }
+      .page-title small {
+        display: block;
+        font-size: 0.7rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--accent-on-bg);
+      }
+      /* The site's #a37a00 is too faint for small text on cream (3.7 : 1). */
+      body:has(#theme-light:checked) .page-title small {
+        color: #7a5b00;
+      }
+
+      /* ---------- A monitor: one link per show ---------- */
+      .wall {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .monitor {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: var(--label);
+        text-decoration: none;
+        border-radius: 6px;
+      }
+      .bezel {
+        position: relative;
+        display: block;
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        padding: 6%;
+        border-radius: 6px;
+        background: linear-gradient(#30353f, #16191e);
+        box-shadow:
+          inset 0 0 0 1px #464c58,
+          0 8px 16px rgba(0, 0, 0, 0.45);
+        transition: transform 0.2s;
+      }
+      .screen {
+        position: relative;
+        display: block;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        border-radius: 2px;
+        background: #000;
+      }
+      .screen img {
+        position: absolute;
+        inset: 0;
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: brightness(0.62) saturate(0.7);
+        transition: filter 0.2s;
+      }
+      /* scan lines, faded out when the monitor is chosen */
+      .screen::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.3) 0 1px, transparent 1px 3px);
+        transition: opacity 0.2s;
+      }
+      .led {
+        position: absolute;
+        right: 6%;
+        bottom: 1.8%;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #4a4f5a;
+      }
+      .mon-label {
+        margin-top: 0.45rem;
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 0.85rem;
+        line-height: 1.2;
+        text-align: center;
+      }
+      .monitor:hover .screen img,
+      .monitor:focus-visible .screen img {
+        filter: none;
+      }
+      .monitor:hover .screen::after,
+      .monitor:focus-visible .screen::after {
+        opacity: 0.15;
+      }
+      .monitor:hover .bezel,
+      .monitor:focus-visible .bezel {
+        transform: translateY(-3px);
+      }
+      .monitor:hover .led,
+      .monitor:focus-visible .led {
+        background: var(--accent);
+        box-shadow: 0 0 8px var(--accent);
+      }
+      .monitor:hover .mon-label,
+      .monitor:focus-visible .mon-label {
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+      /* A show with no art yet: colour bars and a note. */
+      .testcard {
+        display: grid;
+        place-items: center;
+        background: linear-gradient(
+          90deg,
+          #bfbfbf 0 14.3%,
+          #bfbf00 0 28.6%,
+          #00bfbf 0 42.9%,
+          #00bf00 0 57.1%,
+          #bf00bf 0 71.4%,
+          #bf0000 0 85.7%,
+          #0000bf 0
+        );
+        filter: saturate(0.6) brightness(0.8);
+        transition: filter 0.2s;
+      }
+      .monitor:hover .testcard,
+      .monitor:focus-visible .testcard {
+        filter: none;
+      }
+      .testcard span {
+        position: relative;
+        z-index: 1;
+        padding: 0.15em 0.5em;
+        background: #0a0a0a;
+        color: #f5efe2;
+        font-size: 0.7rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .bezel,
+        .screen img,
+        .screen::after,
+        .testcard {
+          transition: none;
+        }
+        .monitor:hover .bezel,
+        .monitor:focus-visible .bezel {
+          transform: none;
+        }
+      }
+
+      /* Where commissioned art of the hosts would go. */
+      .art-slot {
+        display: grid;
+        place-items: center;
+        gap: 0.25rem;
+        padding: 0.6rem;
+        border: 2px dashed #8b93a8;
+        border-radius: var(--radius-md);
+        color: #d7dbe5;
+        font-size: 0.8rem;
+        text-align: center;
+      }
+      .art-slot strong {
+        font-family: var(--font-display);
+        font-size: 0.75rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--accent);
+      }
+      .art-slot svg {
+        width: min(16rem, 80%);
+        height: auto;
+      }
+
+      /* A dark studio backdrop, the same in both themes (it is artwork). */
+      .studio {
+        --label: #f5efe2;
+        position: relative;
+        background:
+          radial-gradient(ellipse at 50% 20%, rgba(58, 92, 184, 0.45), transparent 65%),
+          linear-gradient(#0e1630, #070b18 70%, #04060d);
+        color: var(--label);
+      }
+
+      /* ---------- Option A: desk scene, monitor wall behind ---------- */
+      .scene-a {
+        display: grid;
+        gap: 1.25rem;
+        padding: 1.25rem 1rem 0;
+      }
+      .scene-a .wall {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem 0.9rem;
+      }
+      .scene-a .desk-area {
+        order: -1;
+        display: grid;
+        gap: 0.5rem;
+      }
+      .desk {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.6rem;
+        height: 3.5rem;
+        margin: 0 -1rem;
+        clip-path: polygon(3% 0, 97% 0, 100% 100%, 0 100%);
+        border-top: 4px solid var(--accent);
+        background: linear-gradient(#2c3240, #13161d);
+        font-family: var(--font-display);
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        color: var(--accent);
+      }
+      .desk img {
+        width: 34px;
+        height: 34px;
+      }
+      @container stage (min-width: 760px) {
+        .scene-a {
+          padding: 2rem 2.5rem 0;
+          gap: 1.5rem;
+        }
+        .scene-a .wall {
+          grid-template-columns: repeat(3, 1fr);
+          gap: 1.4rem 2rem;
+          max-width: 46rem;
+          margin: 0 auto;
+          width: 100%;
+        }
+        .scene-a .desk-area {
+          order: 0;
+        }
+        .scene-a .art-slot {
+          width: 26rem;
+          margin: 0 auto -0.25rem;
+        }
+        .desk {
+          height: 5rem;
+          margin: 0 -2.5rem;
+          font-size: 1.25rem;
+          clip-path: polygon(8% 0, 92% 0, 100% 100%, 0 100%);
+        }
+        .desk img {
+          width: 48px;
+          height: 48px;
+        }
+      }
+
+      /* ---------- Option B: a plain monitor grid, art as a banner ---------- */
+      .grid-b {
+        padding: 0 1.25rem 1.5rem;
+        --label: var(--fg-primary);
+      }
+      .grid-b .art-slot {
+        margin-bottom: 1.25rem;
+        border-color: var(--line-strong);
+        color: var(--fg-secondary);
+      }
+      .grid-b .art-slot strong {
+        color: var(--fg-primary);
+      }
+      .grid-b .wall {
+        display: grid;
+        gap: 0.75rem;
+      }
+      .grid-b .monitor {
+        display: grid;
+        grid-template-columns: 7rem 1fr;
+        gap: 0.9rem;
+        align-items: center;
+        padding: 0.6rem;
+        border: 1px solid var(--line);
+        background: var(--bg-surface);
+      }
+      .grid-b .monitor:hover {
+        border-color: var(--line-strong);
+      }
+      .grid-b .mon-label {
+        margin: 0;
+        text-align: left;
+        font-size: 1rem;
+      }
+      .mon-desc {
+        display: block;
+        margin-top: 0.2rem;
+        font-size: 0.82rem;
+        color: var(--fg-secondary);
+      }
+      @container stage (min-width: 760px) {
+        .grid-b {
+          padding: 0 2.5rem 2.5rem;
+        }
+        .grid-b .wall {
+          grid-template-columns: repeat(3, 1fr);
+          gap: 1.25rem;
+        }
+        .grid-b .monitor {
+          grid-template-columns: 1fr;
+          align-content: start;
+          padding: 0.9rem;
+        }
+      }
+
+      /* ---------- Option C: control-room arc ---------- */
+      .scene-c {
+        padding: 1.25rem 0 0;
+      }
+      /* On a phone: one row that scrolls sideways, snapping to each monitor. */
+      .scene-c .wall {
+        display: flex;
+        gap: 0.9rem;
+        padding: 0.5rem 1rem 1rem;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scroll-padding: 0 1rem;
+      }
+      .scene-c .wall li {
+        flex: 0 0 58%;
+        scroll-snap-align: start;
+      }
+      .swipe {
+        margin: 0;
+        padding: 0 1rem;
+        font-size: 0.75rem;
+        color: #c3c8d4;
+      }
+      .console {
+        margin-top: 0.5rem;
+      }
+      .console svg {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+      .console .art-slot {
+        width: max-content;
+        max-width: 90%;
+        margin: 0 auto 0.5rem;
+        padding: 0.3rem 0.6rem;
+        font-size: 0.7rem;
+      }
+      @container stage (min-width: 760px) {
+        .scene-c {
+          padding-top: 2.5rem;
+          perspective: 1100px;
+        }
+        .scene-c .wall {
+          justify-content: center;
+          gap: 0.6rem;
+          padding: 0 2rem;
+          overflow: visible;
+        }
+        .scene-c .wall li {
+          flex: 0 1 9.5rem;
+        }
+        /* Each monitor turns toward the middle of the room. */
+        .scene-c .wall li:nth-child(1) {
+          transform: rotateY(32deg) translateY(28px);
+        }
+        .scene-c .wall li:nth-child(2) {
+          transform: rotateY(18deg) translateY(8px);
+        }
+        .scene-c .wall li:nth-child(3) {
+          transform: rotateY(6deg);
+        }
+        .scene-c .wall li:nth-child(4) {
+          transform: rotateY(-6deg);
+        }
+        .scene-c .wall li:nth-child(5) {
+          transform: rotateY(-18deg) translateY(8px);
+        }
+        .scene-c .wall li:nth-child(6) {
+          transform: rotateY(-32deg) translateY(28px);
+        }
+        .swipe {
+          display: none;
+        }
+        .console {
+          margin-top: 1.5rem;
+        }
+        .console svg {
+          max-width: 52rem;
+          margin: 0 auto;
+        }
+        .console .art-slot {
+          font-size: 0.8rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="lab-head">
+      <p class="status">Open for feedback</p>
+      <h1>Shows page: how should the news-desk graphic work?</h1>
+      <p>
+        Issue: <a href="https://github.com/stucny/Armageterdone/issues/9">#9 Shows page: news desk graphic</a> ·
+        2026-10-24
+      </p>
+      <p>
+        Three layouts for the top of the Shows page: a monitor for each of the six shows, each one a link. Hover or tab
+        to a monitor to switch it on. The hosts are not drawn here: their spot is marked for commissioned artwork.
+        Shows without art yet show colour bars.
+      </p>
+    </header>
+
+    <div class="controls" role="group" aria-label="View options">
+      <fieldset>
+        <legend>Theme</legend>
+        <label><input type="radio" name="theme" id="theme-dark" checked /> Dark</label>
+        <label><input type="radio" name="theme" id="theme-light" /> Light</label>
+      </fieldset>
+      <fieldset class="width-switch">
+        <legend>Width</legend>
+        <label><input type="radio" name="width" id="width-desktop" checked /> Desktop, one at a time</label>
+        <label><input type="radio" name="width" id="width-phone" /> Phone (390px), side by side</label>
+      </fieldset>
+    </div>
+
+    <main class="options">
+      <!-- ===================== Option A ===================== -->
+      <section class="option" aria-labelledby="opt-a">
+        <h2 id="opt-a"><span class="tag">Option A</span> Desk scene</h2>
+        <p class="diff">A studio picture: the monitors hang on the wall behind the hosts' desk.</p>
+        <div class="preview">
+          <div class="mock-nav"><img src="../../images/cc-logo.webp" alt="" width="28" height="28" />Canary Cry<span class="where">Shows</span></div>
+          <p class="page-title"><small>The Canary Cry Network</small>Shows</p>
+          <div class="studio scene-a">
+            <ul class="wall" aria-label="Shows">
+              <li><a class="monitor" href="../../tag/news-talk/"><span class="bezel"><span class="screen"><img src="../../images/show-news-talk.webp" alt="" width="512" height="512" /></span><span class="led"></span></span><span class="mon-label">Canary Cry News Talk</span></a></li>
+              <li><a class="monitor" href="../../tag/radio/"><span class="bezel"><span class="screen"><img src="../../images/show-radio.webp" alt="" width="512" height="512" /></span><span class="led"></span></span><span class="mon-label">Canary Cry Radio</span></a></li>
+              <li><a class="monitor" href="../../tag/clubhouse/"><span class="bezel"><span class="screen"><img src="../../images/show-clubhouse.webp" alt="" width="512" height="512" /></span><span class="led"></span></span><span class="mon-label">Canary Cry Clubhouse</span></a></li>
+              <li><a class="monitor" href="#no-page"><span class="bezel"><span class="screen testcard"><span>Art to come</span></span><span class="led"></span></span><span class="mon-label">The Joyspiracy Theory</span></a></li>
+              <li><a class="monitor" href="../../burningmanresearch/"><span class="bezel"><span class="screen"><img src="../../content/images/e2f8d5c0-83360211-6a87-d7bf-6741-59b8ca567492.jpg" alt="" /></span><span class="led"></span></span><span class="mon-label">Burning Man Research</span></a></li>
+              <li><a class="monitor" href="#no-page"><span class="bezel"><span class="screen testcard"><span>Art to come</span></span><span class="led"></span></span><span class="mon-label">Basil's Bunker</span></a></li>
+            </ul>
+            <div class="desk-area">
+              <div class="art-slot">
+                <strong>Commissioned artwork goes here</strong>
+                Basil and Gonz at the desk
+                <svg viewBox="0 0 240 70" aria-hidden="true">
+                  <g fill="none" stroke="#8b93a8" stroke-width="3" stroke-linecap="round">
+                    <rect x="40" y="6" width="50" height="46" rx="10" />
+                    <line x1="65" y1="52" x2="65" y2="68" />
+                    <rect x="150" y="6" width="50" height="46" rx="10" />
+                    <line x1="175" y1="52" x2="175" y2="68" />
+                  </g>
+                </svg>
+              </div>
+              <div class="desk"><img src="../../images/cc-logo.webp" alt="" width="48" height="48" />CANARY CRY</div>
+            </div>
+          </div>
+        </div>
+        <div class="notes">
+          <ul>
+            <li><strong>On a phone:</strong> the desk becomes a short banner on top, and the monitors drop into two columns under it.</li>
+            <li><strong>Artwork:</strong> needs one wide commissioned picture of the desk; the monitors stay live links on top of it.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ===================== Option B ===================== -->
+      <section class="option" aria-labelledby="opt-b">
+        <h2 id="opt-b"><span class="tag">Option B</span> Monitor grid</h2>
+        <p class="diff">No scene: six monitor cards with a line about each show, and the desk artwork as a banner above.</p>
+        <div class="preview">
+          <div class="mock-nav"><img src="../../images/cc-logo.webp" alt="" width="28" height="28" />Canary Cry<span class="where">Shows</span></div>
+          <p class="page-title"><small>The Canary Cry Network</small>Shows</p>
+          <div class="grid-b">
+            <div class="art-slot">
+              <strong>Commissioned artwork goes here</strong>
+              A wide banner of Basil and Gonz at the desk (optional in this layout)
+            </div>
+            <ul class="wall" aria-label="Shows">
+              <li><a class="monitor" href="../../tag/news-talk/"><span class="bezel"><span class="screen"><img src="../../images/show-news-talk.webp" alt="" width="512" height="512" /></span><span class="led"></span></span><span><span class="mon-label">Canary Cry News Talk</span><span class="mon-desc">The flagship discernment broadcast — daily news through a Biblical worldview.</span></span></a></li>
+              <li><a class="monitor" href="../../tag/radio/"><span class="bezel"><span class="screen"><img src="../../images/show-radio.webp" alt="" width="512" height="512" /></span><span class="led"></span></span><span><span class="mon-label">Canary Cry Radio</span><span class="mon-desc">Deep-cut interviews and conversations with discerners, theologians, and researchers.</span></span></a></li>
+              <li><a class="monitor" href="../../tag/clubhouse/"><span class="bezel"><span class="screen"><img src="../../images/show-clubhouse.webp" alt="" width="512" height="512" /></span><span class="led"></span></span><span><span class="mon-label">Canary Cry Clubhouse</span><span class="mon-desc">Open-mic conversations with the community. Wade into deep waters together.</span></span></a></li>
+              <li><a class="monitor" href="#no-page"><span class="bezel"><span class="screen testcard"><span>Art to come</span></span><span class="led"></span></span><span><span class="mon-label">The Joyspiracy Theory</span><span class="mon-desc">[Description to come]</span></span></a></li>
+              <li><a class="monitor" href="../../burningmanresearch/"><span class="bezel"><span class="screen"><img src="../../content/images/e2f8d5c0-83360211-6a87-d7bf-6741-59b8ca567492.jpg" alt="" /></span><span class="led"></span></span><span><span class="mon-label">Burning Man Research</span><span class="mon-desc">The show has covered Burning Man for over a decade — annual fieldwork, theological analysis, and producer-funded ground-truthing.</span></span></a></li>
+              <li><a class="monitor" href="#no-page"><span class="bezel"><span class="screen testcard"><span>Art to come</span></span><span class="led"></span></span><span><span class="mon-label">Basil's Bunker</span><span class="mon-desc">[Description to come]</span></span></a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="notes">
+          <ul>
+            <li><strong>On a phone:</strong> one list, a small monitor beside each show's name and line.</li>
+            <li><strong>Artwork:</strong> works without any; the banner can come later or not at all.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ===================== Option C ===================== -->
+      <section class="option" aria-labelledby="opt-c">
+        <h2 id="opt-c"><span class="tag">Option C</span> Control-room arc</h2>
+        <p class="diff">The monitors curve round the desk like a broadcast control room, angled toward the middle.</p>
+        <div class="preview">
+          <div class="mock-nav"><img src="../../images/cc-logo.webp" alt="" width="28" height="28" />Canary Cry<span class="where">Shows</span></div>
+          <p class="page-title"><small>The Canary Cry Network</small>Shows</p>
+          <div class="studio scene-c">
+            <ul class="wall" aria-label="Shows">
+              <li><a class="monitor" href="../../tag/news-talk/"><span class="bezel"><span class="screen"><img src="../../images/show-news-talk.webp" alt="" width="512" height="512" /></span><span class="led"></span></span><span class="mon-label">Canary Cry News Talk</span></a></li>
+              <li><a class="monitor" href="../../tag/radio/"><span class="bezel"><span class="screen"><img src="../../images/show-radio.webp" alt="" width="512" height="512" /></span><span class="led"></span></span><span class="mon-label">Canary Cry Radio</span></a></li>
+              <li><a class="monitor" href="../../tag/clubhouse/"><span class="bezel"><span class="screen"><img src="../../images/show-clubhouse.webp" alt="" width="512" height="512" /></span><span class="led"></span></span><span class="mon-label">Canary Cry Clubhouse</span></a></li>
+              <li><a class="monitor" href="#no-page"><span class="bezel"><span class="screen testcard"><span>Art to come</span></span><span class="led"></span></span><span class="mon-label">The Joyspiracy Theory</span></a></li>
+              <li><a class="monitor" href="../../burningmanresearch/"><span class="bezel"><span class="screen"><img src="../../content/images/e2f8d5c0-83360211-6a87-d7bf-6741-59b8ca567492.jpg" alt="" /></span><span class="led"></span></span><span class="mon-label">Burning Man Research</span></a></li>
+              <li><a class="monitor" href="#no-page"><span class="bezel"><span class="screen testcard"><span>Art to come</span></span><span class="led"></span></span><span class="mon-label">Basil's Bunker</span></a></li>
+            </ul>
+            <p class="swipe" aria-hidden="true">Swipe for more shows &rarr;</p>
+            <div class="console">
+              <div class="art-slot"><strong>Placeholder silhouettes</strong> Commissioned artwork of the hosts goes here</div>
+              <!-- Curved desk with two plain silhouettes standing in for the hosts. -->
+              <svg viewBox="0 0 800 190" aria-hidden="true">
+                <g fill="#232a3d" stroke="#8b93a8" stroke-width="2" stroke-dasharray="6 5">
+                  <circle cx="330" cy="62" r="24" />
+                  <path d="M290 132 C290 100 306 88 330 88 C354 88 370 100 370 132 Z" />
+                  <circle cx="470" cy="62" r="24" />
+                  <path d="M430 132 C430 100 446 88 470 88 C494 88 510 100 510 132 Z" />
+                </g>
+                <path d="M0 150 Q400 95 800 150 L800 190 L0 190 Z" fill="#1a1f2b" />
+                <path d="M0 150 Q400 95 800 150" fill="none" stroke="#e6b40f" stroke-width="4" />
+                <path d="M60 170 Q400 125 740 170" fill="none" stroke="#2c3240" stroke-width="2" />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="notes">
+          <ul>
+            <li><strong>On a phone:</strong> the arc flattens into one row that you swipe sideways, snapping to each monitor.</li>
+            <li><strong>Artwork:</strong> needs a commissioned picture of the hosts from behind or at the desk, to sit in the middle of the arc.</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+
+    <section class="ask" aria-labelledby="ask">
+      <h2 id="ask">What we need from you</h2>
+      <p>
+        <strong>Which layout should we build: A, B or C?</strong> Any change you'd make to it? Comment your pick on
+        <a href="https://github.com/stucny/Armageterdone/issues/9">issue #9</a>.
+      </p>
+      <p>We also need to know:</p>
+      <ul>
+        <li>
+          <strong>The artwork of Basil and Gonz at the desk:</strong> do you have it, or will you commission it? We won't
+          draw or generate the hosts ourselves.
+        </li>
+        <li id="no-page">
+          <strong>The Joyspiracy Theory and Basil's Bunker</strong> have no page on the site yet, so their monitors lead
+          here. Where should they link, and do you have show art for them?
+        </li>
+      </ul>
+    </section>
+
+    <footer class="lab-foot">
+      <p>
+        About this lab: the show art is the site's own (News Talk, Radio and Clubhouse show art, and the Burning Man
+        Research page's picture). The colour bars, the empty chairs and the silhouettes are placeholders, not final art.
+        The show descriptions in Option B are the site's current text; "[Description to come]" marks the two shows that
+        have none. The 24/7 livestream the issue mentions is on hold, so it isn't shown.
+      </p>
+      <p><a href="../">All design labs</a> · <a href="../../">Back to the preview site</a></p>
+    </footer>
+  </body>
+</html>
