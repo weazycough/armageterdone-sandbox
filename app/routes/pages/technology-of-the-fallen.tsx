@@ -1,9 +1,10 @@
 // technology-of-the-fallen.tsx — the long-form essay as a PDF (Ghost
-// page-technology-of-the-fallen.hbs).
+// page-technology-of-the-fallen.hbs). Ghost framed the PDF from Dropbox, but
+// Dropbox forbids framing (frame-ancestors) and the frame stayed blank, so
+// this links to it instead.
 
 import type * as React from "react";
-import { Embed } from "../../components/embed";
-import { BracketHero, Prose, Section } from "../../components/page-parts";
+import { BracketHero, ButtonLink, Prose, Section } from "../../components/page-parts";
 import { pageTitle } from "../../lib/meta";
 
 export const meta = () => pageTitle("Technology of the Fallen");
@@ -24,22 +25,17 @@ export default function TechnologyOfTheFallen(): React.ReactNode {
       <Section>
         <Prose>
           <p>
-            The PDF below is a working draft from April 2024. It connects threads that the show has
-            pulled at across years of episodes — the spiritual dimension of modern technology, the
-            question of who is building what, and a Biblical frame for it.
+            The PDF linked below is a working draft from April 2024. It connects threads that the
+            show has pulled at across years of episodes — the spiritual dimension of modern
+            technology, the question of who is building what, and a Biblical frame for it.
           </p>
         </Prose>
 
-        <div style={{ maxWidth: "56rem", margin: "var(--space-6) auto" }}>
-          <Embed
-            service="Dropbox"
-            title="Technology of the Fallen — April 2024 PDF"
-            src={PDF}
-            openHref={PDF}
-            openLabel="Download the PDF instead"
-            style={{ aspectRatio: "4 / 5" }}
-          />
-        </div>
+        <p className="page-buttons page-buttons--center" style={{ margin: "var(--space-6) auto" }}>
+          <ButtonLink href={PDF} newTab>
+            Read the April 2024 PDF →
+          </ButtonLink>
+        </p>
 
         <p className="muted" style={{ textAlign: "center", fontSize: "0.85rem" }}>
           Hosted on Dropbox. The team can swap in a copy hosted on this site once one is sent in.

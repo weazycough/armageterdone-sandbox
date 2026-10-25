@@ -29,9 +29,8 @@ export default function Watch(): React.ReactNode {
             <Embed
               service="Twitch"
               title="Canary Cry Twitch stream"
-              src={(host) =>
-                `https://player.twitch.tv/?channel=${CHANNEL}&parent=${encodeURIComponent(host)}`
-              }
+              src={`https://player.twitch.tv/?channel=${CHANNEL}`}
+              parent
               openHref={`https://www.twitch.tv/${CHANNEL}`}
             />
           </div>
@@ -40,9 +39,8 @@ export default function Watch(): React.ReactNode {
             <Embed
               service="Twitch"
               title="Canary Cry Twitch chat"
-              src={(host) =>
-                `https://www.twitch.tv/embed/${CHANNEL}/chat?parent=${encodeURIComponent(host)}`
-              }
+              src={`https://www.twitch.tv/embed/${CHANNEL}/chat`}
+              parent
               openHref={`https://www.twitch.tv/${CHANNEL}`}
               className="video-frame video-frame--tall"
             />

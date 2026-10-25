@@ -1,4 +1,4 @@
-// embed.tsx — a third-party player (Twitch, Restream, SoundCloud, a PDF) that
+// embed.tsx — a third-party player (Twitch, Restream, SoundCloud) that
 // loads only when the visitor asks for it. The Ghost theme put these iframes
 // straight in the page; here the page makes no request to the other site
 // until the button is pressed, so the preview stays tracker-free by default
@@ -6,12 +6,14 @@
 
 import { useState } from "react";
 import type * as React from "react";
+import { EMBED_SANDBOX, embedUrl } from "../lib/embed-url";
 import { buttonVariants } from "./ui/button";
 
 export function Embed({
   service,
   title,
   src,
+  parent = false,
   openHref,
   openLabel,
   allow,
@@ -22,8 +24,10 @@ export function Embed({
   service: string;
   /** The iframe's accessible title. */
   title: string;
-  /** The iframe URL, or a function of the page's hostname (Twitch's `parent=`). */
-  src: string | ((hostname: string) => string);
+  /** The iframe URL. */
+  src: string;
+  /** Add the page's hostname as `parent=` when loading (Twitch). */
+  parent?: boolean;
   /** The same content on the other site, for visitors who'd rather go there. */
   openHref: string;
   /** Defaults to "Open it on <service> instead". */
@@ -33,7 +37,7 @@ export function Embed({
   style?: React.CSSProperties;
 }): React.ReactNode {
   const [url, setUrl] = useState<string | null>(null);
-  const host = new URL(typeof src === "string" ? src : src("example.com")).hostname;
+  const host = new URL(src).hostname;
   return (
     <div className={className} style={style}>
       {url === null ? (
@@ -43,7 +47,7 @@ export function Embed({
             className={buttonVariants()}
             type="button"
             onClick={() => {
-              setUrl(typeof src === "string" ? src : src(window.location.hostname));
+              setUrl(embedUrl(src, parent, window.location.hostname));
             }}
           >
             Load the {service} player
@@ -57,7 +61,7 @@ export function Embed({
           </p>
         </div>
       ) : (
-        <iframe src={url} title={title} allow={allow} allowFullScreen />
+        <iframe src={url} title={title} allow={allow} allowFullScreen sandbox={EMBED_SANDBOX} />
       )}
     </div>
   );
