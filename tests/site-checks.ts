@@ -2,6 +2,8 @@
 // they can be unit-tested on hand-written pages (design labs are written by
 // hand, not by React, so quoting and markup vary).
 
+import { BASE } from "../app/lib/paths";
+
 /** Hosts a page may load media from (img/audio/video), and why. */
 export const MEDIA_HOSTS = new Set([
   "static.libsyn.com", // episode artwork from the RSS feed
@@ -133,9 +135,48 @@ const MEDIA_TAGS = new Set(["img", "audio", "video", "source", "track", "picture
 const SVG_LOADS = new Set(["image", "use", "feimage"]);
 
 /** React Router's hydration data: one call with one string literal, so it
- *  carries text (show notes may mention any site) but can't run anything. */
+ *  carries text (show notes may mention any site). Only trusted on pages the
+ *  build made (isReactBuilt): elsewhere an earlier script could redefine
+ *  enqueue. */
 const HYDRATION_DATA =
   /^window\.__reactRouterContext\.streamController\.enqueue\("(?:[^"\\]|\\[\s\S])*"\);$/;
+
+const ASSETS = `${BASE}assets/`.replace(/[/.]/g, "\\$&");
+const ASSET = `"${ASSETS}[\\w.-]+\\.js"`;
+
+/** React Router's boot module, exactly: imports of the site's own assets and
+ *  the route map. The only inline script allowed to use import(). */
+const BOOT_MODULE = new RegExp(
+  `^\\s*import ${ASSET};\\s*(?:import \\* as route\\d+ from ${ASSET};\\s*)*` +
+    `window\\.__reactRouterRouteModules = \\{(?:"[\\w/.-]+":route\\d+,?)*\\};\\s*` +
+    `import\\(${ASSET}\\);\\s*$`,
+);
+
+/** A page React Router built: it boots the app with that module. Hand-written
+ *  pages (design labs, anything else in public/) never count, whatever they
+ *  contain. */
+export function isReactBuilt(html: string, file: string): boolean {
+  return (
+    !file.startsWith("labs/") && parsePage(html).inlineScripts.some((js) => BOOT_MODULE.test(js))
+  );
+}
+
+/** Inline scripts are for local UI: anything that can make a request, or
+ *  build code or a URL from parts, is out (React Router's own scripts use
+ *  none of it, bar the boot module's import()). A guard against mistakes,
+ *  not a sandbox: a determined author can get round any list. */
+const SCRIPT_BANS: [RegExp, string][] = [
+  [/\bfetch\s*\(/, "fetch()"],
+  [/\bXMLHttpRequest\b/, "XMLHttpRequest"],
+  [/\bsendBeacon\b/, "sendBeacon"],
+  [/\bnew\s+Image\b/, "new Image"],
+  [/\bWebSocket\b/, "WebSocket"],
+  [/\bEventSource\b/, "EventSource"],
+  [/\beval\b/, "eval"],
+  [/\bFunction\s*\(/, "Function()"],
+  [/\batob\s*\(/, "atob()"],
+  [/\bimport\s*\(/, "import()"],
+];
 
 /** Hosts named in a script ("https://host/…", "//host/…"). */
 export function scriptHosts(js: string): string[] {
@@ -198,8 +239,12 @@ export function thirdPartyProblems(html: string, file: string): string[] {
   }
 
   for (const css of page.styles) problems.push(...cssProblems(css));
+  const reactBuilt = isReactBuilt(html, file);
   for (const js of page.inlineScripts) {
-    if (HYDRATION_DATA.test(js.trim())) continue;
+    if (reactBuilt && (HYDRATION_DATA.test(js.trim()) || BOOT_MODULE.test(js))) continue;
+    for (const [ban, what] of SCRIPT_BANS) {
+      if (ban.test(js)) problems.push(`inline script uses ${what} (scripts do local UI only)`);
+    }
     const m = TRACKERS.exec(js);
     if (m !== null) problems.push(`inline script references ${m[0]}`);
     // A script that names another site can load or send to it (a beacon).
