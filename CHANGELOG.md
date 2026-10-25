@@ -24,9 +24,10 @@
 - A list per show (News Talk, Radio, Clubhouse) at `/tag/<show>/`, linked from the Shows menu, the homepage and
   About.
 - Site search in the header: a static index built with the site, searched in the browser, no search service.
-- Players (Twitch, Restream, SoundCloud, the Dropbox PDF) load only when the visitor asks for them; until then the
-  page contacts no other site.
-- Site checks also catch other sites named in inline scripts, remote SVG images and `background` attributes.
+- Players (Twitch, Restream, SoundCloud) load only when the visitor asks for them, in a sandboxed frame; until
+  then the page contacts no other site.
+- Site checks also catch other sites named in inline scripts, request and code-building APIs in inline scripts
+  (`fetch`, `eval`, `atob`…), remote SVG images, `background` attributes, and phone numbers.
 
 ### Changed from the Ghost theme
 
@@ -36,6 +37,7 @@
 - Embedded players load on request (see above). Inside the pages without a custom design they are links to the
   original for now.
 - Meet-up hosts' personal emails and phone number are not published; each contact goes through the show's inbox.
+- Technology of the Fallen links to its PDF: Dropbox doesn't allow it to be shown inside another site.
 - Instructions written for the Ghost editor ("paste it into a Ghost card") now ask the team to send the material
   in; Twitch's `parent=` follows the page's address, so the Watch page's note about changing it is gone.
 - Page titles in the browser tab are the pages' headings (the Ghost pages were mostly titled "Support The Show").
@@ -44,6 +46,9 @@
 
 ### Fixed
 
+- Producers' and guests' personal email addresses (and one phone number) from the episode notes were published on
+  the episode pages; they are now replaced with "[contact removed in preview]", and the leak scan allows only the
+  show's own addresses.
 - Pages were 1280px wide at desktop sizes, and narrower than the screen on tablets: Tailwind's `container`
   utility overrode the theme's.
 - Outlined ("ghost") buttons had no outline.

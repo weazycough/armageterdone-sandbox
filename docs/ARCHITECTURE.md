@@ -71,16 +71,22 @@ time it opens and filters it in the browser (`app/lib/search.ts`: every word mus
 title matches first). No query leaves the page and there is no search service.
 
 **Embeds.** Where a Ghost template had a player (Twitch on `/watch/`, Restream on `/livestream/`, SoundCloud on
-`/mixtape/`, the Dropbox PDF on `/technology-of-the-fallen/`), the page shows a "Load the … player" button instead
-(`app/components/embed.tsx`). The iframe is created only when the visitor presses it, so the built HTML has no
-iframes and loading a page contacts no other site. Twitch's `parent=` is taken from the page's hostname at that
-moment (`stucny.github.io` on Pages, which Twitch requires; anything else in a local preview). The Restream URL
-carries Restream's public embed token, the same one as on the live site. Embeds inside imported page bodies (the
-generic template) are still links, as the extractor left them.
+`/mixtape/`), the page shows a "Load the … player" button instead (`app/components/embed.tsx`). The iframe is
+created only when the visitor presses it, so the built HTML has no iframes and loading a page contacts no other
+site. The frame is sandboxed (`app/lib/embed-url.ts`): the player runs and can open its own site in a new tab, but
+can't navigate the page; Twitch plays the same with and without it. Ghost also framed the Technology of the Fallen
+PDF from Dropbox, but Dropbox forbids framing (`frame-ancestors`), so that page links to the PDF. Twitch's
+`parent=` is taken from the page's hostname at that moment (`stucny.github.io` on Pages, which Twitch requires;
+anything else in a local preview). The Restream URL carries Restream's public embed token, the same one as on the
+live site. Embeds inside imported page bodies (the generic template) are still links, as the extractor left them.
 
-**Contact details.** The Ghost meet-ups page listed hosts' personal emails, a phone number and an X handle. Private
-people's details don't go on the preview (AGENTS.md), so the port routes each contact through the show's inbox with
-the place in the subject line. The leak scan's email check would fail on them anyway.
+**Contact details.** Private people's emails and phone numbers don't go on the preview (AGENTS.md), even where the
+show published them. Show notes name producers' and guests' addresses (and once a number): `sanitizeNotes` replaces
+them with "[contact removed in preview]", and a mailto or tel link to them goes whole (`app/lib/contacts.ts`). The
+show's own addresses (`SHOW_EMAILS`, and canarycry… mailboxes at Gmail and Proton) and its Textedly number stay.
+The same runs over the Ghost content at extraction, and so over the search index, which is built from the same
+text. The Ghost meet-ups page listed hosts' personal emails, a phone number and an X handle; the port routes each
+contact through the show's inbox with the place in the subject line.
 
 **404.html is static.** Pages serves it at whatever URL was missing, so its URL never matches the route it was
 rendered for; hydrating it would mismatch and then show an error. `assemble-dist.ts` therefore removes the app's
@@ -149,14 +155,18 @@ self-hosted, and episodes play in the browser's own `<audio preload="none">`, so
 
 The HTML checks live in `tests/site-checks.ts` as plain functions, unit-tested on hand-written pages
 (`tests/unit/site-checks.test.ts`), because labs are written by hand: any attribute quoting, every `srcset`
-candidate, inline `<style>` and `style=""`, SVG references, and inline scripts. An inline script may name another
-site only if it is React Router's hydration data: exactly one `enqueue("…")` call with a string literal, which
-carries text (show notes link anywhere) but can't run anything; code appended after it is still checked.
+candidate, inline `<style>` and `style=""`, SVG references, and inline scripts. Inline scripts do local UI only:
+none may use `fetch`, `XMLHttpRequest`, `sendBeacon`, `new Image`, `WebSocket`, `EventSource`, `eval`,
+`Function(`, `atob(` or `import(`, or name another site. Two of React Router's own scripts are let through, and only
+on pages the build made (never under `labs/`): its boot module, matched exactly (imports of the site's assets and
+the route map), and its hydration data, exactly one `enqueue("…")` call with a string literal, which carries text
+(show notes link anywhere) but can't run anything. This is a guard against mistakes, not a sandbox.
 
 The leak scan (`tests/leak-patterns.ts`) has two parts. **Shapes** are generic regexes: tailnet names and IPs, private
 network IPs, loopback with a port, bare-host URLs with a port, home-directory and workspace paths, the git forge,
-unconverted Ghost links, and email addresses (allowed: the show's own, and any address the episode feed itself
-published). **Names** of hosts, accounts and people are stored only as SHA-256 hashes; the scanner hashes every word
+unconverted Ghost links; and, in text files, email addresses and phone numbers other than the show's own (the same
+rules as the redaction above, in `app/lib/contacts.ts`; the phone shape is checked against the whole feed so dates,
+timestamps and episode numbers don't match). **Names** of hosts, accounts and people are stored only as SHA-256 hashes; the scanner hashes every word
 and compares, and a failing run prints the hash, not the word. Names that are also ordinary words only count in host
 position (`//name`, `name:22`, `name.local`), because show notes use them as words. How to add a name is in the
 file's header. A file that must contain a shape goes in `LEAK_SCAN_EXEMPT_FILES` with a reason.
