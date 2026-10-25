@@ -116,7 +116,9 @@ export function ArtGallery({ tiles }: { tiles: FanArtTile[] }): React.ReactNode 
                       alt={tile.caption}
                       decoding="async"
                     />
-                    <figcaption className="art-modal__caption">{tile.caption}</figcaption>
+                    <figcaption className="art-modal__caption" aria-live="polite">
+                      {tile.caption}
+                    </figcaption>
                   </figure>
                 </>
               )
