@@ -184,13 +184,13 @@
       /* View switches: radio buttons + :has(), no script. */
       @media (min-width: 64rem) {
         body:has(#width-phone:checked) .options {
-          grid-template-columns: repeat(3, minmax(0, 390px));
+          grid-template-columns: repeat(2, minmax(0, 390px));
           justify-content: center;
           gap: 1.5rem;
         }
-        body:has(#width-phone:checked) .option > h2,
+        /* room for a three-line description, so the previews line up */
         body:has(#width-phone:checked) .option > .diff {
-          min-height: 2.5em;
+          min-height: 4.65em;
         }
       }
       @media (max-width: 63.99rem) {
@@ -534,10 +534,10 @@
                 </ul>
                 <p class="year">Earlier: Louisville, KY · Humboldt County, CA</p>
               </div>
-              <aside class="host-box" aria-label="Host a meet-up">
+              <div class="host-box">
                 <img class="poster" src="../../content/images/16276642-ciara-startownmeetup.jpg" width="1022" height="1509" alt="Poster: Want to start a meetup? Here is what you do: 1) Choose a location. 2) Figure out a date and time. 3) Make a flyer. 4) Promote!" />
                 <p style="margin: 0"><strong>Start a meet-up near you</strong>Pennsylvania and NorCal are looking for hosts.</p>
-              </aside>
+              </div>
             </div>
           </div>
         </div>
@@ -558,8 +558,7 @@
       </p>
       <p>
         We also need the posters: do you have them for past meet-ups (Houston, Cherryville, Kansas City, Los Angeles,
-        Louisville, NorCal) and for Trondheim? Hosts' names and contact details would stay off the page, as they are
-        now.
+        Louisville, NorCal) and for Trondheim? Hosts' contact details would stay off the page, as they are now.
       </p>
     </section>
 

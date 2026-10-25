@@ -205,9 +205,9 @@
           justify-content: center;
           gap: 1.5rem;
         }
-        body:has(#width-phone:checked) .option > h2,
+        /* room for a three-line description, so the previews line up */
         body:has(#width-phone:checked) .option > .diff {
-          min-height: 2.5em;
+          min-height: 4.65em;
         }
       }
       @media (max-width: 63.99rem) {
@@ -244,16 +244,20 @@
         --fg-tertiary: #6b5d4d;
         --line: #d6c89e;
         --line-strong: #b8a673;
-        --tile-0: #ebe0c2;
+        --tile-0: #f3ead2;
         --ink-0: #4a3f33;
-        --tile-1: #f2d88a;
+        --tile-1: #e8c35a;
         --ink-1: #14110a;
-        --tile-2: #d9a60d;
+        --tile-2: #c08e0a;
         --ink-2: #14110a;
-        --tile-3: #7a5b00;
+        --tile-3: #6e5200;
         --ink-3: #fdf8eb;
         --kicker: #7a5b00;
         color-scheme: light;
+      }
+      /* The canary focus ring is only 1.8 : 1 on cream; use the deep yellow. */
+      body:has(#theme-light:checked) .preview :focus-visible {
+        outline-color: #7a5b00;
       }
       .mock-nav {
         display: flex;
@@ -335,11 +339,13 @@
         border-radius: 3px;
         font-family: var(--font-display);
         font-weight: 600;
-        font-size: clamp(0.55rem, 2.4cqi, 0.85rem);
+        font-size: clamp(0.6rem, 2.4cqi, 0.85rem);
       }
+      /* "fewer than 5" also gets an outline, so it isn't told apart by colour alone */
       .p0 {
         background: var(--tile-0);
         color: var(--ink-0);
+        box-shadow: inset 0 0 0 1px var(--line-strong);
       }
       .p1 {
         background: var(--tile-1);
@@ -373,6 +379,10 @@
       }
       .mk-host {
         background: #8a2a1c;
+      }
+      .t .mk + .mk {
+        right: auto;
+        left: -5px;
       }
       .legend {
         display: flex;
@@ -454,6 +464,10 @@
         border-radius: 5px;
         background: var(--accent);
       }
+      /* canary on the beige track is 1.5 : 1; the deep yellow reads better */
+      body:has(#theme-light:checked) .bar i {
+        background: var(--accent-deep);
+      }
       .met {
         margin: 0;
         font-size: 0.82rem;
@@ -470,6 +484,10 @@
       .optc .t {
         background: var(--tile-0);
         color: var(--ink-0);
+        box-shadow: inset 0 0 0 1px var(--line-strong);
+      }
+      .optc:has(#c-producers:checked) .t:not(.p0) {
+        box-shadow: none;
       }
       .optc .t:has(.mk) {
         outline: 2px solid var(--fg-primary);
@@ -560,7 +578,7 @@
             <p class="sec-title">Where we are</p>
             <p class="sec-text">Producers who said yes to the map, by state. <span class="sample">Sample data</span></p>
             <div class="map-wrap">
-              <div class="tiles" role="img" aria-label="Map of US states shaded by number of producers (sample data), with past meet-ups marked in Texas, North Carolina, Missouri, California and Kentucky, and a call for a host in Pennsylvania. The same data is in the table below the options.">
+              <div class="tiles" role="img" aria-label="Map of US states shaded by number of producers (sample data), with past meet-ups marked in Texas, North Carolina, Missouri, California and Kentucky, and calls for a host in Pennsylvania and northern California. The same data is in the table below the options.">
                 <span class="t p1" style="--r: 1; --c: 1" title="Alaska">AK</span>
                 <span class="t p1" style="--r: 1; --c: 11" title="Maine">ME</span>
                 <span class="t p0" style="--r: 2; --c: 10" title="Vermont">VT</span>
@@ -586,12 +604,12 @@
                 <span class="t p2" style="--r: 4; --c: 8" title="Pennsylvania">PA<span class="mk mk-host">?</span></span>
                 <span class="t p1" style="--r: 4; --c: 9" title="New Jersey">NJ</span>
                 <span class="t p1" style="--r: 4; --c: 10" title="Connecticut">CT</span>
-                <span class="t p3" style="--r: 5; --c: 1" title="California">CA<span class="mk mk-past">&#9679;</span></span>
+                <span class="t p3" style="--r: 5; --c: 1" title="California">CA<span class="mk">&#9679;</span><span class="mk mk-host">?</span></span>
                 <span class="t p1" style="--r: 5; --c: 2" title="Utah">UT</span>
                 <span class="t p2" style="--r: 5; --c: 3" title="Colorado">CO</span>
                 <span class="t p1" style="--r: 5; --c: 4" title="Nebraska">NE</span>
-                <span class="t p2" style="--r: 5; --c: 5" title="Missouri">MO<span class="mk mk-past">&#9679;</span></span>
-                <span class="t p1" style="--r: 5; --c: 6" title="Kentucky">KY<span class="mk mk-past">&#9679;</span></span>
+                <span class="t p2" style="--r: 5; --c: 5" title="Missouri">MO<span class="mk">&#9679;</span></span>
+                <span class="t p1" style="--r: 5; --c: 6" title="Kentucky">KY<span class="mk">&#9679;</span></span>
                 <span class="t p1" style="--r: 5; --c: 7" title="West Virginia">WV</span>
                 <span class="t p2" style="--r: 5; --c: 8" title="Virginia">VA</span>
                 <span class="t p1" style="--r: 5; --c: 9" title="Maryland">MD</span>
@@ -601,7 +619,7 @@
                 <span class="t p1" style="--r: 6; --c: 4" title="Kansas">KS</span>
                 <span class="t p1" style="--r: 6; --c: 5" title="Arkansas">AR</span>
                 <span class="t p2" style="--r: 6; --c: 6" title="Tennessee">TN</span>
-                <span class="t p2" style="--r: 6; --c: 7" title="North Carolina">NC<span class="mk mk-past">&#9679;</span></span>
+                <span class="t p2" style="--r: 6; --c: 7" title="North Carolina">NC<span class="mk">&#9679;</span></span>
                 <span class="t p1" style="--r: 6; --c: 8" title="South Carolina">SC</span>
                 <span class="t p0" style="--r: 6; --c: 9" title="District of Columbia">DC</span>
                 <span class="t p1" style="--r: 7; --c: 4" title="Oklahoma">OK</span>
@@ -610,7 +628,7 @@
                 <span class="t p1" style="--r: 7; --c: 7" title="Alabama">AL</span>
                 <span class="t p2" style="--r: 7; --c: 8" title="Georgia">GA</span>
                 <span class="t p1" style="--r: 8; --c: 1" title="Hawaii">HI</span>
-                <span class="t p3" style="--r: 8; --c: 4" title="Texas">TX<span class="mk mk-past">&#9679;</span></span>
+                <span class="t p3" style="--r: 8; --c: 4" title="Texas">TX<span class="mk">&#9679;</span></span>
                 <span class="t p3" style="--r: 8; --c: 9" title="Florida">FL</span>
               </div>
               <div>
@@ -618,7 +636,7 @@
                   <li><span class="sw" style="background: var(--tile-3)"></span>50 or more</li>
                   <li><span class="sw" style="background: var(--tile-2)"></span>20 to 49</li>
                   <li><span class="sw" style="background: var(--tile-1)"></span>5 to 19</li>
-                  <li><span class="sw" style="background: var(--tile-0)"></span>Fewer than 5 (not shown)</li>
+                  <li><span class="sw" style="background: var(--tile-0); box-shadow: inset 0 0 0 1px var(--line-strong)"></span>Fewer than 5 (not shown)</li>
                   <li><span class="mk">&#9679;</span>Past meet-up</li>
                   <li><span class="mk mk-host">?</span>Looking for a host</li>
                 </ul>
@@ -634,6 +652,7 @@
           <ul>
             <li><strong>Privacy:</strong> a state with fewer than 5 producers looks the same as one with none, so no one stands out.</li>
             <li><strong>On a phone:</strong> the tiles shrink to fit the screen; the key moves under the map.</li>
+            <li><strong>Readable:</strong> every state label is at least 4.7 : 1 against its tile in both themes (AA).</li>
           </ul>
         </div>
       </section>
@@ -696,7 +715,7 @@
             <p class="sec-title">Where we've met</p>
             <label class="layer"><input type="checkbox" id="c-producers" /> Also show where producers are (those who opted in) <span class="sample">Sample data</span></label>
             <div class="map-wrap">
-              <div class="tiles" role="img" aria-label="Map of US states with past meet-ups marked in Texas, North Carolina, Missouri, California and Kentucky, and a call for a host in Pennsylvania. With the producer layer on, states are shaded by number of producers (sample data).">
+              <div class="tiles" role="img" aria-label="Map of US states with past meet-ups marked in Texas, North Carolina, Missouri, California and Kentucky, and calls for a host in Pennsylvania and northern California. With the producer layer on, states are shaded by number of producers (sample data).">
                 <span class="t p1" style="--r: 1; --c: 1" title="Alaska">AK</span>
                 <span class="t p1" style="--r: 1; --c: 11" title="Maine">ME</span>
                 <span class="t p0" style="--r: 2; --c: 10" title="Vermont">VT</span>
@@ -722,12 +741,12 @@
                 <span class="t p2" style="--r: 4; --c: 8" title="Pennsylvania">PA<span class="mk mk-host">?</span></span>
                 <span class="t p1" style="--r: 4; --c: 9" title="New Jersey">NJ</span>
                 <span class="t p1" style="--r: 4; --c: 10" title="Connecticut">CT</span>
-                <span class="t p3" style="--r: 5; --c: 1" title="California">CA<span class="mk mk-past">&#9679;</span></span>
+                <span class="t p3" style="--r: 5; --c: 1" title="California">CA<span class="mk">&#9679;</span><span class="mk mk-host">?</span></span>
                 <span class="t p1" style="--r: 5; --c: 2" title="Utah">UT</span>
                 <span class="t p2" style="--r: 5; --c: 3" title="Colorado">CO</span>
                 <span class="t p1" style="--r: 5; --c: 4" title="Nebraska">NE</span>
-                <span class="t p2" style="--r: 5; --c: 5" title="Missouri">MO<span class="mk mk-past">&#9679;</span></span>
-                <span class="t p1" style="--r: 5; --c: 6" title="Kentucky">KY<span class="mk mk-past">&#9679;</span></span>
+                <span class="t p2" style="--r: 5; --c: 5" title="Missouri">MO<span class="mk">&#9679;</span></span>
+                <span class="t p1" style="--r: 5; --c: 6" title="Kentucky">KY<span class="mk">&#9679;</span></span>
                 <span class="t p1" style="--r: 5; --c: 7" title="West Virginia">WV</span>
                 <span class="t p2" style="--r: 5; --c: 8" title="Virginia">VA</span>
                 <span class="t p1" style="--r: 5; --c: 9" title="Maryland">MD</span>
@@ -737,7 +756,7 @@
                 <span class="t p1" style="--r: 6; --c: 4" title="Kansas">KS</span>
                 <span class="t p1" style="--r: 6; --c: 5" title="Arkansas">AR</span>
                 <span class="t p2" style="--r: 6; --c: 6" title="Tennessee">TN</span>
-                <span class="t p2" style="--r: 6; --c: 7" title="North Carolina">NC<span class="mk mk-past">&#9679;</span></span>
+                <span class="t p2" style="--r: 6; --c: 7" title="North Carolina">NC<span class="mk">&#9679;</span></span>
                 <span class="t p1" style="--r: 6; --c: 8" title="South Carolina">SC</span>
                 <span class="t p0" style="--r: 6; --c: 9" title="District of Columbia">DC</span>
                 <span class="t p1" style="--r: 7; --c: 4" title="Oklahoma">OK</span>
@@ -746,7 +765,7 @@
                 <span class="t p1" style="--r: 7; --c: 7" title="Alabama">AL</span>
                 <span class="t p2" style="--r: 7; --c: 8" title="Georgia">GA</span>
                 <span class="t p1" style="--r: 8; --c: 1" title="Hawaii">HI</span>
-                <span class="t p3" style="--r: 8; --c: 4" title="Texas">TX<span class="mk mk-past">&#9679;</span></span>
+                <span class="t p3" style="--r: 8; --c: 4" title="Texas">TX<span class="mk">&#9679;</span></span>
                 <span class="t p3" style="--r: 8; --c: 9" title="Florida">FL</span>
               </div>
               <div>
@@ -809,7 +828,7 @@
                   <tr><td>Alaska</td><td>5 to 19</td><td></td></tr>
                   <tr><td>Arizona</td><td>20 to 49</td><td></td></tr>
                   <tr><td>Arkansas</td><td>5 to 19</td><td></td></tr>
-                  <tr><td>California</td><td>50 or more</td><td>Past meet-up</td></tr>
+                  <tr><td>California</td><td>50 or more</td><td>Past meet-up; looking for a host</td></tr>
                   <tr><td>Colorado</td><td>20 to 49</td><td></td></tr>
                   <tr><td>Connecticut</td><td>5 to 19</td><td></td></tr>
                   <tr><td>Delaware</td><td>fewer than 5</td><td></td></tr>
