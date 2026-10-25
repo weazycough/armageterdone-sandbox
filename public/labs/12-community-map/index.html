@@ -1,0 +1,891 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow, noarchive" />
+    <meta name="referrer" content="no-referrer" />
+    <title>Lab #12: Community page map</title>
+    <style>
+      /* Fonts: copied from the site's Fontsource packages (SIL OFL 1.1, see NOTICE.md). */
+      @font-face {
+        font-family: "Jost";
+        font-weight: 600;
+        font-display: swap;
+        src: url("jost-latin-600-normal.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Jost";
+        font-weight: 700;
+        font-display: swap;
+        src: url("jost-latin-700-normal.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Inter";
+        font-weight: 400;
+        font-display: swap;
+        src: url("inter-latin-400-normal.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Inter";
+        font-weight: 600;
+        font-display: swap;
+        src: url("inter-latin-600-normal.woff2") format("woff2");
+      }
+
+      /* Site tokens, copied from app/styles/theme.css (dark set). */
+      :root {
+        --bg-canvas: #0a0a0a;
+        --bg-surface: #141414;
+        --bg-elevated: #1f1f1f;
+        --fg-primary: #f5efe2;
+        --fg-secondary: #c9c2b3;
+        --fg-tertiary: #8b867a;
+        --fg-inverse: #0a0a0a;
+        --accent: #e6b40f;
+        --accent-deep: #a37a00;
+        --shield: #1e3a8a;
+        --line: #2a2a2a;
+        --line-strong: #3a3a3a;
+        --accent-on-bg: var(--accent);
+        --font-display: "Jost", "Futura PT", "Futura", "Helvetica Neue", Arial, sans-serif;
+        --font-body: "Inter", "Proxima Nova", "Helvetica Neue", Arial, sans-serif;
+        --radius-sm: 2px;
+        --radius-md: 4px;
+        --radius-lg: 8px;
+        color-scheme: dark;
+      }
+
+      /* ---------- Lab page (same frame as the other labs) ---------- */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 1.5rem;
+        background: var(--bg-canvas);
+        color: var(--fg-primary);
+        font-family: var(--font-body);
+        line-height: 1.55;
+      }
+      a {
+        color: var(--accent);
+      }
+      :focus-visible {
+        outline: 3px solid var(--accent);
+        outline-offset: 2px;
+      }
+      h1,
+      h2 {
+        font-family: var(--font-display);
+        line-height: 1.15;
+      }
+      .lab-head,
+      .controls,
+      .ask,
+      .data,
+      .lab-foot {
+        max-width: 76rem;
+        margin: 0 auto 2rem;
+      }
+      .lab-head h1 {
+        font-size: clamp(1.75rem, 4vw, 2.5rem);
+        margin: 0.5rem 0;
+      }
+      .lab-head p {
+        margin: 0.25rem 0;
+        color: var(--fg-secondary);
+        max-width: 48rem;
+      }
+      .lab-head .status {
+        display: inline-block;
+        padding: 0.2rem 0.7rem;
+        border-radius: 999px;
+        background: var(--accent);
+        color: var(--fg-inverse);
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 0.85rem;
+      }
+      .controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem 2rem;
+      }
+      .controls fieldset {
+        border: 1px solid var(--line-strong);
+        border-radius: var(--radius-lg);
+        padding: 0.5rem 0.9rem 0.7rem;
+        margin: 0;
+      }
+      .controls legend {
+        padding: 0 0.3rem;
+        font-family: var(--font-display);
+        font-weight: 600;
+        color: var(--fg-secondary);
+      }
+      .controls label {
+        margin-right: 1rem;
+        cursor: pointer;
+      }
+      input {
+        accent-color: var(--accent);
+      }
+      .options {
+        display: grid;
+        gap: 3rem;
+        max-width: 76rem;
+        margin: 0 auto;
+      }
+      .option {
+        min-width: 0;
+      }
+      .option > h2 {
+        margin: 0 0 0.25rem;
+        font-size: 1.6rem;
+      }
+      .option > h2 .tag {
+        color: var(--accent);
+      }
+      .option > .diff {
+        margin: 0 0 1rem;
+        color: var(--fg-secondary);
+      }
+      .notes {
+        margin-top: 1rem;
+        padding: 0.75rem 1rem;
+        border: 1px solid var(--line-strong);
+        border-radius: var(--radius-lg);
+        font-size: 0.9rem;
+        color: var(--fg-secondary);
+      }
+      .notes ul {
+        margin: 0;
+        padding-left: 1.1rem;
+      }
+      .notes strong {
+        color: var(--fg-primary);
+      }
+      .ask {
+        margin-top: 3rem;
+        padding: 1rem 1.25rem;
+        border-left: 4px solid var(--accent);
+        background: var(--bg-surface);
+      }
+      .ask h2 {
+        margin-top: 0;
+      }
+      .data summary {
+        cursor: pointer;
+        font-family: var(--font-display);
+        font-weight: 600;
+      }
+      .data table {
+        margin-top: 0.75rem;
+        border-collapse: collapse;
+        font-size: 0.85rem;
+      }
+      .data th,
+      .data td {
+        padding: 0.2rem 1rem 0.2rem 0;
+        border-bottom: 1px solid var(--line);
+        text-align: left;
+      }
+      .lab-foot {
+        font-size: 0.875rem;
+        color: var(--fg-tertiary);
+      }
+
+      /* View switches: radio buttons + :has(), no script. */
+      @media (min-width: 64rem) {
+        body:has(#width-phone:checked) .options {
+          grid-template-columns: repeat(3, minmax(0, 390px));
+          justify-content: center;
+          gap: 1.5rem;
+        }
+        /* room for a three-line description, so the previews line up */
+        body:has(#width-phone:checked) .option > .diff {
+          min-height: 4.65em;
+        }
+      }
+      @media (max-width: 63.99rem) {
+        .width-switch {
+          display: none;
+        }
+      }
+
+      /* ---------- Previews: a slice of the Community page ---------- */
+      .preview {
+        container: page / inline-size;
+        border: 1px solid var(--line-strong);
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        background: var(--bg-canvas);
+        color: var(--fg-primary);
+        /* map shading, darkest to brightest = fewest to most producers */
+        --tile-0: #1f1f1f;
+        --ink-0: #c9c2b3;
+        --tile-1: #4a3b0c;
+        --ink-1: #f5efe2;
+        --tile-2: #9a7609;
+        --ink-2: #0a0a0a;
+        --tile-3: #e6b40f;
+        --ink-3: #0a0a0a;
+        --kicker: var(--accent);
+      }
+      body:has(#theme-light:checked) .preview {
+        --bg-canvas: #fdf8eb;
+        --bg-surface: #f5edd6;
+        --bg-elevated: #ebe0c2;
+        --fg-primary: #14110a;
+        --fg-secondary: #4a3f33;
+        --fg-tertiary: #6b5d4d;
+        --line: #d6c89e;
+        --line-strong: #b8a673;
+        --tile-0: #f3ead2;
+        --ink-0: #4a3f33;
+        --tile-1: #e8c35a;
+        --ink-1: #14110a;
+        --tile-2: #c08e0a;
+        --ink-2: #14110a;
+        --tile-3: #6e5200;
+        --ink-3: #fdf8eb;
+        --kicker: #7a5b00;
+        color-scheme: light;
+      }
+      /* The canary focus ring is only 1.8 : 1 on cream; use the deep yellow. */
+      body:has(#theme-light:checked) .preview :focus-visible {
+        outline-color: #7a5b00;
+      }
+      .mock-nav {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        padding: 0.7rem 1rem;
+        border-bottom: 1px solid var(--line);
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 0.85rem;
+      }
+      .mock-nav img {
+        width: 28px;
+        height: 28px;
+      }
+      .mock-nav .where {
+        margin-left: auto;
+        color: var(--fg-tertiary);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        font-size: 0.75rem;
+      }
+      .body {
+        padding: 1.25rem 1rem 1.5rem;
+      }
+      .kicker {
+        margin: 0;
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 0.7rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--kicker);
+      }
+      .sec-title {
+        margin: 0.2rem 0 0.5rem;
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 1.4rem;
+      }
+      .sec-text {
+        margin: 0 0 1rem;
+        font-size: 0.875rem;
+        color: var(--fg-secondary);
+        max-width: 40rem;
+      }
+      .sample {
+        display: inline-block;
+        padding: 0.1rem 0.5rem;
+        border: 1px dashed currentColor;
+        border-radius: var(--radius-sm);
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--fg-secondary);
+      }
+
+      /* ---------- The state tile map (A and C) ----------
+         One square per state, hand-placed on an 11 x 8 grid: no map data
+         and no points, only whole states. */
+      .map-wrap {
+        display: grid;
+        gap: 1rem;
+      }
+      .tiles {
+        display: grid;
+        grid-template-columns: repeat(11, 1fr);
+        gap: 3px;
+        max-width: 40rem;
+      }
+      .t {
+        position: relative;
+        grid-row: var(--r);
+        grid-column: var(--c);
+        display: grid;
+        place-items: center;
+        aspect-ratio: 1;
+        border-radius: 3px;
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: clamp(0.6rem, 2.4cqi, 0.85rem);
+      }
+      /* "fewer than 5" also gets an outline, so it isn't told apart by colour alone */
+      .p0 {
+        background: var(--tile-0);
+        color: var(--ink-0);
+        box-shadow: inset 0 0 0 1px var(--line-strong);
+      }
+      .p1 {
+        background: var(--tile-1);
+        color: var(--ink-1);
+      }
+      .p2 {
+        background: var(--tile-2);
+        color: var(--ink-2);
+      }
+      .p3 {
+        background: var(--tile-3);
+        color: var(--ink-3);
+      }
+      /* meet-up badges: a shape as well as a colour */
+      .mk {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        display: grid;
+        place-items: center;
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        border: 1.5px solid #f5efe2;
+        background: var(--shield);
+        color: #f5efe2;
+        font-family: var(--font-body);
+        font-size: 9px;
+        font-weight: 600;
+        line-height: 1;
+      }
+      .mk-host {
+        background: #8a2a1c;
+      }
+      .t .mk + .mk {
+        right: auto;
+        left: -5px;
+      }
+      .legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem 1rem;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        font-size: 0.8rem;
+        color: var(--fg-secondary);
+      }
+      .legend li {
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+      }
+      .sw {
+        display: inline-block;
+        width: 14px;
+        height: 14px;
+        border-radius: 3px;
+      }
+      .legend .mk {
+        position: static;
+      }
+      .abroad {
+        padding: 0.6rem 0.8rem;
+        border: 1px solid var(--line);
+        border-radius: var(--radius-md);
+        background: var(--bg-surface);
+        font-size: 0.85rem;
+        color: var(--fg-secondary);
+      }
+      .abroad strong {
+        color: var(--fg-primary);
+      }
+      @container page (min-width: 760px) {
+        .body {
+          padding: 2rem 2.5rem 2.5rem;
+        }
+        .map-wrap {
+          grid-template-columns: minmax(0, 40rem) 1fr;
+          align-items: start;
+          gap: 2rem;
+        }
+      }
+
+      /* ---------- Option B: regions, no map ---------- */
+      .regions {
+        display: grid;
+        gap: 0.9rem;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      .region-head {
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        font-family: var(--font-display);
+        font-weight: 600;
+      }
+      .region-head span {
+        color: var(--fg-secondary);
+        font-family: var(--font-body);
+        font-weight: 400;
+        font-size: 0.85rem;
+      }
+      .bar {
+        height: 10px;
+        margin: 0.3rem 0;
+        border-radius: 5px;
+        background: var(--tile-0);
+      }
+      .bar i {
+        display: block;
+        height: 100%;
+        width: var(--w);
+        border-radius: 5px;
+        background: var(--accent);
+      }
+      /* canary on the beige track is 1.5 : 1; the deep yellow reads better */
+      body:has(#theme-light:checked) .bar i {
+        background: var(--accent-deep);
+      }
+      .met {
+        margin: 0;
+        font-size: 0.82rem;
+        color: var(--fg-secondary);
+      }
+      @container page (min-width: 760px) {
+        .regions {
+          grid-template-columns: 1fr 1fr;
+          gap: 1.25rem 2.5rem;
+        }
+      }
+
+      /* ---------- Option C: meet-ups first, producers opt-in ---------- */
+      .optc .t {
+        background: var(--tile-0);
+        color: var(--ink-0);
+        box-shadow: inset 0 0 0 1px var(--line-strong);
+      }
+      .optc:has(#c-producers:checked) .t:not(.p0) {
+        box-shadow: none;
+      }
+      .optc .t:has(.mk) {
+        outline: 2px solid var(--fg-primary);
+        outline-offset: -2px;
+      }
+      .optc:has(#c-producers:checked) .p1 {
+        background: var(--tile-1);
+        color: var(--ink-1);
+      }
+      .optc:has(#c-producers:checked) .p2 {
+        background: var(--tile-2);
+        color: var(--ink-2);
+      }
+      .optc:has(#c-producers:checked) .p3 {
+        background: var(--tile-3);
+        color: var(--ink-3);
+      }
+      .optc:not(:has(#c-producers:checked)) .producer-key {
+        display: none;
+      }
+      .layer {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+        padding: 0.5rem 0.75rem;
+        border: 1px solid var(--line-strong);
+        border-radius: var(--radius-md);
+        font-size: 0.875rem;
+        cursor: pointer;
+      }
+      .meetups {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        font-size: 0.85rem;
+      }
+      .meetups li {
+        display: flex;
+        gap: 0.6rem;
+        padding: 0.35rem 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .meetups .when {
+        flex: 0 0 4.5rem;
+        color: var(--fg-secondary);
+      }
+    </style>
+  </head>
+  <body>
+    <header class="lab-head">
+      <p class="status">Open for feedback</p>
+      <h1>Community page: how should the map show producers and meet-ups?</h1>
+      <p>
+        Issue: <a href="https://github.com/stucny/Armageterdone/issues/12">#12 Community page: map and meetup posters</a>
+        · 2026-10-24
+      </p>
+      <p>
+        Three ways to show where producers are and where meet-ups have happened. All three stay coarse: whole states or
+        regions, never a pin on a town. <strong>The producer numbers are made-up sample data.</strong> The meet-ups
+        are the real ones from the Meet-Ups page. The meet-up posters are a separate question, in
+        <a href="../12-meetup-posters/">their own lab</a>.
+      </p>
+    </header>
+
+    <div class="controls" role="group" aria-label="View options">
+      <fieldset>
+        <legend>Theme</legend>
+        <label><input type="radio" name="theme" id="theme-dark" checked /> Dark</label>
+        <label><input type="radio" name="theme" id="theme-light" /> Light</label>
+      </fieldset>
+      <fieldset class="width-switch">
+        <legend>Width</legend>
+        <label><input type="radio" name="width" id="width-desktop" checked /> Desktop, one at a time</label>
+        <label><input type="radio" name="width" id="width-phone" /> Phone (390px), side by side</label>
+      </fieldset>
+    </div>
+
+    <main class="options">
+      <!-- ===================== Option A ===================== -->
+      <section class="option" aria-labelledby="opt-a">
+        <h2 id="opt-a"><span class="tag">Option A</span> State tiles</h2>
+        <p class="diff">A square per state, shaded by how many producers live there; meet-ups marked on their state.</p>
+        <div class="preview">
+          <div class="mock-nav"><img src="../../images/cc-logo.webp" alt="" width="28" height="28" />Canary Cry<span class="where">Community</span></div>
+          <div class="body">
+            <p class="kicker">The producers</p>
+            <p class="sec-title">Where we are</p>
+            <p class="sec-text">Producers who said yes to the map, by state. <span class="sample">Sample data</span></p>
+            <div class="map-wrap">
+              <div class="tiles" role="img" aria-label="Map of US states shaded by number of producers (sample data), with past meet-ups marked in Texas, North Carolina, Missouri, California and Kentucky, and calls for a host in Pennsylvania and northern California. The same data is in the table below the options.">
+                <span class="t p1" style="--r: 1; --c: 1" title="Alaska">AK</span>
+                <span class="t p1" style="--r: 1; --c: 11" title="Maine">ME</span>
+                <span class="t p0" style="--r: 2; --c: 10" title="Vermont">VT</span>
+                <span class="t p1" style="--r: 2; --c: 11" title="New Hampshire">NH</span>
+                <span class="t p2" style="--r: 3; --c: 1" title="Washington">WA</span>
+                <span class="t p1" style="--r: 3; --c: 2" title="Idaho">ID</span>
+                <span class="t p1" style="--r: 3; --c: 3" title="Montana">MT</span>
+                <span class="t p0" style="--r: 3; --c: 4" title="North Dakota">ND</span>
+                <span class="t p1" style="--r: 3; --c: 5" title="Minnesota">MN</span>
+                <span class="t p2" style="--r: 3; --c: 6" title="Illinois">IL</span>
+                <span class="t p1" style="--r: 3; --c: 7" title="Wisconsin">WI</span>
+                <span class="t p2" style="--r: 3; --c: 8" title="Michigan">MI</span>
+                <span class="t p2" style="--r: 3; --c: 9" title="New York">NY</span>
+                <span class="t p0" style="--r: 3; --c: 10" title="Rhode Island">RI</span>
+                <span class="t p1" style="--r: 3; --c: 11" title="Massachusetts">MA</span>
+                <span class="t p2" style="--r: 4; --c: 1" title="Oregon">OR</span>
+                <span class="t p1" style="--r: 4; --c: 2" title="Nevada">NV</span>
+                <span class="t p0" style="--r: 4; --c: 3" title="Wyoming">WY</span>
+                <span class="t p1" style="--r: 4; --c: 4" title="South Dakota">SD</span>
+                <span class="t p1" style="--r: 4; --c: 5" title="Iowa">IA</span>
+                <span class="t p1" style="--r: 4; --c: 6" title="Indiana">IN</span>
+                <span class="t p2" style="--r: 4; --c: 7" title="Ohio">OH</span>
+                <span class="t p2" style="--r: 4; --c: 8" title="Pennsylvania">PA<span class="mk mk-host">?</span></span>
+                <span class="t p1" style="--r: 4; --c: 9" title="New Jersey">NJ</span>
+                <span class="t p1" style="--r: 4; --c: 10" title="Connecticut">CT</span>
+                <span class="t p3" style="--r: 5; --c: 1" title="California">CA<span class="mk">&#9679;</span><span class="mk mk-host">?</span></span>
+                <span class="t p1" style="--r: 5; --c: 2" title="Utah">UT</span>
+                <span class="t p2" style="--r: 5; --c: 3" title="Colorado">CO</span>
+                <span class="t p1" style="--r: 5; --c: 4" title="Nebraska">NE</span>
+                <span class="t p2" style="--r: 5; --c: 5" title="Missouri">MO<span class="mk">&#9679;</span></span>
+                <span class="t p1" style="--r: 5; --c: 6" title="Kentucky">KY<span class="mk">&#9679;</span></span>
+                <span class="t p1" style="--r: 5; --c: 7" title="West Virginia">WV</span>
+                <span class="t p2" style="--r: 5; --c: 8" title="Virginia">VA</span>
+                <span class="t p1" style="--r: 5; --c: 9" title="Maryland">MD</span>
+                <span class="t p0" style="--r: 5; --c: 10" title="Delaware">DE</span>
+                <span class="t p2" style="--r: 6; --c: 2" title="Arizona">AZ</span>
+                <span class="t p1" style="--r: 6; --c: 3" title="New Mexico">NM</span>
+                <span class="t p1" style="--r: 6; --c: 4" title="Kansas">KS</span>
+                <span class="t p1" style="--r: 6; --c: 5" title="Arkansas">AR</span>
+                <span class="t p2" style="--r: 6; --c: 6" title="Tennessee">TN</span>
+                <span class="t p2" style="--r: 6; --c: 7" title="North Carolina">NC<span class="mk">&#9679;</span></span>
+                <span class="t p1" style="--r: 6; --c: 8" title="South Carolina">SC</span>
+                <span class="t p0" style="--r: 6; --c: 9" title="District of Columbia">DC</span>
+                <span class="t p1" style="--r: 7; --c: 4" title="Oklahoma">OK</span>
+                <span class="t p1" style="--r: 7; --c: 5" title="Louisiana">LA</span>
+                <span class="t p0" style="--r: 7; --c: 6" title="Mississippi">MS</span>
+                <span class="t p1" style="--r: 7; --c: 7" title="Alabama">AL</span>
+                <span class="t p2" style="--r: 7; --c: 8" title="Georgia">GA</span>
+                <span class="t p1" style="--r: 8; --c: 1" title="Hawaii">HI</span>
+                <span class="t p3" style="--r: 8; --c: 4" title="Texas">TX<span class="mk">&#9679;</span></span>
+                <span class="t p3" style="--r: 8; --c: 9" title="Florida">FL</span>
+              </div>
+              <div>
+                <ul class="legend" aria-label="Key">
+                  <li><span class="sw" style="background: var(--tile-3)"></span>50 or more</li>
+                  <li><span class="sw" style="background: var(--tile-2)"></span>20 to 49</li>
+                  <li><span class="sw" style="background: var(--tile-1)"></span>5 to 19</li>
+                  <li><span class="sw" style="background: var(--tile-0); box-shadow: inset 0 0 0 1px var(--line-strong)"></span>Fewer than 5 (not shown)</li>
+                  <li><span class="mk">&#9679;</span>Past meet-up</li>
+                  <li><span class="mk mk-host">?</span>Looking for a host</li>
+                </ul>
+                <p class="abroad" style="margin-top: 1rem">
+                  <strong>Outside the US:</strong> producers in 9 other countries <span class="sample">Sample data</span>.
+                  Next meet-up: <strong>Trondheim, Norway</strong>, June 21.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="notes">
+          <ul>
+            <li><strong>Privacy:</strong> a state with fewer than 5 producers looks the same as one with none, so no one stands out.</li>
+            <li><strong>On a phone:</strong> the tiles shrink to fit the screen; the key moves under the map.</li>
+            <li><strong>Readable:</strong> every state label is at least 4.7 : 1 against its tile in both themes (AA).</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ===================== Option B ===================== -->
+      <section class="option" aria-labelledby="opt-b">
+        <h2 id="opt-b"><span class="tag">Option B</span> Regions, no map</h2>
+        <p class="diff">Five regions with a bar each, rounded to the nearest ten, and the meet-ups held there.</p>
+        <div class="preview">
+          <div class="mock-nav"><img src="../../images/cc-logo.webp" alt="" width="28" height="28" />Canary Cry<span class="where">Community</span></div>
+          <div class="body">
+            <p class="kicker">The producers</p>
+            <p class="sec-title">Where we are</p>
+            <p class="sec-text">Producers who said yes to the map, by region. <span class="sample">Sample data</span></p>
+            <ul class="regions">
+              <li>
+                <div class="region-head">The South <span>about 210 producers</span></div>
+                <div class="bar"><i style="--w: 100%"></i></div>
+                <p class="met">Meet-ups: Houston, TX · Cherryville, NC · Louisville, KY</p>
+              </li>
+              <li>
+                <div class="region-head">The West <span>about 140 producers</span></div>
+                <div class="bar"><i style="--w: 67%"></i></div>
+                <p class="met">Meet-ups: Los Angeles, CA · NorCal (Humboldt County) is looking for a host</p>
+              </li>
+              <li>
+                <div class="region-head">The Midwest <span>about 90 producers</span></div>
+                <div class="bar"><i style="--w: 43%"></i></div>
+                <p class="met">Meet-ups: Kansas City, MO</p>
+              </li>
+              <li>
+                <div class="region-head">The Northeast <span>about 70 producers</span></div>
+                <div class="bar"><i style="--w: 33%"></i></div>
+                <p class="met">Pennsylvania is looking for a host</p>
+              </li>
+              <li>
+                <div class="region-head">Outside the US <span>about 30 producers</span></div>
+                <div class="bar"><i style="--w: 14%"></i></div>
+                <p class="met">Next meet-up: Trondheim, Norway, June 21</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="notes">
+          <ul>
+            <li><strong>Privacy:</strong> the coarsest option; a region holds dozens of producers, and the numbers are rounded.</li>
+            <li><strong>On a phone:</strong> one column of bars; nothing to zoom or pan.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ===================== Option C ===================== -->
+      <section class="option optc" aria-labelledby="opt-c">
+        <h2 id="opt-c"><span class="tag">Option C</span> Meet-ups first</h2>
+        <p class="diff">The map shows where meet-ups have been; the producer shading is an extra layer you switch on.</p>
+        <div class="preview">
+          <div class="mock-nav"><img src="../../images/cc-logo.webp" alt="" width="28" height="28" />Canary Cry<span class="where">Community</span></div>
+          <div class="body">
+            <p class="kicker">Meet-ups</p>
+            <p class="sec-title">Where we've met</p>
+            <label class="layer"><input type="checkbox" id="c-producers" /> Also show where producers are (those who opted in) <span class="sample">Sample data</span></label>
+            <div class="map-wrap">
+              <div class="tiles" role="img" aria-label="Map of US states with past meet-ups marked in Texas, North Carolina, Missouri, California and Kentucky, and calls for a host in Pennsylvania and northern California. With the producer layer on, states are shaded by number of producers (sample data).">
+                <span class="t p1" style="--r: 1; --c: 1" title="Alaska">AK</span>
+                <span class="t p1" style="--r: 1; --c: 11" title="Maine">ME</span>
+                <span class="t p0" style="--r: 2; --c: 10" title="Vermont">VT</span>
+                <span class="t p1" style="--r: 2; --c: 11" title="New Hampshire">NH</span>
+                <span class="t p2" style="--r: 3; --c: 1" title="Washington">WA</span>
+                <span class="t p1" style="--r: 3; --c: 2" title="Idaho">ID</span>
+                <span class="t p1" style="--r: 3; --c: 3" title="Montana">MT</span>
+                <span class="t p0" style="--r: 3; --c: 4" title="North Dakota">ND</span>
+                <span class="t p1" style="--r: 3; --c: 5" title="Minnesota">MN</span>
+                <span class="t p2" style="--r: 3; --c: 6" title="Illinois">IL</span>
+                <span class="t p1" style="--r: 3; --c: 7" title="Wisconsin">WI</span>
+                <span class="t p2" style="--r: 3; --c: 8" title="Michigan">MI</span>
+                <span class="t p2" style="--r: 3; --c: 9" title="New York">NY</span>
+                <span class="t p0" style="--r: 3; --c: 10" title="Rhode Island">RI</span>
+                <span class="t p1" style="--r: 3; --c: 11" title="Massachusetts">MA</span>
+                <span class="t p2" style="--r: 4; --c: 1" title="Oregon">OR</span>
+                <span class="t p1" style="--r: 4; --c: 2" title="Nevada">NV</span>
+                <span class="t p0" style="--r: 4; --c: 3" title="Wyoming">WY</span>
+                <span class="t p1" style="--r: 4; --c: 4" title="South Dakota">SD</span>
+                <span class="t p1" style="--r: 4; --c: 5" title="Iowa">IA</span>
+                <span class="t p1" style="--r: 4; --c: 6" title="Indiana">IN</span>
+                <span class="t p2" style="--r: 4; --c: 7" title="Ohio">OH</span>
+                <span class="t p2" style="--r: 4; --c: 8" title="Pennsylvania">PA<span class="mk mk-host">?</span></span>
+                <span class="t p1" style="--r: 4; --c: 9" title="New Jersey">NJ</span>
+                <span class="t p1" style="--r: 4; --c: 10" title="Connecticut">CT</span>
+                <span class="t p3" style="--r: 5; --c: 1" title="California">CA<span class="mk">&#9679;</span><span class="mk mk-host">?</span></span>
+                <span class="t p1" style="--r: 5; --c: 2" title="Utah">UT</span>
+                <span class="t p2" style="--r: 5; --c: 3" title="Colorado">CO</span>
+                <span class="t p1" style="--r: 5; --c: 4" title="Nebraska">NE</span>
+                <span class="t p2" style="--r: 5; --c: 5" title="Missouri">MO<span class="mk">&#9679;</span></span>
+                <span class="t p1" style="--r: 5; --c: 6" title="Kentucky">KY<span class="mk">&#9679;</span></span>
+                <span class="t p1" style="--r: 5; --c: 7" title="West Virginia">WV</span>
+                <span class="t p2" style="--r: 5; --c: 8" title="Virginia">VA</span>
+                <span class="t p1" style="--r: 5; --c: 9" title="Maryland">MD</span>
+                <span class="t p0" style="--r: 5; --c: 10" title="Delaware">DE</span>
+                <span class="t p2" style="--r: 6; --c: 2" title="Arizona">AZ</span>
+                <span class="t p1" style="--r: 6; --c: 3" title="New Mexico">NM</span>
+                <span class="t p1" style="--r: 6; --c: 4" title="Kansas">KS</span>
+                <span class="t p1" style="--r: 6; --c: 5" title="Arkansas">AR</span>
+                <span class="t p2" style="--r: 6; --c: 6" title="Tennessee">TN</span>
+                <span class="t p2" style="--r: 6; --c: 7" title="North Carolina">NC<span class="mk">&#9679;</span></span>
+                <span class="t p1" style="--r: 6; --c: 8" title="South Carolina">SC</span>
+                <span class="t p0" style="--r: 6; --c: 9" title="District of Columbia">DC</span>
+                <span class="t p1" style="--r: 7; --c: 4" title="Oklahoma">OK</span>
+                <span class="t p1" style="--r: 7; --c: 5" title="Louisiana">LA</span>
+                <span class="t p0" style="--r: 7; --c: 6" title="Mississippi">MS</span>
+                <span class="t p1" style="--r: 7; --c: 7" title="Alabama">AL</span>
+                <span class="t p2" style="--r: 7; --c: 8" title="Georgia">GA</span>
+                <span class="t p1" style="--r: 8; --c: 1" title="Hawaii">HI</span>
+                <span class="t p3" style="--r: 8; --c: 4" title="Texas">TX<span class="mk">&#9679;</span></span>
+                <span class="t p3" style="--r: 8; --c: 9" title="Florida">FL</span>
+              </div>
+              <div>
+                <ul class="legend" aria-label="Key">
+                  <li><span class="mk">&#9679;</span>Past meet-up</li>
+                  <li><span class="mk mk-host">?</span>Looking for a host</li>
+                  <li class="producer-key"><span class="sw" style="background: var(--tile-3)"></span>50+ producers</li>
+                  <li class="producer-key"><span class="sw" style="background: var(--tile-2)"></span>20 to 49</li>
+                  <li class="producer-key"><span class="sw" style="background: var(--tile-1)"></span>5 to 19</li>
+                </ul>
+                <ul class="meetups" aria-label="Meet-ups" style="margin-top: 1rem">
+                  <li><span class="when">June 21</span>Trondheim, Norway (next)</li>
+                  <li><span class="when">May 24</span>Houston, TX</li>
+                  <li><span class="when">May 03</span>Cherryville, NC</li>
+                  <li><span class="when">Apr 25</span>Kansas City, MO</li>
+                  <li><span class="when">Mar 03</span>Los Angeles, CA</li>
+                  <li><span class="when">Earlier</span>Louisville, KY</li>
+                  <li><span class="when">Wanted</span>Hosts in Pennsylvania and NorCal</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="notes">
+          <ul>
+            <li><strong>Privacy:</strong> the page shows only meet-ups (already public) until a visitor turns the producer layer on; the layer works like Option A's.</li>
+            <li><strong>On a phone:</strong> the switch sits above the map; the meet-up list follows it.</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+
+    <section class="ask" aria-labelledby="ask">
+      <h2 id="ask">What we need from you</h2>
+      <p>
+        <strong>Which map should we build: A, B or C?</strong> Any change you'd make to it? Comment your pick on
+        <a href="https://github.com/stucny/Armageterdone/issues/12">issue #12</a>.
+      </p>
+      <p>We also need to know:</p>
+      <ul>
+        <li>
+          <strong>How would producers opt in?</strong> For example: a yes/no question when they sign up or text in, a
+          reply keyword to the show's text line, or a short form on the site. We'd count only people who said yes.
+        </li>
+        <li>
+          An area code shows where a number was first issued, which may not be where someone lives now. Is a state from
+          the area code close enough, or should producers tell us their state?
+        </li>
+      </ul>
+    </section>
+
+    <details class="data">
+      <summary>The sample data behind the maps, as a table</summary>
+      <table>
+        <thead>
+          <tr><th scope="col">State</th><th scope="col">Producers (sample)</th><th scope="col">Meet-ups (real)</th></tr>
+        </thead>
+        <tbody>
+                  <tr><td>Alabama</td><td>5 to 19</td><td></td></tr>
+                  <tr><td>Alaska</td><td>5 to 19</td><td></td></tr>
+                  <tr><td>Arizona</td><td>20 to 49</td><td></td></tr>
+                  <tr><td>Arkansas</td><td>5 to 19</td><td></td></tr>
+                  <tr><td>California</td><td>50 or more</td><td>Past meet-up; looking for a host</td></tr>
+                  <tr><td>Colorado</td><td>20 to 49</td><td></td></tr>
+                  <tr><td>Connecticut</td><td>5 to 19</td><td></td></tr>
+                  <tr><td>Delaware</td><td>fewer than 5</td><td></td></tr>
+                  <tr><td>District of Columbia</td><td>fewer than 5</td><td></td></tr>
+                  <tr><td>Florida</td><td>50 or more</td><td></td></tr>
+                  <tr><td>Georgia</td><td>20 to 49</td><td></td></tr>
+                  <tr><td>Hawaii</td><td>5 to 19</td><td></td></tr>
+                  <tr><td>Idaho</td><td>5 to 19</td><td></td></tr>
+                  <tr><td>Illinois</td><td>20 to 49</td><td></td></tr>
+                  <tr><td>Indiana</td><td>5 to 19</td><td></td></tr>
+                  <tr><td>Iowa</td><td>5 to 19</td><td></td></tr>
+                  <tr><td>Kansas</td><td>5 to 19</td><td></td></tr>
+                  <tr><td>Kentucky</td><td>5 to 19</td><td>Past meet-up</td></tr>
+                  <tr><td>Louisiana</td><td>5 to 19</td><td></td></tr>
+                  <tr><td>Maine</td><td>5 to 19</td><td></td></tr>
+                  <tr><td>Maryland</td><td>5 to 19</td><td></td></tr>
+                  <tr><td>Massachusetts</td><td>5 to 19</td><td></td></tr>
+                  <tr><td>Michigan</td><td>20 to 49</td><td></td></tr>
+                  <tr><td>Minnesota</td><td>5 to 19</td><td></td></tr>
+                  <tr><td>Mississippi</td><td>fewer than 5</td><td></td></tr>
+                  <tr><td>Missouri</td><td>20 to 49</td><td>Past meet-up</td></tr>
+                  <tr><td>Montana</td><td>5 to 19</td><td></td></tr>
+                  <tr><td>Nebraska</td><td>5 to 19</td><td></td></tr>
+                  <tr><td>Nevada</td><td>5 to 19</td><td></td></tr>
+                  <tr><td>New Hampshire</td><td>5 to 19</td><td></td></tr>
+                  <tr><td>New Jersey</td><td>5 to 19</td><td></td></tr>
+                  <tr><td>New Mexico</td><td>5 to 19</td><td></td></tr>
+                  <tr><td>New York</td><td>20 to 49</td><td></td></tr>
+                  <tr><td>North Carolina</td><td>20 to 49</td><td>Past meet-up</td></tr>
+                  <tr><td>North Dakota</td><td>fewer than 5</td><td></td></tr>
+                  <tr><td>Ohio</td><td>20 to 49</td><td></td></tr>
+                  <tr><td>Oklahoma</td><td>5 to 19</td><td></td></tr>
+                  <tr><td>Oregon</td><td>20 to 49</td><td></td></tr>
+                  <tr><td>Pennsylvania</td><td>20 to 49</td><td>Looking for a host</td></tr>
+                  <tr><td>Rhode Island</td><td>fewer than 5</td><td></td></tr>
+                  <tr><td>South Carolina</td><td>5 to 19</td><td></td></tr>
+                  <tr><td>South Dakota</td><td>5 to 19</td><td></td></tr>
+                  <tr><td>Tennessee</td><td>20 to 49</td><td></td></tr>
+                  <tr><td>Texas</td><td>50 or more</td><td>Past meet-up</td></tr>
+                  <tr><td>Utah</td><td>5 to 19</td><td></td></tr>
+                  <tr><td>Vermont</td><td>fewer than 5</td><td></td></tr>
+                  <tr><td>Virginia</td><td>20 to 49</td><td></td></tr>
+                  <tr><td>Washington</td><td>20 to 49</td><td></td></tr>
+                  <tr><td>West Virginia</td><td>5 to 19</td><td></td></tr>
+                  <tr><td>Wisconsin</td><td>5 to 19</td><td></td></tr>
+                  <tr><td>Wyoming</td><td>fewer than 5</td><td></td></tr>
+        </tbody>
+      </table>
+    </details>
+
+    <footer class="lab-foot">
+      <p>
+        About this lab: every producer number here is made up to show the design; there is no real producer data in
+        it. The meet-ups (places and dates) are from the site's Meet-Ups page. The state squares are placed by hand on
+        a grid, not drawn from map data, and are not to scale.
+      </p>
+      <p><a href="../">All design labs</a> · <a href="../../">Back to the preview site</a></p>
+    </footer>
+  </body>
+</html>

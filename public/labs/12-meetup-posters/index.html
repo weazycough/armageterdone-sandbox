@@ -1,0 +1,573 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow, noarchive" />
+    <meta name="referrer" content="no-referrer" />
+    <title>Lab #12: Meet-up posters</title>
+    <style>
+      /* Fonts: copied from the site's Fontsource packages (SIL OFL 1.1, see NOTICE.md). */
+      @font-face {
+        font-family: "Jost";
+        font-weight: 600;
+        font-display: swap;
+        src: url("jost-latin-600-normal.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Jost";
+        font-weight: 700;
+        font-display: swap;
+        src: url("jost-latin-700-normal.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Inter";
+        font-weight: 400;
+        font-display: swap;
+        src: url("inter-latin-400-normal.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Inter";
+        font-weight: 600;
+        font-display: swap;
+        src: url("inter-latin-600-normal.woff2") format("woff2");
+      }
+
+      /* Site tokens, copied from app/styles/theme.css (dark set). */
+      :root {
+        --bg-canvas: #0a0a0a;
+        --bg-surface: #141414;
+        --bg-elevated: #1f1f1f;
+        --fg-primary: #f5efe2;
+        --fg-secondary: #c9c2b3;
+        --fg-tertiary: #8b867a;
+        --fg-inverse: #0a0a0a;
+        --accent: #e6b40f;
+        --accent-deep: #a37a00;
+        --shield: #1e3a8a;
+        --line: #2a2a2a;
+        --line-strong: #3a3a3a;
+        --accent-on-bg: var(--accent);
+        --font-display: "Jost", "Futura PT", "Futura", "Helvetica Neue", Arial, sans-serif;
+        --font-body: "Inter", "Proxima Nova", "Helvetica Neue", Arial, sans-serif;
+        --radius-sm: 2px;
+        --radius-md: 4px;
+        --radius-lg: 8px;
+        color-scheme: dark;
+      }
+
+      /* ---------- Lab page (same frame as the other labs) ---------- */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 1.5rem;
+        background: var(--bg-canvas);
+        color: var(--fg-primary);
+        font-family: var(--font-body);
+        line-height: 1.55;
+      }
+      a {
+        color: var(--accent);
+      }
+      :focus-visible {
+        outline: 3px solid var(--accent);
+        outline-offset: 2px;
+      }
+      h1,
+      h2 {
+        font-family: var(--font-display);
+        line-height: 1.15;
+      }
+      .lab-head,
+      .controls,
+      .ask,
+      .lab-foot {
+        max-width: 76rem;
+        margin: 0 auto 2rem;
+      }
+      .lab-head h1 {
+        font-size: clamp(1.75rem, 4vw, 2.5rem);
+        margin: 0.5rem 0;
+      }
+      .lab-head p {
+        margin: 0.25rem 0;
+        color: var(--fg-secondary);
+        max-width: 48rem;
+      }
+      .lab-head .status {
+        display: inline-block;
+        padding: 0.2rem 0.7rem;
+        border-radius: 999px;
+        background: var(--accent);
+        color: var(--fg-inverse);
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 0.85rem;
+      }
+      .controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem 2rem;
+      }
+      .controls fieldset {
+        border: 1px solid var(--line-strong);
+        border-radius: var(--radius-lg);
+        padding: 0.5rem 0.9rem 0.7rem;
+        margin: 0;
+      }
+      .controls legend {
+        padding: 0 0.3rem;
+        font-family: var(--font-display);
+        font-weight: 600;
+        color: var(--fg-secondary);
+      }
+      .controls label {
+        margin-right: 1rem;
+        cursor: pointer;
+      }
+      input {
+        accent-color: var(--accent);
+      }
+      .options {
+        display: grid;
+        gap: 3rem;
+        max-width: 76rem;
+        margin: 0 auto;
+      }
+      .option {
+        min-width: 0;
+      }
+      .option > h2 {
+        margin: 0 0 0.25rem;
+        font-size: 1.6rem;
+      }
+      .option > h2 .tag {
+        color: var(--accent);
+      }
+      .option > .diff {
+        margin: 0 0 1rem;
+        color: var(--fg-secondary);
+      }
+      .notes {
+        margin-top: 1rem;
+        padding: 0.75rem 1rem;
+        border: 1px solid var(--line-strong);
+        border-radius: var(--radius-lg);
+        font-size: 0.9rem;
+        color: var(--fg-secondary);
+      }
+      .notes ul {
+        margin: 0;
+        padding-left: 1.1rem;
+      }
+      .notes strong {
+        color: var(--fg-primary);
+      }
+      .ask {
+        margin-top: 3rem;
+        padding: 1rem 1.25rem;
+        border-left: 4px solid var(--accent);
+        background: var(--bg-surface);
+      }
+      .ask h2 {
+        margin-top: 0;
+      }
+      .lab-foot {
+        font-size: 0.875rem;
+        color: var(--fg-tertiary);
+      }
+
+      /* View switches: radio buttons + :has(), no script. */
+      @media (min-width: 64rem) {
+        body:has(#width-phone:checked) .options {
+          grid-template-columns: repeat(2, minmax(0, 390px));
+          justify-content: center;
+          gap: 1.5rem;
+        }
+        /* room for a three-line description, so the previews line up */
+        body:has(#width-phone:checked) .option > .diff {
+          min-height: 4.65em;
+        }
+      }
+      @media (max-width: 63.99rem) {
+        .width-switch {
+          display: none;
+        }
+      }
+
+
+      /* ---------- Previews: a slice of the Community page ---------- */
+      .preview {
+        container: page / inline-size;
+        border: 1px solid var(--line-strong);
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        background: var(--bg-canvas);
+        color: var(--fg-primary);
+        --kicker: var(--accent);
+      }
+      body:has(#theme-light:checked) .preview {
+        --bg-canvas: #fdf8eb;
+        --bg-surface: #f5edd6;
+        --bg-elevated: #ebe0c2;
+        --fg-primary: #14110a;
+        --fg-secondary: #4a3f33;
+        --fg-tertiary: #6b5d4d;
+        --line: #d6c89e;
+        --line-strong: #b8a673;
+        --kicker: #7a5b00;
+        color-scheme: light;
+      }
+      .mock-nav {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        padding: 0.7rem 1rem;
+        border-bottom: 1px solid var(--line);
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 0.85rem;
+      }
+      .mock-nav img {
+        width: 28px;
+        height: 28px;
+      }
+      .mock-nav .where {
+        margin-left: auto;
+        color: var(--fg-tertiary);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        font-size: 0.75rem;
+      }
+      .body {
+        padding: 1.25rem 1rem 1.5rem;
+      }
+      .kicker {
+        margin: 0;
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 0.7rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--kicker);
+      }
+      .sec-title {
+        margin: 0.2rem 0 0.75rem;
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 1.4rem;
+      }
+      @container page (min-width: 760px) {
+        .body {
+          padding: 2rem 2.5rem 2.5rem;
+        }
+      }
+
+      /* A poster: the real image, or a marked empty slot. */
+      .poster {
+        display: block;
+        aspect-ratio: 2 / 3;
+        width: 100%;
+        height: auto;
+        border-radius: var(--radius-md);
+        object-fit: cover;
+        background: var(--bg-surface);
+      }
+      .poster-slot {
+        display: grid;
+        place-content: center;
+        gap: 0.3rem;
+        padding: 0.75rem;
+        border: 2px dashed var(--line-strong);
+        text-align: center;
+        font-family: var(--font-display);
+        font-weight: 600;
+        color: var(--fg-secondary);
+      }
+      .poster-slot b {
+        font-size: 0.65rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--fg-tertiary);
+      }
+      .poster-slot span {
+        font-size: 0.95rem;
+        color: var(--fg-primary);
+      }
+      .card-meta {
+        margin: 0.5rem 0 0;
+        font-size: 0.85rem;
+        line-height: 1.35;
+      }
+      .card-meta strong {
+        display: block;
+        font-family: var(--font-display);
+        font-size: 0.95rem;
+      }
+      .card-meta span {
+        color: var(--fg-secondary);
+      }
+      .card-meta .badge {
+        display: inline-block;
+        margin-bottom: 0.3rem;
+        padding: 0.05rem 0.45rem;
+        border-radius: 999px;
+        background: var(--accent);
+        color: #0a0a0a;
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 0.65rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+      .card-meta .badge--host {
+        background: var(--shield);
+        color: #f5efe2;
+      }
+      .cards {
+        display: grid;
+        gap: 1rem;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      /* ---------- Option A: poster wall ---------- */
+      .wall-a .upcoming {
+        grid-template-columns: repeat(2, 1fr);
+        margin-bottom: 2rem;
+      }
+      .wall-a .archive {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.75rem;
+      }
+      .wall-a .archive .card-meta {
+        font-size: 0.75rem;
+      }
+      .wall-a .archive .card-meta strong {
+        font-size: 0.8rem;
+      }
+      .wall-a .archive .poster-slot span {
+        font-size: 0.75rem;
+      }
+      @container page (min-width: 760px) {
+        .wall-a .upcoming {
+          grid-template-columns: repeat(3, minmax(0, 14rem));
+          gap: 1.5rem;
+        }
+        .wall-a .archive {
+          grid-template-columns: repeat(6, 1fr);
+          gap: 1rem;
+        }
+      }
+
+      /* ---------- Option B: timeline ---------- */
+      .timeline-b {
+        display: grid;
+        gap: 1.5rem;
+      }
+      .timeline {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        border-left: 2px solid var(--line-strong);
+      }
+      .timeline li {
+        position: relative;
+        display: grid;
+        grid-template-columns: 4.5rem 1fr;
+        gap: 0.9rem;
+        align-items: start;
+        padding: 0 0 1.1rem 1rem;
+      }
+      .timeline li::before {
+        content: "";
+        position: absolute;
+        left: -7px;
+        top: 0.4rem;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: var(--bg-canvas);
+        border: 2px solid var(--accent);
+      }
+      .timeline li.next::before {
+        background: var(--accent);
+      }
+      .timeline .card-meta {
+        margin: 0;
+      }
+      .timeline .poster-slot {
+        padding: 0.3rem;
+      }
+      .timeline .poster-slot b {
+        font-size: 0.55rem;
+      }
+      .year {
+        margin: 0 0 0.75rem;
+        padding-left: 1rem;
+        font-family: var(--font-display);
+        font-weight: 700;
+        color: var(--fg-tertiary);
+      }
+      .host-box {
+        display: grid;
+        grid-template-columns: 6rem 1fr;
+        gap: 1rem;
+        align-items: center;
+        padding: 0.9rem;
+        border: 1px solid var(--line);
+        border-radius: var(--radius-md);
+        background: var(--bg-surface);
+        font-size: 0.875rem;
+        color: var(--fg-secondary);
+      }
+      .host-box strong {
+        display: block;
+        color: var(--fg-primary);
+        font-family: var(--font-display);
+        font-size: 1rem;
+      }
+      @container page (min-width: 760px) {
+        .timeline-b {
+          grid-template-columns: 1fr 16rem;
+          gap: 2.5rem;
+          align-items: start;
+        }
+        .timeline li {
+          grid-template-columns: 6rem 1fr;
+        }
+        .host-box {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="lab-head">
+      <p class="status">Open for feedback</p>
+      <h1>Community page: how should the meet-up posters be laid out?</h1>
+      <p>
+        Issue: <a href="https://github.com/stucny/Armageterdone/issues/12">#12 Community page: map and meetup posters</a>
+        · 2026-10-24
+      </p>
+      <p>
+        Two layouts for upcoming meet-up posters and the archive of past ones. The site has one poster so far (the
+        "Want to start a meetup?" flyer); every other slot is marked "Poster to come", with the real place and date
+        from the Meet-Ups page. The map is a separate question, in <a href="../12-community-map/">its own lab</a>.
+      </p>
+    </header>
+
+    <div class="controls" role="group" aria-label="View options">
+      <fieldset>
+        <legend>Theme</legend>
+        <label><input type="radio" name="theme" id="theme-dark" checked /> Dark</label>
+        <label><input type="radio" name="theme" id="theme-light" /> Light</label>
+      </fieldset>
+      <fieldset class="width-switch">
+        <legend>Width</legend>
+        <label><input type="radio" name="width" id="width-desktop" checked /> Desktop, one at a time</label>
+        <label><input type="radio" name="width" id="width-phone" /> Phone (390px), side by side</label>
+      </fieldset>
+    </div>
+
+    <main class="options">
+      <!-- ===================== Option A ===================== -->
+      <section class="option" aria-labelledby="opt-a">
+        <h2 id="opt-a"><span class="tag">Option A</span> Poster wall</h2>
+        <p class="diff">Big posters for what's coming up, then a gallery wall of past posters.</p>
+        <div class="preview">
+          <div class="mock-nav"><img src="../../images/cc-logo.webp" alt="" width="28" height="28" />Canary Cry<span class="where">Community</span></div>
+          <div class="body wall-a">
+            <p class="kicker">Meet-ups</p>
+            <p class="sec-title">Coming up</p>
+            <ul class="cards upcoming">
+              <li>
+                <div class="poster poster-slot"><b>Poster to come</b><span>Trondheim, Norway</span></div>
+                <p class="card-meta"><span class="badge">Next</span><strong>Trondheim, Norway</strong><span>June 21 · EU producer chapter</span></p>
+              </li>
+              <li>
+                <img class="poster" src="../../content/images/16276642-ciara-startownmeetup.jpg" width="1022" height="1509" alt="Poster: Want to start a meetup? Here is what you do: 1) Choose a location. 2) Figure out a date and time. 3) Make a flyer. 4) Promote!" />
+                <p class="card-meta"><span class="badge badge--host">Host one</span><strong>Start a meet-up near you</strong><span>Pennsylvania and NorCal are looking for hosts</span></p>
+              </li>
+            </ul>
+            <p class="sec-title">Past meet-ups</p>
+            <ul class="cards archive">
+              <li><div class="poster poster-slot"><b>Poster to come</b><span>Houston</span></div><p class="card-meta"><strong>Houston, TX</strong><span>May 24</span></p></li>
+              <li><div class="poster poster-slot"><b>Poster to come</b><span>Cherryville</span></div><p class="card-meta"><strong>Cherryville, NC</strong><span>May 03</span></p></li>
+              <li><div class="poster poster-slot"><b>Poster to come</b><span>Kansas City</span></div><p class="card-meta"><strong>Kansas City, MO</strong><span>Apr 25</span></p></li>
+              <li><div class="poster poster-slot"><b>Poster to come</b><span>Los Angeles</span></div><p class="card-meta"><strong>Los Angeles, CA</strong><span>Mar 03</span></p></li>
+              <li><div class="poster poster-slot"><b>Poster to come</b><span>Louisville</span></div><p class="card-meta"><strong>Louisville, KY</strong><span>Kentucky chapter</span></p></li>
+              <li><div class="poster poster-slot"><b>Poster to come</b><span>NorCal</span></div><p class="card-meta"><strong>Humboldt County, CA</strong><span>NorCal chapter</span></p></li>
+            </ul>
+          </div>
+        </div>
+        <div class="notes">
+          <ul>
+            <li><strong>Best when:</strong> most meet-ups have a poster; the posters do the talking.</li>
+            <li><strong>On a phone:</strong> two upcoming posters side by side, then the archive three across.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ===================== Option B ===================== -->
+      <section class="option" aria-labelledby="opt-b">
+        <h2 id="opt-b"><span class="tag">Option B</span> Timeline</h2>
+        <p class="diff">One list by date, newest first, each meet-up with a small poster; the host flyer sits alongside.</p>
+        <div class="preview">
+          <div class="mock-nav"><img src="../../images/cc-logo.webp" alt="" width="28" height="28" />Canary Cry<span class="where">Community</span></div>
+          <div class="body">
+            <p class="kicker">Meet-ups</p>
+            <p class="sec-title">Every meet-up</p>
+            <div class="timeline-b">
+              <div>
+                <ul class="timeline">
+                  <li class="next"><div class="poster poster-slot"><b>Poster to come</b></div><p class="card-meta"><span class="badge">Next</span><strong>Trondheim, Norway</strong><span>June 21 · EU producer chapter</span></p></li>
+                  <li><div class="poster poster-slot"><b>Poster to come</b></div><p class="card-meta"><strong>Houston, TX</strong><span>May 24</span></p></li>
+                  <li><div class="poster poster-slot"><b>Poster to come</b></div><p class="card-meta"><strong>Cherryville, NC</strong><span>May 03 · Carolinas</span></p></li>
+                  <li><div class="poster poster-slot"><b>Poster to come</b></div><p class="card-meta"><strong>Kansas City, MO</strong><span>Apr 25</span></p></li>
+                  <li><div class="poster poster-slot"><b>Poster to come</b></div><p class="card-meta"><strong>Los Angeles, CA</strong><span>Mar 03</span></p></li>
+                </ul>
+                <p class="year">Earlier: Louisville, KY · Humboldt County, CA</p>
+              </div>
+              <div class="host-box">
+                <img class="poster" src="../../content/images/16276642-ciara-startownmeetup.jpg" width="1022" height="1509" alt="Poster: Want to start a meetup? Here is what you do: 1) Choose a location. 2) Figure out a date and time. 3) Make a flyer. 4) Promote!" />
+                <p style="margin: 0"><strong>Start a meet-up near you</strong>Pennsylvania and NorCal are looking for hosts.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="notes">
+          <ul>
+            <li><strong>Best when:</strong> posters are patchy; the dates and places carry the page and a missing poster doesn't leave a gap.</li>
+            <li><strong>On a phone:</strong> the timeline first, the host flyer after it.</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+
+    <section class="ask" aria-labelledby="ask">
+      <h2 id="ask">What we need from you</h2>
+      <p>
+        <strong>Which layout should we build: A or B?</strong> Any change you'd make to it? Comment your pick on
+        <a href="https://github.com/stucny/Armageterdone/issues/12">issue #12</a>.
+      </p>
+      <p>
+        We also need the posters: do you have them for past meet-ups (Houston, Cherryville, Kansas City, Los Angeles,
+        Louisville, NorCal) and for Trondheim? Hosts' contact details would stay off the page, as they are now.
+      </p>
+    </section>
+
+    <footer class="lab-foot">
+      <p>
+        About this lab: the places and dates are from the site's Meet-Ups page. The "Want to start a meetup?" flyer is
+        the only poster the site has; every "Poster to come" slot is a placeholder.
+      </p>
+      <p><a href="../">All design labs</a> · <a href="../../">Back to the preview site</a></p>
+    </footer>
+  </body>
+</html>
