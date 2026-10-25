@@ -10,6 +10,7 @@ import { AudioPlayer } from "../components/audio-player";
 import { EpisodeCard } from "../components/episode-card";
 import { PlatformRow } from "../components/platform-row";
 import { PreviewForm } from "../components/preview-form";
+import { ShowsStrip } from "../components/shows-strip";
 import { SupportRow } from "../components/support-row";
 import { buttonVariants } from "../components/ui/button";
 import { Input } from "../components/ui/input";
@@ -46,27 +47,6 @@ export function loader() {
 export function meta(): Route.MetaDescriptors {
   return [{ title: "Canary Cry News Talk — Cogitare extra caveam" }];
 }
-
-const SHOWS = [
-  {
-    art: "images/show-news-talk.webp",
-    kicker: "The main show",
-    title: "Canary Cry News Talk",
-    desc: "The flagship discernment broadcast — daily news through a Biblical worldview.",
-  },
-  {
-    art: "images/show-radio.webp",
-    kicker: "Long-form",
-    title: "Canary Cry Radio",
-    desc: "Deep-cut interviews and conversations with discerners, theologians, and researchers.",
-  },
-  {
-    art: "images/show-clubhouse.webp",
-    kicker: "Live",
-    title: "Canary Cry Clubhouse",
-    desc: "Open-mic conversations with the community. Wade into deep waters together.",
-  },
-];
 
 function Brackets({ where }: { where: "mobile" | "desktop" }): React.ReactNode {
   return (
@@ -141,25 +121,7 @@ export default function Home({ loaderData }: Route.ComponentProps): React.ReactN
               The Canary Cry Network
             </h2>
           </div>
-          <div className="shows-strip">
-            {SHOWS.map((s) => (
-              <Link className="show-card" to="/episodes/" key={s.title}>
-                <img
-                  className="show-card__art"
-                  src={asset(s.art)}
-                  alt=""
-                  width="96"
-                  height="96"
-                  loading="lazy"
-                />
-                <div className="show-card__body">
-                  <span className="show-card__kicker">{s.kicker}</span>
-                  <h3 className="show-card__title">{s.title}</h3>
-                  <p className="show-card__desc">{s.desc}</p>
-                </div>
-              </Link>
-            ))}
-          </div>
+          <ShowsStrip />
           <div style={{ marginTop: "var(--space-7)" }}>
             <SupportRow eyebrow="Value-for-value" heading="No advertisers. Just producers.">
               Canary Cry doesn&apos;t take corporate ad money. The show runs on producers —

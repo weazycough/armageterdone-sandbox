@@ -23,6 +23,7 @@ import { basename, extname, join } from "node:path";
 import { parseArgs } from "node:util";
 import sanitizeHtml from "sanitize-html";
 import { z } from "zod";
+import { redactContactsHtml } from "../app/lib/contacts.ts";
 import { plainExcerpt, slugify } from "../app/lib/feed.ts";
 
 const { values } = parseArgs({
@@ -179,7 +180,8 @@ async function cleanHtml(
   for (const src of srcs) {
     if (src.startsWith("http")) out = out.split(`"${src}"`).join(`"${await localImage(src)}"`);
   }
-  return { html: sanitizeHtml(out, SANITIZE).trim(), removedEmbeds };
+  // Other people's emails and phone numbers stay out of the preview.
+  return { html: redactContactsHtml(sanitizeHtml(out, SANITIZE)).trim(), removedEmbeds };
 }
 
 await rm("content/pages", { recursive: true, force: true });

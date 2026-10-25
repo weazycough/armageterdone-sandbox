@@ -90,8 +90,84 @@ describe("thirdPartyProblems", () => {
     ],
     ["a remote @import in a style block", '<style>@import "https://fonts.example/css";</style>'],
     ["a tracker in an inline script", "<script>gtag('config','x')</script>"],
+    [
+      "a beacon to another site in an inline script",
+      "<script>navigator.sendBeacon('https://collect.example/hit')</script>",
+    ],
+    [
+      "a protocol-relative host in an inline script",
+      '<script>new Image().src = "//px.example/p.gif"</script>',
+    ],
+    [
+      "code smuggled after the hydration data",
+      `<script>window.__reactRouterContext.streamController.enqueue("[]");fetch("https://x.example/")</script>`,
+    ],
+    ["an SVG <image> from another site", '<svg><image href="https://img.example/a.png"/></svg>'],
+    [
+      "an SVG <use> from another site (xlink)",
+      `<svg><use xlink:href='https://icons.example/s.svg#i'></use></svg>`,
+    ],
+    ["a body background", '<body background="https://img.example/bg.gif">'],
   ])("flags %s", (_name, body) => {
     expect(problems(body)).not.toEqual([]);
+  });
+
+  // How React Router's prerendered pages boot (see dist/*/index.html).
+  const BOOT = `<script type="module" async="">import "/Armageterdone/assets/manifest-1.js";
+import * as route0 from "/Armageterdone/assets/root-a.js";
+  window.__reactRouterRouteModules = {"root":route0};
+import("/Armageterdone/assets/entry.client-b.js");</script>`;
+  const NOTES = String.raw`window.__reactRouterContext.streamController.enqueue("[{\"notes\":\"<a href=\\\"https://rumble.com/x\\\">\"}]\n");`;
+
+  it("allows React Router's hydration data on a built page, which may name any site", () => {
+    expect(
+      thirdPartyProblems(page(ROBOTS, `${BOOT}<script>${NOTES}</script>`), "episodes/x/index.html"),
+    ).toEqual([]);
+  });
+
+  it("never trusts hydration-shaped data in a lab, even with a boot script", () => {
+    expect(problems(`${BOOT}<script>${NOTES}</script>`)).not.toEqual([]);
+  });
+
+  it.each([
+    [
+      "enqueue redefined as eval",
+      String.raw`<script>window.__reactRouterContext={streamController:{enqueue:eval}}</script><script>window.__reactRouterContext.streamController.enqueue("fetch(\"https://evil.example/b\")");</script>`,
+    ],
+    ["a URL built from parts", `<script>fetch("https:"+"//"+"evil.example")</script>`],
+    [
+      "a URL hidden in base64",
+      `<script>location.href = atob("aHR0cHM6Ly9ldmlsLmV4YW1wbGU=")</script>`,
+    ],
+    ["an image beacon", `<script>new Image().src = "/x?" + document.cookie</script>`],
+    ["a dynamic import", `<script>import("./more.js")</script>`],
+    ["new Function", `<script>Function("return 1")()</script>`],
+    ["a WebSocket", `<script>new WebSocket("wss://" + host)</script>`],
+  ])("flags %s, in a lab and on a page that boots like the app", (_name, body) => {
+    expect(problems(body)).not.toEqual([]);
+    expect(thirdPartyProblems(page(ROBOTS, BOOT + body), "x/index.html")).not.toEqual([]);
+  });
+
+  it("does not take a boot script with extra code for the app's", () => {
+    const fake = BOOT.replace("import(", 'fetch("/x");import(');
+    expect(thirdPartyProblems(page(ROBOTS, fake), "x/index.html")).not.toEqual([]);
+  });
+
+  it("lets a lab script do local UI", () => {
+    expect(
+      problems(
+        `<script>document.querySelectorAll("[data-option]").forEach((b) => b.addEventListener("click", () => document.body.classList.toggle("alt")));</script>`,
+      ),
+    ).toEqual([]);
+  });
+
+  it("allows same-site SVG references and episode-media hosts in scripts", () => {
+    expect(
+      problems(
+        `<svg><use href="#icon"/><image href="art.png"/></svg>
+         <script>const a = "https://traffic.libsyn.com/a.mp3";</script>`,
+      ),
+    ).toEqual([]);
   });
 
   it("allows an iframe only from the page's allow-listed hosts", () => {

@@ -20,6 +20,11 @@ export function episodeListPath(page: number): string {
   return page <= 1 ? "/episodes/" : `/episodes/page/${String(page)}/`;
 }
 
+/** A show's episode list (Ghost tag.hbs), paginated like the full list. */
+export function tagPath(tag: string, page = 1): string {
+  return page <= 1 ? `/tag/${tag}/` : `/tag/${tag}/page/${String(page)}/`;
+}
+
 export function episodePath(slug: string): string {
   return `/episodes/${slug}/`;
 }

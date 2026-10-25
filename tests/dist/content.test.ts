@@ -3,8 +3,11 @@
 
 import { readdirSync, readFileSync } from "node:fs";
 import { describe, expect, it } from "vite-plus/test";
+import { DESIGNED_PAGES } from "../../app/lib/designed-pages";
 import { episodeListSchema } from "../../app/lib/feed";
-import { EPISODES_JSON, PAGES_DIR, pageCount } from "../../app/lib/paths";
+import { EPISODES_JSON, PAGES_DIR, pageCount, tagPath } from "../../app/lib/paths";
+import { SEARCH_INDEX_FILE, searchIndexSchema } from "../../app/lib/search";
+import { SHOWS, showOf } from "../../app/lib/shows";
 import { files, htmlFiles, read } from "./dist-files";
 
 const episodes = episodeListSchema.parse(JSON.parse(readFileSync(EPISODES_JSON, "utf8")));
@@ -38,6 +41,33 @@ describe("pages", () => {
   it("has every page extracted from Ghost", () => {
     expect(pageSlugs.length).toBeGreaterThan(30);
     expect(pageSlugs.filter((s) => !files.includes(`${s}/index.html`))).toEqual([]);
+  });
+});
+
+describe("designed pages and show lists", () => {
+  it("renders each designed page with its own template, not the generic one", () => {
+    const generic = DESIGNED_PAGES.filter(
+      (slug) => !/<article class="page [a-z0-9-]+-page"/.test(read(`${slug}/index.html`)),
+    );
+    expect(generic).toEqual([]);
+  });
+
+  it("has every page of every show's list", () => {
+    for (const show of SHOWS) {
+      const count = episodes.filter((e) => showOf(e) === show.slug).length;
+      expect(count, show.slug).toBeGreaterThan(10);
+      const lists = htmlFiles.filter((f) => f.startsWith(`tag/${show.slug}/`));
+      expect(lists, show.slug).toHaveLength(pageCount(count));
+      expect(files).toContain(`${tagPath(show.slug).slice(1)}index.html`);
+    }
+  });
+
+  it("has a search index with every page and every episode", () => {
+    const index = searchIndexSchema.parse(JSON.parse(read(SEARCH_INDEX_FILE)));
+    const paths = new Set(index.map((e) => e.path));
+    expect(pageSlugs.filter((s) => !paths.has(`/${s}/`))).toEqual([]);
+    expect(episodes.filter((e) => !paths.has(`/episodes/${e.slug}/`))).toEqual([]);
+    expect(index.find((e) => e.path === "/support/")?.title).toBe("Become a Producer");
   });
 });
 

@@ -9,6 +9,7 @@
 import { XMLParser } from "fast-xml-parser";
 import sanitizeHtml from "sanitize-html";
 import { z } from "zod";
+import { redactContactsHtml } from "./contacts.ts";
 
 export const episodeSchema = z.object({
   slug: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
@@ -105,7 +106,8 @@ export function sanitizeNotes(html: string): string {
   // Notes use hosted emoji images; keep the emoji (the alt text), drop the
   // image request. The alt value is already HTML-escaped, so it goes in as is.
   const emojiAsText = html.replace(/<img\b[^>]*?\balt=(["'])(.*?)\1[^>]*>/gi, "$2");
-  return sanitizeHtml(emojiAsText, NOTES_OPTIONS)
+  // Other people's emails and phone numbers stay out of the preview.
+  return redactContactsHtml(sanitizeHtml(emojiAsText, NOTES_OPTIONS))
     .replace(/<(p|div)>\s*<\/\1>/g, "")
     .trim();
 }

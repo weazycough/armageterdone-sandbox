@@ -6,7 +6,9 @@
 // `buttonVariants` styles links too (`<Link className={buttonVariants()}>`),
 // since most of the site's buttons navigate. Focus rings key on React Aria's
 // `data-focus-visible`, not CSS `:focus-visible`, which also fires after a
-// mouse press in React Aria.
+// mouse press in React Aria. Each variant sets its own border colour: cva
+// doesn't merge classes, so a base `border-transparent` would win over the
+// ghost's `border-input` whenever Tailwind emits it later.
 
 import type * as React from "react";
 import { cva } from "class-variance-authority";
@@ -16,15 +18,15 @@ import type { ButtonProps as ButtonPrimitiveProps } from "react-aria-components"
 import { cn } from "../../lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 rounded-[2px] border border-transparent font-display text-[0.82rem] font-semibold tracking-[0.12em] whitespace-nowrap uppercase no-underline transition outline-none select-none hover:no-underline data-focus-visible:ring-2 data-focus-visible:ring-ring data-focus-visible:ring-offset-2 data-focus-visible:ring-offset-background data-disabled:cursor-default data-disabled:opacity-45 [&_svg]:pointer-events-none [&_svg]:shrink-0",
+  "inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 rounded-[2px] border font-display text-[0.82rem] font-semibold tracking-[0.12em] whitespace-nowrap uppercase no-underline transition outline-none select-none hover:no-underline data-focus-visible:ring-2 data-focus-visible:ring-ring data-focus-visible:ring-offset-2 data-focus-visible:ring-offset-background data-disabled:cursor-default data-disabled:opacity-45 [&_svg]:pointer-events-none [&_svg]:shrink-0",
   {
     variants: {
       variant: {
         primary:
-          "bg-accent text-(--fg-inverse) hover:-translate-y-px hover:bg-(--accent-2) hover:text-(--fg-inverse) data-hovered:bg-(--accent-2)",
+          "border-transparent bg-accent text-(--fg-inverse) hover:-translate-y-px hover:bg-(--accent-2) hover:text-(--fg-inverse) data-hovered:bg-(--accent-2)",
         ghost:
           "border-input bg-transparent text-foreground hover:-translate-y-px hover:border-accent hover:text-accent data-hovered:border-accent data-hovered:text-accent",
-        blue: "bg-shield text-white hover:bg-(--shield-2) hover:text-white data-hovered:bg-(--shield-2)",
+        blue: "border-transparent bg-shield text-white hover:bg-(--shield-2) hover:text-white data-hovered:bg-(--shield-2)",
       },
       size: {
         default: "px-[1.4rem] py-[0.85rem]",

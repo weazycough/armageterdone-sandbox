@@ -16,6 +16,7 @@
 //   HOST_TOKEN_HASHES and only count in host position (see isHostPosition).
 
 import { createHash } from "node:crypto";
+import { EMAIL, PHONE, isShowEmail, isShowPhone } from "../app/lib/contacts";
 
 export interface LeakPattern {
   pattern: RegExp;
@@ -73,25 +74,14 @@ export const HOST_TOKEN_HASHES = new Set([
   "7499aced43869b27f505701e4edc737f0cc346add1240d4ba86fbfa251e0fc35",
 ]);
 
-/** The show's own public addresses (in its feed and on the current site), and
- *  the form placeholder. Any other address must come from the episode feed,
- *  which the show publishes itself (see `allowEmails`). */
-export const SHOW_EMAILS = new Set([
-  "canarycryradio@gmail.com",
-  "canarycryradio@protonmail.com",
-  "canarycrysupplydrop@gmail.com",
-  "canarycrytechteam@gmail.com",
-  "you@email.com",
-]);
-
-const EMAIL = /[a-z0-9._%+-]+@[a-z0-9-]+(?:\.[a-z0-9-]+)*\.[a-z]{2,}/gi;
-
 /** Files that contain shapes on purpose, each with its reason. */
 export const LEAK_SCAN_EXEMPT_FILES = new Set([
   // The list itself: its regexes spell out the shapes.
   "tests/leak-patterns.ts",
-  // Feeds made-up samples of each shape (none of them real) through the scanner.
+  // Feed made-up samples of each shape (none of them real) through the
+  // scanner and the redaction.
   "tests/unit/leak-patterns.test.ts",
+  "tests/unit/contacts.test.ts",
   // The Ghost importer: it finds the __GHOST_URL__ marker in order to rewrite it.
   "scripts/extract-ghost.ts",
   // The local preview server: it binds to the loopback address on purpose.
@@ -105,10 +95,8 @@ export const LEAK_SCAN_EXEMPT_FILES = new Set([
 export interface ScanOptions {
   tokenHashes?: Set<string>;
   hostTokenHashes?: Set<string>;
-  /** Extra addresses that may appear (lowercase): the episode feed's. */
-  allowEmails?: Set<string>;
-  /** Look for email addresses (off for images and fonts, whose bytes can
-   *  spell one by chance). */
+  /** Look for email addresses and phone numbers (off for images and fonts,
+   *  whose bytes can spell one by chance). */
   emails?: boolean;
 }
 
@@ -148,9 +136,16 @@ export function findLeaks(
   }
 
   for (const m of options.emails === false ? [] : text.matchAll(EMAIL)) {
-    const address = m[0].toLowerCase();
-    if (!SHOW_EMAILS.has(address) && options.allowEmails?.has(address) !== true) {
+    // Only the show's own addresses; everyone else's are removed at build.
+    if (!isShowEmail(m[0])) {
       hits.push({ why: "an email address that isn't the show's", match: m[0] });
+      break;
+    }
+  }
+  // Phone numbers, the same way (dates and timestamps don't match the shape).
+  for (const m of options.emails === false ? [] : text.matchAll(PHONE)) {
+    if (!isShowPhone(m[0])) {
+      hits.push({ why: "a phone number that isn't the show's", match: m[0] });
       break;
     }
   }
@@ -188,9 +183,4 @@ function hyphenParts(word: string): { w: string; at: number }[] {
     at += w.length + 1;
   }
   return out;
-}
-
-/** Every address in a text, lowercased: the feed's are allowed on the site. */
-export function emailsIn(text: string): Set<string> {
-  return new Set([...text.matchAll(EMAIL)].map((m) => m[0].toLowerCase()));
 }

@@ -1,5 +1,5 @@
-// support-row.tsx — the value-for-value call to action (Ghost index.hbs and
-// post.hbs).
+// support-row.tsx — the value-for-value call to action (Ghost index.hbs,
+// post.hbs and most page templates). The buttons default to Support + Patreon.
 
 import type * as React from "react";
 import { Link } from "react-router";
@@ -12,10 +12,12 @@ const WRAP_WHEN_NARROW = "max-[400px]:shrink max-[400px]:whitespace-normal";
 export function SupportRow({
   eyebrow,
   heading,
+  actions,
   children,
 }: {
   eyebrow: string;
   heading: string;
+  actions?: React.ReactNode;
   children: React.ReactNode;
 }): React.ReactNode {
   return (
@@ -26,17 +28,25 @@ export function SupportRow({
         <p>{children}</p>
       </div>
       <div style={{ display: "flex", gap: "var(--space-3)", flexWrap: "wrap" }}>
-        <Link className={cn(buttonVariants(), WRAP_WHEN_NARROW)} to="/support/">
-          Ways to produce the show
-        </Link>
-        <a
-          className={buttonVariants({ variant: "ghost" })}
-          href="https://www.patreon.com/ccnt"
-          rel="noopener"
-        >
-          Patreon
-        </a>
+        {actions ?? <DefaultActions />}
       </div>
     </div>
+  );
+}
+
+function DefaultActions(): React.ReactNode {
+  return (
+    <>
+      <Link className={cn(buttonVariants(), WRAP_WHEN_NARROW)} to="/support/">
+        Ways to produce the show
+      </Link>
+      <a
+        className={buttonVariants({ variant: "ghost" })}
+        href="https://www.patreon.com/ccnt"
+        rel="noopener"
+      >
+        Patreon
+      </a>
+    </>
   );
 }

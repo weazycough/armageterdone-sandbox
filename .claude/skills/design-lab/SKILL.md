@@ -35,7 +35,7 @@ the real site and the lab is retired.
 
 The preview site is public. These rules keep it out of search engines and
 keep private information off the internet. The build's gate checks the first
-two and fails if they're broken.
+three and fails if they're broken.
 
 1. **`noindex`.** Every lab page has
    `<meta name="robots" content="noindex, nofollow, noarchive">` in its `<head>`.
@@ -47,7 +47,13 @@ two and fails if they're broken.
    folder). No external scripts, analytics, trackers, or web-font services;
    copy fonts into the folder if needed. Images come from the lab folder,
    the site's own `public/` files, or `assets-inbox/` (copy them in; files in
-   `assets-inbox/` are not published on their own).
+   `assets-inbox/` are not published on their own). Lab scripts do local UI
+   only (toggles, tabs, option switches). The gate fails an iframe, a remote
+   image in CSS, SVG or a `background` attribute, an inline script that
+   names another site, and a lab script that uses `fetch`, `XMLHttpRequest`,
+   `sendBeacon`, `new Image`, `WebSocket`, `EventSource`, `eval`,
+   `Function(`, `atob(` or `import(`. That check is a guard against
+   mistakes, not a sandbox: don't work round it.
 4. **Real content where it matters.** Use real episode titles, real art and
    the site's real colours and fonts, so the team judges the design, not
    placeholder text. The design tokens are at the top of
