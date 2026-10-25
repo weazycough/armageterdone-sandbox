@@ -1,0 +1,1049 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow, noarchive" />
+    <meta name="referrer" content="no-referrer" />
+    <title>Lab #1: Landing page hero</title>
+    <style>
+      /* Fonts: copied from the site's Fontsource packages (SIL OFL 1.1, see NOTICE.md). */
+      @font-face {
+        font-family: "Jost";
+        font-weight: 600;
+        font-display: swap;
+        src: url("jost-latin-600-normal.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Jost";
+        font-weight: 700;
+        font-display: swap;
+        src: url("jost-latin-700-normal.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Inter";
+        font-weight: 400;
+        font-display: swap;
+        src: url("inter-latin-400-normal.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Inter";
+        font-weight: 600;
+        font-display: swap;
+        src: url("inter-latin-600-normal.woff2") format("woff2");
+      }
+
+      /* Site tokens, copied from app/styles/theme.css. The lab itself uses the
+         dark set; each preview sets its own theme below. */
+      :root {
+        --bg-canvas: #0a0a0a;
+        --bg-surface: #141414;
+        --bg-elevated: #1f1f1f;
+        --fg-primary: #f5efe2;
+        --fg-secondary: #c9c2b3;
+        --fg-tertiary: #8b867a;
+        --fg-inverse: #0a0a0a;
+        --accent: #e6b40f;
+        --accent-2: #f0ab1a;
+        --accent-deep: #a37a00;
+        --shield: #1e3a8a;
+        --line: #2a2a2a;
+        --line-strong: #3a3a3a;
+        --accent-on-bg: var(--accent);
+        --font-display: "Jost", "Futura PT", "Futura", "Helvetica Neue", Arial, sans-serif;
+        --font-body: "Inter", "Proxima Nova", "Helvetica Neue", Arial, sans-serif;
+        --radius-sm: 2px;
+        --radius-md: 4px;
+        --radius-lg: 8px;
+        color-scheme: dark;
+      }
+
+      /* ---------- Lab page ---------- */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 1.5rem;
+        background: var(--bg-canvas);
+        color: var(--fg-primary);
+        font-family: var(--font-body);
+        line-height: 1.55;
+      }
+      a {
+        color: var(--accent);
+      }
+      :focus-visible {
+        outline: 3px solid var(--accent);
+        outline-offset: 2px;
+      }
+      h1,
+      h2 {
+        font-family: var(--font-display);
+        line-height: 1.15;
+      }
+      .lab-head,
+      .controls,
+      .ask,
+      .lab-foot {
+        max-width: 76rem;
+        margin: 0 auto 2rem;
+      }
+      .lab-head h1 {
+        font-size: clamp(1.75rem, 4vw, 2.5rem);
+        margin: 0.5rem 0;
+      }
+      .lab-head p {
+        margin: 0.25rem 0;
+        color: var(--fg-secondary);
+        max-width: 48rem;
+      }
+      .lab-head .status {
+        display: inline-block;
+        padding: 0.2rem 0.7rem;
+        border-radius: 999px;
+        background: var(--accent);
+        color: var(--fg-inverse);
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 0.85rem;
+      }
+      .controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem 2rem;
+      }
+      .controls fieldset {
+        border: 1px solid var(--line-strong);
+        border-radius: var(--radius-lg);
+        padding: 0.5rem 0.9rem 0.7rem;
+        margin: 0;
+      }
+      .controls legend {
+        padding: 0 0.3rem;
+        font-family: var(--font-display);
+        font-weight: 600;
+        color: var(--fg-secondary);
+      }
+      .controls label {
+        margin-right: 1rem;
+        cursor: pointer;
+      }
+      .controls input {
+        accent-color: var(--accent);
+      }
+      .options {
+        display: grid;
+        gap: 2.5rem;
+        max-width: 76rem;
+        margin: 0 auto;
+      }
+      .option {
+        min-width: 0;
+      }
+      .option > h2 {
+        margin: 0 0 0.25rem;
+        font-size: 1.6rem;
+      }
+      .option > h2 .tag {
+        color: var(--accent);
+      }
+      .option > .diff {
+        margin: 0 0 1rem;
+        color: var(--fg-secondary);
+      }
+      .theme-label {
+        margin: 1rem 0 0.4rem;
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 0.8rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--fg-tertiary);
+      }
+      .contrast {
+        margin-top: 1rem;
+        padding: 0.75rem 1rem;
+        border: 1px solid var(--line-strong);
+        border-radius: var(--radius-lg);
+        font-size: 0.9rem;
+        color: var(--fg-secondary);
+      }
+      .contrast h3 {
+        margin: 0 0 0.4rem;
+        font-family: var(--font-display);
+        font-size: 1rem;
+        color: var(--fg-primary);
+      }
+      .contrast ul {
+        margin: 0;
+        padding-left: 1.1rem;
+      }
+      .swatch {
+        display: inline-block;
+        width: 0.9em;
+        height: 0.9em;
+        vertical-align: -0.1em;
+        border: 1px solid var(--line-strong);
+        border-radius: 2px;
+      }
+      .pass {
+        color: #8fd18f;
+        font-weight: 600;
+      }
+      .warn {
+        color: #f0c060;
+        font-weight: 600;
+      }
+      .fail {
+        color: #ff9b8f;
+        font-weight: 600;
+      }
+      .ask {
+        margin-top: 3rem;
+        padding: 1rem 1.25rem;
+        border-left: 4px solid var(--accent);
+        background: var(--bg-surface);
+      }
+      .ask h2 {
+        margin-top: 0;
+      }
+      .lab-foot {
+        font-size: 0.875rem;
+        color: var(--fg-tertiary);
+      }
+
+      /* View switches: radio buttons + :has(), so the lab needs no script.
+         Phone width puts the three options side by side at 390px; desktop
+         width stacks them full width. Themes: dark, light or both. */
+      body:has(#theme-dark:checked) .preview-wrap[data-theme="light"],
+      body:has(#theme-light:checked) .preview-wrap[data-theme="dark"] {
+        display: none;
+      }
+      @media (min-width: 64rem) {
+        body:has(#width-phone:checked) .options {
+          grid-template-columns: repeat(3, minmax(0, 390px));
+          justify-content: center;
+          gap: 1.5rem;
+        }
+        body:has(#width-phone:checked) .option > h2,
+        body:has(#width-phone:checked) .option > .diff {
+          min-height: 2.5em;
+        }
+      }
+      /* On a phone, the previews are already phone width. */
+      @media (max-width: 63.99rem) {
+        .width-switch {
+          display: none;
+        }
+      }
+
+      /* ---------- Previews: a slice of the site in one theme ---------- */
+      .preview {
+        container: hero / inline-size;
+        border: 1px solid var(--line-strong);
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        background: var(--bg-canvas);
+        color: var(--fg-primary);
+      }
+      [data-theme="dark"] .preview {
+        --art-line: #c9c2b3;
+        --hero-glow: radial-gradient(ellipse at top, rgba(230, 180, 15, 0.1), transparent 60%);
+        color-scheme: dark;
+      }
+      [data-theme="light"] .preview {
+        --bg-canvas: #fdf8eb;
+        --bg-surface: #f5edd6;
+        --bg-elevated: #ebe0c2;
+        --fg-primary: #14110a;
+        --fg-secondary: #4a3f33;
+        --fg-tertiary: #6b5d4d;
+        --fg-inverse: #fdf8eb;
+        --accent-on-bg: var(--accent-deep);
+        --line: #d6c89e;
+        --line-strong: #b8a673;
+        --art-line: #4a3f33;
+        --hero-glow: radial-gradient(ellipse at top, rgba(163, 122, 0, 0.1), transparent 60%);
+        color-scheme: light;
+      }
+      /* Option B's band stays dark in both themes. */
+      .always-dark {
+        --bg-canvas: #0a0a0a;
+        --bg-surface: #141414;
+        --fg-primary: #f5efe2;
+        --fg-secondary: #c9c2b3;
+        --fg-tertiary: #8b867a;
+        --fg-inverse: #0a0a0a;
+        --accent-on-bg: var(--accent);
+        --line: #2a2a2a;
+        --line-strong: #3a3a3a;
+        --art-line: #c9c2b3;
+      }
+
+      .mock-nav {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        padding: 0.7rem 1rem;
+        border-bottom: 1px solid var(--line);
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 0.85rem;
+      }
+      .mock-nav img {
+        width: 28px;
+        height: 28px;
+      }
+      .mock-nav .links {
+        margin-left: auto;
+        display: none;
+        gap: 1.25rem;
+        color: var(--fg-secondary);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        font-size: 0.75rem;
+      }
+      .mock-nav .menu {
+        margin-left: auto;
+        width: 22px;
+        height: 22px;
+        color: var(--fg-secondary);
+      }
+      @container hero (min-width: 760px) {
+        .mock-nav .links {
+          display: flex;
+        }
+        .mock-nav .menu {
+          display: none;
+        }
+      }
+
+      /* Shared hero text */
+      .hero-title {
+        margin: 0;
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: clamp(2.75rem, 13cqi, 5.5rem);
+        line-height: 0.95;
+        letter-spacing: 0.02em;
+        color: var(--title-colour, var(--accent));
+      }
+      .hero-sub {
+        margin: 0.75rem 0 0;
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 1rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--fg-secondary);
+      }
+      .hero-tag {
+        margin: 0.5rem 0 0;
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: clamp(1.25rem, 4cqi, 1.6rem);
+        color: var(--fg-primary);
+      }
+      .about {
+        margin: 1.25rem 0 0;
+        max-width: 36rem;
+        color: var(--fg-secondary);
+        font-size: 0.95rem;
+      }
+      .about strong {
+        color: var(--fg-primary);
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-family: var(--font-display);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        font-size: 0.8rem;
+        padding: 0.8rem 1.2rem;
+        border-radius: var(--radius-sm);
+        border: 1px solid transparent;
+        text-decoration: none;
+      }
+      .btn--primary {
+        background: var(--accent);
+        color: #0a0a0a;
+      }
+      .btn--ghost {
+        color: var(--fg-primary);
+        border-color: var(--line-strong);
+      }
+      .btn:hover {
+        background: var(--accent-2);
+        color: #0a0a0a;
+        border-color: transparent;
+      }
+      .buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        margin-top: 1.5rem;
+      }
+
+      /* Latest-episode card (A and C) */
+      .latest {
+        display: grid;
+        grid-template-columns: 72px 1fr;
+        gap: 0.9rem;
+        align-items: center;
+        padding: 0.75rem;
+        border: 1px solid var(--line-strong);
+        border-radius: var(--radius-md);
+        background: var(--bg-surface);
+        color: var(--fg-primary);
+        text-decoration: none;
+      }
+      .latest:hover {
+        border-color: var(--accent-on-bg);
+      }
+      .latest img {
+        width: 72px;
+        height: 72px;
+        border-radius: var(--radius-sm);
+        object-fit: cover;
+      }
+      .latest .kicker {
+        display: block;
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 0.7rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--accent-on-bg);
+      }
+      /* The site's #a37a00 is only 3.4 : 1 on the light card: too faint for
+         small text, so the light kicker uses a deeper yellow (5.4 : 1). */
+      [data-theme="light"] .latest .kicker {
+        color: #7a5b00;
+      }
+      .latest .ep-title {
+        display: block;
+        font-family: var(--font-display);
+        font-weight: 600;
+        line-height: 1.25;
+      }
+      .latest .ep-date {
+        display: block;
+        font-size: 0.8rem;
+        color: var(--fg-tertiary);
+      }
+
+      /* Placeholder illustration */
+      .art {
+        position: relative;
+        margin: 0;
+      }
+      .art svg {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+      .art figcaption {
+        position: absolute;
+        left: 0.5rem;
+        bottom: 0.5rem;
+        padding: 0.15rem 0.5rem;
+        border: 1px dashed var(--fg-tertiary);
+        border-radius: var(--radius-sm);
+        background: var(--bg-canvas);
+        color: var(--fg-secondary);
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      /* ---------- Option A: split, art beside the words ---------- */
+      .hero-a {
+        display: grid;
+        gap: 1.5rem;
+        padding: 2rem 1.25rem 2.25rem;
+        background: var(--hero-glow), var(--bg-canvas);
+      }
+      [data-theme="light"] .hero-a {
+        --title-colour: var(--accent-deep);
+      }
+      .hero-a .art {
+        max-width: 18rem;
+        justify-self: center;
+        order: -1;
+      }
+      .hero-a .latest {
+        margin-top: 1.5rem;
+        max-width: 28rem;
+      }
+      @container hero (min-width: 760px) {
+        .hero-a {
+          grid-template-columns: 1.2fr 1fr;
+          align-items: center;
+          gap: 3rem;
+          padding: 3.5rem 2.5rem;
+        }
+        .hero-a .art {
+          order: 0;
+          max-width: none;
+        }
+      }
+
+      /* ---------- Option B: a dark band in both themes, About below ---------- */
+      .hero-b {
+        padding: 1.75rem 1.25rem 0;
+        text-align: center;
+        background:
+          radial-gradient(ellipse at 50% 30%, rgba(230, 180, 15, 0.16), transparent 60%),
+          var(--bg-canvas);
+        color: var(--fg-primary);
+      }
+      .hero-b .art {
+        width: min(15rem, 70%);
+        margin: 0 auto 0.5rem;
+      }
+      .hero-b .art figcaption {
+        left: 50%;
+        transform: translateX(-50%);
+        white-space: nowrap;
+      }
+      .ticker {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 0.4rem 0.8rem;
+        margin: 1.75rem -1.25rem 0;
+        padding: 0.8rem 1rem;
+        border-top: 1px solid var(--line-strong);
+        background: var(--bg-surface);
+        color: var(--fg-primary);
+        text-decoration: none;
+        font-family: var(--font-display);
+        font-weight: 600;
+      }
+      .ticker:hover .ticker-go {
+        text-decoration: underline;
+      }
+      .ticker .pill {
+        padding: 0.15rem 0.55rem;
+        border-radius: 999px;
+        background: var(--accent);
+        color: #0a0a0a;
+        font-size: 0.7rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+      .ticker-go {
+        color: var(--accent);
+      }
+      .below-b {
+        padding: 1.5rem 1.25rem 2rem;
+        background: var(--bg-canvas);
+        border-top: 1px solid var(--line);
+      }
+      .below-b .about {
+        margin: 0 auto;
+        text-align: left;
+      }
+      @container hero (min-width: 760px) {
+        .hero-b {
+          padding-top: 2.5rem;
+        }
+        .ticker {
+          margin-top: 2.25rem;
+          margin-left: -1.25rem;
+          margin-right: -1.25rem;
+        }
+        .below-b {
+          padding: 2rem 2.5rem 2.5rem;
+        }
+        .below-b .about {
+          font-size: 1.05rem;
+          max-width: 44rem;
+        }
+      }
+
+      /* ---------- Option C: the crest's shield blue as a framed panel ---------- */
+      .hero-c {
+        display: grid;
+        gap: 1.5rem;
+        padding: 2rem 1.25rem 2.25rem;
+        background: var(--bg-canvas);
+      }
+      .panel {
+        position: relative;
+        padding: 1.75rem 1.25rem 1.5rem;
+        border-radius: var(--radius-md);
+        background: linear-gradient(160deg, #24449a, var(--shield) 55%, #172f73);
+        --fg-primary: #f5efe2;
+        --fg-secondary: #c9c2b3;
+        color: var(--fg-primary);
+      }
+      .panel .bracket {
+        position: absolute;
+        width: 18px;
+        height: 18px;
+        border: 2px solid var(--accent);
+      }
+      .panel .tl {
+        top: -6px;
+        left: -6px;
+        border-right: 0;
+        border-bottom: 0;
+      }
+      .panel .tr {
+        top: -6px;
+        right: -6px;
+        border-left: 0;
+        border-bottom: 0;
+      }
+      .panel .bl {
+        bottom: -6px;
+        left: -6px;
+        border-right: 0;
+        border-top: 0;
+      }
+      .panel .br {
+        bottom: -6px;
+        right: -6px;
+        border-left: 0;
+        border-top: 0;
+      }
+      .panel .art {
+        float: right;
+        width: 46%;
+        margin: -2.75rem -0.5rem 0 0.5rem;
+        text-align: center;
+      }
+      .panel .art figcaption {
+        position: static;
+        display: inline-block;
+        font-size: 0.6rem;
+        background: #172f73;
+        color: #f5efe2;
+        border-color: #c9c2b3;
+      }
+      .panel .about {
+        clear: both;
+      }
+      .panel .btn--ghost {
+        color: #f5efe2;
+        border-color: #c9c2b3;
+      }
+      @container hero (min-width: 760px) {
+        .hero-c {
+          grid-template-columns: 1.6fr 1fr;
+          align-items: end;
+          gap: 2.5rem;
+          padding: 3.5rem 2.5rem 3rem;
+        }
+        .panel {
+          padding: 2.5rem 2.25rem 2.25rem;
+        }
+        .panel .art {
+          width: 34%;
+          margin: -4.5rem -1.5rem 0 1rem;
+        }
+        .panel .about {
+          clear: none;
+        }
+        .hero-c .latest {
+          grid-template-columns: 1fr;
+        }
+        .hero-c .latest img {
+          width: 100%;
+          height: auto;
+          aspect-ratio: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- The placeholder illustration, drawn once and reused by every preview.
+         Colours come from the preview's --art-line and the brand yellow. -->
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+      <symbol id="cage-art" viewBox="0 0 400 360">
+        <g fill="none" stroke="var(--art-line)" stroke-width="4" stroke-linecap="round">
+          <circle cx="170" cy="62" r="12" />
+          <line x1="170" y1="74" x2="170" y2="90" />
+          <path d="M80 150 C80 70 260 70 260 150" />
+          <path d="M170 90 Q95 100 102.5 150" />
+          <path d="M170 90 Q115 100 125 150" />
+          <path d="M170 90 Q140 100 147.5 150" />
+          <path d="M170 90 V150" />
+          <path d="M170 90 Q200 100 192.5 150" />
+          <path d="M170 90 Q225 100 215 150" />
+          <path d="M170 90 Q245 100 237.5 150" />
+          <ellipse cx="170" cy="150" rx="90" ry="12" />
+          <line x1="80" y1="150" x2="80" y2="320" />
+          <line x1="102.5" y1="160" x2="102.5" y2="330" />
+          <line x1="125" y1="161" x2="125" y2="331" />
+          <line x1="147.5" y1="162" x2="147.5" y2="332" />
+          <line x1="170" y1="162" x2="170" y2="332" />
+          <line x1="192.5" y1="162" x2="192.5" y2="332" />
+          <line x1="215" y1="161" x2="215" y2="331" />
+          <!-- the two bars the canary forced apart -->
+          <path d="M237.5 160 Q200 245 237.5 330" />
+          <path d="M260 150 Q305 235 260 320" />
+          <ellipse cx="170" cy="320" rx="90" ry="12" />
+          <path d="M80 320 V334 A90 12 0 0 0 260 334 V320" />
+        </g>
+        <!-- motion trail and loose feathers -->
+        <g fill="none" stroke="var(--accent)" stroke-width="3" stroke-linecap="round" stroke-dasharray="2 10">
+          <path d="M250 245 Q270 190 300 150" />
+          <path d="M268 255 Q295 205 325 172" />
+        </g>
+        <ellipse cx="282" cy="262" rx="7" ry="2.6" transform="rotate(35 282 262)" fill="#e6b40f" />
+        <ellipse cx="296" cy="228" rx="6" ry="2.2" transform="rotate(-20 296 228)" fill="#c9930a" />
+        <!-- the canary -->
+        <g transform="translate(330 112) rotate(-22)">
+          <path d="M-14 2 C-32 -30 -16 -52 -4 -52 C-6 -30 -2 -10 2 4 Z" fill="#a37a00" />
+          <polygon points="-32,4 -64,-8 -62,16 -32,13" fill="#c9930a" />
+          <ellipse cx="0" cy="6" rx="35" ry="20" fill="#e6b40f" />
+          <ellipse cx="6" cy="15" rx="20" ry="7" fill="#f6d860" />
+          <circle cx="30" cy="-12" r="17" fill="#e6b40f" />
+          <polygon points="45,-17 60,-10 45,-5" fill="#e8772e" />
+          <circle cx="36" cy="-15" r="3.3" fill="#14110a" />
+          <circle cx="37.2" cy="-16.2" r="1.1" fill="#fff" />
+          <path d="M-6 2 C-10 -42 22 -62 34 -56 C18 -40 14 -16 8 4 Z" fill="#c9930a" />
+        </g>
+      </symbol>
+    </svg>
+
+    <header class="lab-head">
+      <p class="status">Open for feedback</p>
+      <h1>Landing page: how should the hero introduce Canary Cry?</h1>
+      <p>
+        Issue: <a href="https://github.com/stucny/Armageterdone/issues/1">#1 Redesign the landing page around the mission</a>
+        · 2026-10-24
+      </p>
+      <p>
+        Three ways to open the home page with what Canary Cry is, while keeping a quick route to the newest episode.
+        Every option uses the same words: the title, subtitle and tagline from the issue, and the About paragraph from
+        the current About page. Switch between dark and light theme; on a wide screen you can also switch between phone
+        and desktop width.
+      </p>
+    </header>
+
+    <div class="controls" role="group" aria-label="View options">
+      <fieldset>
+        <legend>Theme</legend>
+        <label><input type="radio" name="theme" id="theme-both" checked /> Both</label>
+        <label><input type="radio" name="theme" id="theme-dark" /> Dark</label>
+        <label><input type="radio" name="theme" id="theme-light" /> Light</label>
+      </fieldset>
+      <fieldset class="width-switch">
+        <legend>Width</legend>
+        <label><input type="radio" name="width" id="width-phone" checked /> Phone (390px), side by side</label>
+        <label><input type="radio" name="width" id="width-desktop" /> Desktop, one at a time</label>
+      </fieldset>
+    </div>
+
+    <main class="options">
+      <!-- ===================== Option A ===================== -->
+      <section class="option" aria-labelledby="opt-a">
+        <h2 id="opt-a"><span class="tag">Option A</span> Split</h2>
+        <p class="diff">Words beside the canary (below it on a phone); the latest episode is a card under the About text.</p>
+
+        <div class="preview-wrap" data-theme="dark">
+          <p class="theme-label">Dark theme</p>
+          <div class="preview">
+            <div class="mock-nav">
+              <img src="../../images/cc-logo.webp" alt="" width="28" height="28" />Canary Cry
+              <span class="links"><span>Episodes</span><span>Shows</span><span>Community</span><span>Support</span></span>
+              <svg class="menu" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" /></svg>
+            </div>
+            <div class="hero-a">
+              <div>
+                <p class="hero-title">CANARY CRY</p>
+                <p class="hero-sub">Canary Cry Radio | Canary Cry News Talk</p>
+                <p class="hero-tag">Think Outside the Cage.</p>
+                <p class="about">
+                  <strong>A biblical take on the news and world events.</strong> CANARY CRY NEWS TALK is a show that
+                  brings frequent updates on news and events happening around the world from an Alt. Christian
+                  worldview, hosted by us, Basil and Gonz of the Canary Cry Radio podcast.
+                </p>
+                <a class="latest" href="../../episodes/hackpacalypse-now-weather-wars-and-crispr-unicorns-ccnt-984/">
+                  <img src="https://static.libsyn.com/p/assets/f/3/b/6/f3b6642a6ccae661a04421dee9605cbd/CCNT984_square-20261022-0vjwu4e57m.png" alt="" width="72" height="72" />
+                  <span>
+                    <span class="kicker">Latest episode</span>
+                    <span class="ep-title">HACKPACALYPSE NOW! Weather Wars and CRISPR Unicorns | CCNT 984</span>
+                    <span class="ep-date">October 22, 2026</span>
+                  </span>
+                </a>
+              </div>
+              <figure class="art">
+                <svg viewBox="0 0 400 360" role="img" aria-label="Placeholder illustration: a canary flying out between the bent bars of a birdcage"><use href="#cage-art" /></svg>
+                <figcaption>Placeholder illustration</figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+
+        <div class="preview-wrap" data-theme="light">
+          <p class="theme-label">Light theme</p>
+          <div class="preview">
+            <div class="mock-nav">
+              <img src="../../images/cc-logo.webp" alt="" width="28" height="28" />Canary Cry
+              <span class="links"><span>Episodes</span><span>Shows</span><span>Community</span><span>Support</span></span>
+              <svg class="menu" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" /></svg>
+            </div>
+            <div class="hero-a">
+              <div>
+                <p class="hero-title">CANARY CRY</p>
+                <p class="hero-sub">Canary Cry Radio | Canary Cry News Talk</p>
+                <p class="hero-tag">Think Outside the Cage.</p>
+                <p class="about">
+                  <strong>A biblical take on the news and world events.</strong> CANARY CRY NEWS TALK is a show that
+                  brings frequent updates on news and events happening around the world from an Alt. Christian
+                  worldview, hosted by us, Basil and Gonz of the Canary Cry Radio podcast.
+                </p>
+                <a class="latest" href="../../episodes/hackpacalypse-now-weather-wars-and-crispr-unicorns-ccnt-984/">
+                  <img src="https://static.libsyn.com/p/assets/f/3/b/6/f3b6642a6ccae661a04421dee9605cbd/CCNT984_square-20261022-0vjwu4e57m.png" alt="" width="72" height="72" />
+                  <span>
+                    <span class="kicker">Latest episode</span>
+                    <span class="ep-title">HACKPACALYPSE NOW! Weather Wars and CRISPR Unicorns | CCNT 984</span>
+                    <span class="ep-date">October 22, 2026</span>
+                  </span>
+                </a>
+              </div>
+              <figure class="art">
+                <svg viewBox="0 0 400 360" role="img" aria-label="Placeholder illustration: a canary flying out between the bent bars of a birdcage"><use href="#cage-art" /></svg>
+                <figcaption>Placeholder illustration</figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+
+        <div class="contrast">
+          <h3>Is the yellow readable?</h3>
+          <ul>
+            <li>
+              Dark: <span class="swatch" style="background: #e6b40f"></span> #e6b40f on
+              <span class="swatch" style="background: #0a0a0a"></span> #0a0a0a is <strong>10.3 : 1</strong>.
+              <span class="pass">Passes</span> AA and AAA.
+            </li>
+            <li>
+              Light: canary #e6b40f on <span class="swatch" style="background: #fdf8eb"></span> cream #fdf8eb would
+              be only <strong>1.8 : 1</strong> (<span class="fail">fails</span>), so the light theme uses the site's
+              darker yellow <span class="swatch" style="background: #a37a00"></span> #a37a00: <strong>3.7 : 1</strong>.
+              <span class="warn">Passes</span> AA for large text only. Fine for the big title, but it reads as mustard
+              rather than canary.
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ===================== Option B ===================== -->
+      <section class="option" aria-labelledby="opt-b">
+        <h2 id="opt-b"><span class="tag">Option B</span> Night band</h2>
+        <p class="diff">A centred dark band in both themes with a latest-episode strip; the About text sits below it.</p>
+
+        <div class="preview-wrap" data-theme="dark">
+          <p class="theme-label">Dark theme</p>
+          <div class="preview">
+            <div class="mock-nav">
+              <img src="../../images/cc-logo.webp" alt="" width="28" height="28" />Canary Cry
+              <span class="links"><span>Episodes</span><span>Shows</span><span>Community</span><span>Support</span></span>
+              <svg class="menu" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" /></svg>
+            </div>
+            <div class="hero-b always-dark">
+              <figure class="art">
+                <svg viewBox="0 0 400 360" role="img" aria-label="Placeholder illustration: a canary flying out between the bent bars of a birdcage"><use href="#cage-art" /></svg>
+                <figcaption>Placeholder illustration</figcaption>
+              </figure>
+              <p class="hero-title">CANARY CRY</p>
+              <p class="hero-sub">Canary Cry Radio | Canary Cry News Talk</p>
+              <p class="hero-tag">Think Outside the Cage.</p>
+              <a class="ticker" href="../../episodes/hackpacalypse-now-weather-wars-and-crispr-unicorns-ccnt-984/">
+                <span class="pill">Latest episode</span>
+                <span>HACKPACALYPSE NOW! Weather Wars and CRISPR Unicorns | CCNT 984</span>
+                <span class="ticker-go">Listen &rarr;</span>
+              </a>
+            </div>
+            <div class="below-b">
+              <p class="about">
+                <strong>A biblical take on the news and world events.</strong> CANARY CRY NEWS TALK is a show that
+                brings frequent updates on news and events happening around the world from an Alt. Christian worldview,
+                hosted by us, Basil and Gonz of the Canary Cry Radio podcast.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="preview-wrap" data-theme="light">
+          <p class="theme-label">Light theme</p>
+          <div class="preview">
+            <div class="mock-nav">
+              <img src="../../images/cc-logo.webp" alt="" width="28" height="28" />Canary Cry
+              <span class="links"><span>Episodes</span><span>Shows</span><span>Community</span><span>Support</span></span>
+              <svg class="menu" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" /></svg>
+            </div>
+            <div class="hero-b always-dark">
+              <figure class="art">
+                <svg viewBox="0 0 400 360" role="img" aria-label="Placeholder illustration: a canary flying out between the bent bars of a birdcage"><use href="#cage-art" /></svg>
+                <figcaption>Placeholder illustration</figcaption>
+              </figure>
+              <p class="hero-title">CANARY CRY</p>
+              <p class="hero-sub">Canary Cry Radio | Canary Cry News Talk</p>
+              <p class="hero-tag">Think Outside the Cage.</p>
+              <a class="ticker" href="../../episodes/hackpacalypse-now-weather-wars-and-crispr-unicorns-ccnt-984/">
+                <span class="pill">Latest episode</span>
+                <span>HACKPACALYPSE NOW! Weather Wars and CRISPR Unicorns | CCNT 984</span>
+                <span class="ticker-go">Listen &rarr;</span>
+              </a>
+            </div>
+            <div class="below-b">
+              <p class="about">
+                <strong>A biblical take on the news and world events.</strong> CANARY CRY NEWS TALK is a show that
+                brings frequent updates on news and events happening around the world from an Alt. Christian worldview,
+                hosted by us, Basil and Gonz of the Canary Cry Radio podcast.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="contrast">
+          <h3>Is the yellow readable?</h3>
+          <ul>
+            <li>
+              Both themes: <span class="swatch" style="background: #e6b40f"></span> #e6b40f on
+              <span class="swatch" style="background: #0a0a0a"></span> #0a0a0a is <strong>10.3 : 1</strong>.
+              <span class="pass">Passes</span> AA and AAA. The band never turns cream, so the title stays true canary.
+            </li>
+            <li>
+              Light theme, About text below the band: #4a3f33 on #fdf8eb is <strong>9.7 : 1</strong>.
+              <span class="pass">Passes</span> AA and AAA.
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ===================== Option C ===================== -->
+      <section class="option" aria-labelledby="opt-c">
+        <h2 id="opt-c"><span class="tag">Option C</span> Shield panel</h2>
+        <p class="diff">A blue panel in the crest's shield colour, framed with the site's corner brackets; the canary escapes over its edge.</p>
+
+        <div class="preview-wrap" data-theme="dark">
+          <p class="theme-label">Dark theme</p>
+          <div class="preview">
+            <div class="mock-nav">
+              <img src="../../images/cc-logo.webp" alt="" width="28" height="28" />Canary Cry
+              <span class="links"><span>Episodes</span><span>Shows</span><span>Community</span><span>Support</span></span>
+              <svg class="menu" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" /></svg>
+            </div>
+            <div class="hero-c">
+              <div class="panel">
+                <span class="bracket tl"></span><span class="bracket tr"></span><span class="bracket bl"></span><span class="bracket br"></span>
+                <figure class="art" style="--art-line: #c9c2b3">
+                  <svg viewBox="0 0 400 360" role="img" aria-label="Placeholder illustration: a canary flying out between the bent bars of a birdcage"><use href="#cage-art" /></svg>
+                  <figcaption>Placeholder illustration</figcaption>
+                </figure>
+                <p class="hero-title">CANARY CRY</p>
+                <p class="hero-sub">Canary Cry Radio | Canary Cry News Talk</p>
+                <p class="hero-tag">Think Outside the Cage.</p>
+                <p class="about">
+                  <strong>A biblical take on the news and world events.</strong> CANARY CRY NEWS TALK is a show that
+                  brings frequent updates on news and events happening around the world from an Alt. Christian
+                  worldview, hosted by us, Basil and Gonz of the Canary Cry Radio podcast.
+                </p>
+              </div>
+              <a class="latest" href="../../episodes/hackpacalypse-now-weather-wars-and-crispr-unicorns-ccnt-984/">
+                <img src="https://static.libsyn.com/p/assets/f/3/b/6/f3b6642a6ccae661a04421dee9605cbd/CCNT984_square-20261022-0vjwu4e57m.png" alt="" width="72" height="72" />
+                <span>
+                  <span class="kicker">Latest episode</span>
+                  <span class="ep-title">HACKPACALYPSE NOW! Weather Wars and CRISPR Unicorns | CCNT 984</span>
+                  <span class="ep-date">October 22, 2026</span>
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="preview-wrap" data-theme="light">
+          <p class="theme-label">Light theme</p>
+          <div class="preview">
+            <div class="mock-nav">
+              <img src="../../images/cc-logo.webp" alt="" width="28" height="28" />Canary Cry
+              <span class="links"><span>Episodes</span><span>Shows</span><span>Community</span><span>Support</span></span>
+              <svg class="menu" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" /></svg>
+            </div>
+            <div class="hero-c">
+              <div class="panel">
+                <span class="bracket tl"></span><span class="bracket tr"></span><span class="bracket bl"></span><span class="bracket br"></span>
+                <figure class="art" style="--art-line: #c9c2b3">
+                  <svg viewBox="0 0 400 360" role="img" aria-label="Placeholder illustration: a canary flying out between the bent bars of a birdcage"><use href="#cage-art" /></svg>
+                  <figcaption>Placeholder illustration</figcaption>
+                </figure>
+                <p class="hero-title">CANARY CRY</p>
+                <p class="hero-sub">Canary Cry Radio | Canary Cry News Talk</p>
+                <p class="hero-tag">Think Outside the Cage.</p>
+                <p class="about">
+                  <strong>A biblical take on the news and world events.</strong> CANARY CRY NEWS TALK is a show that
+                  brings frequent updates on news and events happening around the world from an Alt. Christian
+                  worldview, hosted by us, Basil and Gonz of the Canary Cry Radio podcast.
+                </p>
+              </div>
+              <a class="latest" href="../../episodes/hackpacalypse-now-weather-wars-and-crispr-unicorns-ccnt-984/">
+                <img src="https://static.libsyn.com/p/assets/f/3/b/6/f3b6642a6ccae661a04421dee9605cbd/CCNT984_square-20261022-0vjwu4e57m.png" alt="" width="72" height="72" />
+                <span>
+                  <span class="kicker">Latest episode</span>
+                  <span class="ep-title">HACKPACALYPSE NOW! Weather Wars and CRISPR Unicorns | CCNT 984</span>
+                  <span class="ep-date">October 22, 2026</span>
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="contrast">
+          <h3>Is the yellow readable?</h3>
+          <ul>
+            <li>
+              Both themes: <span class="swatch" style="background: #e6b40f"></span> #e6b40f on
+              <span class="swatch" style="background: #1e3a8a"></span> shield blue #1e3a8a is <strong>5.4 : 1</strong>.
+              <span class="pass">Passes</span> AA at every size (AAA for large text). The panel's lightest corner,
+              #24449a, is <strong>4.6 : 1</strong>, still AA.
+            </li>
+            <li>
+              About text on the panel: #c9c2b3 on #1e3a8a is <strong>5.9 : 1</strong>. <span class="pass">Passes</span>
+              AA.
+            </li>
+          </ul>
+        </div>
+      </section>
+    </main>
+
+    <section class="ask" aria-labelledby="ask">
+      <h2 id="ask">What we need from you</h2>
+      <p>
+        <strong>Which hero should we build: A, B or C?</strong> Any change you'd make to it? Comment your pick on
+        <a href="https://github.com/stucny/Armageterdone/issues/1">issue #1</a>.
+      </p>
+      <p>Two smaller questions, if you have a view:</p>
+      <ul>
+        <li>Should "A biblical take on the news and world events." open the About paragraph, as shown?</li>
+        <li>
+          The canary-and-cage drawing is a placeholder. Will you supply the final hero art, or should we commission it?
+        </li>
+      </ul>
+    </section>
+
+    <footer class="lab-foot">
+      <p>
+        About this lab: the latest episode is the newest in the podcast feed on 2026-10-24. The About text is the
+        current About page's first paragraph. The canary-and-cage drawing is a hand-made placeholder for this lab, not
+        final art. Contrast ratios use the WCAG 2.2 formula on the flat background colour (AA needs 4.5 : 1 for body
+        text and 3 : 1 for large text). The final logo (#2) may change this layout later.
+      </p>
+      <p><a href="../">All design labs</a> · <a href="../../">Back to the preview site</a></p>
+    </footer>
+  </body>
+</html>
