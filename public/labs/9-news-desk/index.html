@@ -189,9 +189,9 @@
           justify-content: center;
           gap: 1.5rem;
         }
-        body:has(#width-phone:checked) .option > h2,
+        /* room for a three-line description, so the previews line up */
         body:has(#width-phone:checked) .option > .diff {
-          min-height: 2.5em;
+          min-height: 4.65em;
         }
       }
       @media (max-width: 63.99rem) {
@@ -526,6 +526,10 @@
         border: 1px solid var(--line);
         background: var(--bg-surface);
       }
+      /* The canary focus ring is only 1.8 : 1 on cream; use the deep yellow. */
+      body:has(#theme-light:checked) .grid-b .monitor:focus-visible {
+        outline-color: #7a5b00;
+      }
       .grid-b .monitor:hover {
         border-color: var(--line-strong);
       }
@@ -653,7 +657,8 @@
       <p>
         Three layouts for the top of the Shows page: a monitor for each of the six shows, each one a link. Hover or tab
         to a monitor to switch it on. The hosts are not drawn here: their spot is marked for commissioned artwork.
-        Shows without art yet show colour bars.
+        Shows without art yet show colour bars. In the light theme the studio scenes (A and C) stay dark, like a
+        picture would.
       </p>
     </header>
 
@@ -684,7 +689,7 @@
               <li><a class="monitor" href="../../tag/radio/"><span class="bezel"><span class="screen"><img src="../../images/show-radio.webp" alt="" width="512" height="512" /></span><span class="led"></span></span><span class="mon-label">Canary Cry Radio</span></a></li>
               <li><a class="monitor" href="../../tag/clubhouse/"><span class="bezel"><span class="screen"><img src="../../images/show-clubhouse.webp" alt="" width="512" height="512" /></span><span class="led"></span></span><span class="mon-label">Canary Cry Clubhouse</span></a></li>
               <li><a class="monitor" href="#no-page"><span class="bezel"><span class="screen testcard"><span>Art to come</span></span><span class="led"></span></span><span class="mon-label">The Joyspiracy Theory</span></a></li>
-              <li><a class="monitor" href="../../burningmanresearch/"><span class="bezel"><span class="screen"><img src="../../content/images/e2f8d5c0-83360211-6a87-d7bf-6741-59b8ca567492.jpg" alt="" /></span><span class="led"></span></span><span class="mon-label">Burning Man Research</span></a></li>
+              <li><a class="monitor" href="../../burningmanresearch/"><span class="bezel"><span class="screen"><img src="../../content/images/e2f8d5c0-83360211-6a87-d7bf-6741-59b8ca567492.jpg" alt="" width="1152" height="929" /></span><span class="led"></span></span><span class="mon-label">Burning Man Research</span></a></li>
               <li><a class="monitor" href="#no-page"><span class="bezel"><span class="screen testcard"><span>Art to come</span></span><span class="led"></span></span><span class="mon-label">Basil's Bunker</span></a></li>
             </ul>
             <div class="desk-area">
@@ -729,7 +734,7 @@
               <li><a class="monitor" href="../../tag/radio/"><span class="bezel"><span class="screen"><img src="../../images/show-radio.webp" alt="" width="512" height="512" /></span><span class="led"></span></span><span><span class="mon-label">Canary Cry Radio</span><span class="mon-desc">Deep-cut interviews and conversations with discerners, theologians, and researchers.</span></span></a></li>
               <li><a class="monitor" href="../../tag/clubhouse/"><span class="bezel"><span class="screen"><img src="../../images/show-clubhouse.webp" alt="" width="512" height="512" /></span><span class="led"></span></span><span><span class="mon-label">Canary Cry Clubhouse</span><span class="mon-desc">Open-mic conversations with the community. Wade into deep waters together.</span></span></a></li>
               <li><a class="monitor" href="#no-page"><span class="bezel"><span class="screen testcard"><span>Art to come</span></span><span class="led"></span></span><span><span class="mon-label">The Joyspiracy Theory</span><span class="mon-desc">[Description to come]</span></span></a></li>
-              <li><a class="monitor" href="../../burningmanresearch/"><span class="bezel"><span class="screen"><img src="../../content/images/e2f8d5c0-83360211-6a87-d7bf-6741-59b8ca567492.jpg" alt="" /></span><span class="led"></span></span><span><span class="mon-label">Burning Man Research</span><span class="mon-desc">The show has covered Burning Man for over a decade — annual fieldwork, theological analysis, and producer-funded ground-truthing.</span></span></a></li>
+              <li><a class="monitor" href="../../burningmanresearch/"><span class="bezel"><span class="screen"><img src="../../content/images/e2f8d5c0-83360211-6a87-d7bf-6741-59b8ca567492.jpg" alt="" width="1152" height="929" /></span><span class="led"></span></span><span><span class="mon-label">Burning Man Research</span><span class="mon-desc">The show has covered Burning Man for over a decade — annual fieldwork, theological analysis, and producer-funded ground-truthing.</span></span></a></li>
               <li><a class="monitor" href="#no-page"><span class="bezel"><span class="screen testcard"><span>Art to come</span></span><span class="led"></span></span><span><span class="mon-label">Basil's Bunker</span><span class="mon-desc">[Description to come]</span></span></a></li>
             </ul>
           </div>
@@ -755,7 +760,7 @@
               <li><a class="monitor" href="../../tag/radio/"><span class="bezel"><span class="screen"><img src="../../images/show-radio.webp" alt="" width="512" height="512" /></span><span class="led"></span></span><span class="mon-label">Canary Cry Radio</span></a></li>
               <li><a class="monitor" href="../../tag/clubhouse/"><span class="bezel"><span class="screen"><img src="../../images/show-clubhouse.webp" alt="" width="512" height="512" /></span><span class="led"></span></span><span class="mon-label">Canary Cry Clubhouse</span></a></li>
               <li><a class="monitor" href="#no-page"><span class="bezel"><span class="screen testcard"><span>Art to come</span></span><span class="led"></span></span><span class="mon-label">The Joyspiracy Theory</span></a></li>
-              <li><a class="monitor" href="../../burningmanresearch/"><span class="bezel"><span class="screen"><img src="../../content/images/e2f8d5c0-83360211-6a87-d7bf-6741-59b8ca567492.jpg" alt="" /></span><span class="led"></span></span><span class="mon-label">Burning Man Research</span></a></li>
+              <li><a class="monitor" href="../../burningmanresearch/"><span class="bezel"><span class="screen"><img src="../../content/images/e2f8d5c0-83360211-6a87-d7bf-6741-59b8ca567492.jpg" alt="" width="1152" height="929" /></span><span class="led"></span></span><span class="mon-label">Burning Man Research</span></a></li>
               <li><a class="monitor" href="#no-page"><span class="bezel"><span class="screen testcard"><span>Art to come</span></span><span class="led"></span></span><span class="mon-label">Basil's Bunker</span></a></li>
             </ul>
             <p class="swipe" aria-hidden="true">Swipe for more shows &rarr;</p>
