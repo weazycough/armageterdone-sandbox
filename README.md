@@ -14,8 +14,12 @@ visitors. Forms (newsletter, contact) are marked "Preview only" and send nothing
   anything.
 - Episodes come straight from the Libsyn RSS feed: each one gets its own page with its artwork, show notes and an
   audio player.
-- The other pages (Support, Roundtable, Meet-Ups…) currently use a simple shared layout. Their custom designs are
-  being ported next.
+- Each show (News Talk, Radio, Clubhouse) has its own episode list, and the search button in the header searches
+  every page and episode.
+- The pages (Support, Roundtable, Meet-Ups…) have the designs of the Ghost demo. Placeholders (The Gospel's text,
+  the Speak Pipe widget, Street Team flyers, the T-Shirt Council pricing table) say what is still needed: send it
+  in an issue or through [`assets-inbox/`](assets-inbox/).
+- Video and music players load only when you press their button, so opening a page contacts no other site.
 
 ## Giving feedback
 
@@ -45,10 +49,11 @@ pnpm feed:refresh     # download the RSS feed again (local builds reuse a cached
 `pnpm gate` must pass before anything is published, and CI runs it on every push:
 
 - **Lint and type check** (`vp check`): TypeScript in strict mode and Oxlint with type-aware rules.
-- **Unit tests** (`vp test`): RSS parsing and show-note cleaning, URL helpers, the site checks themselves.
+- **Unit tests** (`vp test`): RSS parsing and show-note cleaning, URL helpers, which show an episode belongs to,
+  search, the site checks themselves.
 - **Site checks**, run over the built site at the end of `pnpm build`: every page carries the no-index tag; no
   robots.txt or sitemap; no analytics, trackers or third-party scripts; no personal or internal details anywhere in
-  the site or the repository; every internal link works; every episode and page was built; forms send nothing.
+  the site or the repository; every internal link works; every episode, page and show list was built, with the search index; forms send nothing.
 
 How it all fits together: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md). Third-party licences:
 [`NOTICE.md`](NOTICE.md). Changes: [`CHANGELOG.md`](CHANGELOG.md).
