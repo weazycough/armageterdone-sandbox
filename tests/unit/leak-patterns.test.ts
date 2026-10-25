@@ -23,6 +23,9 @@ describe("leak shapes", () => {
     "mirrored on Forgejo",
     "__GHOST_URL__/support",
     "write to someone@example.org",
+    "Example Initiative (555) 201-0146",
+    "call 555-201-4477 today",
+    "text +1 555.201.4477",
   ])("flags %s", (sample) => {
     expect(findLeaks(sample)).not.toEqual([]);
   });
@@ -37,16 +40,19 @@ describe("leak shapes", () => {
     "you@email.com",
     'let base = "http://localhost";',
     "https://news.example/home/insights/story",
+    // Real show-note text that looks a bit like a phone number.
+    "HACKPACALYPSE NOW - 10.21.2026 - #984",
+    "Recorded 01:42:37, timestamps 1:02:33 and 12:30:45",
+    "https://x.com/i/status/1839045851 and id 1146781072",
+    "CCNT 983 - 2026-10-20 - ep 666-777",
   ])("passes %s", (sample) => {
     expect(findLeaks(sample)).toEqual([]);
   });
 
-  it("allows addresses the episode feed published", () => {
-    expect(
-      findLeaks("write to a.producer@example.org", {
-        allowEmails: new Set(["a.producer@example.org"]),
-      }),
-    ).toEqual([]);
+  it("allows only the show's addresses, not others the feed names", () => {
+    expect(findLeaks("write to canarycrynewsdesk@proton.me")).toEqual([]);
+    expect(findLeaks("write to a.producer@example.org")).not.toEqual([]);
+    expect(findLeaks("write to canarycryfan@example.org")).not.toEqual([]);
   });
 
   it("reads JSON-escaped hydration data as text", () => {
@@ -54,8 +60,8 @@ describe("leak shapes", () => {
     expect(findLeaks(String.raw`>someone@example.org</a`)).not.toEqual([]);
   });
 
-  it("can skip the email check for binary files", () => {
-    expect(findLeaks("x@y.ab", { emails: false })).toEqual([]);
+  it("can skip the email and phone checks for binary files", () => {
+    expect(findLeaks("x@y.ab 555-201-4477", { emails: false })).toEqual([]);
   });
 });
 
