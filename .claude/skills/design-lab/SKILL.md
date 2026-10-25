@@ -65,8 +65,24 @@ three and fails if they're broken.
    need from `node_modules/@fontsource/<font>/files/` into the lab folder
    and add an `@font-face` for each. Episode art may load from
    `static.libsyn.com` (the feed's own art host, which the gate allows).
+   Point at the site's own images and pages with relative paths
+   (`../../images/cc-logo.webp`, `../../tag/radio/`); the build's link check
+   fails one that doesn't exist.
+   Where the real thing can't be shown, say so on the page:
+   - Numbers that are private or not collected yet: clearly made-up values,
+     labelled **Sample data** next to them.
+   - Art that doesn't exist yet: draw a simple placeholder by hand in SVG or
+     CSS (not AI-generated or stock images) and label it **Placeholder
+     illustration**. Never draw or generate real people, the hosts included:
+     use a labelled silhouette or an empty space marked "commissioned
+     artwork goes here".
 5. **Works on a phone.** Most reviewers will open the link on a phone. Check a
    narrow width (about 390px) as well as desktop.
+6. **Readable.** When an option's colours are part of the choice, give each
+   key text colour's contrast ratio against its background, computed with
+   the WCAG formula (not estimated), and the level it passes: AA needs
+   4.5 : 1 for body text and 3 : 1 for large text. Keep the lab's own
+   controls keyboard-usable with a visible focus ring.
 
 ## What a good lab looks like
 
@@ -75,9 +91,19 @@ three and fails if they're broken.
   retired).
 - **Two to four options**, each with a big clear label (`Option A`,
   `Option B`, …) and one line saying what's different about it. Side by side
-  on desktop, stacked on a phone.
+  on desktop, stacked on a phone. A design that needs the full page width (a
+  hero, a banner, a page section) won't fit in a column: stack the options,
+  and let wide-screen reviewers switch the previews to phone width. Radio
+  buttons with `:has()` do this without a script, and container queries
+  inside each preview make it lay out as it would on a phone
+  (`public/labs/1-landing-hero/` shows how). Wrap such switches in a
+  `<div role="group">`, not a `<form>`: the gate holds every form to the
+  preview's form rules (no named fields, a "Preview only" notice).
 - Show each option in context (inside a realistic page section, light and
-  dark theme if the site has both), not floating on a blank canvas.
+  dark theme if the site has both), not floating on a blank canvas. Mock the
+  site's headings inside a preview with styled `<p>` or `<div>`, not
+  `<h1>`–`<h3>`, so the lab's own headings (the question, each option, "What
+  we need from you") stay the outline a screen reader user navigates.
 - End with **"What we need from you"**: the exact question, e.g. "Which
   option for the episode card? Any change you'd make to it?"
 - Keep it to one decision per lab. Two questions → two labs.
