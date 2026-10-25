@@ -6,6 +6,7 @@ import { describe, expect, it } from "vite-plus/test";
 import { DESIGNED_PAGES } from "../../app/lib/designed-pages";
 import { episodeListSchema } from "../../app/lib/feed";
 import { EPISODES_JSON, PAGES_DIR, pageCount, tagPath } from "../../app/lib/paths";
+import { SEARCH_INDEX_FILE, searchIndexSchema } from "../../app/lib/search";
 import { SHOWS, showOf } from "../../app/lib/shows";
 import { files, htmlFiles, read } from "./dist-files";
 
@@ -59,6 +60,14 @@ describe("designed pages and show lists", () => {
       expect(lists, show.slug).toHaveLength(pageCount(count));
       expect(files).toContain(`${tagPath(show.slug).slice(1)}index.html`);
     }
+  });
+
+  it("has a search index with every page and every episode", () => {
+    const index = searchIndexSchema.parse(JSON.parse(read(SEARCH_INDEX_FILE)));
+    const paths = new Set(index.map((e) => e.path));
+    expect(pageSlugs.filter((s) => !paths.has(`/${s}/`))).toEqual([]);
+    expect(episodes.filter((e) => !paths.has(`/episodes/${e.slug}/`))).toEqual([]);
+    expect(index.find((e) => e.path === "/support/")?.title).toBe("Become a Producer");
   });
 });
 

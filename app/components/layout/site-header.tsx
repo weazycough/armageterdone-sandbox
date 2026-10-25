@@ -1,6 +1,5 @@
 // site-header.tsx — the latest-episode ticker, brand, primary nav, theme
-// toggle and the mobile drawer (Ghost default.hbs). The Ghost search button is
-// left out until the site has its own search.
+// toggle, search and the mobile drawer (Ghost default.hbs).
 
 import { useState } from "react";
 import type * as React from "react";
@@ -9,6 +8,7 @@ import { asset } from "../../lib/asset";
 import { episodePath } from "../../lib/paths";
 import { formatShortDate } from "../../lib/dates";
 import { MainNav } from "./main-nav";
+import { SiteSearch } from "./site-search";
 import { ThemeToggle } from "./theme-toggle";
 
 export interface LatestEpisode {
@@ -76,6 +76,7 @@ export function SiteHeader({ latest }: { latest: LatestEpisode | null }): React.
             <MainNav />
           </nav>
           <div className="site-tools">
+            <SiteSearch />
             <ThemeToggle />
             <button
               className="nav-toggle"
