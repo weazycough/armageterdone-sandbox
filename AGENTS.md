@@ -68,7 +68,9 @@ Everything merged to `main` is published to a public website.
   numbers, home addresses, passwords, API keys, internal server names or IP
   addresses, personal file paths.
 - **No trackers.** No analytics, ad scripts, or third-party scripts that track
-  visitors. Embeds (YouTube, Twitch, etc.) only where the page needs them.
+  visitors. Embeds (YouTube, Twitch, etc.) only where the page needs them,
+  and only through `app/components/embed.tsx`, which loads the player when
+  the visitor presses its button; the build rejects a plain `<iframe>`.
 - **Forms don't submit anywhere** in the preview; they're marked "preview
   only".
 - The build's gate enforces the `noindex` tag and scans for leaked private

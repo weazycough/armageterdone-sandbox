@@ -101,6 +101,87 @@
   }
 }
 
+@layer components {
+  /* Page ports (app/components/page-parts.tsx). The Ghost templates set these
+     inline; as classes they also get a narrow-screen layout. */
+  .page-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+  .prose--center .page-buttons,
+  .page-buttons--center {
+    justify-content: center;
+  }
+  /* Ghost forced two columns inline, even on phones. */
+  @media (min-width: 700px) {
+    .producer-tiers--two {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  .placeholder-box {
+    background: var(--bg-surface);
+    border: 1px dashed var(--line-strong);
+    border-radius: var(--radius-md);
+    padding: var(--space-6);
+    text-align: center;
+  }
+  .placeholder-box__note {
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent-on-bg);
+  }
+}
+
+@layer components {
+  /* A third-party player before it is loaded (app/components/embed.tsx). */
+  .embed-facade {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    text-align: center;
+  }
+  .embed-facade__note {
+    max-width: 28rem;
+    margin: 0;
+    font-size: 0.8125rem;
+    color: var(--fg-tertiary);
+  }
+  /* A fixed-height embed (the SoundCloud playlist). */
+  .embed-box {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+  }
+  .embed-box iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+}
+
+@layer components {
+  /* The product image beside a product hero (supply drop, t-shirt council). */
+  .product-hero__img {
+    width: 100%;
+    max-width: 480px;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    background: var(--bg-surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+  }
+}
+
 /* Tailwind has a `container` utility of its own (a max-width per breakpoint,
    in the utilities layer), which would beat the theme's .container and make
    pages wider than the theme at 1280px+ and narrower at tablet widths. This

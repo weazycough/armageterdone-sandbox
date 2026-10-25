@@ -3,6 +3,7 @@
 
 import { readdirSync, readFileSync } from "node:fs";
 import { describe, expect, it } from "vite-plus/test";
+import { DESIGNED_PAGES } from "../../app/lib/designed-pages";
 import { episodeListSchema } from "../../app/lib/feed";
 import { EPISODES_JSON, PAGES_DIR, pageCount, tagPath } from "../../app/lib/paths";
 import { SHOWS, showOf } from "../../app/lib/shows";
@@ -42,7 +43,14 @@ describe("pages", () => {
   });
 });
 
-describe("show lists", () => {
+describe("designed pages and show lists", () => {
+  it("renders each designed page with its own template, not the generic one", () => {
+    const generic = DESIGNED_PAGES.filter(
+      (slug) => !/<article class="page [a-z0-9-]+-page"/.test(read(`${slug}/index.html`)),
+    );
+    expect(generic).toEqual([]);
+  });
+
   it("has every page of every show's list", () => {
     for (const show of SHOWS) {
       const count = episodes.filter((e) => showOf(e) === show.slug).length;
