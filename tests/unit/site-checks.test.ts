@@ -90,8 +90,40 @@ describe("thirdPartyProblems", () => {
     ],
     ["a remote @import in a style block", '<style>@import "https://fonts.example/css";</style>'],
     ["a tracker in an inline script", "<script>gtag('config','x')</script>"],
+    [
+      "a beacon to another site in an inline script",
+      "<script>navigator.sendBeacon('https://collect.example/hit')</script>",
+    ],
+    [
+      "a protocol-relative host in an inline script",
+      '<script>new Image().src = "//px.example/p.gif"</script>',
+    ],
+    [
+      "code smuggled after the hydration data",
+      `<script>window.__reactRouterContext.streamController.enqueue("[]");fetch("https://x.example/")</script>`,
+    ],
+    ["an SVG <image> from another site", '<svg><image href="https://img.example/a.png"/></svg>'],
+    [
+      "an SVG <use> from another site (xlink)",
+      `<svg><use xlink:href='https://icons.example/s.svg#i'></use></svg>`,
+    ],
+    ["a body background", '<body background="https://img.example/bg.gif">'],
   ])("flags %s", (_name, body) => {
     expect(problems(body)).not.toEqual([]);
+  });
+
+  it("allows React Router's hydration data, which may name any site in show notes", () => {
+    const data = String.raw`window.__reactRouterContext.streamController.enqueue("[{\"notes\":\"<a href=\\\"https://rumble.com/x\\\">\"}]\n");`;
+    expect(problems(`<script>${data}</script>`)).toEqual([]);
+  });
+
+  it("allows same-site SVG references and episode-media hosts in scripts", () => {
+    expect(
+      problems(
+        `<svg><use href="#icon"/><image href="art.png"/></svg>
+         <script>const a = "https://traffic.libsyn.com/a.mp3";</script>`,
+      ),
+    ).toEqual([]);
   });
 
   it("allows an iframe only from the page's allow-listed hosts", () => {

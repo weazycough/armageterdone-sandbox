@@ -129,6 +129,20 @@ export function cssProblems(css: string): string[] {
 }
 
 const MEDIA_TAGS = new Set(["img", "audio", "video", "source", "track", "picture", "input"]);
+/** SVG elements that load what their href points at. */
+const SVG_LOADS = new Set(["image", "use", "feimage"]);
+
+/** React Router's hydration data: one call with one string literal, so it
+ *  carries text (show notes may mention any site) but can't run anything. */
+const HYDRATION_DATA =
+  /^window\.__reactRouterContext\.streamController\.enqueue\("(?:[^"\\]|\\[\s\S])*"\);$/;
+
+/** Hosts named in a script ("https://host/…", "//host/…"). */
+export function scriptHosts(js: string): string[] {
+  return [...js.matchAll(/(?:https?:)?\/\/([a-z0-9-]+(?:\.[a-z0-9-]+)+)/gi)].map((m) =>
+    (m[1] ?? "").toLowerCase(),
+  );
+}
 const LINK_LOADS =
   /\b(?:stylesheet|preload|modulepreload|prefetch|prerender|preconnect|dns-prefetch|icon|apple-touch-icon|manifest)\b/i;
 
@@ -166,6 +180,11 @@ export function thirdPartyProblems(html: string, file: string): string[] {
       const target = urls("src", "data")[0] ?? "";
       if (!iframeAllow.includes(externalHost(target) ?? "")) problems.push(`<${name}> ${target}`);
     }
+    if (SVG_LOADS.has(name)) {
+      for (const u of external(urls("href", "xlink:href"))) problems.push(`<${name}> loads ${u}`);
+    }
+    // <body background>, and the same legacy attribute on tables.
+    for (const u of external(urls("background"))) problems.push(`<${name} background=${u}>`);
     if (attrs.has("ping")) problems.push(`<${name} ping=${attrs.get("ping") ?? ""}>`);
     if (name === "meta" && (attrs.get("http-equiv") ?? "").toLowerCase() === "refresh") {
       const target = /url\s*=\s*['"]?([^'";]+)/i.exec(attrs.get("content") ?? "")?.[1] ?? "";
@@ -180,11 +199,13 @@ export function thirdPartyProblems(html: string, file: string): string[] {
 
   for (const css of page.styles) problems.push(...cssProblems(css));
   for (const js of page.inlineScripts) {
-    // React Router's hydration data carries the show notes as text; it is
-    // data, not code, and notes may mention anything.
-    if (js.startsWith("window.__reactRouterContext.streamController.enqueue(")) continue;
+    if (HYDRATION_DATA.test(js.trim())) continue;
     const m = TRACKERS.exec(js);
     if (m !== null) problems.push(`inline script references ${m[0]}`);
+    // A script that names another site can load or send to it (a beacon).
+    for (const host of scriptHosts(js)) {
+      if (!MEDIA_HOSTS.has(host)) problems.push(`inline script names ${host}`);
+    }
   }
   return problems;
 }

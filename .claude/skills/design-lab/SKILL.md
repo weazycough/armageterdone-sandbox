@@ -35,7 +35,7 @@ the real site and the lab is retired.
 
 The preview site is public. These rules keep it out of search engines and
 keep private information off the internet. The build's gate checks the first
-two and fails if they're broken.
+three and fails if they're broken.
 
 1. **`noindex`.** Every lab page has
    `<meta name="robots" content="noindex, nofollow, noarchive">` in its `<head>`.
@@ -44,7 +44,9 @@ two and fails if they're broken.
    names or IP addresses, passwords, API keys, or draft material the team
    hasn't agreed to show.
 3. **Self-contained.** Inline CSS and JS in the one file (or files in the lab
-   folder). No external scripts, analytics, trackers, or web-font services;
+   folder). No external scripts, analytics, trackers, or web-font services
+   (the gate also fails an inline script that names another site, an iframe,
+   and a remote image in CSS, SVG or a `background` attribute);
    copy fonts into the folder if needed. Images come from the lab folder,
    the site's own `public/` files, or `assets-inbox/` (copy them in; files in
    `assets-inbox/` are not published on their own).
