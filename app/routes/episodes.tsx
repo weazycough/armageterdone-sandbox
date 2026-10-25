@@ -2,41 +2,21 @@
 // /episodes/ is page 1, /episodes/page/2/ onwards the rest (Ghost tag.hbs).
 
 import type * as React from "react";
-import { data } from "react-router";
 import type { Route } from "./+types/episodes";
 import { EpisodeCard } from "../components/episode-card";
 import { Pagination } from "../components/pagination";
 import { loadEpisodes } from "../lib/content.server";
-import { EPISODES_PER_PAGE, pageCount } from "../lib/paths";
+import { listPage } from "../lib/episode-list.server";
+import { pageTitle } from "../lib/meta";
+import { episodeListPath } from "../lib/paths";
 
 export function loader({ params }: Route.LoaderArgs) {
-  const episodes = loadEpisodes();
-  const pages = pageCount(episodes.length);
-  const page = params.page === undefined ? 1 : Number(params.page);
-  // /episodes/page/1/ is not a page: page 1 lives at /episodes/.
-  if (!Number.isInteger(page) || page < 1 || page > pages || params.page === "1") {
-    throw data(null, { status: 404 });
-  }
-  const start = (page - 1) * EPISODES_PER_PAGE;
-  return {
-    page,
-    pages,
-    total: episodes.length,
-    episodes: episodes
-      .slice(start, start + EPISODES_PER_PAGE)
-      .map(({ slug, title, published, excerpt, duration }) => ({
-        slug,
-        title,
-        published,
-        excerpt,
-        duration,
-      })),
-  };
+  return listPage(loadEpisodes(), params.page);
 }
 
 export function meta({ loaderData }: Route.MetaArgs): Route.MetaDescriptors {
   const suffix = loaderData.page > 1 ? ` (page ${String(loaderData.page)})` : "";
-  return [{ title: `Episodes${suffix} — Canary Cry News Talk` }];
+  return pageTitle(`Episodes${suffix}`);
 }
 
 export default function Episodes({ loaderData }: Route.ComponentProps): React.ReactNode {
@@ -57,7 +37,7 @@ export default function Episodes({ loaderData }: Route.ComponentProps): React.Re
               <EpisodeCard key={e.slug} episode={e} />
             ))}
           </div>
-          <Pagination page={page} pages={pages} />
+          <Pagination page={page} pages={pages} pathFor={episodeListPath} />
         </div>
       </section>
     </>

@@ -12,7 +12,9 @@ import {
   episodePath,
   pageCount,
   pagePath,
+  tagPath,
 } from "./app/lib/paths";
+import { SHOWS, showOf } from "./app/lib/shows";
 
 export default {
   ssr: false,
@@ -22,9 +24,14 @@ export default {
     const lists = Array.from({ length: pageCount(episodes.length) }, (_, i) =>
       episodeListPath(i + 1),
     );
+    const tags = SHOWS.flatMap((show) => {
+      const count = episodes.filter((e) => showOf(e) === show.slug).length;
+      return Array.from({ length: pageCount(count) }, (_, i) => tagPath(show.slug, i + 1));
+    });
     return [
       "/",
       ...lists,
+      ...tags,
       ...episodes.map((e) => episodePath(e.slug)),
       ...loadPages().map((p) => pagePath(p.slug)),
       // Two segments, so only the catch-all route matches (":slug" would take

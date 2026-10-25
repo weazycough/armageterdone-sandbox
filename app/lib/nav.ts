@@ -3,10 +3,11 @@
 // paths ("/support/"); anything starting with "http" is external.
 //
 // Differences from the Ghost theme, until pages for them exist:
-// - the three Shows all point at /episodes/: the feed mixes the shows and
-//   doesn't label them reliably, so there are no per-show lists yet;
 // - the footer's "Hangouts" link is gone (no such page), and "Privacy" points
 //   at the text-message privacy page.
+
+import { tagPath } from "./paths";
+import { SHOWS } from "./shows";
 
 export interface NavLink {
   label: string;
@@ -25,11 +26,7 @@ export const PRIMARY_NAV: NavItem[] = [
   { label: "Episodes", href: "/episodes/" },
   {
     label: "Shows",
-    menu: [
-      { label: "Canary Cry News Talk", href: "/episodes/", meta: "The main show" },
-      { label: "Canary Cry Radio", href: "/episodes/", meta: "Long-form interviews" },
-      { label: "Canary Cry Clubhouse", href: "/episodes/", meta: "Live conversations" },
-    ],
+    menu: SHOWS.map((s) => ({ label: s.title, href: tagPath(s.slug), meta: s.nav })),
   },
   {
     label: "Community",

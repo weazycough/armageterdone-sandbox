@@ -6,6 +6,8 @@ export default [
   route("episodes", "routes/episodes.tsx", { id: "episodes" }),
   route("episodes/page/:page", "routes/episodes.tsx", { id: "episodes-page" }),
   route("episodes/:slug", "routes/episode.tsx"),
+  route("tag/:tag", "routes/tag.tsx", { id: "tag" }),
+  route("tag/:tag/page/:page", "routes/tag.tsx", { id: "tag-page" }),
   route(":slug", "routes/page.tsx"),
   route("*", "routes/not-found.tsx"),
 ] satisfies RouteConfig;
