@@ -96,9 +96,12 @@ three and fails if they're broken.
   and let wide-screen reviewers switch the previews to phone width. Radio
   buttons with `:has()` do this without a script, and container queries
   inside each preview make it lay out as it would on a phone
-  (`public/labs/1-landing-hero/` shows how). Wrap such switches in a
-  `<div role="group">`, not a `<form>`: the gate holds every form to the
-  preview's form rules (no named fields, a "Preview only" notice).
+  (`public/labs/1-landing-hero/` shows how). Open at desktop width with a
+  Dark / Light switch; when the colours themselves are the question, add a
+  "Both" choice and open on it side by side, as that lab does. Wrap such
+  switches in a `<div role="group">`, not a `<form>`: the gate holds every
+  form to the preview's form rules (no named fields, a "Preview only"
+  notice).
 - Show each option in context (inside a realistic page section, light and
   dark theme if the site has both), not floating on a blank canvas. Mock the
   site's headings inside a preview with styled `<p>` or `<div>`, not
