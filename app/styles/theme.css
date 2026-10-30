@@ -757,11 +757,12 @@ p {
   justify-self: center;
   order: -1; /* phone: art above the copy (Option A) */
   width: 100%;
-  border-radius: 12px;
+  border-radius: 14px;
   overflow: hidden;
-  /* Soft-fade the black JPG edges into the dark band so it isn't a hard box. */
-  -webkit-mask-image: radial-gradient(ellipse 92% 92% at 50% 48%, #000 62%, transparent 100%);
-  mask-image: radial-gradient(ellipse 92% 92% at 50% 48%, #000 62%, transparent 100%);
+  /* Feather black JPG edges into the dark band; soft gold halo for depth. */
+  -webkit-mask-image: radial-gradient(ellipse 86% 86% at 50% 46%, #000 52%, transparent 100%);
+  mask-image: radial-gradient(ellipse 86% 86% at 50% 46%, #000 52%, transparent 100%);
+  filter: drop-shadow(0 0 28px rgba(230, 180, 15, 0.22));
 }
 .mission-hero__art picture,
 .mission-hero__art img {
