@@ -7,6 +7,10 @@ import { DESIGNED_PAGES } from "../../app/lib/designed-pages";
 import { episodeListSchema } from "../../app/lib/feed";
 import { EPISODES_JSON, PAGES_DIR, pageCount, tagPath } from "../../app/lib/paths";
 import { SEARCH_INDEX_FILE, searchIndexSchema } from "../../app/lib/search";
+import {
+  TRANSCRIPT_INDEX_FILE,
+  transcriptIndexSchema,
+} from "../../app/lib/transcript-search";
 import { SHOWS, showOf } from "../../app/lib/shows";
 import { files, htmlFiles, read } from "./dist-files";
 
@@ -68,6 +72,15 @@ describe("designed pages and show lists", () => {
     expect(pageSlugs.filter((s) => !paths.has(`/${s}/`))).toEqual([]);
     expect(episodes.filter((e) => !paths.has(`/episodes/${e.slug}/`))).toEqual([]);
     expect(index.find((e) => e.path === "/support/")?.title).toBe("Become a Producer");
+  });
+
+  it("has a transcript search index covering every episode's show notes", () => {
+    const index = transcriptIndexSchema.parse(JSON.parse(read(TRANSCRIPT_INDEX_FILE)));
+    const episodePaths = new Set(
+      index.filter((e) => e.source === "show-notes").map((e) => e.path),
+    );
+    expect(episodes.filter((e) => !episodePaths.has(`/episodes/${e.slug}/`))).toEqual([]);
+    expect(index.every((e) => e.text.length > 0 || e.title.length > 0)).toBe(true);
   });
 });
 
