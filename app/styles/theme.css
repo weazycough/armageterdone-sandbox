@@ -752,24 +752,17 @@ p {
 }
 .mission-hero__art {
   margin: 0;
-  /* Square key art: keep phone height in check (~14rem ≈ 224px). */
-  max-width: min(14rem, 72vw);
+  /* Transparent key art sits on the always-dark band; no box mask needed. */
+  max-width: min(17rem, 80vw);
   justify-self: center;
   order: -1; /* phone: art above the copy (Option A) */
   width: 100%;
-  border-radius: 14px;
-  overflow: hidden;
-  /* Feather black JPG edges into the dark band; soft gold halo for depth. */
-  -webkit-mask-image: radial-gradient(ellipse 86% 86% at 50% 46%, #000 52%, transparent 100%);
-  mask-image: radial-gradient(ellipse 86% 86% at 50% 46%, #000 52%, transparent 100%);
-  filter: drop-shadow(0 0 28px rgba(230, 180, 15, 0.22));
 }
 .mission-hero__art picture,
 .mission-hero__art img {
   display: block;
   width: 100%;
   height: auto;
-  vertical-align: top;
 }
 .mission-hero__title {
   margin: 0;
@@ -862,7 +855,7 @@ p {
   }
   .mission-hero__art {
     order: 0;
-    max-width: min(26rem, 100%);
+    max-width: min(32rem, 100%); /* ~23% larger than 26rem */
   }
 }
 
