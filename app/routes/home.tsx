@@ -83,12 +83,15 @@ export default function Home({ loaderData }: Route.ComponentProps): React.ReactN
               </Link>
             </div>
             <figure className="mission-hero__art">
-              <img
-                src={asset("images/canary-cry-wordmark.webp")}
-                alt="Canary Cry"
-                width={900}
-                height={281}
-              />
+              <picture>
+                <source srcSet={asset("images/canary-cry-key-art.webp")} type="image/webp" />
+                <img
+                  src={asset("images/canary-cry-key-art.jpg")}
+                  alt="Canary Cry key art: the hosts surrounded by the show's symbols over a neon grid"
+                  width={960}
+                  height={960}
+                />
+              </picture>
             </figure>
           </div>
         </div>
