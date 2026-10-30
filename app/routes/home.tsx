@@ -86,8 +86,8 @@ export default function Home({ loaderData }: Route.ComponentProps): React.ReactN
               <picture>
                 <source srcSet={asset("images/canary-cry-key-art.webp")} type="image/webp" />
                 <img
-                  src={asset("images/canary-cry-key-art.jpg")}
-                  alt="Canary Cry key art: the hosts surrounded by the show's symbols over a neon grid"
+                  src={asset("images/canary-cry-key-art.png")}
+                  alt="Canary Cry key art: the hosts surrounded by the show's symbols"
                   width={960}
                   height={960}
                 />
