@@ -182,19 +182,17 @@ export default function Transcripts(): React.ReactNode {
             )}
           </p>
 
-          {state.status === "ready" && (
-            <div className="transcript-search__notice" role="note">
-              <strong>Full spoken transcripts aren&apos;t loaded yet.</strong> Right now this
-              searches episode <em>titles</em> and <em>show notes</em> from the Libsyn feed
-              {realCount > 0 ? (
-                <>
-                  , plus {realCount} producer transcript{realCount === 1 ? "" : "s"}
-                </>
-              ) : null}
-              . Drop real transcripts into <code>content/transcripts/</code> and they&apos;ll
-              appear here on the next build.
-            </div>
-          )}
+          <div className="transcript-search__notice" role="note">
+            <strong>Full spoken transcripts aren&apos;t loaded yet.</strong> Right now this
+            searches episode <em>titles</em> and <em>show notes</em> from the Libsyn feed
+            {state.status === "ready" && realCount > 0 ? (
+              <>
+                , plus {realCount} producer transcript{realCount === 1 ? "" : "s"}
+              </>
+            ) : null}
+            . Drop real transcripts into <code>content/transcripts/</code> and they&apos;ll
+            appear here on the next build.
+          </div>
 
           {results.length > 0 && (
             <ol className="transcript-hits">
