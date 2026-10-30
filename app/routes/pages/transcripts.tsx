@@ -143,7 +143,7 @@ export default function Transcripts(): React.ReactNode {
         maxWidth="48rem"
         eyebrow="Searchable archive"
         title="Episode Transcripts"
-        lede="Search past shows by topic, guest, or keyword. Results jump to the episode, with audio and video links when we have them."
+        lede="Search past shows by topic, guest, or keyword. Results jump to the episode, with audio and video links when available."
       />
 
       <Section>
