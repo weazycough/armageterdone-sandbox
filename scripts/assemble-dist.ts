@@ -17,6 +17,9 @@
 // Last, it writes the site search index (dist/search-index.json, see
 // app/lib/search.ts): every page, read back from its built HTML so designed
 // and generic pages are indexed alike, and every episode from the feed.
+// It also writes the transcript search index (dist/transcript-search-index.json,
+// see app/lib/transcript-search.ts): fuller show-notes text per episode, plus
+// any real transcripts dropped into content/transcripts/.
 
 import { cp, mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import { join } from "node:path";
@@ -38,6 +41,12 @@ import {
 } from "../app/lib/search.ts";
 import { SHOWS } from "../app/lib/shows.ts";
 import { THEME_KEY } from "../app/lib/theme.ts";
+import {
+  NOTES_TEXT_CHARS,
+  TRANSCRIPT_INDEX_FILE,
+  firstYoutubeUrl,
+  transcriptIndexSchema,
+} from "../app/lib/transcript-search.ts";
 
 const CLIENT = "build/client";
 const PAGES = join(CLIENT, BASE);
@@ -101,4 +110,72 @@ const index = searchIndexSchema.parse([
 ]);
 await writeFile(join(DIST, SEARCH_INDEX_FILE), JSON.stringify(index));
 
-console.log(`dist: assembled from ${CLIENT}; search index: ${String(index.length)} entries`);
+// Transcript / show-notes search index. Real transcripts live in
+// content/transcripts/*.json ({ title, text, date?, audioUrl?, videoUrl?,
+// path?, externalUrl? }); everything else is the feed's show notes.
+const TRANSCRIPTS_DIR = "content/transcripts";
+const realTranscripts: {
+  title: string;
+  text: string;
+  date?: string;
+  audioUrl?: string;
+  videoUrl?: string;
+  path?: string;
+  externalUrl?: string;
+}[] = [];
+try {
+  for (const f of await readdir(TRANSCRIPTS_DIR)) {
+    if (!f.endsWith(".json")) continue;
+    const raw = JSON.parse(await readFile(join(TRANSCRIPTS_DIR, f), "utf8")) as {
+      title?: unknown;
+      text?: unknown;
+      date?: unknown;
+      audioUrl?: unknown;
+      videoUrl?: unknown;
+      path?: unknown;
+      externalUrl?: unknown;
+    };
+    if (typeof raw.title !== "string" || typeof raw.text !== "string") continue;
+    realTranscripts.push({
+      title: raw.title,
+      text: plainText(raw.text).slice(0, NOTES_TEXT_CHARS * 4),
+      ...(typeof raw.date === "string" ? { date: raw.date } : {}),
+      ...(typeof raw.audioUrl === "string" ? { audioUrl: raw.audioUrl } : {}),
+      ...(typeof raw.videoUrl === "string" ? { videoUrl: raw.videoUrl } : {}),
+      ...(typeof raw.path === "string" ? { path: raw.path } : {}),
+      ...(typeof raw.externalUrl === "string" ? { externalUrl: raw.externalUrl } : {}),
+    });
+  }
+} catch {
+  // Directory optional.
+}
+
+const transcriptIndex = transcriptIndexSchema.parse([
+  ...realTranscripts.map((t) => ({
+    source: "transcript" as const,
+    title: t.title,
+    text: t.text,
+    ...(t.date !== undefined ? { date: t.date } : {}),
+    ...(t.audioUrl !== undefined ? { audioUrl: t.audioUrl } : {}),
+    ...(t.videoUrl !== undefined ? { videoUrl: t.videoUrl } : {}),
+    ...(t.path !== undefined ? { path: t.path } : {}),
+    ...(t.externalUrl !== undefined ? { externalUrl: t.externalUrl } : {}),
+  })),
+  ...episodes.map((e) => {
+    const videoUrl = firstYoutubeUrl(e.notesHtml);
+    return {
+      source: "show-notes" as const,
+      title: e.title,
+      path: episodePath(e.slug),
+      date: e.published,
+      audioUrl: e.audioUrl,
+      ...(videoUrl !== undefined ? { videoUrl } : {}),
+      text: plainText(e.notesHtml).slice(0, NOTES_TEXT_CHARS),
+    };
+  }),
+]);
+await writeFile(join(DIST, TRANSCRIPT_INDEX_FILE), JSON.stringify(transcriptIndex));
+
+console.log(
+  `dist: assembled from ${CLIENT}; search index: ${String(index.length)} entries; transcript index: ${String(transcriptIndex.length)} entries (${String(realTranscripts.length)} real transcripts)`,
+);
