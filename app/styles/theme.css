@@ -752,15 +752,23 @@ p {
 }
 .mission-hero__art {
   margin: 0;
-  max-width: 22rem;
+  /* Square key art: keep phone height in check (~14rem ≈ 224px). */
+  max-width: min(14rem, 72vw);
   justify-self: center;
-  order: -1; /* phone: wordmark above the copy (Option A) */
+  order: -1; /* phone: art above the copy (Option A) */
   width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  /* Soft-fade the black JPG edges into the dark band so it isn't a hard box. */
+  -webkit-mask-image: radial-gradient(ellipse 92% 92% at 50% 48%, #000 62%, transparent 100%);
+  mask-image: radial-gradient(ellipse 92% 92% at 50% 48%, #000 62%, transparent 100%);
 }
+.mission-hero__art picture,
 .mission-hero__art img {
   display: block;
   width: 100%;
   height: auto;
+  vertical-align: top;
 }
 .mission-hero__title {
   margin: 0;
@@ -772,7 +780,7 @@ p {
   text-transform: uppercase;
   color: var(--accent);
 }
-/* Wordmark already says CANARY CRY; keep the h1 for SEO/a11y but don't out-shout the art. */
+/* Key art carries the brand visually; keep the h1 for SEO/a11y, sized not to fight it. */
 .mission-hero__sub {
   margin: 0.75rem 0 0;
   font-family: var(--font-display);
@@ -853,7 +861,7 @@ p {
   }
   .mission-hero__art {
     order: 0;
-    max-width: none;
+    max-width: min(26rem, 100%);
   }
 }
 
