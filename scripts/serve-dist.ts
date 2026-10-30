@@ -1,4 +1,4 @@
-// serve-dist.ts — serve dist/ at http://127.0.0.1:4173/Armageterdone/ the way
+// serve-dist.ts — serve dist/ at http://127.0.0.1:4173/armageterdone-sandbox/ the way
 // GitHub Pages will: directory URLs get index.html, missing paths get
 // 404.html with a 404 status. Local only (bound to the loopback address).
 //

@@ -1,7 +1,7 @@
 # Architecture
 
 The Canary Cry preview is a static site: plain HTML files built once, served by GitHub Pages at
-`https://stucny.github.io/Armageterdone/`. There is no server, database or CMS at runtime. React renders every page at
+`https://weazycough.github.io/armageterdone-sandbox/`. There is no server, database or CMS at runtime. React renders every page at
 build time, then hydrates in the browser for the interactive bits (menus, theme toggle, client-side navigation).
 
 ## Build pipeline
@@ -17,8 +17,8 @@ build time, then hydrates in the browser for the interactive bits (menus, theme 
    is wired in as `vite` through a pnpm override). `react-router.config.ts` lists every path to prerender; each
    route's `loader` runs at build time and its output is baked into the HTML (and a `_.data` file per page for
    client-side navigation).
-3. **`scripts/assemble-dist.ts`**: React Router writes pages under `build/client/Armageterdone/` but assets and
-   `public/` files at `build/client/`; this merges both into `dist/`, which Pages serves at `/Armageterdone/`. It
+3. **`scripts/assemble-dist.ts`**: React Router writes pages under `build/client/armageterdone-sandbox/` but assets and
+   `public/` files at `build/client/`; this merges both into `dist/`, which Pages serves at `/armageterdone-sandbox/`. It
    turns the not-found page into `dist/404.html` (with the app's scripts stripped, see below) and drops React
    Router's SPA fallback.
 4. **`vp test --project dist`**: the guard tests below, over `dist/`. A failing guard fails the build, so a site that
@@ -115,7 +115,7 @@ Header and footer links are in `app/lib/nav.ts`. Its comment lists where they di
 ## Design labs
 
 Option pages for design decisions live in `public/labs/<issue>-<slug>/index.html` and publish at
-`/Armageterdone/labs/<issue>-<slug>/`; `public/labs/index.html` lists them. How to write one:
+`/armageterdone-sandbox/labs/<issue>-<slug>/`; `public/labs/index.html` lists them. How to write one:
 `.claude/skills/design-lab/SKILL.md`. Every check above covers them (they are just more HTML files in `dist/`).
 In `pnpm dev`, a small middleware in `vite.config.ts` (`labIndexes`) serves a lab folder's `index.html`, as Pages
 does; otherwise the router would take the URL.
@@ -147,7 +147,7 @@ The site is public but unlisted. These are checked by tests over every build, so
 | No `robots.txt` (a Disallow would hide the noindex tag from crawlers) and no sitemap                                                                                                                                                                                                                                                                                                                         | `tests/dist/noindex.test.ts`                                          |
 | Scripts and styles only from the site; media only from the podcast's Libsyn art and MP3 hosts; no iframes (allow-list per page, empty: players load on request, see Embeds); no remote `url()`/`@import` in styles; no remote SVG `<image>`/`<use>` or `background`; no `ping`, off-site meta refresh or form action; inline scripts name no other site; no analytics, trackers, font CDNs or hosted players | `tests/dist/third-party.test.ts`                                      |
 | Nothing pointing at the people or machines that build the site, in `dist/` or in any committed file                                                                                                                                                                                                                                                                                                          | `tests/dist/leak-scan.test.ts` (patterns in `tests/leak-patterns.ts`) |
-| Every internal link and asset resolves under `/Armageterdone/` (relative links resolved against their page)                                                                                                                                                                                                                                                                                                  | `tests/dist/links.test.ts`                                            |
+| Every internal link and asset resolves under `/armageterdone-sandbox/` (relative links resolved against their page)                                                                                                                                                                                                                                                                                                  | `tests/dist/links.test.ts`                                            |
 | Every episode, list page, show list and extracted page exists; each designed page uses its own template; the search index lists every page and episode; forms have no action, method or named fields and say "Preview only"                                                                                                                                                                                  | `tests/dist/content.test.ts`                                          |
 
 Also: `<meta name="referrer" content="no-referrer">` keeps the preview's address out of other sites' logs, fonts are

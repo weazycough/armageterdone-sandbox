@@ -8,7 +8,7 @@ redesign.
 A redesign of the Canary Cry News Talk website, built as a static React site
 and published as a preview on GitHub Pages:
 
-**Preview:** https://stucny.github.io/Armageterdone/
+**Preview:** https://weazycough.github.io/armageterdone-sandbox/
 
 The repo is private. The preview site is public but unlisted: it is not
 linked from anywhere, and every page tells search engines not to index it, so
@@ -52,7 +52,7 @@ should read that file.) In short:
 
 - Labs live in `public/labs/<issue-number>-<slug>/index.html` and publish
   with the preview at
-  `https://stucny.github.io/Armageterdone/labs/<issue-number>-<slug>/`
+  `https://weazycough.github.io/armageterdone-sandbox/labs/<issue-number>-<slug>/`
   once merged to `main`.
 - Every lab has the `noindex` robots tag and contains nothing private.
 - **Post the lab link as a comment on its issue**, and **give your user the

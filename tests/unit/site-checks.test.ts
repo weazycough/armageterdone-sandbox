@@ -57,7 +57,7 @@ describe("thirdPartyProblems", () => {
   it("allows same-site, relative and episode-media loads", () => {
     expect(
       problems(
-        `<img src="art.png" srcset="art.png 1x, /Armageterdone/images/a.webp 2x"><img src=https://static.libsyn.com/p/a.png>
+        `<img src="art.png" srcset="art.png 1x, /armageterdone-sandbox/images/a.webp 2x"><img src=https://static.libsyn.com/p/a.png>
          <audio src='https://traffic.libsyn.com/a.mp3'></audio><script src="lab.js"></script><a href="https://x.example/">ok</a>
          <div style="background:url(bg.png)"></div><script>console.log(1)</script>`,
         `<link rel=stylesheet href=lab.css><style>@font-face{src:url("jost.woff2")}</style>`,
@@ -113,10 +113,10 @@ describe("thirdPartyProblems", () => {
   });
 
   // How React Router's prerendered pages boot (see dist/*/index.html).
-  const BOOT = `<script type="module" async="">import "/Armageterdone/assets/manifest-1.js";
-import * as route0 from "/Armageterdone/assets/root-a.js";
+  const BOOT = `<script type="module" async="">import "/armageterdone-sandbox/assets/manifest-1.js";
+import * as route0 from "/armageterdone-sandbox/assets/root-a.js";
   window.__reactRouterRouteModules = {"root":route0};
-import("/Armageterdone/assets/entry.client-b.js");</script>`;
+import("/armageterdone-sandbox/assets/entry.client-b.js");</script>`;
   const NOTES = String.raw`window.__reactRouterContext.streamController.enqueue("[{\"notes\":\"<a href=\\\"https://rumble.com/x\\\">\"}]\n");`;
 
   it("allows React Router's hydration data on a built page, which may name any site", () => {
@@ -186,7 +186,7 @@ describe("cssProblems", () => {
     expect(cssProblems(`@import 'https://fonts.example/x.css';`)).not.toEqual([]);
     expect(
       cssProblems(
-        `@font-face{src:url(/Armageterdone/assets/a.woff2)}b{background:url(data:image/png;base64,AA==)}`,
+        `@font-face{src:url(/armageterdone-sandbox/assets/a.woff2)}b{background:url(data:image/png;base64,AA==)}`,
       ),
     ).toEqual([]);
   });

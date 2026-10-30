@@ -4,7 +4,7 @@
 
 ### Added
 
-- Static site on React Router (prerendered, `ssr: false`) and Vite+, deployed to GitHub Pages at `/Armageterdone/`.
+- Static site on React Router (prerendered, `ssr: false`) and Vite+, deployed to GitHub Pages at `/armageterdone-sandbox/`.
 - Episodes from the Libsyn RSS feed at every build: a paginated list (12 a page) and a page per episode with artwork,
   the MP3 in the browser's own audio player, and sanitised show notes.
 - The Ghost theme's header (latest-episode ticker, nav with dropdowns, mobile menu), footer, light/dark toggle, colours

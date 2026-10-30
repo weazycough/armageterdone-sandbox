@@ -8,7 +8,7 @@ import { defineConfig } from "vite-plus";
 import type { Plugin } from "vite-plus";
 import { BASE, SITE_JSON } from "./app/lib/paths";
 
-/** In dev, serve a design lab folder ("/Armageterdone/labs/12-x/") as its
+/** In dev, serve a design lab folder ("/armageterdone-sandbox/labs/12-x/") as its
  *  index.html, as GitHub Pages does. Without it the router takes the URL. */
 function labIndexes(): Plugin {
   return {

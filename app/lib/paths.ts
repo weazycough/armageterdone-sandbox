@@ -2,7 +2,7 @@
 // routes, the prerender list and the tests agree.
 
 /** GitHub Pages project path. Every URL on the site starts with it. */
-export const BASE = "/Armageterdone/";
+export const BASE = "/armageterdone-sandbox/";
 
 export const FEED_URL = "https://rss.libsyn.com/shows/84402/destinations/400745.xml";
 export const FEED_CACHE = ".cache/libsyn-feed.xml";

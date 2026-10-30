@@ -1,7 +1,7 @@
 # Canary Cry website preview
 
 A preview of a redesigned website for the Canary Cry News Talk podcast. It is built from this repository and published
-at **https://stucny.github.io/Armageterdone/**.
+at **https://weazycough.github.io/armageterdone-sandbox/**.
 
 The preview is public but unlisted: every page tells search engines not to index it, and nothing on it tracks
 visitors. Forms (newsletter, contact) are marked "Preview only" and send nothing.
@@ -29,7 +29,7 @@ and the page address help. To send logos, photos or other files, see [`assets-in
 ## Design labs
 
 When a change has more than one reasonable design, the options are shown side by side on a "design lab" page,
-linked from its issue. All labs are listed at https://stucny.github.io/Armageterdone/labs/.
+linked from its issue. All labs are listed at https://weazycough.github.io/armageterdone-sandbox/labs/.
 
 ## Working on the site
 

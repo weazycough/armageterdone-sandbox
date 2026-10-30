@@ -22,7 +22,7 @@ the real site and the lab is retired.
 - Everything in `public/` is copied into the built site, so the lab is
   published at:
 
-  `https://stucny.github.io/Armageterdone/labs/<issue-number>-<short-slug>/`
+  `https://weazycough.github.io/armageterdone-sandbox/labs/<issue-number>-<short-slug>/`
 
 - GitHub Pages only publishes `main`. A lab goes live a few minutes after it
   is merged to `main` and the "Deploy" workflow finishes. Labs are additive
@@ -196,7 +196,7 @@ robots tag) and a plain list of links: `#12 Community page map — Open`.
    create it first (label `design`), describing the decision to be made.
 2. Build the lab on a branch, check it locally (open the file in a browser, or
    run the site's dev server with `pnpm dev` and visit
-   `/Armageterdone/labs/<folder>/` at the address it prints), at phone and
+   `/armageterdone-sandbox/labs/<folder>/` at the address it prints), at phone and
    desktop widths. `pnpm build && pnpm preview` shows the built site exactly
    as GitHub Pages will serve it.
 3. Run the gate (`pnpm gate`) and the build. Fix anything it flags.
@@ -205,12 +205,12 @@ robots tag) and a plain list of links: `#12 Community page map — Open`.
    change ships.
 5. **Wait for the deploy**, then check the live link really works:
    `gh run watch` (or the repo's Actions tab), then
-   `curl -s https://stucny.github.io/Armageterdone/labs/<folder>/ | grep -c noindex`
+   `curl -s https://weazycough.github.io/armageterdone-sandbox/labs/<folder>/ | grep -c noindex`
    should print `1` or more. Open it once yourself.
 6. **Post the link in the issue** as a comment: what the lab compares, the
    link, and the question you need answered. Example:
 
-   > Design lab for this issue: https://stucny.github.io/Armageterdone/labs/12-community-map/
+   > Design lab for this issue: https://weazycough.github.io/armageterdone-sandbox/labs/12-community-map/
    > It compares two map styles (A: pins on a dark map, B: a list with a small map).
    > Which one should we build?
 

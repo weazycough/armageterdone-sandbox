@@ -1,9 +1,9 @@
 // assemble-dist.ts — lay React Router's build output out as the site root
-// GitHub Pages serves at /Armageterdone/.
+// GitHub Pages serves at /armageterdone-sandbox/.
 //
-// React Router writes prerendered pages under build/client/Armageterdone/
+// React Router writes prerendered pages under build/client/armageterdone-sandbox/
 // (the basename) but Vite's assets and public/ files at build/client/. Pages
-// serves the uploaded folder AT /Armageterdone/, so dist/ is both merged at
+// serves the uploaded folder AT /armageterdone-sandbox/, so dist/ is both merged at
 // one level. Also: the not-found page becomes 404.html (Pages serves it for
 // every missing URL), and React Router's SPA fallback is dropped (every route
 // is prerendered; a missing URL gets 404.html instead).

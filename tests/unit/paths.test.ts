@@ -15,7 +15,7 @@ describe("paths", () => {
 
   it("withBase prefixes root-relative href/src only", () => {
     expect(withBase('<a href="/support/#one">x</a><img src="/content/images/a.png">')).toBe(
-      '<a href="/Armageterdone/support/#one">x</a><img src="/Armageterdone/content/images/a.png">',
+      '<a href="/armageterdone-sandbox/support/#one">x</a><img src="/armageterdone-sandbox/content/images/a.png">',
     );
     expect(withBase('<a href="https://x.test/a">x</a><a href="//cdn.test/a">y</a>')).toBe(
       '<a href="https://x.test/a">x</a><a href="//cdn.test/a">y</a>',

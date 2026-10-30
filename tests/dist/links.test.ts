@@ -1,5 +1,5 @@
 // links.test.ts — every internal link and asset reference resolves to a file
-// in dist/, and none escapes the /Armageterdone/ base path. Relative links
+// in dist/, and none escapes the /armageterdone-sandbox/ base path. Relative links
 // (common in hand-written labs) are resolved against their page.
 
 import { existsSync } from "node:fs";
