@@ -1,14 +1,12 @@
-// home.tsx — the homepage (Ghost index.hbs): the latest episode with its
-// player, the three shows, the value-for-value row, recent episodes, the
-// community art wall and the newsletter signup (preview only).
+// home.tsx — the homepage: mission hero (lab #1 Option A split layout with
+// Option B's always-dark band), then shows, value-for-value, recent episodes,
+// community art, and the newsletter signup (preview only).
 
 import type * as React from "react";
 import { TextField } from "react-aria-components";
 import { Link } from "react-router";
 import type { Route } from "./+types/home";
-import { AudioPlayer } from "../components/audio-player";
 import { EpisodeCard } from "../components/episode-card";
-import { PlatformRow } from "../components/platform-row";
 import { PreviewForm } from "../components/preview-form";
 import { ShowsStrip } from "../components/shows-strip";
 import { SupportRow } from "../components/support-row";
@@ -25,14 +23,11 @@ export function loader() {
   const latest = episodes[0];
   if (latest === undefined) throw new Error("no episodes");
   return {
-    // Everything but the show notes, which the homepage doesn't show.
     latest: {
       slug: latest.slug,
       title: latest.title,
       published: latest.published,
       artUrl: latest.artUrl,
-      audioUrl: latest.audioUrl,
-      audioType: latest.audioType,
     },
     recent: episodes.slice(0, 4).map(({ slug, title, published, excerpt, duration }) => ({
       slug,
@@ -48,66 +43,56 @@ export function meta(): Route.MetaDescriptors {
   return [{ title: "Canary Cry News Talk — Cogitare extra caveam" }];
 }
 
-function Brackets({ where }: { where: "mobile" | "desktop" }): React.ReactNode {
-  return (
-    <>
-      <span className={`bracket bracket--tl bracket--${where}`} />
-      <span className={`bracket bracket--tr bracket--${where}`} />
-      <span className={`bracket bracket--bl bracket--${where}`} />
-      <span className={`bracket bracket--br bracket--${where}`} />
-    </>
-  );
-}
-
 export default function Home({ loaderData }: Route.ComponentProps): React.ReactNode {
   const { latest, recent } = loaderData;
+  const latestArt = latest.artUrl ?? asset("images/cc-logo.webp");
   return (
     <>
-      <section className="hero">
+      <section className="mission-hero" aria-label="Canary Cry mission">
         <div className="container">
-          <div className="hero__inner bracket-frame">
-            <Brackets where="mobile" />
-            <div className="hero__title-col bracket-frame">
-              <Brackets where="desktop" />
-              <div className="hero__body">
-                <span className="eyebrow">Latest from the watchmen</span>
-                <h1>
-                  <Link className="hero__title-link" to={episodePath(latest.slug)}>
-                    {latest.title}
-                  </Link>
-                </h1>
-                <p className="hero__meta">
-                  <time className="hero__date" dateTime={isoDay(latest.published)}>
-                    {formatLongDate(latest.published)}
-                  </time>
-                </p>
-              </div>
+          <div className="mission-hero__grid">
+            <div className="mission-hero__copy">
+              {/* Keep a real h1 for SEO/a11y; the wordmark art already shows the
+                  name, so the title is sized down rather than removed. */}
+              <h1 className="mission-hero__title">Canary Cry</h1>
+              <p className="mission-hero__sub">Canary Cry Radio | Canary Cry News Talk</p>
+              <p className="mission-hero__tag">Think Outside the Cage.</p>
+              <p className="mission-hero__about">
+                <strong>A biblical take on the news and world events.</strong> CANARY CRY NEWS TALK
+                is a show that brings frequent updates on news and events happening around the world
+                from an Alt. Christian worldview, hosted by us, Basil and Gonz of the Canary Cry
+                Radio podcast.
+              </p>
+              <Link className="mission-hero__latest" to={episodePath(latest.slug)}>
+                <img
+                  className="mission-hero__latest-art"
+                  src={latestArt}
+                  alt=""
+                  width={72}
+                  height={72}
+                />
+                <span>
+                  <span className="mission-hero__latest-kicker">Latest episode</span>
+                  <span className="mission-hero__latest-title">{latest.title}</span>
+                  <span className="mission-hero__latest-date">
+                    <time dateTime={isoDay(latest.published)}>
+                      {formatLongDate(latest.published)}
+                    </time>
+                  </span>
+                </span>
+              </Link>
             </div>
-
-            <div className="hero__art-col">
-              <div className="hero__art">
-                {latest.artUrl === undefined ? (
-                  <img
-                    className="hero__art-fallback"
-                    src={asset("images/cc-logo.webp")}
-                    alt="Canary Cry crest"
-                  />
-                ) : (
-                  <img src={latest.artUrl} alt={`Episode artwork for ${latest.title}`} />
-                )}
-              </div>
-              <p className="hero__art-caption muted">Latest episode artwork</p>
-            </div>
-
-            <div className="hero__playback-col">
-              <div className="hero__player">
-                <AudioPlayer src={latest.audioUrl} type={latest.audioType} title={latest.title} />
-                <Link className="hero__player-notes" to={episodePath(latest.slug)}>
-                  Show notes →
-                </Link>
-              </div>
-              <PlatformRow />
-            </div>
+            <figure className="mission-hero__art">
+              <picture>
+                <source srcSet={asset("images/canary-cry-key-art.webp")} type="image/webp" />
+                <img
+                  src={asset("images/canary-cry-key-art.png")}
+                  alt="Canary Cry key art: the hosts surrounded by the show's symbols"
+                  width={960}
+                  height={960}
+                />
+              </picture>
+            </figure>
           </div>
         </div>
       </section>

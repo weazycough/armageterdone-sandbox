@@ -722,65 +722,144 @@ p {
   }
 }
 
-/* ---------- Hero (home) ---------- */
-.hero {
-  padding: var(--space-8) 0 var(--space-7);
-  border-bottom: 1px solid var(--line);
+/* ---------- Mission hero (home): Option A split + Option B always-dark band ---------- */
+/* Dark band tokens stay dark in both site themes (lab Option B's .always-dark). */
+.mission-hero {
+  --bg-canvas: #0a0a0a;
+  --bg-surface: #141414;
+  --bg-elevated: #1f1f1f;
+  --fg-primary: #f5efe2;
+  --fg-secondary: #c9c2b3;
+  --fg-tertiary: #8b867a;
+  --fg-inverse: #0a0a0a;
+  --accent-on-bg: var(--accent);
+  --line: #2a2a2a;
+  --line-strong: #3a3a3a;
+  --hero-glow: radial-gradient(ellipse at top, rgba(230, 180, 15, 0.16), transparent 60%);
+  color: var(--fg-primary);
+  color-scheme: dark;
+  border-bottom: 1px solid var(--line-strong);
   background: var(--hero-glow), var(--bg-canvas);
-  position: relative;
 }
-.hero__inner {
-  /* Mobile flow: title → art → playback */
+.mission-hero :focus-visible {
+  outline-color: var(--accent);
+}
+.mission-hero__grid {
   display: grid;
-  gap: var(--space-5);
-  align-items: start;
-  grid-template-columns: minmax(0, 1fr);
+  gap: 1.5rem;
+  padding: 2rem 0 2.25rem;
+  align-items: center;
 }
-@media (min-width: 1024px) {
-  /* Desktop: 2 cols; art on the right spans both rows */
-  .hero__inner {
-    grid-template-columns: 1.35fr 1fr;
-    grid-template-areas:
-      "title    art"
-      "playback art";
-    grid-template-rows: auto 1fr;
-    gap: var(--space-6) var(--space-7);
-  }
-  .hero__title-col {
-    grid-area: title;
-  }
-  .hero__playback-col {
-    grid-area: playback;
-  }
-  .hero__art-col {
-    grid-area: art;
-    align-self: start;
-  }
+.mission-hero__art {
+  margin: 0;
+  /* Transparent key art sits on the always-dark band; no box mask needed. */
+  max-width: min(17rem, 80vw);
+  justify-self: center;
+  order: -1; /* phone: art above the copy (Option A) */
+  width: 100%;
 }
-.hero__body {
-  padding: var(--space-3) var(--space-4) var(--space-2);
+.mission-hero__art picture,
+.mission-hero__art img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
-.hero h1 {
-  margin-bottom: var(--space-3);
-  overflow-wrap: break-word;
+.mission-hero__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.65rem, 6vw, 2.5rem);
+  line-height: 0.95;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--accent);
 }
-.hero h1 a {
-  color: inherit;
+/* Key art carries the brand visually; keep the h1 for SEO/a11y, sized not to fight it. */
+.mission-hero__sub {
+  margin: 0.75rem 0 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-secondary);
 }
-.hero h1 a:hover {
-  color: var(--accent-on-bg);
+.mission-hero__tag {
+  margin: 0.5rem 0 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.25rem, 4vw, 1.6rem);
+  color: var(--fg-primary);
+}
+.mission-hero__about {
+  margin: 1.25rem 0 0;
+  max-width: 36rem;
+  color: var(--fg-secondary);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+.mission-hero__about strong {
+  color: var(--fg-primary);
+}
+.mission-hero__latest {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  gap: 0.9rem;
+  align-items: center;
+  margin-top: 1.5rem;
+  max-width: 28rem;
+  padding: 0.75rem;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  background: var(--bg-surface);
+  color: var(--fg-primary);
   text-decoration: none;
 }
-.hero__meta {
+.mission-hero__latest:hover {
+  border-color: var(--accent);
+  text-decoration: none;
+  color: var(--fg-primary);
+}
+.mission-hero__latest-art {
+  width: 72px;
+  height: 72px;
+  border-radius: var(--radius-sm);
+  object-fit: cover;
+  background: var(--bg-elevated);
+}
+.mission-hero__latest-kicker {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.mission-hero__latest-title {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.25;
+}
+.mission-hero__latest-date {
+  display: block;
+  font-size: 0.8rem;
   color: var(--fg-tertiary);
-  font-size: 0.85rem;
-  letter-spacing: 0.06em;
-  margin-bottom: var(--space-5);
+}
+@media (min-width: 768px) {
+  .mission-hero__grid {
+    grid-template-columns: 1.2fr 1fr;
+    gap: 3rem;
+    padding: 3.5rem 0;
+  }
+  .mission-hero__art {
+    order: 0;
+    max-width: min(32rem, 100%); /* ~23% larger than 26rem */
+  }
 }
 
-/* Hero player — native <audio> injected by the RSS sync from the latest
-   episode's <enclosure> MP3 URL. Falls back to a Libsyn iframe extracted
-   from the post body, or a "show notes" CTA if neither is available. */
+/* Legacy home hero pieces kept only where still shared (platform row lives below). */
 .hero__player {
   background: var(--bg-surface);
   border: 1px solid var(--line);
@@ -820,88 +899,6 @@ p {
 .hero__player .btn {
   width: 100%;
   justify-content: center;
-}
-
-/* Platform row */
-.platform-row {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  flex-wrap: wrap;
-  margin-top: var(--space-2);
-}
-.platform-row__label {
-  font-family: var(--font-display);
-  text-transform: uppercase;
-  letter-spacing: 0.16em;
-  font-size: 0.7rem;
-  color: var(--fg-tertiary);
-  padding-right: var(--space-2);
-  border-right: 1px solid var(--line);
-  margin-right: var(--space-1);
-}
-.platform-row__chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 10px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: var(--bg-surface);
-  color: var(--fg-secondary);
-  font-family: var(--font-display);
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-decoration: none;
-  transition:
-    border-color 0.15s var(--ease),
-    color 0.15s var(--ease),
-    transform 0.15s var(--ease);
-}
-.platform-row__chip:hover {
-  border-color: var(--accent-on-bg);
-  color: var(--accent-on-bg);
-  transform: translateY(-1px);
-  text-decoration: none;
-}
-.platform-row__chip svg {
-  width: 14px;
-  height: 14px;
-}
-
-/* Right column: art */
-.hero__art-col {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-}
-.hero__art {
-  position: relative;
-  aspect-ratio: 1 / 1;
-  background: var(--bg-surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md);
-  padding: var(--space-4);
-  display: grid;
-  place-items: center;
-  overflow: hidden;
-}
-.hero__art img {
-  max-width: 100%;
-  height: auto;
-  max-height: 100%;
-  object-fit: contain;
-}
-.hero__art img.hero__art-fallback {
-  max-width: 72%;
-  opacity: 0.92;
-}
-.hero__art-caption {
-  text-align: center;
-  font-size: 0.72rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
 }
 
 /* ---------- Section ---------- */

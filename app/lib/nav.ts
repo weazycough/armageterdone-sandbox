@@ -23,7 +23,6 @@ export interface NavItem {
 }
 
 export const PRIMARY_NAV: NavItem[] = [
-  { label: "Episodes", href: "/episodes/" },
   {
     label: "Shows",
     menu: SHOWS.map((s) => ({ label: s.title, href: tagPath(s.slug), meta: s.nav })),

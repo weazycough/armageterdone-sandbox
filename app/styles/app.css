@@ -274,4 +274,115 @@
   .static-page .search-toggle {
     display: none;
   }
+
+  /* Transcript / show-notes search (app/routes/pages/transcripts.tsx). */
+  .transcript-search {
+    max-width: 48rem;
+    margin-inline: auto;
+  }
+  .transcript-search__field {
+    display: block;
+  }
+  .transcript-search__field input {
+    width: 100%;
+    border: 1px solid var(--line-strong);
+    background: var(--bg-surface);
+    color: var(--fg-primary);
+    border-radius: var(--radius-md);
+    padding: 0.9rem 1.1rem;
+    font-size: 1.05rem;
+    outline: none;
+  }
+  .transcript-search__field input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px color-mix(in oklab, var(--accent) 45%, transparent);
+  }
+  .transcript-search__status {
+    margin: var(--space-3) 0 var(--space-4);
+  }
+  .transcript-search__notice {
+    background: var(--bg-surface);
+    border: 1px dashed var(--line-strong);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    margin-bottom: var(--space-5);
+    font-size: 0.95rem;
+  }
+  .transcript-search__notice code {
+    font-size: 0.85em;
+  }
+  .transcript-hits {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+  .transcript-hit {
+    background: var(--bg-surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+  }
+  .transcript-hit__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-3);
+    align-items: baseline;
+    font-size: 0.8rem;
+    color: var(--fg-secondary);
+    margin-bottom: var(--space-2);
+  }
+  .transcript-hit__source {
+    font-family: var(--font-display);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-on-bg);
+  }
+  .transcript-hit__time {
+    font-variant-numeric: tabular-nums;
+    color: var(--fg-tertiary);
+  }
+  .transcript-hit__title {
+    margin: 0 0 var(--space-2);
+    font-size: 1.15rem;
+    line-height: 1.3;
+  }
+  .transcript-hit__title a {
+    color: var(--fg-primary);
+    text-decoration: none;
+  }
+  .transcript-hit__title a:hover {
+    color: var(--accent-on-bg);
+    text-decoration: underline;
+  }
+  .transcript-hit__snippet {
+    margin: 0 0 var(--space-3);
+    color: var(--fg-secondary);
+    line-height: 1.45;
+  }
+  .transcript-hit__snippet mark {
+    background: color-mix(in oklab, var(--accent) 35%, transparent);
+    color: inherit;
+    padding: 0 0.15em;
+    border-radius: 2px;
+  }
+  .transcript-hit__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-4);
+  }
+  .transcript-hit__link {
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent-on-bg);
+    text-decoration: none;
+  }
+  .transcript-hit__link:hover {
+    text-decoration: underline;
+  }
 }
