@@ -2636,11 +2636,12 @@ p {
 }
 .shows-studio {
   --shows-label: #f5efe2;
-  --vapor-magenta: rgba(255, 64, 196, 0.22);
-  --vapor-cyan: rgba(64, 230, 255, 0.18);
+  /* Reference neon violet/indigo (sampled ~#6a3cff–#7b2fff / rgb 85–115,16,244–255). */
+  --vapor-neon: #6a3cff;
+  --vapor-neon-hot: #7b2fff;
+  --vapor-neon-glow: rgba(106, 60, 255, 0.45);
   color: var(--shows-label);
-  /* Match vapor floor so the section edge doesn't flash flat black. */
-  background: #07041a;
+  background: #05040c;
 }
 .shows-studio__scene {
   position: relative;
@@ -2649,63 +2650,63 @@ p {
   display: flex;
   flex-direction: column;
   isolation: isolate;
-  /* Vaporwave sky: soft purple → deep blue, faint horizon glow + dim sun.
-     Desk art (transparent cutout) and monitors share this wash — no seam. */
+  /* Near-black sky + floor; faint horizon glow only — desk/monitors stay focus. */
   background:
-    radial-gradient(circle at 50% 36%, rgba(255, 196, 120, 0.14) 0%, rgba(255, 110, 180, 0.08) 6%, transparent 22%),
-    radial-gradient(ellipse 95% 38% at 50% 48%, rgba(255, 80, 190, 0.16), transparent 62%),
-    radial-gradient(ellipse 70% 50% at 50% 22%, rgba(140, 70, 210, 0.28), transparent 58%),
-    repeating-linear-gradient(
-      90deg,
-      transparent 0,
-      transparent 47px,
-      rgba(120, 200, 255, 0.035) 47px,
-      rgba(120, 200, 255, 0.035) 48px
-    ),
+    radial-gradient(ellipse 70% 28% at 50% 50%, rgba(90, 50, 180, 0.14), transparent 70%),
     linear-gradient(
       180deg,
-      #16082c 0%,
-      #2a1060 26%,
-      #3a1878 42%,
-      #1a2a68 52%,
-      #0c1438 68%,
-      #07041a 100%
+      #05040c 0%,
+      #05040c 46%,
+      #0a0618 52%,
+      #080510 100%
     );
 }
-/* Perspective neon floor grid — low opacity, behind desk + monitors. */
+/* Strong wide-angle violet neon floor grid (reference-matched depth/stretch). */
 .shows-studio__scene::before {
   content: "";
   position: absolute;
-  left: -15%;
-  right: -15%;
-  top: 42%;
-  bottom: -18%;
+  left: -55%;
+  right: -55%;
+  /* Horizon ~mid-height; plane fills to the bottom edge. */
+  top: 50%;
+  height: 120%;
   z-index: 0;
   pointer-events: none;
+  background-color: #05040c;
   background-image:
-    linear-gradient(var(--vapor-magenta) 1.5px, transparent 1.5px),
-    linear-gradient(90deg, var(--vapor-cyan) 1.5px, transparent 1.5px);
-  background-size: 100% 2.1rem, 2.6rem 100%;
-  background-position: 0 0, 0 0;
-  transform: perspective(520px) rotateX(66deg);
+    /* Soft bloom under the lines */
+    linear-gradient(var(--vapor-neon-glow) 3px, transparent 3px),
+    linear-gradient(90deg, var(--vapor-neon-glow) 3px, transparent 3px),
+    /* Bright core — electric violet/indigo */
+    linear-gradient(var(--vapor-neon-hot) 1.5px, transparent 1.5px),
+    linear-gradient(90deg, var(--vapor-neon) 1.5px, transparent 1.5px);
+  background-size:
+    100% 1.65rem,
+    1.65rem 100%,
+    100% 1.65rem,
+    1.65rem 100%;
+  background-position: 0 0, 0 0, 0 0, 0 0;
+  /* Short perspective + steep pitch → sharp fan-out; horizontals stretch toward viewer. */
+  transform: perspective(280px) rotateX(74deg);
   transform-origin: 50% 0%;
-  opacity: 0.55;
+  opacity: 0.88;
+  filter: drop-shadow(0 0 6px rgba(106, 60, 255, 0.55));
   -webkit-mask-image: linear-gradient(
     to bottom,
     transparent 0%,
-    #000 12%,
-    #000 72%,
-    transparent 100%
+    #000 4%,
+    #000 88%,
+    rgba(0, 0, 0, 0.55) 100%
   );
   mask-image: linear-gradient(
     to bottom,
     transparent 0%,
-    #000 12%,
-    #000 72%,
-    transparent 100%
+    #000 4%,
+    #000 88%,
+    rgba(0, 0, 0, 0.55) 100%
   );
 }
-/* Soft vignette so monitors/desk stay the focus. */
+/* Soft vignette — keep desk/monitors readable without washing out the grid. */
 .shows-studio__scene::after {
   content: "";
   position: absolute;
@@ -2713,17 +2714,17 @@ p {
   z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(ellipse 78% 68% at 50% 42%, transparent 42%, rgba(4, 2, 16, 0.55) 100%);
-  opacity: 0.9;
+    radial-gradient(ellipse 82% 72% at 50% 40%, transparent 48%, rgba(5, 4, 12, 0.62) 100%);
+  opacity: 0.75;
 }
 @media (prefers-reduced-motion: no-preference) {
   .shows-studio__scene::before {
-    animation: shows-vapor-grid 28s linear infinite;
+    animation: shows-vapor-grid 32s linear infinite;
   }
 }
 @keyframes shows-vapor-grid {
   to {
-    background-position: 0 2.1rem, 0 0;
+    background-position: 0 1.65rem, 0 0, 0 1.65rem, 0 0;
   }
 }
 
