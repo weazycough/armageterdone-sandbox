@@ -1,11 +1,12 @@
 // main-nav.tsx — the primary nav (Ghost partials/main-nav.hbs). Rendered twice,
 // as the desktop bar and inside the mobile drawer, each with its own state.
-// A dropdown opens on click (touch, keyboard, mouse) via aria-expanded, and
-// on hover where the device has one (theme CSS). One open at a time; a click
-// outside or Escape closes it.
+// Plain items are NavLinks (aria-current when active). Dropdowns open on click
+// (touch, keyboard, mouse) via aria-expanded, and on hover where the device
+// has one (theme CSS). One open at a time; a click outside or Escape closes it.
 
 import { useEffect, useRef, useState } from "react";
 import type * as React from "react";
+import { NavLink } from "react-router";
 import { PRIMARY_NAV } from "../../lib/nav";
 import { SmartLink } from "../smart-link";
 
@@ -54,13 +55,13 @@ export function MainNav({ onNavigate }: { onNavigate?: () => void }): React.Reac
       {PRIMARY_NAV.map((item) =>
         item.menu === undefined ? (
           <li className="nav__item" key={item.label}>
-            <SmartLink
-              href={item.href ?? "/"}
+            <NavLink
+              to={item.href ?? "/"}
               className={item.cta === true ? "nav__link nav__link--cta" : "nav__link"}
               onClick={followed}
             >
               {item.label}
-            </SmartLink>
+            </NavLink>
           </li>
         ) : (
           <li className="nav__item nav__item--has-menu" key={item.label}>

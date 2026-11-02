@@ -6,9 +6,6 @@
 // - the footer's "Hangouts" link is gone (no such page), and "Privacy" points
 //   at the text-message privacy page.
 
-import { tagPath } from "./paths";
-import { SHOWS } from "./shows";
-
 export interface NavLink {
   label: string;
   href: string;
@@ -23,13 +20,7 @@ export interface NavItem {
 }
 
 export const PRIMARY_NAV: NavItem[] = [
-  {
-    label: "Shows",
-    menu: [
-      { label: "All shows", href: "/shows/", meta: "The Canary Cry Network" },
-      ...SHOWS.map((s) => ({ label: s.title, href: tagPath(s.slug), meta: s.nav })),
-    ],
-  },
+  { label: "Shows", href: "/shows/" },
   {
     label: "Community",
     menu: [

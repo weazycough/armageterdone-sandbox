@@ -370,7 +370,8 @@ p {
   white-space: nowrap;
 }
 .site-nav .nav__link:hover,
-.site-nav .nav__link[aria-expanded="true"] {
+.site-nav .nav__link[aria-expanded="true"],
+.site-nav .nav__link[aria-current="page"]:not(.nav__link--cta) {
   color: var(--accent-on-bg);
   border-bottom-color: var(--accent-on-bg);
 }
@@ -597,7 +598,8 @@ p {
   border: 0;
   text-decoration: none;
 }
-.mobile-nav .nav__link:hover {
+.mobile-nav .nav__link:hover,
+.mobile-nav .nav__link[aria-current="page"] {
   color: var(--accent-on-bg);
   text-decoration: none;
 }
