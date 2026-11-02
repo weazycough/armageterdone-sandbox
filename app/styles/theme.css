@@ -2585,10 +2585,13 @@ p {
   z-index: 1;
   order: 1;
   flex: 0 0 auto;
-  width: 90%;
-  max-width: 90%;
-  height: 12.5rem;
-  margin: 0.1rem auto 0;
+  /* Phone: crop the art's empty transparent sides so the visible desk fills ~92–94vw
+     at 360–430px. Aspect locks the cover crop so opaque edges track hero width. */
+  width: 94%;
+  max-width: 94%;
+  height: auto;
+  aspect-ratio: 1.34 / 1;
+  margin: 0.15rem auto 0;
   overflow: visible;
   line-height: 0;
   pointer-events: none;
@@ -2598,21 +2601,17 @@ p {
   width: 100%;
   height: 100%;
   max-height: none;
-  object-fit: contain;
+  /* Cover + short aspect crops L/R transparent padding; desk edges stay inset from the screen. */
+  object-fit: cover;
   object-position: center bottom;
-  /* Feather top + sides into the shared studio wash (art bg is transparent). */
-  -webkit-mask-image:
-    linear-gradient(to bottom, transparent 0%, #000 8%, #000 100%),
-    linear-gradient(to right, transparent 0%, #000 4%, #000 96%, transparent 100%);
-  -webkit-mask-size: 100% 100%, 100% 100%;
-  -webkit-mask-repeat: no-repeat, no-repeat;
-  -webkit-mask-composite: source-in;
-  mask-image:
-    linear-gradient(to bottom, transparent 0%, #000 8%, #000 100%),
-    linear-gradient(to right, transparent 0%, #000 4%, #000 96%, transparent 100%);
-  mask-size: 100% 100%, 100% 100%;
-  mask-repeat: no-repeat, no-repeat;
-  mask-composite: intersect;
+  transform: none;
+  /* Mild top feather into the shared studio wash. */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 5%, #000 100%);
+  -webkit-mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 5%, #000 100%);
+  mask-size: 100% 100%;
+  mask-repeat: no-repeat;
 }
 
 .shows-studio__wall {
@@ -2653,7 +2652,8 @@ p {
 .shows-arc {
   list-style: none;
   margin: 0;
-  padding: 0.1rem 0.75rem 1.05rem;
+  /* Extra bottom clearance — phone desk crop/zoom grows toward the labels. */
+  padding: 0.1rem 0.75rem 1.75rem;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 0.35rem 0.35rem;
@@ -2870,6 +2870,7 @@ p {
     max-width: none;
     margin: 0;
     height: auto;
+    aspect-ratio: auto; /* cancel phone crop ratio */
     overflow: visible;
     pointer-events: none;
   }
@@ -2885,6 +2886,7 @@ p {
     min-height: 0;
     object-fit: cover;
     object-position: center bottom;
+    transform: none; /* phone scale must not apply on desktop */
     /* Light top feather into the shared studio wash (art bg is transparent). */
     -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 12%, #000 100%);
     -webkit-mask-size: 100% 100%;
