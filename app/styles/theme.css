@@ -2581,23 +2581,22 @@ p {
   display: block;
   width: 100%;
   height: auto;
-  max-height: min(78vh, 52rem);
+  max-height: min(52vh, 28rem);
   object-fit: cover;
   object-position: center bottom;
 }
+/* Phone: stack title + swipe arc above the desk art so hosts stay visible. */
 .shows-studio__overlay {
-  position: absolute;
-  inset: 0;
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   padding: 1.25rem 0 0;
-  pointer-events: none;
+  order: -1;
 }
-.shows-studio__overlay a,
-.shows-studio__overlay .shows-monitor,
-.shows-studio__overlay .shows-arc {
-  pointer-events: auto;
+.shows-studio__scene {
+  display: flex;
+  flex-direction: column;
 }
 .shows-studio__title {
   margin: 0;
@@ -2799,10 +2798,24 @@ p {
 /* Desktop: arc of monitors angled toward the middle, above the desk. */
 @media (min-width: 768px) {
   .shows-studio__scene {
+    display: block;
+    position: relative;
     perspective: 1100px;
   }
+  .shows-studio__hero img {
+    max-height: min(78vh, 52rem);
+  }
   .shows-studio__overlay {
+    position: absolute;
+    inset: 0;
+    order: 0;
     padding-top: 1.75rem;
+    pointer-events: none;
+  }
+  .shows-studio__overlay a,
+  .shows-studio__overlay .shows-monitor,
+  .shows-studio__overlay .shows-arc {
+    pointer-events: auto;
   }
   .shows-studio__title {
     padding: 0.75rem 2.5rem 1rem;
