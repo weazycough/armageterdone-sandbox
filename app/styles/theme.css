@@ -2665,8 +2665,9 @@ p {
     );
 }
 /* Strong wide-angle violet neon floor grid (reference-matched depth/stretch).
-   Mobile sizes perspective/cells/plane height in cqw so a phone matches a
-   scaled-down ~1280×702 desktop scene; desktop media query locks px/rem. */
+   Mobile: cqw perspective/cells/plane height for desktop-matched fan; fixed
+   1px cores (not cqw) + muted glow so lines stay thin/crisp at DPR 2–3.
+   Desktop media query restores the approved thicker glow look. */
 .shows-studio__scene::before {
   content: "";
   position: absolute;
@@ -2681,14 +2682,17 @@ p {
   /* 280px / 1280 and 1.65rem / 1280 at the desktop reference width. */
   --vapor-persp: 21.875cqw;
   --vapor-cell: 2.0625cqw;
+  /* Fixed CSS-px stroke (not cqw) — crisp on retina; desktop overrides below. */
+  --vapor-line: 1px;
+  --vapor-glow-line: 1.5px;
   background-color: #05040c;
   background-image:
-    /* Soft bloom under the lines */
-    linear-gradient(var(--vapor-neon-glow) 3px, transparent 3px),
-    linear-gradient(90deg, var(--vapor-neon-glow) 3px, transparent 3px),
-    /* Bright core — electric violet/indigo */
-    linear-gradient(var(--vapor-neon-hot) 1.5px, transparent 1.5px),
-    linear-gradient(90deg, var(--vapor-neon) 1.5px, transparent 1.5px);
+    /* Mobile: faint 1.5px bloom only (no heavy drop-shadow blur). */
+    linear-gradient(rgba(106, 60, 255, 0.28) var(--vapor-glow-line), transparent var(--vapor-glow-line)),
+    linear-gradient(90deg, rgba(106, 60, 255, 0.28) var(--vapor-glow-line), transparent var(--vapor-glow-line)),
+    /* Bright 1px core — electric violet/indigo */
+    linear-gradient(var(--vapor-neon-hot) var(--vapor-line), transparent var(--vapor-line)),
+    linear-gradient(90deg, var(--vapor-neon) var(--vapor-line), transparent var(--vapor-line));
   background-size:
     100% var(--vapor-cell),
     var(--vapor-cell) 100%,
@@ -2698,8 +2702,11 @@ p {
   /* Perspective distance scales with scene width → same foreshortening. */
   transform: perspective(var(--vapor-persp)) rotateX(74deg);
   transform-origin: 50% 0%;
-  opacity: 0.88;
-  filter: drop-shadow(0 0 6px rgba(106, 60, 255, 0.55));
+  /* Keep layer as vector-ish as possible under 3D; avoid pre-blur filters. */
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  opacity: 0.92;
+  filter: none;
   -webkit-mask-image: linear-gradient(
     to bottom,
     transparent 0%,
@@ -3006,7 +3013,18 @@ p {
     height: 120%;
     --vapor-persp: 280px;
     --vapor-cell: 1.65rem;
+    --vapor-line: 1.5px;
+    --vapor-glow-line: 3px;
+    background-image:
+      linear-gradient(var(--vapor-neon-glow) var(--vapor-glow-line), transparent var(--vapor-glow-line)),
+      linear-gradient(90deg, var(--vapor-neon-glow) var(--vapor-glow-line), transparent var(--vapor-glow-line)),
+      linear-gradient(var(--vapor-neon-hot) var(--vapor-line), transparent var(--vapor-line)),
+      linear-gradient(90deg, var(--vapor-neon) var(--vapor-line), transparent var(--vapor-line));
     transform: perspective(280px) rotateX(74deg);
+    opacity: 0.88;
+    filter: drop-shadow(0 0 6px rgba(106, 60, 255, 0.55));
+    -webkit-backface-visibility: visible;
+    backface-visibility: visible;
   }
   .shows-studio__wall {
     position: absolute;
