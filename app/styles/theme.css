@@ -1502,6 +1502,35 @@ p {
   border-bottom: 1px solid var(--line);
   text-align: center;
 }
+/* Show/tag heroes stay black in both themes (same idea as .mission-hero). */
+.page-hero--dark {
+  --bg-canvas: #0a0a0a;
+  --bg-surface: #141414;
+  --bg-elevated: #1f1f1f;
+  --fg-primary: #f5efe2;
+  --fg-secondary: #c9c2b3;
+  --fg-tertiary: #8b867a;
+  --fg-inverse: #0a0a0a;
+  --accent-on-bg: var(--accent);
+  --line: #2a2a2a;
+  --line-strong: #3a3a3a;
+  color: var(--fg-primary);
+  color-scheme: dark;
+  background: #0a0a0a;
+  border-bottom-color: var(--line-strong);
+}
+.page-hero--dark a {
+  color: var(--accent);
+}
+.page-hero--dark a:hover {
+  color: var(--accent-2);
+}
+.page-hero--dark :focus-visible {
+  outline-color: var(--accent);
+}
+.page-hero--dark h1 {
+  color: var(--fg-primary);
+}
 .page-hero__title-logo {
   margin: 0 auto;
   max-width: 100%;

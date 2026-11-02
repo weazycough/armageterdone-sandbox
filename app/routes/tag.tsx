@@ -30,7 +30,7 @@ export default function Tag({ loaderData }: Route.ComponentProps): React.ReactNo
   const { show, page, pages, total, episodes } = loaderData;
   return (
     <>
-      <header className="page-hero">
+      <header className="page-hero page-hero--dark">
         <div className="container">
           <span className="eyebrow">{show.kicker}</span>
           {show.slug === "news-talk" ? (
