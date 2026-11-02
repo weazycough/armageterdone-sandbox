@@ -2713,19 +2713,6 @@ p {
     rgba(0, 0, 0, 0.55) 100%
   );
 }
-@media (min-resolution: 3dppx) {
-  .shows-studio__scene::before {
-    --vapor-line: calc(1px / 3);
-  }
-  .shows-studio__scene::after {
-    --vapor-h-stroke: calc(1px / 6);
-  }
-}
-@media (min-resolution: 2dppx) and (max-resolution: 2.99dppx) {
-  .shows-studio__scene::before {
-    --vapor-line: 0.5px;
-  }
-}
 /* Mobile: screen-space horizontal hairlines (no 3D) + soft vignette.
    1px bands so perspective cannot thicken strokes near the bottom. */
 .shows-studio__scene::after {
@@ -2777,6 +2764,25 @@ p {
     #000 100%
   );
 }
+/* Hairline device-pixel tuning — after base ::before/::after so vars stick. */
+@media (min-resolution: 3dppx) {
+  .shows-studio__scene::before {
+    --vapor-line: calc(1px / 3);
+  }
+  .shows-studio__scene::after {
+    /* half-stroke → total ~1 device px, matching verticals */
+    --vapor-h-stroke: calc(1px / 6);
+  }
+}
+@media (min-resolution: 2dppx) and (max-resolution: 2.99dppx) {
+  .shows-studio__scene::before {
+    --vapor-line: 0.5px;
+  }
+  .shows-studio__scene::after {
+    --vapor-h-stroke: 0.5px;
+  }
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .shows-studio__scene::before {
     animation: shows-vapor-grid 32s linear infinite;
