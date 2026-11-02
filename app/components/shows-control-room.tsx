@@ -1,7 +1,7 @@
-// shows-control-room.tsx — Option C from lab #9: six show monitors in a
-// control-room arc over the commissioned news-desk art of Basil and Gonz.
-// The studio stays dark in both themes (it is artwork). On a phone the arc
-// flattens into a sideways snap-scroll row.
+// shows-control-room.tsx — Option C from lab #9: six show monitors as a
+// news-station wall behind the commissioned Basil & Gonz desk art. The studio
+// stays dark in both themes. Desktop: a wide perspective arc. Phone: a 2×3
+// monitor panel behind the hosts (no swipe row).
 
 import type * as React from "react";
 import { Link } from "react-router";
@@ -56,18 +56,8 @@ export function ShowsControlRoom(): React.ReactNode {
   return (
     <section className="shows-studio" aria-label="The Canary Cry Network shows">
       <div className="shows-studio__scene">
-        <picture className="shows-studio__hero">
-          <source srcSet={asset("images/newsdesk-hosts.webp")} type="image/webp" />
-          <img
-            src={asset("images/newsdesk-hosts.jpg")}
-            alt="Basil and Gonz at the Canary Cry news desk"
-            width="1920"
-            height="1080"
-            decoding="async"
-          />
-        </picture>
-
-        <div className="shows-studio__overlay">
+        {/* Wall sits behind the desk art; hero is the foreground strip. */}
+        <div className="shows-studio__wall">
           <header className="shows-studio__title">
             <p className="shows-studio__eyebrow">The Canary Cry Network</p>
             <h1>Shows</h1>
@@ -80,10 +70,18 @@ export function ShowsControlRoom(): React.ReactNode {
               </li>
             ))}
           </ul>
-          <p className="shows-arc__swipe" aria-hidden="true">
-            Swipe for more shows →
-          </p>
         </div>
+
+        <picture className="shows-studio__hero">
+          <source srcSet={asset("images/newsdesk-hosts.webp")} type="image/webp" />
+          <img
+            src={asset("images/newsdesk-hosts.jpg")}
+            alt="Basil and Gonz at the Canary Cry news desk"
+            width="1920"
+            height="1080"
+            decoding="async"
+          />
+        </picture>
       </div>
     </section>
   );
