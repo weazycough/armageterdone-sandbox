@@ -25,7 +25,10 @@ export interface NavItem {
 export const PRIMARY_NAV: NavItem[] = [
   {
     label: "Shows",
-    menu: SHOWS.map((s) => ({ label: s.title, href: tagPath(s.slug), meta: s.nav })),
+    menu: [
+      { label: "All shows", href: "/shows/", meta: "The Canary Cry Network" },
+      ...SHOWS.map((s) => ({ label: s.title, href: tagPath(s.slug), meta: s.nav })),
+    ],
   },
   {
     label: "Community",

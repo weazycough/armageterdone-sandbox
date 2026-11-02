@@ -2556,6 +2556,341 @@ p {
   }
 }
 
+/* ---------- Shows page: Option C control-room arc (issue #9) ---------- */
+/* The studio is artwork: it stays dark in both themes. */
+.shows-page {
+  padding-bottom: var(--space-8);
+}
+.shows-studio {
+  --shows-label: #f5efe2;
+  color: var(--shows-label);
+  background: #04060d;
+}
+.shows-studio__scene {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 50% 55%, rgba(58, 92, 184, 0.35), transparent 55%),
+    linear-gradient(#0e1630, #070b18 70%, #04060d);
+}
+.shows-studio__hero {
+  display: block;
+  line-height: 0;
+}
+.shows-studio__hero img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: min(78vh, 52rem);
+  object-fit: cover;
+  object-position: center bottom;
+}
+.shows-studio__overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 1.25rem 0 0;
+  pointer-events: none;
+}
+.shows-studio__overlay a,
+.shows-studio__overlay .shows-monitor,
+.shows-studio__overlay .shows-arc {
+  pointer-events: auto;
+}
+.shows-studio__title {
+  margin: 0;
+  padding: 0.5rem 1.25rem 0.75rem;
+  text-align: left;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.85);
+}
+.shows-studio__eyebrow {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.shows-studio__title h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  color: #fff;
+  letter-spacing: 0.02em;
+}
+
+/* Phone: one swipeable row of monitors over the upper half of the art. */
+.shows-arc {
+  list-style: none;
+  margin: 0;
+  display: flex;
+  gap: 0.9rem;
+  padding: 0.5rem 1rem 0.25rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding: 0 1rem;
+  -webkit-overflow-scrolling: touch;
+}
+.shows-arc li {
+  flex: 0 0 58%;
+  scroll-snap-align: start;
+  min-width: 0;
+}
+.shows-arc__swipe {
+  margin: 0;
+  padding: 0 1rem 0.5rem;
+  font-size: 0.75rem;
+  color: #c3c8d4;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.8);
+}
+
+.shows-monitor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--shows-label);
+  text-decoration: none;
+  border-radius: 6px;
+}
+.shows-monitor--soon {
+  cursor: default;
+  opacity: 0.92;
+}
+.shows-monitor__bezel {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  padding: 6%;
+  border-radius: 6px;
+  background: linear-gradient(#30353f, #16191e);
+  box-shadow:
+    inset 0 0 0 1px #464c58,
+    0 8px 16px rgba(0, 0, 0, 0.45);
+  transition: transform 0.2s var(--ease);
+}
+.shows-monitor__screen {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 2px;
+  background: #000;
+}
+.shows-monitor__screen img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.62) saturate(0.7);
+  transition: filter 0.2s var(--ease);
+}
+.shows-monitor__screen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.3) 0 1px,
+    transparent 1px 3px
+  );
+  transition: opacity 0.2s var(--ease);
+  pointer-events: none;
+}
+.shows-monitor__led {
+  position: absolute;
+  right: 6%;
+  bottom: 1.8%;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #4a4f5a;
+}
+.shows-monitor__label {
+  margin-top: 0.45rem;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.85rem;
+  line-height: 1.2;
+  text-align: center;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.9);
+}
+.shows-monitor__screen--testcard {
+  display: grid;
+  place-items: center;
+  background: linear-gradient(
+    90deg,
+    #bfbfbf 0 14.3%,
+    #bfbf00 0 28.6%,
+    #00bfbf 0 42.9%,
+    #00bf00 0 57.1%,
+    #bf00bf 0 71.4%,
+    #bf0000 0 85.7%,
+    #0000bf 0
+  );
+  filter: saturate(0.6) brightness(0.8);
+  transition: filter 0.2s var(--ease);
+}
+.shows-monitor__screen--testcard span {
+  position: relative;
+  z-index: 1;
+  padding: 0.15em 0.5em;
+  background: #0a0a0a;
+  color: #f5efe2;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.shows-monitor:hover .shows-monitor__screen img,
+.shows-monitor:focus-visible .shows-monitor__screen img {
+  filter: none;
+}
+.shows-monitor:hover .shows-monitor__screen::after,
+.shows-monitor:focus-visible .shows-monitor__screen::after {
+  opacity: 0.15;
+}
+.shows-monitor:hover .shows-monitor__bezel,
+.shows-monitor:focus-visible .shows-monitor__bezel {
+  transform: translateY(-3px);
+}
+.shows-monitor:hover .shows-monitor__led,
+.shows-monitor:focus-visible .shows-monitor__led {
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+}
+.shows-monitor:hover .shows-monitor__label,
+.shows-monitor:focus-visible .shows-monitor__label {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.shows-monitor--soon:hover .shows-monitor__bezel,
+.shows-monitor--soon:focus-visible .shows-monitor__bezel {
+  transform: none;
+}
+.shows-monitor--soon:hover .shows-monitor__label,
+.shows-monitor--soon:focus-visible .shows-monitor__label {
+  text-decoration: none;
+}
+.shows-monitor--soon:hover .shows-monitor__screen--testcard,
+.shows-monitor--soon:focus-visible .shows-monitor__screen--testcard {
+  filter: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .shows-monitor__bezel,
+  .shows-monitor__screen img,
+  .shows-monitor__screen::after,
+  .shows-monitor__screen--testcard {
+    transition: none;
+  }
+  .shows-monitor:hover .shows-monitor__bezel,
+  .shows-monitor:focus-visible .shows-monitor__bezel {
+    transform: none;
+  }
+}
+
+/* Desktop: arc of monitors angled toward the middle, above the desk. */
+@media (min-width: 768px) {
+  .shows-studio__scene {
+    perspective: 1100px;
+  }
+  .shows-studio__overlay {
+    padding-top: 1.75rem;
+  }
+  .shows-studio__title {
+    padding: 0.75rem 2.5rem 1rem;
+  }
+  .shows-arc {
+    justify-content: center;
+    gap: 0.6rem;
+    padding: 0.25rem 2rem 0;
+    overflow: visible;
+    transform-style: preserve-3d;
+  }
+  .shows-arc li {
+    flex: 0 1 9.5rem;
+  }
+  .shows-arc li:nth-child(1) .shows-monitor {
+    transform: rotateY(32deg) translateY(28px);
+  }
+  .shows-arc li:nth-child(2) .shows-monitor {
+    transform: rotateY(18deg) translateY(8px);
+  }
+  .shows-arc li:nth-child(3) .shows-monitor {
+    transform: rotateY(6deg);
+  }
+  .shows-arc li:nth-child(4) .shows-monitor {
+    transform: rotateY(-6deg);
+  }
+  .shows-arc li:nth-child(5) .shows-monitor {
+    transform: rotateY(-18deg) translateY(8px);
+  }
+  .shows-arc li:nth-child(6) .shows-monitor {
+    transform: rotateY(-32deg) translateY(28px);
+  }
+  .shows-arc__swipe {
+    display: none;
+  }
+  .shows-monitor__label {
+    font-size: 0.8rem;
+  }
+}
+
+/* Roster under the studio: text fallback + open-item notes. */
+.shows-roster {
+  max-width: 44rem;
+  margin: 0 auto;
+}
+.shows-roster__heading {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0 0 var(--space-4);
+}
+.shows-roster__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-4);
+}
+.shows-roster__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--fg-primary);
+  text-decoration: none;
+}
+.shows-roster__title:hover {
+  color: var(--accent-on-bg);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.shows-roster__title--soon {
+  color: var(--fg-secondary);
+}
+.shows-roster__desc {
+  margin: 0.25rem 0 0;
+  color: var(--fg-secondary);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+.shows-roster__open {
+  color: var(--fg-tertiary);
+  font-style: italic;
+}
+.shows-roster__note {
+  margin-top: var(--space-6);
+  font-size: 0.9rem;
+}
+
 /* ---------- Utility ---------- */
 .sr-only {
   position: absolute;

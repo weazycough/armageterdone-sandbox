@@ -16,6 +16,7 @@ export const DESIGNED_PAGES = [
   "meet-ups",
   "mixtape",
   "roundtable",
+  "shows",
   "softwar",
   "speakpipe",
   "streetteam",
