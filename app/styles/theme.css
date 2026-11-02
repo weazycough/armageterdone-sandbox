@@ -2650,6 +2650,9 @@ p {
   display: flex;
   flex-direction: column;
   isolation: isolate;
+  /* CQ width units scale the floor grid with the scene, not the viewport. */
+  container-type: inline-size;
+  container-name: shows-scene;
   /* Near-black sky + floor; faint horizon glow only — desk/monitors stay focus. */
   background:
     radial-gradient(ellipse 70% 28% at 50% 50%, rgba(90, 50, 180, 0.14), transparent 70%),
@@ -2661,17 +2664,23 @@ p {
       #080510 100%
     );
 }
-/* Strong wide-angle violet neon floor grid (reference-matched depth/stretch). */
+/* Strong wide-angle violet neon floor grid (reference-matched depth/stretch).
+   Mobile sizes perspective/cells/plane height in cqw so a phone matches a
+   scaled-down ~1280×702 desktop scene; desktop media query locks px/rem. */
 .shows-studio__scene::before {
   content: "";
   position: absolute;
   left: -55%;
   right: -55%;
-  /* Horizon ~mid-height; plane fills to the bottom edge. */
+  /* Horizon ~mid-height (same ratio as desktop). */
   top: 50%;
-  height: 120%;
+  /* Plane height from scene WIDTH (1.2 × 702/1280) — keeps fan angle stable. */
+  height: 65.8125cqw;
   z-index: 0;
   pointer-events: none;
+  /* 280px / 1280 and 1.65rem / 1280 at the desktop reference width. */
+  --vapor-persp: 21.875cqw;
+  --vapor-cell: 2.0625cqw;
   background-color: #05040c;
   background-image:
     /* Soft bloom under the lines */
@@ -2681,13 +2690,13 @@ p {
     linear-gradient(var(--vapor-neon-hot) 1.5px, transparent 1.5px),
     linear-gradient(90deg, var(--vapor-neon) 1.5px, transparent 1.5px);
   background-size:
-    100% 1.65rem,
-    1.65rem 100%,
-    100% 1.65rem,
-    1.65rem 100%;
+    100% var(--vapor-cell),
+    var(--vapor-cell) 100%,
+    100% var(--vapor-cell),
+    var(--vapor-cell) 100%;
   background-position: 0 0, 0 0, 0 0, 0 0;
-  /* Short perspective + steep pitch → sharp fan-out; horizontals stretch toward viewer. */
-  transform: perspective(280px) rotateX(74deg);
+  /* Perspective distance scales with scene width → same foreshortening. */
+  transform: perspective(var(--vapor-persp)) rotateX(74deg);
   transform-origin: 50% 0%;
   opacity: 0.88;
   filter: drop-shadow(0 0 6px rgba(106, 60, 255, 0.55));
@@ -2724,7 +2733,7 @@ p {
 }
 @keyframes shows-vapor-grid {
   to {
-    background-position: 0 1.65rem, 0 0, 0 1.65rem, 0 0;
+    background-position: 0 var(--vapor-cell), 0 0, 0 var(--vapor-cell), 0 0;
   }
 }
 
@@ -2990,6 +2999,14 @@ p {
     min-height: 0;
     overflow: hidden;
     perspective: 1100px;
+  }
+  /* Keep the approved desktop vapor grid exactly (no cqw drift). */
+  .shows-studio__scene::before {
+    top: 50%;
+    height: 120%;
+    --vapor-persp: 280px;
+    --vapor-cell: 1.65rem;
+    transform: perspective(280px) rotateX(74deg);
   }
   .shows-studio__wall {
     position: absolute;
