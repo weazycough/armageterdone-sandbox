@@ -2636,18 +2636,95 @@ p {
 }
 .shows-studio {
   --shows-label: #f5efe2;
+  --vapor-magenta: rgba(255, 64, 196, 0.22);
+  --vapor-cyan: rgba(64, 230, 255, 0.18);
   color: var(--shows-label);
-  background: #04060d;
+  /* Match vapor floor so the section edge doesn't flash flat black. */
+  background: #07041a;
 }
 .shows-studio__scene {
   position: relative;
-  overflow: visible;
+  overflow-x: hidden;
+  overflow-y: visible;
   display: flex;
   flex-direction: column;
-  /* One continuous studio wash behind monitors + desk (no seam). */
+  isolation: isolate;
+  /* Vaporwave sky: soft purple → deep blue, faint horizon glow + dim sun.
+     Desk art (transparent cutout) and monitors share this wash — no seam. */
   background:
-    radial-gradient(ellipse at 50% 42%, rgba(58, 92, 184, 0.42), transparent 62%),
-    linear-gradient(#0e1630, #070b18 70%, #04060d);
+    radial-gradient(circle at 50% 36%, rgba(255, 196, 120, 0.14) 0%, rgba(255, 110, 180, 0.08) 6%, transparent 22%),
+    radial-gradient(ellipse 95% 38% at 50% 48%, rgba(255, 80, 190, 0.16), transparent 62%),
+    radial-gradient(ellipse 70% 50% at 50% 22%, rgba(140, 70, 210, 0.28), transparent 58%),
+    repeating-linear-gradient(
+      90deg,
+      transparent 0,
+      transparent 47px,
+      rgba(120, 200, 255, 0.035) 47px,
+      rgba(120, 200, 255, 0.035) 48px
+    ),
+    linear-gradient(
+      180deg,
+      #16082c 0%,
+      #2a1060 26%,
+      #3a1878 42%,
+      #1a2a68 52%,
+      #0c1438 68%,
+      #07041a 100%
+    );
+}
+/* Perspective neon floor grid — low opacity, behind desk + monitors. */
+.shows-studio__scene::before {
+  content: "";
+  position: absolute;
+  left: -15%;
+  right: -15%;
+  top: 42%;
+  bottom: -18%;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(var(--vapor-magenta) 1.5px, transparent 1.5px),
+    linear-gradient(90deg, var(--vapor-cyan) 1.5px, transparent 1.5px);
+  background-size: 100% 2.1rem, 2.6rem 100%;
+  background-position: 0 0, 0 0;
+  transform: perspective(520px) rotateX(66deg);
+  transform-origin: 50% 0%;
+  opacity: 0.55;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #000 12%,
+    #000 72%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #000 12%,
+    #000 72%,
+    transparent 100%
+  );
+}
+/* Soft vignette so monitors/desk stay the focus. */
+.shows-studio__scene::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 78% 68% at 50% 42%, transparent 42%, rgba(4, 2, 16, 0.55) 100%);
+  opacity: 0.9;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .shows-studio__scene::before {
+    animation: shows-vapor-grid 28s linear infinite;
+  }
+}
+@keyframes shows-vapor-grid {
+  to {
+    background-position: 0 2.1rem, 0 0;
+  }
 }
 
 /* Phone: desk strip under the 2×3 panel, ~90vw wide so side glow shows.
@@ -2699,10 +2776,12 @@ p {
   overflow: visible;
 }
 .shows-studio__title {
+  position: relative;
+  z-index: 5;
   margin: 0;
   padding: 0.25rem 1rem 0.4rem;
   text-align: left;
-  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.85);
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.85), 0 0 18px rgba(255, 100, 200, 0.25);
 }
 .shows-studio__eyebrow {
   margin: 0 0 0.3rem;
@@ -2914,7 +2993,7 @@ p {
   .shows-studio__wall {
     position: absolute;
     inset: 0;
-    z-index: 1;
+    z-index: 2;
     order: 0;
     min-height: 0;
     padding-top: 1.75rem;
@@ -2929,7 +3008,7 @@ p {
   }
   .shows-studio__title {
     position: relative;
-    z-index: 3;
+    z-index: 5;
     padding: 0.75rem 2.5rem 1rem;
   }
   /* Full uncropped desk image — scene height comes from the art. */
@@ -2938,7 +3017,7 @@ p {
     left: auto;
     right: auto;
     bottom: auto;
-    z-index: 0;
+    z-index: 1;
     order: 0;
     width: 100%;
     max-width: none;
