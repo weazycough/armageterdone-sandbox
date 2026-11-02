@@ -1502,6 +1502,26 @@ p {
   border-bottom: 1px solid var(--line);
   text-align: center;
 }
+.page-hero__title-logo {
+  margin: 0 auto;
+  max-width: 100%;
+}
+.page-hero__logo {
+  display: block;
+  width: min(100%, 22rem);
+  height: auto;
+  margin: 0.15rem auto 0;
+}
+@media (min-width: 640px) {
+  .page-hero__logo {
+    width: min(100%, 32rem);
+  }
+}
+@media (min-width: 1024px) {
+  .page-hero__logo {
+    width: min(100%, 40rem);
+  }
+}
 .page-body {
   padding: var(--space-7) 0;
 }

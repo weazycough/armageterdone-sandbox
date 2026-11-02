@@ -9,6 +9,7 @@ import { EpisodeCard } from "../components/episode-card";
 import { Pagination } from "../components/pagination";
 import { loadEpisodes } from "../lib/content.server";
 import { listPage } from "../lib/episode-list.server";
+import { asset } from "../lib/asset";
 import { pageTitle } from "../lib/meta";
 import { tagPath } from "../lib/paths";
 import { findShow, showOf } from "../lib/shows";
@@ -32,7 +33,20 @@ export default function Tag({ loaderData }: Route.ComponentProps): React.ReactNo
       <header className="page-hero">
         <div className="container">
           <span className="eyebrow">{show.kicker}</span>
-          <h1>{show.title}</h1>
+          {show.slug === "news-talk" ? (
+            <h1 className="page-hero__title-logo">
+              <img
+                className="page-hero__logo"
+                src={asset("images/newstalk-logo.webp")}
+                alt={show.title}
+                width={1731}
+                height={674}
+                decoding="async"
+              />
+            </h1>
+          ) : (
+            <h1>{show.title}</h1>
+          )}
           <p className="muted">
             {show.desc} {total} episodes, newest first. <Link to="/episodes/">All episodes →</Link>
           </p>
