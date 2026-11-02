@@ -1551,6 +1551,36 @@ p {
     width: min(100%, 40rem);
   }
 }
+/* Same footprint as .page-hero__logo until real title art lands (logo: null). */
+.page-hero__logo--placeholder {
+  box-sizing: border-box;
+  aspect-ratio: 2.57; /* matches newstalk-logo 1731×674 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: var(--space-4) var(--space-5);
+  border: 1.5px dashed var(--line-strong);
+  border-radius: 0.5rem;
+  background: color-mix(in srgb, var(--bg-elevated) 55%, transparent);
+}
+.page-hero__logo-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.15rem, 3.8vw, 2.15rem);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: var(--fg-primary);
+}
+.page-hero__logo-note {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-tertiary);
+}
 .page-body {
   padding: var(--space-7) 0;
 }

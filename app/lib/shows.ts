@@ -14,6 +14,8 @@ export const SHOWS = [
     nav: "The main show",
     desc: "The flagship discernment broadcast — daily news through a Biblical worldview.",
     art: "images/show-news-talk.webp",
+    /** Title logo in the tag-page hero; null until art lands (placeholder). */
+    logo: "images/newstalk-logo.webp",
   },
   {
     slug: "radio",
@@ -22,6 +24,7 @@ export const SHOWS = [
     nav: "Long-form interviews",
     desc: "Deep-cut interviews and conversations with discerners, theologians, and researchers.",
     art: "images/show-radio.webp",
+    logo: null,
   },
   {
     slug: "clubhouse",
@@ -30,6 +33,7 @@ export const SHOWS = [
     nav: "Live conversations",
     desc: "Open-mic conversations with the community. Wade into deep waters together.",
     art: "images/show-clubhouse.webp",
+    logo: null,
   },
 ] as const;
 

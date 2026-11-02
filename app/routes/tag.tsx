@@ -12,7 +12,7 @@ import { listPage } from "../lib/episode-list.server";
 import { asset } from "../lib/asset";
 import { pageTitle } from "../lib/meta";
 import { tagPath } from "../lib/paths";
-import { findShow, showOf } from "../lib/shows";
+import { findShow, showOf, type Show } from "../lib/shows";
 
 export function loader({ params }: Route.LoaderArgs) {
   const show = findShow(params.tag);
@@ -26,6 +26,32 @@ export function meta({ loaderData }: Route.MetaArgs): Route.MetaDescriptors {
   return pageTitle(`${loaderData.show.title}${suffix}`);
 }
 
+/** Title mark in the always-dark hero: real logo when `show.logo` is set, else a same-size placeholder. */
+function ShowTitleLogo({ show }: { show: Show }): React.ReactNode {
+  if (show.logo !== null) {
+    return (
+      <h1 className="page-hero__title-logo">
+        <img
+          className="page-hero__logo"
+          src={asset(show.logo)}
+          alt={show.title}
+          width={1731}
+          height={674}
+          decoding="async"
+        />
+      </h1>
+    );
+  }
+  return (
+    <h1 className="page-hero__title-logo">
+      <span className="page-hero__logo page-hero__logo--placeholder">
+        <span className="page-hero__logo-name">{show.title}</span>
+        <span className="page-hero__logo-note">Logo art to come</span>
+      </span>
+    </h1>
+  );
+}
+
 export default function Tag({ loaderData }: Route.ComponentProps): React.ReactNode {
   const { show, page, pages, total, episodes } = loaderData;
   return (
@@ -33,20 +59,7 @@ export default function Tag({ loaderData }: Route.ComponentProps): React.ReactNo
       <header className="page-hero page-hero--dark">
         <div className="container">
           <span className="eyebrow">{show.kicker}</span>
-          {show.slug === "news-talk" ? (
-            <h1 className="page-hero__title-logo">
-              <img
-                className="page-hero__logo"
-                src={asset("images/newstalk-logo.webp")}
-                alt={show.title}
-                width={1731}
-                height={674}
-                decoding="async"
-              />
-            </h1>
-          ) : (
-            <h1>{show.title}</h1>
-          )}
+          <ShowTitleLogo show={show} />
           <p className="muted">
             {show.desc} {total} episodes, newest first. <Link to="/episodes/">All episodes →</Link>
           </p>
