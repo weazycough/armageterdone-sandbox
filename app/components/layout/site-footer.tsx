@@ -3,7 +3,7 @@
 
 import type * as React from "react";
 import { Link } from "react-router";
-import { asset } from "../../lib/asset";
+import { SiteBrand } from "./site-header";
 import { FOOTER_COLUMNS } from "../../lib/nav";
 import { SmartLink } from "../smart-link";
 
@@ -47,17 +47,7 @@ export function SiteFooter({ year }: { year: number }): React.ReactNode {
       <div className="container">
         <div className="site-footer__cols">
           <div>
-            <Link className="site-brand" to="/" style={{ marginBottom: "var(--space-3)" }}>
-              <img
-                className="site-brand__crest"
-                src={asset("images/cc-logo.webp")}
-                alt=""
-                width="40"
-                height="40"
-              />
-              <span className="site-brand__name site-brand__name--short">Canary Cry</span>
-              <span className="site-brand__name site-brand__name--long">Canary Cry Network</span>
-            </Link>
+            <SiteBrand className="site-brand--footer" />
             <p className="site-footer__motto">
               &ldquo;Cogitare extra caveam — think outside the cage.&rdquo;
             </p>

@@ -47,19 +47,18 @@ function Ticker({ latest }: { latest: LatestEpisode }): React.ReactNode {
   );
 }
 
-export function SiteBrand(): React.ReactNode {
+export function SiteBrand({ className }: { className?: string }): React.ReactNode {
+  const classes = ["site-brand", className].filter(Boolean).join(" ");
   return (
-    <Link className="site-brand" to="/">
+    <Link className={classes} to="/">
       <img
-        className="site-brand__crest"
-        src={asset("images/cc-logo.webp")}
-        alt=""
-        width="40"
-        height="40"
+        className="site-brand__mark"
+        src={asset("images/cc-wordmark.webp")}
+        alt="Canary Cry"
+        width={1241}
+        height={387}
+        decoding="async"
       />
-      <span className="site-brand__name site-brand__name--short">Canary Cry</span>
-      <span className="site-brand__name site-brand__name--long">Canary Cry Network</span>
-      <span className="site-brand__small">— Cogitare extra caveam</span>
     </Link>
   );
 }

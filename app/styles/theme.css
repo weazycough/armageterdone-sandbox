@@ -271,57 +271,48 @@ p {
 .site-brand {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
   text-decoration: none;
-  color: var(--fg-primary);
-  font-family: var(--font-display);
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  font-size: 0.95rem;
   flex: 0 0 auto;
+  line-height: 0;
 }
 .site-brand:hover {
-  color: var(--accent-on-bg);
   text-decoration: none;
+  opacity: 0.92;
 }
-.site-brand__crest {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+/* Gold 3D wordmark — replaces crest + "Canary Cry" text. */
+.site-brand__mark {
   display: block;
+  height: 1.65rem; /* phone */
+  width: auto;
+  max-width: min(52vw, 11.5rem);
   flex: 0 0 auto;
 }
-.site-brand__name {
-  white-space: nowrap;
-  font-size: 0.85rem;
-}
-.site-brand__name--long {
-  display: none;
-}
 @media (min-width: 640px) {
-  .site-brand__name {
-    font-size: 0.95rem;
+  .site-brand__mark {
+    height: 1.9rem;
+    max-width: 13.5rem;
   }
 }
-@media (min-width: 700px) {
-  .site-brand__name--short {
-    display: none;
-  }
-  .site-brand__name--long {
-    display: inline;
+@media (min-width: 1024px) {
+  .site-brand__mark {
+    height: 2.15rem;
+    max-width: 15rem;
   }
 }
-.site-brand__small {
-  display: none;
-  color: var(--fg-tertiary);
-  font-weight: 500;
-  font-size: 0.7rem;
-  letter-spacing: 0.18em;
+.site-brand--footer {
+  margin-bottom: var(--space-3);
 }
-@media (min-width: 1600px) {
-  .site-brand__small {
-    display: inline;
+.site-brand--footer .site-brand__mark {
+  height: 2rem;
+  max-width: 14rem;
+}
+/* Soft edge so gold reads on cream without a white halo from the asset. */
+:root[data-theme="light"] .site-brand__mark {
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.28)) drop-shadow(0 0 0.4px rgba(40, 20, 0, 0.35));
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) .site-brand__mark {
+    filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.28)) drop-shadow(0 0 0.4px rgba(40, 20, 0, 0.35));
   }
 }
 
