@@ -2798,100 +2798,125 @@ p {
 /* Desktop: wide curving news-station wall behind the desk. */
 @media (min-width: 768px) {
   .shows-studio__scene {
-    min-height: min(78vh, 46rem);
-    perspective: 1400px;
+    min-height: min(82vh, 50rem);
   }
   .shows-studio__wall {
     position: absolute;
     inset: 0;
     min-height: 0;
-    padding-top: 1.5rem;
+    padding-top: 1rem;
     justify-content: flex-start;
+    /* Perspective must live on an ancestor of the rotated monitors. */
+    perspective: 1200px;
+    perspective-origin: 50% 40%;
   }
   .shows-studio__title {
-    padding: 0.5rem 2.5rem 0.75rem;
+    position: relative;
+    z-index: 3;
+    padding: 0.35rem 2.25rem 0.35rem;
   }
+  /* Shorter desk strip so large monitors read above/behind the hosts. */
   .shows-studio__hero {
-    height: 56%;
+    height: 48%;
   }
   .shows-arc {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 9%;
+    bottom: 26%;
     display: flex;
     justify-content: center;
-    align-items: flex-end;
-    gap: 0.35rem;
-    padding: 0.5rem 1.25rem 0;
-    overflow: visible;
+    align-items: center;
+    gap: 0;
+    padding: 0 0.5rem;
+    margin: 0;
     transform-style: preserve-3d;
-    /* Leave room so the arc sits above the desk strip. */
-    margin-top: 0.25rem;
   }
   .shows-arc li {
     flex: 1 1 0;
-    max-width: 15.5rem;
+    max-width: 22rem;
     min-width: 0;
+    transform-style: preserve-3d;
   }
-  /* Side monitors turn in; outer ones sit lower — a broadcast wall curve. */
+  /* Side monitors turn in; outer ones sit lower + back — a broadcast wall. */
   .shows-arc li:nth-child(1) .shows-monitor {
-    transform: rotateY(38deg) translateY(3.2rem) scale(0.96);
+    transform: rotateY(40deg) translateY(2.4rem) translateZ(-40px);
     transform-origin: right center;
   }
   .shows-arc li:nth-child(2) .shows-monitor {
-    transform: rotateY(22deg) translateY(1.35rem) scale(0.98);
+    transform: rotateY(24deg) translateY(1rem) translateZ(-18px);
     transform-origin: right center;
   }
   .shows-arc li:nth-child(3) .shows-monitor {
-    transform: rotateY(7deg) translateY(0.15rem);
+    transform: rotateY(8deg) translateZ(8px);
     transform-origin: center center;
   }
   .shows-arc li:nth-child(4) .shows-monitor {
-    transform: rotateY(-7deg) translateY(0.15rem);
+    transform: rotateY(-8deg) translateZ(8px);
     transform-origin: center center;
   }
   .shows-arc li:nth-child(5) .shows-monitor {
-    transform: rotateY(-22deg) translateY(1.35rem) scale(0.98);
+    transform: rotateY(-24deg) translateY(1rem) translateZ(-18px);
     transform-origin: left center;
   }
   .shows-arc li:nth-child(6) .shows-monitor {
-    transform: rotateY(-38deg) translateY(3.2rem) scale(0.96);
+    transform: rotateY(-40deg) translateY(2.4rem) translateZ(-40px);
     transform-origin: left center;
   }
   .shows-monitor__bezel {
-    padding: 4.5%;
-    border-radius: 7px;
+    padding: 3.5%;
+    border-radius: 8px;
     box-shadow:
       inset 0 0 0 1px #464c58,
-      0 12px 28px rgba(0, 0, 0, 0.55);
+      0 16px 36px rgba(0, 0, 0, 0.65);
   }
   .shows-monitor__label {
-    margin-top: 0.45rem;
-    font-size: clamp(0.7rem, 1.05vw, 0.92rem);
+    margin-top: 0.35rem;
+    font-size: clamp(0.75rem, 1.15vw, 1rem);
   }
   .shows-monitor__screen--testcard span {
-    font-size: 0.7rem;
+    font-size: 0.75rem;
   }
   .shows-monitor__led {
-    width: 7px;
-    height: 7px;
+    width: 8px;
+    height: 8px;
   }
 }
 
 @media (min-width: 1100px) {
   .shows-studio__scene {
-    min-height: min(82vh, 52rem);
+    min-height: min(86vh, 56rem);
+  }
+  .shows-studio__wall {
+    perspective: 1400px;
   }
   .shows-arc {
-    gap: 0.55rem;
-    padding-left: 2rem;
-    padding-right: 2rem;
+    top: 8%;
+    bottom: 28%;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
   .shows-arc li {
-    max-width: 17.5rem;
+    max-width: 24rem;
   }
   .shows-arc li:nth-child(1) .shows-monitor {
-    transform: rotateY(42deg) translateY(3.6rem) scale(0.97);
+    transform: rotateY(44deg) translateY(2.8rem) translateZ(-56px);
+  }
+  .shows-arc li:nth-child(2) .shows-monitor {
+    transform: rotateY(26deg) translateY(1.15rem) translateZ(-24px);
+  }
+  .shows-arc li:nth-child(3) .shows-monitor {
+    transform: rotateY(8deg) translateZ(12px);
+  }
+  .shows-arc li:nth-child(4) .shows-monitor {
+    transform: rotateY(-8deg) translateZ(12px);
+  }
+  .shows-arc li:nth-child(5) .shows-monitor {
+    transform: rotateY(-26deg) translateY(1.15rem) translateZ(-24px);
   }
   .shows-arc li:nth-child(6) .shows-monitor {
-    transform: rotateY(-42deg) translateY(3.6rem) scale(0.97);
+    transform: rotateY(-44deg) translateY(2.8rem) translateZ(-56px);
   }
 }
 
