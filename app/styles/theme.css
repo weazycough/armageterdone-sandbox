@@ -792,7 +792,7 @@ p {
   color: var(--fg-primary);
 }
 .mission-hero__about {
-  margin: 1.25rem 0 0;
+  margin: 1.5rem 0 0;
   max-width: 36rem;
   color: var(--fg-secondary);
   font-size: 0.95rem;
@@ -806,7 +806,7 @@ p {
   grid-template-columns: 72px 1fr;
   gap: 0.9rem;
   align-items: center;
-  margin-top: 1.5rem;
+  margin-top: 1rem;
   max-width: 28rem;
   padding: 0.75rem;
   border: 1px solid var(--line-strong);

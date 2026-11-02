@@ -1,5 +1,6 @@
 // home.tsx — the homepage: mission hero (lab #1 Option A split layout with
-// Option B's always-dark band), then shows, value-for-value, recent episodes,
+// Option B's always-dark band; latest episode sits under the tagline with About
+// below it per Stefan's #1 feedback), then shows, value-for-value, recent episodes,
 // community art, and the newsletter signup (preview only).
 
 import type * as React from "react";
@@ -57,12 +58,6 @@ export default function Home({ loaderData }: Route.ComponentProps): React.ReactN
               <h1 className="mission-hero__title">Canary Cry</h1>
               <p className="mission-hero__sub">Canary Cry Radio | Canary Cry News Talk</p>
               <p className="mission-hero__tag">Think Outside the Cage.</p>
-              <p className="mission-hero__about">
-                <strong>A biblical take on the news and world events.</strong> CANARY CRY NEWS TALK
-                is a show that brings frequent updates on news and events happening around the world
-                from an Alt. Christian worldview, hosted by us, Basil and Gonz of the Canary Cry
-                Radio podcast.
-              </p>
               <Link className="mission-hero__latest" to={episodePath(latest.slug)}>
                 <img
                   className="mission-hero__latest-art"
@@ -81,6 +76,12 @@ export default function Home({ loaderData }: Route.ComponentProps): React.ReactN
                   </span>
                 </span>
               </Link>
+              <p className="mission-hero__about">
+                <strong>A biblical take on the news and world events.</strong> CANARY CRY NEWS TALK
+                is a show that brings frequent updates on news and events happening around the world
+                from an Alt. Christian worldview, hosted by us, Basil and Gonz of the Canary Cry
+                Radio podcast.
+              </p>
             </div>
             <figure className="mission-hero__art">
               <picture>
