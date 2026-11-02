@@ -2566,30 +2566,30 @@ p {
   --shows-label: #f5efe2;
   color: var(--shows-label);
   background: #04060d;
-  /* Breathing room under the desk before "On the network". */
-  padding-bottom: 2.25rem;
 }
 .shows-studio__scene {
   position: relative;
   overflow: visible;
   display: flex;
   flex-direction: column;
+  /* One continuous studio wash behind monitors + desk (no seam). */
   background:
-    radial-gradient(ellipse at 50% 45%, rgba(58, 92, 184, 0.4), transparent 60%),
+    radial-gradient(ellipse at 50% 42%, rgba(58, 92, 184, 0.42), transparent 62%),
     linear-gradient(#0e1630, #070b18 70%, #04060d);
 }
 
-/* Phone: desk strip under the full 2×3 panel (no cropping).
-   Crop hard to hosts+desk; slight tuck so they sit right under the panel. */
+/* Phone: desk strip under the 2×3 panel, ~90vw wide so side glow shows.
+   Mask fades the art's flat black into the shared studio wash (no seam). */
 .shows-studio__hero {
   position: relative;
   z-index: 1;
   order: 1;
   flex: 0 0 auto;
-  width: 100%;
-  height: 9.35rem;
-  margin-top: 0.2rem;
-  overflow: hidden;
+  width: 90%;
+  max-width: 90%;
+  height: 12.5rem;
+  margin: 0.1rem auto 0;
+  overflow: visible;
   line-height: 0;
   pointer-events: none;
 }
@@ -2598,8 +2598,21 @@ p {
   width: 100%;
   height: 100%;
   max-height: none;
-  object-fit: cover;
-  object-position: center 94%;
+  object-fit: contain;
+  object-position: center bottom;
+  /* Feather top + sides into the shared studio wash (art bg is transparent). */
+  -webkit-mask-image:
+    linear-gradient(to bottom, transparent 0%, #000 8%, #000 100%),
+    linear-gradient(to right, transparent 0%, #000 4%, #000 96%, transparent 100%);
+  -webkit-mask-size: 100% 100%, 100% 100%;
+  -webkit-mask-repeat: no-repeat, no-repeat;
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to bottom, transparent 0%, #000 8%, #000 100%),
+    linear-gradient(to right, transparent 0%, #000 4%, #000 96%, transparent 100%);
+  mask-size: 100% 100%, 100% 100%;
+  mask-repeat: no-repeat, no-repeat;
+  mask-composite: intersect;
 }
 
 .shows-studio__wall {
@@ -2817,9 +2830,6 @@ p {
 /* Desktop: restore original small arc over the full uncropped desk (3606f64).
  * Phone base styles above stay as approved in 65a06de. */
 @media (min-width: 768px) {
-  .shows-studio {
-    padding-bottom: 3rem;
-  }
   .shows-studio__scene {
     display: block;
     position: relative;
@@ -2856,7 +2866,9 @@ p {
     bottom: auto;
     z-index: 0;
     order: 0;
-    margin-top: 0;
+    width: 100%;
+    max-width: none;
+    margin: 0;
     height: auto;
     overflow: visible;
     pointer-events: none;
@@ -2873,6 +2885,13 @@ p {
     min-height: 0;
     object-fit: cover;
     object-position: center bottom;
+    /* Light top feather into the shared studio wash (art bg is transparent). */
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 12%, #000 100%);
+    -webkit-mask-size: 100% 100%;
+    -webkit-mask-repeat: no-repeat;
+    mask-image: linear-gradient(to bottom, transparent 0%, #000 12%, #000 100%);
+    mask-size: 100% 100%;
+    mask-repeat: no-repeat;
   }
   .shows-arc {
     position: static;
