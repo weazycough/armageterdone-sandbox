@@ -2665,9 +2665,8 @@ p {
     );
 }
 /* Strong wide-angle violet neon floor grid (reference-matched depth/stretch).
-   Mobile: cqw perspective/cells/plane height for desktop-matched fan; fixed
-   1px cores (not cqw) + muted glow so lines stay thin/crisp at DPR 2–3.
-   Desktop media query restores the approved thicker glow look. */
+   Mobile: cqw depth/fan + hairline strokes (~0.5px / 1 device px at high DPR),
+   no bloom; slightly brighter cores so lines stay visible. Desktop MQ unchanged. */
 .shows-studio__scene::before {
   content: "";
   position: absolute;
@@ -2682,30 +2681,28 @@ p {
   /* 280px / 1280 and 1.65rem / 1280 at the desktop reference width. */
   --vapor-persp: 21.875cqw;
   --vapor-cell: 2.0625cqw;
-  /* Fixed CSS-px stroke (not cqw) — crisp on retina; desktop overrides below. */
-  --vapor-line: 1px;
-  --vapor-glow-line: 1.5px;
+  /* Hairline: ~0.5 CSS px (1 device px @2x). High-DPR MQ tightens further. */
+  --vapor-line: 0.5px;
+  --vapor-glow-line: 0px;
+  /* Brighter than desktop base so a hairline still reads as neon. */
+  --vapor-hair-hot: #a078ff;
+  --vapor-hair: #8b5cff;
   background-color: #05040c;
   background-image:
-    /* Mobile: faint 1.5px bloom only (no heavy drop-shadow blur). */
-    linear-gradient(rgba(106, 60, 255, 0.28) var(--vapor-glow-line), transparent var(--vapor-glow-line)),
-    linear-gradient(90deg, rgba(106, 60, 255, 0.28) var(--vapor-glow-line), transparent var(--vapor-glow-line)),
-    /* Bright 1px core — electric violet/indigo */
-    linear-gradient(var(--vapor-neon-hot) var(--vapor-line), transparent var(--vapor-line)),
-    linear-gradient(90deg, var(--vapor-neon) var(--vapor-line), transparent var(--vapor-line));
+    /* Mobile: core only — no bloom layer (avoids fuzzy thick strokes). */
+    linear-gradient(var(--vapor-hair-hot) var(--vapor-line), transparent var(--vapor-line)),
+    linear-gradient(90deg, var(--vapor-hair) var(--vapor-line), transparent var(--vapor-line));
   background-size:
     100% var(--vapor-cell),
-    var(--vapor-cell) 100%,
-    100% var(--vapor-cell),
     var(--vapor-cell) 100%;
-  background-position: 0 0, 0 0, 0 0, 0 0;
+  background-position: 0 0, 0 0;
   /* Perspective distance scales with scene width → same foreshortening. */
   transform: perspective(var(--vapor-persp)) rotateX(74deg);
   transform-origin: 50% 0%;
   /* Keep layer as vector-ish as possible under 3D; avoid pre-blur filters. */
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  opacity: 0.92;
+  opacity: 1;
   filter: none;
   -webkit-mask-image: linear-gradient(
     to bottom,
@@ -2721,6 +2718,17 @@ p {
     #000 88%,
     rgba(0, 0, 0, 0.55) 100%
   );
+}
+/* ~1 device pixel at 3× / high-DPI phones. */
+@media (min-resolution: 3dppx) {
+  .shows-studio__scene::before {
+    --vapor-line: calc(1px / 3);
+  }
+}
+@media (min-resolution: 2dppx) and (max-resolution: 2.99dppx) {
+  .shows-studio__scene::before {
+    --vapor-line: 0.5px;
+  }
 }
 /* Soft vignette — keep desk/monitors readable without washing out the grid. */
 .shows-studio__scene::after {
