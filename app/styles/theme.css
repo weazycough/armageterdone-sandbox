@@ -2665,8 +2665,9 @@ p {
     );
 }
 /* Strong wide-angle violet neon floor grid (reference-matched depth/stretch).
-   Mobile: cqw depth/fan + hairline strokes (~0.5px / 1 device px at high DPR),
-   no bloom; slightly brighter cores so lines stay visible. Desktop MQ unchanged. */
+   Mobile: cqw fan via transformed VERTICALS only; HORIZONTALS are screen-space
+   hairlines on ::after so rotateX cannot thicken them. Same color, no bloom.
+   Desktop MQ restores the combined transformed grid + vignette. */
 .shows-studio__scene::before {
   content: "";
   position: absolute;
@@ -2681,25 +2682,18 @@ p {
   /* 280px / 1280 and 1.65rem / 1280 at the desktop reference width. */
   --vapor-persp: 21.875cqw;
   --vapor-cell: 2.0625cqw;
-  /* Hairline: ~0.5 CSS px (1 device px @2x). High-DPR MQ tightens further. */
+  /* Hairline verticals (~0.5 CSS px / 1 device px @2–3x). */
   --vapor-line: 0.5px;
   --vapor-glow-line: 0px;
-  /* Brighter than desktop base so a hairline still reads as neon. */
-  --vapor-hair-hot: #a078ff;
   --vapor-hair: #8b5cff;
   background-color: #05040c;
   background-image:
-    /* Mobile: core only — no bloom layer (avoids fuzzy thick strokes). */
-    linear-gradient(var(--vapor-hair-hot) var(--vapor-line), transparent var(--vapor-line)),
+    /* Verticals only — thickness is in X, not stretched by rotateX. */
     linear-gradient(90deg, var(--vapor-hair) var(--vapor-line), transparent var(--vapor-line));
-  background-size:
-    100% var(--vapor-cell),
-    var(--vapor-cell) 100%;
-  background-position: 0 0, 0 0;
-  /* Perspective distance scales with scene width → same foreshortening. */
+  background-size: var(--vapor-cell) 100%;
+  background-position: 0 0;
   transform: perspective(var(--vapor-persp)) rotateX(74deg);
   transform-origin: 50% 0%;
-  /* Keep layer as vector-ish as possible under 3D; avoid pre-blur filters. */
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   opacity: 1;
@@ -2719,10 +2713,12 @@ p {
     rgba(0, 0, 0, 0.55) 100%
   );
 }
-/* ~1 device pixel at 3× / high-DPI phones. */
 @media (min-resolution: 3dppx) {
   .shows-studio__scene::before {
     --vapor-line: calc(1px / 3);
+  }
+  .shows-studio__scene::after {
+    --vapor-h-stroke: calc(1px / 6);
   }
 }
 @media (min-resolution: 2dppx) and (max-resolution: 2.99dppx) {
@@ -2730,16 +2726,56 @@ p {
     --vapor-line: 0.5px;
   }
 }
-/* Soft vignette — keep desk/monitors readable without washing out the grid. */
+/* Mobile: screen-space horizontal hairlines (no 3D) + soft vignette.
+   1px bands so perspective cannot thicken strokes near the bottom. */
 .shows-studio__scene::after {
   content: "";
   position: absolute;
-  inset: 0;
+  left: 0;
+  right: 0;
+  top: 50%;
+  bottom: 0;
   z-index: 0;
   pointer-events: none;
-  background:
-    radial-gradient(ellipse 82% 72% at 50% 40%, transparent 48%, rgba(5, 4, 12, 0.62) 100%);
-  opacity: 0.75;
+  --vapor-hair: #8b5cff;
+  /* Screen-space stroke — same hairline weight as verticals (1 CSS px @1–2x). */
+  --vapor-h-stroke: 0.5px;
+  background-color: transparent;
+  background-image:
+    linear-gradient(to bottom, transparent calc(0.3086% - var(--vapor-h-stroke)), var(--vapor-hair) calc(0.3086% - var(--vapor-h-stroke)), var(--vapor-hair) calc(0.3086% + var(--vapor-h-stroke)), transparent calc(0.3086% + var(--vapor-h-stroke))),
+    linear-gradient(to bottom, transparent calc(1.2346% - var(--vapor-h-stroke)), var(--vapor-hair) calc(1.2346% - var(--vapor-h-stroke)), var(--vapor-hair) calc(1.2346% + var(--vapor-h-stroke)), transparent calc(1.2346% + var(--vapor-h-stroke))),
+    linear-gradient(to bottom, transparent calc(2.7778% - var(--vapor-h-stroke)), var(--vapor-hair) calc(2.7778% - var(--vapor-h-stroke)), var(--vapor-hair) calc(2.7778% + var(--vapor-h-stroke)), transparent calc(2.7778% + var(--vapor-h-stroke))),
+    linear-gradient(to bottom, transparent calc(4.9383% - var(--vapor-h-stroke)), var(--vapor-hair) calc(4.9383% - var(--vapor-h-stroke)), var(--vapor-hair) calc(4.9383% + var(--vapor-h-stroke)), transparent calc(4.9383% + var(--vapor-h-stroke))),
+    linear-gradient(to bottom, transparent calc(7.7160% - var(--vapor-h-stroke)), var(--vapor-hair) calc(7.7160% - var(--vapor-h-stroke)), var(--vapor-hair) calc(7.7160% + var(--vapor-h-stroke)), transparent calc(7.7160% + var(--vapor-h-stroke))),
+    linear-gradient(to bottom, transparent calc(11.1111% - var(--vapor-h-stroke)), var(--vapor-hair) calc(11.1111% - var(--vapor-h-stroke)), var(--vapor-hair) calc(11.1111% + var(--vapor-h-stroke)), transparent calc(11.1111% + var(--vapor-h-stroke))),
+    linear-gradient(to bottom, transparent calc(15.1235% - var(--vapor-h-stroke)), var(--vapor-hair) calc(15.1235% - var(--vapor-h-stroke)), var(--vapor-hair) calc(15.1235% + var(--vapor-h-stroke)), transparent calc(15.1235% + var(--vapor-h-stroke))),
+    linear-gradient(to bottom, transparent calc(19.7531% - var(--vapor-h-stroke)), var(--vapor-hair) calc(19.7531% - var(--vapor-h-stroke)), var(--vapor-hair) calc(19.7531% + var(--vapor-h-stroke)), transparent calc(19.7531% + var(--vapor-h-stroke))),
+    linear-gradient(to bottom, transparent calc(25.0000% - var(--vapor-h-stroke)), var(--vapor-hair) calc(25.0000% - var(--vapor-h-stroke)), var(--vapor-hair) calc(25.0000% + var(--vapor-h-stroke)), transparent calc(25.0000% + var(--vapor-h-stroke))),
+    linear-gradient(to bottom, transparent calc(30.8642% - var(--vapor-h-stroke)), var(--vapor-hair) calc(30.8642% - var(--vapor-h-stroke)), var(--vapor-hair) calc(30.8642% + var(--vapor-h-stroke)), transparent calc(30.8642% + var(--vapor-h-stroke))),
+    linear-gradient(to bottom, transparent calc(37.3457% - var(--vapor-h-stroke)), var(--vapor-hair) calc(37.3457% - var(--vapor-h-stroke)), var(--vapor-hair) calc(37.3457% + var(--vapor-h-stroke)), transparent calc(37.3457% + var(--vapor-h-stroke))),
+    linear-gradient(to bottom, transparent calc(44.4444% - var(--vapor-h-stroke)), var(--vapor-hair) calc(44.4444% - var(--vapor-h-stroke)), var(--vapor-hair) calc(44.4444% + var(--vapor-h-stroke)), transparent calc(44.4444% + var(--vapor-h-stroke))),
+    linear-gradient(to bottom, transparent calc(52.1605% - var(--vapor-h-stroke)), var(--vapor-hair) calc(52.1605% - var(--vapor-h-stroke)), var(--vapor-hair) calc(52.1605% + var(--vapor-h-stroke)), transparent calc(52.1605% + var(--vapor-h-stroke))),
+    linear-gradient(to bottom, transparent calc(60.4938% - var(--vapor-h-stroke)), var(--vapor-hair) calc(60.4938% - var(--vapor-h-stroke)), var(--vapor-hair) calc(60.4938% + var(--vapor-h-stroke)), transparent calc(60.4938% + var(--vapor-h-stroke))),
+    linear-gradient(to bottom, transparent calc(69.4444% - var(--vapor-h-stroke)), var(--vapor-hair) calc(69.4444% - var(--vapor-h-stroke)), var(--vapor-hair) calc(69.4444% + var(--vapor-h-stroke)), transparent calc(69.4444% + var(--vapor-h-stroke))),
+    linear-gradient(to bottom, transparent calc(79.0123% - var(--vapor-h-stroke)), var(--vapor-hair) calc(79.0123% - var(--vapor-h-stroke)), var(--vapor-hair) calc(79.0123% + var(--vapor-h-stroke)), transparent calc(79.0123% + var(--vapor-h-stroke))),
+    linear-gradient(to bottom, transparent calc(89.1975% - var(--vapor-h-stroke)), var(--vapor-hair) calc(89.1975% - var(--vapor-h-stroke)), var(--vapor-hair) calc(89.1975% + var(--vapor-h-stroke)), transparent calc(89.1975% + var(--vapor-h-stroke))),
+    linear-gradient(to bottom, transparent calc(100.0000% - var(--vapor-h-stroke)), var(--vapor-hair) calc(100.0000% - var(--vapor-h-stroke)), var(--vapor-hair) calc(100.0000% + var(--vapor-h-stroke)), transparent calc(100.0000% + var(--vapor-h-stroke))),
+    radial-gradient(ellipse 90% 85% at 50% 0%, transparent 42%, rgba(5, 4, 12, 0.55) 100%);
+  background-repeat: no-repeat;
+  opacity: 1;
+  filter: none;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #000 6%,
+    #000 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #000 6%,
+    #000 100%
+  );
 }
 @media (prefers-reduced-motion: no-preference) {
   .shows-studio__scene::before {
@@ -2748,7 +2784,8 @@ p {
 }
 @keyframes shows-vapor-grid {
   to {
-    background-position: 0 var(--vapor-cell), 0 0, 0 var(--vapor-cell), 0 0;
+    /* Mobile: shift verticals; desktop 4-layer grid still scrolls horizontals. */
+    background-position: var(--vapor-cell) 0, 0 0, 0 var(--vapor-cell), 0 0;
   }
 }
 
@@ -3023,16 +3060,38 @@ p {
     --vapor-cell: 1.65rem;
     --vapor-line: 1.5px;
     --vapor-glow-line: 3px;
+    background-color: #05040c;
     background-image:
       linear-gradient(var(--vapor-neon-glow) var(--vapor-glow-line), transparent var(--vapor-glow-line)),
       linear-gradient(90deg, var(--vapor-neon-glow) var(--vapor-glow-line), transparent var(--vapor-glow-line)),
       linear-gradient(var(--vapor-neon-hot) var(--vapor-line), transparent var(--vapor-line)),
       linear-gradient(90deg, var(--vapor-neon) var(--vapor-line), transparent var(--vapor-line));
+    background-size:
+      100% var(--vapor-cell),
+      var(--vapor-cell) 100%,
+      100% var(--vapor-cell),
+      var(--vapor-cell) 100%;
+    background-position: 0 0, 0 0, 0 0, 0 0;
     transform: perspective(280px) rotateX(74deg);
     opacity: 0.88;
     filter: drop-shadow(0 0 6px rgba(106, 60, 255, 0.55));
     -webkit-backface-visibility: visible;
     backface-visibility: visible;
+  }
+  /* Desktop vignette — not the mobile screen-space horizontals. */
+  .shows-studio__scene::after {
+    inset: 0;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background:
+      radial-gradient(ellipse 82% 72% at 50% 40%, transparent 48%, rgba(5, 4, 12, 0.62) 100%);
+    background-color: transparent;
+    opacity: 0.75;
+    filter: none;
+    -webkit-mask-image: none;
+    mask-image: none;
   }
   .shows-studio__wall {
     position: absolute;
