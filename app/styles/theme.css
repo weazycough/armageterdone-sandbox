@@ -2569,7 +2569,7 @@ p {
 }
 .shows-studio__scene {
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   display: flex;
   flex-direction: column;
   background:
@@ -2581,12 +2581,12 @@ p {
    Crop hard to hosts+desk; slight tuck so they sit right under the panel. */
 .shows-studio__hero {
   position: relative;
-  z-index: 2;
+  z-index: 1;
   order: 1;
   flex: 0 0 auto;
   width: 100%;
   height: 9.35rem;
-  margin-top: -0.55rem;
+  margin-top: 0.2rem;
   overflow: hidden;
   line-height: 0;
   pointer-events: none;
@@ -2602,12 +2602,13 @@ p {
 
 .shows-studio__wall {
   position: relative;
-  z-index: 1;
+  z-index: 3;
   order: 0;
   display: flex;
   flex-direction: column;
   flex: 0 0 auto;
   padding: 0.55rem 0 0;
+  overflow: visible;
 }
 .shows-studio__title {
   margin: 0;
@@ -2633,18 +2634,22 @@ p {
   letter-spacing: 0.02em;
 }
 
-/* Phone: full 2×3 panel, tight above the desk. */
+/* Phone: full 2×3 panel, tight above the desk. Labels must clear the desk strip. */
 .shows-arc {
   list-style: none;
   margin: 0;
-  padding: 0.1rem 0.75rem 0;
+  padding: 0.1rem 0.75rem 1.05rem;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 0.35rem 0.35rem;
   align-items: start;
+  overflow: visible;
 }
 .shows-arc li {
   min-width: 0;
+  position: relative;
+  z-index: 1;
+  overflow: visible;
 }
 
 .shows-monitor {
@@ -2680,6 +2685,10 @@ p {
   overflow: hidden;
   border-radius: 2px;
   background: #000;
+  box-shadow:
+    0 0 14px rgba(160, 205, 255, 0.45),
+    0 0 4px rgba(255, 255, 255, 0.2),
+    inset 0 0 10px rgba(255, 255, 255, 0.06);
 }
 .shows-monitor__screen img {
   position: absolute;
@@ -2688,18 +2697,21 @@ p {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: brightness(0.62) saturate(0.7);
+  filter: none;
   transition: filter 0.2s var(--ease);
 }
 .shows-monitor__screen::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: repeating-linear-gradient(
-    0deg,
-    rgba(0, 0, 0, 0.3) 0 1px,
-    transparent 1px 3px
+  /* Faint specular sheen — no dimming */
+  background: linear-gradient(
+    160deg,
+    rgba(255, 255, 255, 0.14) 0%,
+    transparent 42%,
+    transparent 100%
   );
+  opacity: 1;
   transition: opacity 0.2s var(--ease);
   pointer-events: none;
 }
@@ -2713,6 +2725,8 @@ p {
   background: #4a4f5a;
 }
 .shows-monitor__label {
+  position: relative;
+  z-index: 2;
   margin-top: 0.22rem;
   font-family: var(--font-display);
   font-weight: 600;
@@ -2734,7 +2748,7 @@ p {
     #bf0000 0 85.7%,
     #0000bf 0
   );
-  filter: saturate(0.6) brightness(0.8);
+  filter: none;
   transition: filter 0.2s var(--ease);
 }
 .shows-monitor__screen--testcard span {
@@ -2748,13 +2762,16 @@ p {
   text-transform: uppercase;
   letter-spacing: 0.06em;
 }
-.shows-monitor:hover .shows-monitor__screen img,
-.shows-monitor:focus-visible .shows-monitor__screen img {
-  filter: none;
+.shows-monitor:hover .shows-monitor__screen,
+.shows-monitor:focus-visible .shows-monitor__screen {
+  box-shadow:
+    0 0 18px rgba(170, 210, 255, 0.65),
+    0 0 6px rgba(255, 255, 255, 0.28),
+    inset 0 0 10px rgba(255, 255, 255, 0.08);
 }
 .shows-monitor:hover .shows-monitor__screen::after,
 .shows-monitor:focus-visible .shows-monitor__screen::after {
-  opacity: 0.15;
+  opacity: 0.9;
 }
 .shows-monitor:hover .shows-monitor__bezel,
 .shows-monitor:focus-visible .shows-monitor__bezel {
@@ -2802,6 +2819,7 @@ p {
     display: block;
     position: relative;
     min-height: 0;
+    overflow: hidden;
     perspective: 1100px;
   }
   .shows-studio__wall {
