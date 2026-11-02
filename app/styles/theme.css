@@ -2566,6 +2566,8 @@ p {
   --shows-label: #f5efe2;
   color: var(--shows-label);
   background: #04060d;
+  /* Breathing room under the desk before "On the network". */
+  padding-bottom: 2.25rem;
 }
 .shows-studio__scene {
   position: relative;
@@ -2815,6 +2817,9 @@ p {
 /* Desktop: restore original small arc over the full uncropped desk (3606f64).
  * Phone base styles above stay as approved in 65a06de. */
 @media (min-width: 768px) {
+  .shows-studio {
+    padding-bottom: 3rem;
+  }
   .shows-studio__scene {
     display: block;
     position: relative;
