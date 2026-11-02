@@ -2795,156 +2795,127 @@ p {
   }
 }
 
-/*
- * Desktop: mid-size curved wall fully above the hosts' heads.
- * Size sits between the first lab-like arc (~9.5rem) and the oversized
- * ~22rem pass. Outer monitors only drop a little so labels stay clear.
- */
+/* Desktop: restore original small arc over the full uncropped desk (3606f64).
+ * Phone base styles above stay as approved in 65a06de. */
 @media (min-width: 768px) {
   .shows-studio__scene {
     display: block;
-    min-height: min(76vh, 44rem);
+    position: relative;
+    min-height: 0;
+    perspective: 1100px;
   }
   .shows-studio__wall {
     position: absolute;
     inset: 0;
+    z-index: 1;
     order: 0;
     min-height: 0;
-    padding-top: 1.15rem;
-    perspective: 1300px;
-    perspective-origin: 50% 32%;
+    padding-top: 1.75rem;
+    perspective: none;
+    perspective-origin: 50% 50%;
+    pointer-events: none;
+  }
+  .shows-studio__wall a,
+  .shows-studio__wall .shows-monitor,
+  .shows-studio__wall .shows-arc {
+    pointer-events: auto;
   }
   .shows-studio__title {
     position: relative;
     z-index: 3;
-    padding: 0.4rem 2.25rem 0.5rem;
+    padding: 0.75rem 2.5rem 1rem;
   }
-  /* Desk/hosts in the lower band; arc stays entirely above their heads. */
+  /* Full uncropped desk image — scene height comes from the art. */
   .shows-studio__hero {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    position: relative;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    z-index: 0;
     order: 0;
     margin-top: 0;
-    height: 46%;
-    overflow: hidden;
+    height: auto;
+    overflow: visible;
+    pointer-events: none;
   }
   .shows-studio__hero img {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    position: static;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    display: block;
     width: 100%;
     height: auto;
-    max-height: none;
-    min-height: 100%;
+    max-height: min(78vh, 52rem);
+    min-height: 0;
     object-fit: cover;
     object-position: center bottom;
   }
-  /*
-   * bottom: 56% => arc's bottom edge is 44% from the top — clear of the
-   * hero strip (top of heads ~54%). Labels stay inside this band.
-   */
   .shows-arc {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 12%;
-    bottom: 56%;
+    position: static;
+    left: auto;
+    right: auto;
+    top: auto;
+    bottom: auto;
     display: flex;
     justify-content: center;
-    align-items: flex-end;
-    gap: 0.45rem;
-    padding: 0 1.5rem 0.35rem;
+    align-items: stretch;
+    gap: 0.6rem;
+    padding: 0.25rem 2rem 0;
     margin: 0;
+    overflow: visible;
     transform-style: preserve-3d;
   }
   .shows-arc li {
-    flex: 1 1 0;
-    max-width: 13.25rem;
+    flex: 0 1 9.5rem;
+    max-width: none;
     min-width: 0;
-    transform-style: preserve-3d;
+    transform-style: flat;
   }
-  /* Mild curve; almost no downward drop into the head band. */
   .shows-arc li:nth-child(1) .shows-monitor {
-    transform: rotateY(30deg) translateY(0.2rem) translateZ(-24px);
-    transform-origin: right center;
+    transform: rotateY(32deg) translateY(28px);
+    transform-origin: center center;
   }
   .shows-arc li:nth-child(2) .shows-monitor {
-    transform: rotateY(16deg) translateZ(-10px);
-    transform-origin: right center;
+    transform: rotateY(18deg) translateY(8px);
+    transform-origin: center center;
   }
   .shows-arc li:nth-child(3) .shows-monitor {
-    transform: rotateY(5deg) translateZ(4px);
+    transform: rotateY(6deg);
     transform-origin: center center;
   }
   .shows-arc li:nth-child(4) .shows-monitor {
-    transform: rotateY(-5deg) translateZ(4px);
+    transform: rotateY(-6deg);
     transform-origin: center center;
   }
   .shows-arc li:nth-child(5) .shows-monitor {
-    transform: rotateY(-16deg) translateZ(-10px);
-    transform-origin: left center;
+    transform: rotateY(-18deg) translateY(8px);
+    transform-origin: center center;
   }
   .shows-arc li:nth-child(6) .shows-monitor {
-    transform: rotateY(-30deg) translateY(0.2rem) translateZ(-24px);
-    transform-origin: left center;
+    transform: rotateY(-32deg) translateY(28px);
+    transform-origin: center center;
   }
   .shows-monitor__bezel {
-    padding: 4.5%;
-    border-radius: 7px;
+    padding: 6%;
+    border-radius: 6px;
     box-shadow:
       inset 0 0 0 1px #464c58,
-      0 12px 28px rgba(0, 0, 0, 0.55);
+      0 8px 16px rgba(0, 0, 0, 0.45);
   }
   .shows-monitor__label {
-    margin-top: 0.4rem;
-    font-size: clamp(0.7rem, 1vw, 0.88rem);
+    margin-top: 0.45rem;
+    font-size: 0.8rem;
+    line-height: 1.2;
   }
   .shows-monitor__screen--testcard span {
-    font-size: 0.68rem;
+    font-size: 0.7rem;
+    padding: 0.15em 0.5em;
+    letter-spacing: 0.08em;
   }
   .shows-monitor__led {
-    width: 7px;
-    height: 7px;
-  }
-}
-
-@media (min-width: 1100px) {
-  .shows-studio__scene {
-    min-height: min(80vh, 48rem);
-  }
-  .shows-studio__wall {
-    perspective: 1500px;
-  }
-  .shows-arc {
-    top: 11%;
-    bottom: 55%;
-    gap: 0.55rem;
-    padding-left: 2.25rem;
-    padding-right: 2.25rem;
-  }
-  .shows-arc li {
-    max-width: 14.75rem;
-  }
-  .shows-arc li:nth-child(1) .shows-monitor {
-    transform: rotateY(32deg) translateY(0.25rem) translateZ(-28px);
-  }
-  .shows-arc li:nth-child(2) .shows-monitor {
-    transform: rotateY(18deg) translateZ(-12px);
-  }
-  .shows-arc li:nth-child(3) .shows-monitor {
-    transform: rotateY(5deg) translateZ(6px);
-  }
-  .shows-arc li:nth-child(4) .shows-monitor {
-    transform: rotateY(-5deg) translateZ(6px);
-  }
-  .shows-arc li:nth-child(5) .shows-monitor {
-    transform: rotateY(-18deg) translateZ(-12px);
-  }
-  .shows-arc li:nth-child(6) .shows-monitor {
-    transform: rotateY(-32deg) translateY(0.25rem) translateZ(-28px);
+    width: 6px;
+    height: 6px;
   }
 }
 
