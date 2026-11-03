@@ -2668,7 +2668,7 @@ p {
   /* Hairline verticals (~0.5 CSS px / 1 device px @2–3x). */
   --vapor-line: 0.5px;
   --vapor-glow-line: 0px;
-  --vapor-hair: #8b5cff;
+  --vapor-hair: rgba(106, 60, 255, 0.8); /* same hue as desktop --vapor-neon */
   background-color: #05040c;
   background-image:
     /* Verticals only — thickness is in X, not stretched by rotateX. */
@@ -2714,7 +2714,7 @@ p {
   bottom: 0;
   z-index: 0;
   pointer-events: none;
-  --vapor-hair: #8b5cff;
+  --vapor-hair: rgba(106, 60, 255, 0.8); /* same hue as desktop --vapor-neon */
   /* Screen-space stroke — same hairline weight as verticals (1 CSS px @1–2x). */
   --vapor-h-stroke: 0.5px;
   background-color: transparent;
