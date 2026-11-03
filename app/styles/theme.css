@@ -375,8 +375,8 @@ p {
 }
 
 .site-nav .nav__link--cta {
-  background: var(--accent-on-bg);
-  color: var(--fg-inverse);
+  background: var(--accent);
+  color: var(--on-accent);
   border-radius: var(--radius-sm);
   border-bottom: 2px solid transparent;
   padding-left: var(--space-4);
@@ -385,7 +385,7 @@ p {
 }
 .site-nav .nav__link--cta:hover {
   background: var(--accent-2);
-  color: var(--fg-inverse);
+  color: var(--on-accent);
   border-bottom-color: transparent;
 }
 
@@ -3537,7 +3537,7 @@ p {
 .signal-rule {
   border: 0;
   height: 4px;
-  background: var(--accent-on-bg);
+  background: var(--accent);
   margin: 0;
 }
 
@@ -3577,14 +3577,14 @@ h2 {
 .ep-wall__rule {
   flex: 1;
   height: 5px;
-  background: var(--accent-on-bg);
+  background: var(--accent);
   border-radius: 3px;
 }
 .ep-wall__badge {
   width: 2.2rem;
   height: 2.2rem;
   border-radius: 8px;
-  background: var(--accent-on-bg);
+  background: var(--accent);
   color: var(--bg-canvas);
   display: grid;
   place-items: center;
