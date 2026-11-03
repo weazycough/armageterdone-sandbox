@@ -3381,14 +3381,41 @@ p {
 .show-card__logo {
   grid-area: logo;
   display: block;
-  width: auto;
-  max-width: 100%;
   height: 1.35rem;
+  max-width: 100%;
+  background: var(--fg-primary);
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: left center;
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: left center;
+}
+:root:not([data-theme="light"]) .show-card__logo {
+  background: var(--accent-on-bg);
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) .show-card__logo {
+    background: var(--fg-primary);
+  }
+}
+@media (max-width: 767px) {
+  .shows-strip {
+    gap: 0;
+  }
+  .shows-strip .show-card {
+    padding: var(--space-5) 0;
+  }
+  .shows-strip .show-card + .show-card {
+    border-top: 1px solid var(--line);
+  }
 }
 .shows-strip .show-card__art {
   grid-area: art;
   border-radius: 50%;
   border: 0;
+  background: none;
+  object-fit: contain;
 }
 .shows-strip .show-card__body {
   grid-area: body;

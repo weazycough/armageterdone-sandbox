@@ -7,22 +7,30 @@ import { asset } from "../lib/asset";
 import { tagPath } from "../lib/paths";
 import { SHOWS } from "../lib/shows";
 
+// Home-strip art: the crest for News Talk, the round bird for Clubhouse.
+const STRIP_ART: Record<string, string> = {
+  "news-talk": "images/show-news-talk-crest.webp",
+  clubhouse: "images/show-clubhouse-bird.webp",
+};
+
 export function ShowsStrip(): React.ReactNode {
   return (
     <div className="shows-strip">
       {SHOWS.map((s) => (
         <Link className="show-card" to={tagPath(s.slug)} key={s.slug}>
-          <img
+          <span
             className="show-card__logo"
-            src={asset(s.logo)}
-            alt={s.title}
-            width={s.logoSize[0]}
-            height={s.logoSize[1]}
-            loading="lazy"
+            role="img"
+            aria-label={s.title}
+            style={{
+              maskImage: `url(${asset(s.logo)})`,
+              WebkitMaskImage: `url(${asset(s.logo)})`,
+              aspectRatio: `${s.logoSize[0]} / ${s.logoSize[1]}`,
+            }}
           />
           <img
             className="show-card__art"
-            src={asset(s.art)}
+            src={asset(STRIP_ART[s.slug] ?? s.art)}
             alt=""
             width="96"
             height="96"
