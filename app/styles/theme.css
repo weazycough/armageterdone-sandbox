@@ -3450,3 +3450,154 @@ h2 {
 .transcript-hit__title {
   font-size: 1.4rem;
 }
+
+/* ---------- Episode wall (home Recent episodes, Episodes page) ---------- */
+.ep-wall__head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+}
+.ep-wall__heading {
+  margin: 0;
+  white-space: nowrap;
+}
+.ep-wall__rule {
+  flex: 1;
+  height: 5px;
+  background: var(--accent-on-bg);
+  border-radius: 3px;
+}
+.ep-wall__badge {
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 8px;
+  background: var(--accent-on-bg);
+  color: var(--bg-canvas);
+  display: grid;
+  place-items: center;
+  flex: none;
+}
+.ep-wall__badge svg {
+  width: 1.3rem;
+  height: 1.3rem;
+}
+.ep-wall__count {
+  margin: calc(-1 * var(--space-3)) 0 var(--space-5);
+}
+.ep-wall {
+  display: grid;
+  gap: var(--space-5);
+}
+@media (min-width: 900px) {
+  .ep-wall {
+    grid-template-columns: minmax(220px, 1fr) 3.4fr;
+    align-items: start;
+  }
+  .ep-wall--full {
+    grid-template-columns: 1fr;
+  }
+}
+.ep-wall__feature {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  border-left: 6px solid var(--accent-on-bg);
+  padding-left: var(--space-4);
+  color: var(--fg-primary);
+  text-decoration: none;
+}
+.ep-wall__feature:hover {
+  text-decoration: none;
+}
+.ep-wall__feature img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-2);
+}
+.ep-wall__kicker {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent-on-bg);
+}
+.ep-wall__ftitle {
+  font-family: var(--font-title);
+  font-size: 1.5rem;
+  line-height: 1.1;
+  letter-spacing: 0.03em;
+}
+.ep-wall__fdate,
+.ep-wall__date {
+  font-family: var(--font-title);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent-on-bg);
+}
+.ep-wall__grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-4) var(--space-3);
+  grid-template-columns: repeat(2, 1fr);
+}
+@media (min-width: 600px) {
+  .ep-wall__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (min-width: 900px) {
+  .ep-wall__grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+  .ep-wall--full .ep-wall__grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+.ep-wall__tile {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  color: var(--fg-primary);
+  text-decoration: none;
+}
+.ep-wall__tile:hover {
+  text-decoration: none;
+}
+.ep-wall__tile img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  transition: transform 0.2s var(--ease);
+}
+.ep-wall__tile:hover img {
+  transform: translateY(-3px);
+}
+.ep-wall__ttitle {
+  font-size: 0.82rem;
+  line-height: 1.35;
+  color: var(--fg-secondary);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.ep-wall__all {
+  text-align: right;
+  margin-top: var(--space-4);
+}
+.ep-wall__all a {
+  font-family: var(--font-title);
+  letter-spacing: 0.08em;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  color: var(--accent-on-bg);
+}

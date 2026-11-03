@@ -7,7 +7,7 @@ import type * as React from "react";
 import { TextField } from "react-aria-components";
 import { Link } from "react-router";
 import type { Route } from "./+types/home";
-import { EpisodeCard } from "../components/episode-card";
+import { EpisodeWall, WallHead } from "../components/episode-wall";
 import { PreviewForm } from "../components/preview-form";
 import { ShowsStrip } from "../components/shows-strip";
 import { SupportRow } from "../components/support-row";
@@ -30,12 +30,11 @@ export function loader() {
       published: latest.published,
       artUrl: latest.artUrl,
     },
-    recent: episodes.slice(0, 4).map(({ slug, title, published, excerpt, duration }) => ({
+    recent: episodes.slice(0, 11).map(({ slug, title, published, artUrl }) => ({
       slug,
       title,
       published,
-      excerpt,
-      duration,
+      artUrl,
     })),
   };
 }
@@ -98,6 +97,16 @@ export default function Home({ loaderData }: Route.ComponentProps): React.ReactN
         </div>
       </section>
 
+      <section className="section">
+        <div className="container">
+          <WallHead title="Recent episodes" />
+          <EpisodeWall featured={recent[0]} rest={recent.slice(1)} />
+          <div className="ep-wall__all">
+            <Link to="/episodes/">View all &rarr;</Link>
+          </div>
+        </div>
+      </section>
+
       <section className="section section--alt">
         <div className="container">
           <div className="section__head">
@@ -122,19 +131,6 @@ export default function Home({ loaderData }: Route.ComponentProps): React.ReactN
         </div>
       </section>
 
-      <section className="section">
-        <div className="container">
-          <div className="section__head">
-            <h2>Recent episodes</h2>
-            <Link to="/episodes/">View all &rarr;</Link>
-          </div>
-          <div className="episode-grid">
-            {recent.map((e) => (
-              <EpisodeCard key={e.slug} episode={e} />
-            ))}
-          </div>
-        </div>
-      </section>
 
       <section className="art-ribbon">
         <div className="container">

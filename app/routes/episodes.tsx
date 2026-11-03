@@ -3,7 +3,7 @@
 
 import type * as React from "react";
 import type { Route } from "./+types/episodes";
-import { EpisodeCard } from "../components/episode-card";
+import { EpisodeWall, WallHead } from "../components/episode-wall";
 import { Pagination } from "../components/pagination";
 import { loadEpisodes } from "../lib/content.server";
 import { listPage } from "../lib/episode-list.server";
@@ -23,20 +23,15 @@ export default function Episodes({ loaderData }: Route.ComponentProps): React.Re
   const { page, pages, total, episodes } = loaderData;
   return (
     <>
-      <header className="page-hero">
-        <div className="container">
-          <span className="eyebrow">The archive</span>
-          <h1>Episodes</h1>
-          <p className="muted">{total} episodes, newest first.</p>
-        </div>
-      </header>
       <section className="section">
         <div className="container">
-          <div className="episode-grid">
-            {episodes.map((e) => (
-              <EpisodeCard key={e.slug} episode={e} />
-            ))}
-          </div>
+          <WallHead title="Episodes" as="h1" />
+          <p className="muted ep-wall__count">{total} episodes, newest first.</p>
+          <EpisodeWall
+            featured={page === 1 ? episodes[0] : undefined}
+            rest={page === 1 ? episodes.slice(1) : episodes}
+            showTitles
+          />
           <Pagination page={page} pages={pages} pathFor={episodeListPath} />
         </div>
       </section>

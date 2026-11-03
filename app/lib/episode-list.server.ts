@@ -20,8 +20,9 @@ export function listPage(episodes: Episode[], pageParam: string | undefined) {
     // Card fields only: the show notes stay out of the list pages' data.
     episodes: episodes
       .slice(start, start + EPISODES_PER_PAGE)
-      .map(({ slug, title, published, excerpt, duration }) => ({
+      .map(({ slug, title, published, excerpt, duration, artUrl }) => ({
         slug,
+        artUrl,
         title,
         published,
         excerpt,
