@@ -2791,9 +2791,17 @@ p {
   background-color: #05040c;
   background-image:
     /* Verticals only — thickness is in X, not stretched by rotateX. */
-    linear-gradient(90deg, var(--vapor-hair) var(--vapor-line), transparent var(--vapor-line));
-  background-size: var(--vapor-cell) 100%;
-  background-position: 0 0;
+    linear-gradient(90deg, var(--vapor-hair) var(--vapor-line), transparent var(--vapor-line)),
+    /* Soft accent floor glow under the grid; strongest near, fades to horizon. */
+    linear-gradient(
+      to top,
+      color-mix(in srgb, var(--accent) 30%, transparent) 0%,
+      color-mix(in srgb, var(--accent) 14%, transparent) 28%,
+      color-mix(in srgb, var(--accent) 4%, transparent) 55%,
+      transparent 78%
+    );
+  background-size: var(--vapor-cell) 100%, 100% 100%;
+  background-position: 0 0, 0 0;
   transform: perspective(var(--vapor-persp)) rotateX(74deg);
   transform-origin: 50% 0%;
   -webkit-backface-visibility: hidden;
@@ -2907,8 +2915,8 @@ p {
 }
 @keyframes shows-vapor-grid {
   to {
-    /* Mobile: shift verticals; desktop 4-layer grid still scrolls horizontals. */
-    background-position: var(--vapor-cell) 0, 0 0, 0 var(--vapor-cell), 0 0;
+    /* Mobile: shift verticals; desktop 4-layer grid scrolls; yellow glow stays put. */
+    background-position: var(--vapor-cell) 0, 0 0, 0 var(--vapor-cell), 0 0, 0 0;
   }
 }
 
@@ -3210,13 +3218,22 @@ p {
       linear-gradient(var(--vapor-neon-glow) var(--vapor-glow-line), transparent var(--vapor-glow-line)),
       linear-gradient(90deg, var(--vapor-neon-glow) var(--vapor-glow-line), transparent var(--vapor-glow-line)),
       linear-gradient(var(--vapor-neon-hot) var(--vapor-line), transparent var(--vapor-line)),
-      linear-gradient(90deg, var(--vapor-neon) var(--vapor-line), transparent var(--vapor-line));
+      linear-gradient(90deg, var(--vapor-neon) var(--vapor-line), transparent var(--vapor-line)),
+      /* Soft accent floor glow under the grid (same mask/perspective as lines). */
+      linear-gradient(
+        to top,
+        color-mix(in srgb, var(--accent) 32%, transparent) 0%,
+        color-mix(in srgb, var(--accent) 14%, transparent) 28%,
+        color-mix(in srgb, var(--accent) 4%, transparent) 55%,
+        transparent 78%
+      );
     background-size:
       100% var(--vapor-cell),
       var(--vapor-cell) 100%,
       100% var(--vapor-cell),
-      var(--vapor-cell) 100%;
-    background-position: 0 0, 0 0, 0 0, 0 0;
+      var(--vapor-cell) 100%,
+      100% 100%;
+    background-position: 0 0, 0 0, 0 0, 0 0, 0 0;
     transform: perspective(280px) rotateX(74deg);
     opacity: 0.88;
     filter: drop-shadow(0 0 6px rgba(106, 60, 255, 0.55));
