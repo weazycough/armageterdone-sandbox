@@ -5,7 +5,7 @@
 import type * as React from "react";
 import { data, Link } from "react-router";
 import type { Route } from "./+types/tag";
-import { EpisodeCard } from "../components/episode-card";
+import { EpisodeWall } from "../components/episode-wall";
 import { Pagination } from "../components/pagination";
 import { loadEpisodes } from "../lib/content.server";
 import { listPage } from "../lib/episode-list.server";
@@ -46,22 +46,21 @@ export default function Tag({ loaderData }: Route.ComponentProps): React.ReactNo
   const { show, page, pages, total, episodes } = loaderData;
   return (
     <>
-      <header className="page-hero page-hero--dark">
-        <div className="container">
-          <span className="eyebrow">{show.kicker}</span>
-          <ShowTitleLogo show={show} />
-          <p className="muted">
-            {show.desc} {total} episodes, newest first. <Link to="/episodes/">All episodes →</Link>
-          </p>
-        </div>
-      </header>
       <section className="section">
         <div className="container">
-          <div className="episode-grid">
-            {episodes.map((e) => (
-              <EpisodeCard key={e.slug} episode={e} />
-            ))}
+          <div className="ep-wall__head">
+            <ShowTitleLogo show={show} />
+            <span className="ep-wall__rule" aria-hidden="true" />
           </div>
+          <p className="muted ep-wall__count">
+            <span className="ep-wall__kicker">{show.kicker}</span> · {show.desc} {total} episodes,
+            newest first. <Link to="/episodes/">All episodes →</Link>
+          </p>
+          <EpisodeWall
+            featured={page === 1 ? episodes[0] : undefined}
+            rest={page === 1 ? episodes.slice(1) : episodes}
+            showTitles
+          />
           <Pagination page={page} pages={pages} pathFor={(n) => tagPath(show.slug, n)} />
         </div>
       </section>

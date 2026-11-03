@@ -3622,3 +3622,14 @@ h2 {
     transform-origin: top center;
   }
 }
+.ep-wall__head .page-hero__title-logo {
+  margin: 0;
+  flex: 0 1 auto;
+  min-width: 0;
+}
+.ep-wall__head .page-hero__logo {
+  display: block;
+  height: clamp(1.6rem, 4vw, 2.6rem);
+  width: auto;
+  max-width: 100%;
+}
