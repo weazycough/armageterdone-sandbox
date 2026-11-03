@@ -17,31 +17,42 @@ export interface LatestEpisode {
   published: string;
 }
 
-function Ticker({ latest }: { latest: LatestEpisode }): React.ReactNode {
+function TickerSeq({
+  latest,
+  hidden,
+}: {
+  latest: LatestEpisode;
+  hidden?: boolean;
+}): React.ReactNode {
   const to = episodePath(latest.slug);
+  const tab = hidden === true ? -1 : undefined;
+  return (
+    <span className="ticker__seq" aria-hidden={hidden}>
+      <span>📡 New episode</span>
+      <span className="ticker__sep">·</span>
+      <Link className="ticker__title" to={to} tabIndex={tab}>
+        {latest.title}
+      </Link>
+      <span className="ticker__sep">·</span>
+      <span>{formatShortDate(latest.published)}</span>
+      <span className="ticker__sep">·</span>
+      <Link to="/episodes/" tabIndex={tab}>
+        All episodes →
+      </Link>
+      <span className="ticker__sep">·</span>
+      <span>Cogitare extra caveam</span>
+      <span className="ticker__sep">·</span>
+    </span>
+  );
+}
+
+/** Two identical runs; sliding by one run's width loops seamlessly. */
+function Ticker({ latest }: { latest: LatestEpisode }): React.ReactNode {
   return (
     <div className="ticker" aria-label="Latest episode">
       <div className="ticker__row">
-        <span>📡 New episode</span>
-        <span className="ticker__sep">·</span>
-        <Link className="ticker__title" to={to}>
-          {latest.title}
-        </Link>
-        {/* The rest scrolls past on wider screens; phones show the line above. */}
-        <span className="ticker__extra">
-          <span className="ticker__sep">·</span>
-          <span>{formatShortDate(latest.published)}</span>
-          <span className="ticker__sep">·</span>
-          <Link to="/episodes/">All episodes →</Link>
-          <span className="ticker__sep">·</span>
-          <span>Cogitare extra caveam</span>
-          <span className="ticker__sep">·</span>
-          <span>📡 New episode</span>
-          <span className="ticker__sep">·</span>
-          <Link to={to} tabIndex={-1}>
-            {latest.title}
-          </Link>
-        </span>
+        <TickerSeq latest={latest} />
+        <TickerSeq latest={latest} hidden />
       </div>
     </div>
   );

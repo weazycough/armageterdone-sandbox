@@ -12,8 +12,7 @@
    - on narrow phones a long one-word episode title wraps instead of
      pushing the home hero (and the support row) wider than the screen;
    - the Ghost custom-font hooks (--gh-font-*) are gone;
-   - on phones (under 768px) the latest-episode ticker is one still line
-     with the title cut short, not a marquee that starts off-screen.
+   - the latest-episode ticker loops seamlessly (two identical runs).
    ========================================================================= */
 
 /* ---------- Tokens: dark (default) ---------- */
@@ -2568,20 +2567,24 @@ p {
 }
 .ticker__row {
   display: flex;
-  gap: var(--space-7);
+  width: max-content;
   white-space: nowrap;
-  animation: ticker 22s linear infinite;
-  padding-left: 100%;
-}
-@media (min-width: 768px) {
-  .ticker__row {
-    animation-duration: 28s;
-  }
+  /* Two identical runs: -50% lands exactly on the start of the copy. */
+  animation: ticker 30s linear infinite;
 }
 @media (min-width: 1200px) {
   .ticker__row {
-    animation-duration: 35s;
+    animation-duration: 38s;
   }
+}
+.ticker:hover .ticker__row {
+  animation-play-state: paused;
+}
+.ticker__seq {
+  display: flex;
+  flex: 0 0 auto;
+  gap: var(--space-7);
+  padding-right: var(--space-7);
 }
 .ticker__row a {
   color: #0a0a0a;
@@ -2593,32 +2596,12 @@ p {
 .ticker__sep {
   opacity: 0.5;
 }
-.ticker__extra {
-  display: contents;
-}
-/* Phones: one still line, the title cut short, instead of a marquee that
-   starts off-screen. */
-@media (max-width: 767px) {
-  .ticker__row {
-    animation: none;
-    gap: var(--space-2);
-    padding: 0 var(--space-4);
-  }
-  .ticker__title {
-    min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .ticker__extra {
-    display: none;
-  }
-}
 @keyframes ticker {
   from {
     transform: translateX(0);
   }
   to {
-    transform: translateX(-100%);
+    transform: translateX(-50%);
   }
 }
 @media (prefers-reduced-motion: reduce) {
