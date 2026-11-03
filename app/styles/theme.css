@@ -3434,7 +3434,7 @@ p {
   --font-title: "Bebas Neue", "Jost", "Helvetica Neue", Arial, sans-serif;
 }
 :is(h1, h2, h3, h4, h5),
-[class*="__title"]:not([class*="__title-logo"]) {
+[class*="__title"]:not([class*="__title-logo"], .ticker__title) {
   font-family: var(--font-title);
   font-weight: 400;
   letter-spacing: 0.03em;
@@ -3445,4 +3445,8 @@ h1 {
 }
 h2 {
   font-size: clamp(2rem, 4.2vw, 2.9rem);
+}
+.episode-card__title,
+.transcript-hit__title {
+  font-size: 1.4rem;
 }
