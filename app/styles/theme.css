@@ -740,8 +740,9 @@ p {
 }
 .mission-hero__art {
   margin: 0;
-  /* Transparent key art sits on the always-dark band; no box mask needed. */
-  max-width: min(17rem, 80vw);
+  /* Portrait sticker (≈0.87:1). Cap width so height stays sane on phone. */
+  max-width: min(13.5rem, 62vw);
+  max-height: min(72vh, 22rem);
   justify-self: center;
   order: -1; /* phone: art above the copy (Option A) */
   width: 100%;
@@ -751,6 +752,8 @@ p {
   display: block;
   width: 100%;
   height: auto;
+  max-height: inherit;
+  object-fit: contain;
 }
 .mission-hero__title {
   margin: 0;
@@ -843,7 +846,9 @@ p {
   }
   .mission-hero__art {
     order: 0;
-    max-width: min(32rem, 100%); /* ~23% larger than 26rem */
+    /* Desktop: taller portrait — width ~22rem → ~25rem tall, beside copy */
+    max-width: min(22rem, 100%);
+    max-height: min(78vh, 34rem);
   }
 }
 

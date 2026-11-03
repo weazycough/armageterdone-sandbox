@@ -88,9 +88,9 @@ export default function Home({ loaderData }: Route.ComponentProps): React.ReactN
                 <source srcSet={asset("images/canary-cry-key-art.webp")} type="image/webp" />
                 <img
                   src={asset("images/canary-cry-key-art.png")}
-                  alt="Canary Cry key art: the hosts surrounded by the show's symbols"
-                  width={960}
-                  height={960}
+                  alt="Canary Cry sticker poster of hosts Basil and Gonz with a cat, UFO, and show symbols"
+                  width={900}
+                  height={1036}
                 />
               </picture>
             </figure>
