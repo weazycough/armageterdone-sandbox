@@ -35,8 +35,8 @@ function ShowTitleLogo({ show }: { show: Show }): React.ReactNode {
           className="page-hero__logo"
           src={asset(show.logo)}
           alt={show.title}
-          width={1731}
-          height={674}
+          width={show.logo.endsWith(".svg") ? 662 : 1731}
+          height={show.logo.endsWith(".svg") ? 53 : 674}
           decoding="async"
         />
       </h1>

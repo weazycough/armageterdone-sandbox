@@ -15,7 +15,7 @@ export const SHOWS = [
     desc: "The flagship discernment broadcast — daily news through a Biblical worldview.",
     art: "images/show-news-talk.webp",
     /** Title logo in the tag-page hero; null until art lands (placeholder). */
-    logo: "images/newstalk-logo.webp",
+    logo: "images/newstalk-logo.svg",
   },
   {
     slug: "radio",
