@@ -3612,3 +3612,9 @@ h2 {
   text-transform: uppercase;
   color: var(--accent-on-bg);
 }
+@media (max-width: 767px) {
+  .mission-hero__tag {
+    text-align: center;
+    transform-origin: top center;
+  }
+}
