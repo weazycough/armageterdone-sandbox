@@ -1,5 +1,5 @@
-// home.tsx — the homepage: mission hero (lab #1 Option A split layout with
-// Option B's always-dark band; stretched tagline with About below it), then shows, value-for-value, recent episodes,
+// home.tsx — the homepage: mission hero (3-col intro / key art / tagline,
+// Value-for-Value band under a blue UFO beam), then recent episodes, shows,
 // community art, and the newsletter signup (preview only).
 
 import type * as React from "react";
@@ -9,12 +9,12 @@ import type { Route } from "./+types/home";
 import { EpisodeWall, WallHead } from "../components/episode-wall";
 import { PreviewForm } from "../components/preview-form";
 import { ShowsStrip } from "../components/shows-strip";
-import { SupportRow } from "../components/support-row";
 import { buttonVariants } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { asset } from "../lib/asset";
 import { loadEpisodes } from "../lib/content.server";
 import { ART_RIBBON } from "../lib/fan-art";
+import { cn } from "../lib/utils";
 
 export function loader() {
   const episodes = loadEpisodes();
@@ -37,20 +37,19 @@ export default function Home({ loaderData }: Route.ComponentProps): React.ReactN
   return (
     <>
       <section className="mission-hero" aria-label="Canary Cry mission">
-        <div className="container">
+        <div className="container mission-hero__inner">
           <div className="mission-hero__grid">
-            <div className="mission-hero__copy">
-              <h1 className="mission-hero__tag">
-                <span className="sr-only">Canary Cry: </span>
-                <span>Think Outside</span>
-                <span>The Cage</span>
-              </h1>
-              <p className="mission-hero__about">
-                <strong>A biblical take on the news and world events.</strong> CANARY CRY NEWS TALK
-                is a show that brings frequent updates on news and events happening around the world
-                from an Alt. Christian worldview, hosted by us, Basil and Gonz of the Canary Cry
-                Radio podcast.
+            <div className="mission-hero__intro">
+              <p className="mission-hero__kicker">
+                Your news and biblical views on world events
               </p>
+              <span className="mission-hero__bar" aria-hidden="true" />
+              <p className="mission-hero__about">
+                Canary Cry NewsTalk is a show that brings frequent updates on news and
+                events happening around the world from an Alt. Christian worldview,
+                hosted by us, Basil and Gonz of the Canary Cry Radio podcast.
+              </p>
+              <span className="mission-hero__bar" aria-hidden="true" />
             </div>
             <figure className="mission-hero__art">
               <picture>
@@ -63,6 +62,40 @@ export default function Home({ loaderData }: Route.ComponentProps): React.ReactN
                 />
               </picture>
             </figure>
+            <h1 className="mission-hero__tag">
+              <span className="sr-only">Canary Cry: </span>
+              <span>Think</span>
+              <span>Outside</span>
+              <span>The Cage</span>
+            </h1>
+          </div>
+
+          <div className="mission-hero__v4v">
+            <div className="mission-hero__v4v-actions">
+              <Link
+                className={cn(buttonVariants(), "mission-hero__give")}
+                to="/support/"
+              >
+                $ Give
+              </Link>
+              <a
+                className={cn(buttonVariants({ variant: "blue" }), "mission-hero__patreon")}
+                href="https://www.patreon.com/ccnt"
+                rel="noopener"
+              >
+                Patreon
+              </a>
+            </div>
+            <div className="mission-hero__v4v-copy">
+              <span className="mission-hero__v4v-eyebrow">No advertisers. Just producers</span>
+              <h2 className="mission-hero__v4v-heading">What is Value-for-Value…</h2>
+              <p>
+                Canary Cry doesn&apos;t take corporate ad money. The show runs on producers —
+                listeners who return value with their <strong>time, talent, or treasure</strong> for
+                the value the show puts out. Patreon, one-time gifts, Cage Rattler Coffee, art
+                submissions, Speak Pipe calls — they all count.
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -93,14 +126,6 @@ export default function Home({ loaderData }: Route.ComponentProps): React.ReactN
           </div>
           <ShowsStrip />
           <hr className="signal-rule" />
-          <div style={{ marginTop: "var(--space-7)" }}>
-            <SupportRow eyebrow="Value-for-value" heading="No advertisers. Just producers.">
-              Canary Cry doesn&apos;t take corporate ad money. The show runs on producers —
-              listeners who return value with their <strong>time, talent, or treasure</strong> for
-              the value the show puts out. Patreon, one-time gifts, Cage Rattler Coffee, art
-              submissions, Speak Pipe calls — they all count.
-            </SupportRow>
-          </div>
         </div>
       </section>
 

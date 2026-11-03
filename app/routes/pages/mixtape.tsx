@@ -8,7 +8,7 @@ import { pageTitle } from "../../lib/meta";
 export const meta = () => pageTitle("Canary Cry Mixtape");
 
 const PLAYER =
-  "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/1399555342&color=%23e6b40f&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true";
+  "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/1399555342&color=%23e8f22a&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true";
 
 export default function Mixtape(): React.ReactNode {
   return (

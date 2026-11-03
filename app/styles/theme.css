@@ -30,12 +30,13 @@
   --fg-inverse: #0a0a0a; /* text that needs to be dark (on yellow buttons) */
 
   /* Accents (constant across themes — these are the brand colors) */
-  --accent: #e6b40f; /* canary yellow (from current site CSS) */
-  --accent-2: #f0ab1a; /* Libsyn-matched warm canary */
-  --accent-deep: #a37a00; /* darker yellow for cream backgrounds (light mode) */
+  --accent: #e8f22a; /* neon lemon canary (sampled from redesign mock) */
+  --accent-2: #f3fc52; /* lighter lemon hover */
+  --accent-deep: #6b7000; /* darker olive-yellow for cream backgrounds (AA) */
+  --on-accent: #0a0a0a; /* text on bright yellow fills */
   --brand-mark: var(--accent-on-bg); /* wordmark matches site yellow */
-  --shield: #1e3a8a; /* heraldic blue from crest shield */
-  --shield-2: #3a5cb8; /* lighter shield */
+  --shield: #1e4aad; /* royal blue (Patreon / UFO beam) */
+  --shield-2: #3a6ad4; /* lighter shield */
 
   /* Borders */
   --line: #2a2a2a;
@@ -45,7 +46,7 @@
   --accent-on-bg: var(--accent);
 
   /* Hero gradient mix */
-  --hero-glow: radial-gradient(ellipse at top, rgba(230, 180, 15, 0.1), transparent 60%);
+  --hero-glow: radial-gradient(ellipse at top, rgba(232, 242, 42, 0.1), transparent 60%);
 
   /* Header glass */
   --header-bg: rgba(10, 10, 10, 0.92);
@@ -96,7 +97,7 @@
   --line: #d6c89e;
   --line-strong: #b8a673;
 
-  --hero-glow: radial-gradient(ellipse at top, rgba(163, 122, 0, 0.1), transparent 60%);
+  --hero-glow: radial-gradient(ellipse at top, rgba(107, 112, 0, 0.1), transparent 60%);
   --header-bg: rgba(253, 248, 235, 0.92);
 
   color-scheme: light;
@@ -117,7 +118,7 @@
     --accent-on-bg: var(--accent-deep);
     --line: #d6c89e;
     --line-strong: #b8a673;
-    --hero-glow: radial-gradient(ellipse at top, rgba(163, 122, 0, 0.1), transparent 60%);
+    --hero-glow: radial-gradient(ellipse at top, rgba(107, 112, 0, 0.1), transparent 60%);
     --header-bg: rgba(253, 248, 235, 0.92);
     color-scheme: light;
   }
@@ -709,7 +710,7 @@ p {
   }
 }
 
-/* ---------- Mission hero (home): Option A split + Option B always-dark band ---------- */
+/* ---------- Mission hero (home): 3-col intro / art / tag + V4V beam band ---------- */
 /* Dark band tokens stay dark in both site themes (lab Option B's .always-dark). */
 .mission-hero {
   --bg-canvas: #0a0a0a;
@@ -722,29 +723,94 @@ p {
   --accent-on-bg: var(--accent);
   --line: #2a2a2a;
   --line-strong: #3a3a3a;
-  --hero-glow: radial-gradient(ellipse at top, rgba(230, 180, 15, 0.16), transparent 60%);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   color: var(--fg-primary);
   color-scheme: dark;
   border-bottom: 1px solid var(--line-strong);
-  background: var(--hero-glow), var(--bg-canvas);
+  background: var(--bg-canvas);
+}
+/* Faint teal/blue glow at the top of the hero */
+.mission-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: min(28rem, 55%);
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 70% 90% at 50% -10%, rgba(75, 180, 170, 0.28), transparent 60%),
+    radial-gradient(ellipse 50% 70% at 70% 0%, rgba(38, 81, 196, 0.22), transparent 55%);
+}
+/* Blue UFO beam: spills from mid-hero and widens into a bottom band */
+.mission-hero::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 38%;
+  width: 140%;
+  height: 75%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 45% 35% at 50% 8%, rgba(90, 190, 255, 0.55), rgba(38, 81, 196, 0.28) 35%, transparent 70%),
+    linear-gradient(180deg, transparent 0%, rgba(30, 74, 173, 0.18) 45%, rgba(30, 74, 173, 0.55) 100%);
+}
+.mission-hero__inner {
+  position: relative;
+  z-index: 1;
 }
 .mission-hero :focus-visible {
   outline-color: var(--accent);
 }
 .mission-hero__grid {
   display: grid;
-  gap: 1.5rem;
-  padding: 2rem 0 2.25rem;
+  gap: 1.25rem;
+  padding: 1.75rem 0 1.25rem;
   align-items: center;
+}
+.mission-hero__intro {
+  order: 2;
+  max-width: 22rem;
+  justify-self: center;
+  text-align: left;
+}
+.mission-hero__kicker {
+  margin: 0;
+  font-family: var(--font-title);
+  font-weight: 400;
+  font-size: clamp(1.35rem, 3.6vw, 1.85rem);
+  line-height: 1.05;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #b8b3a8;
+}
+.mission-hero__bar {
+  display: block;
+  width: 3.25rem;
+  height: 4px;
+  margin: 0.85rem 0;
+  background: var(--accent);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--accent) 55%, transparent);
+  border-radius: 2px;
+}
+.mission-hero__about {
+  margin: 0;
+  color: var(--fg-secondary);
+  font-size: 0.88rem;
+  line-height: 1.55;
 }
 .mission-hero__art {
   margin: 0;
-  /* Portrait sticker (≈0.87:1). Cap width so height stays sane on phone. */
   max-width: min(19rem, 82vw);
   max-height: min(78vh, 30rem);
   justify-self: center;
-  order: -1; /* phone: art above the copy (Option A) */
+  order: 0; /* phone: art first */
   width: 100%;
+  position: relative;
+  z-index: 1;
 }
 .mission-hero__art picture,
 .mission-hero__art img {
@@ -754,111 +820,142 @@ p {
   max-height: inherit;
   object-fit: contain;
 }
-.mission-hero__title {
-  margin: 0;
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: clamp(1.65rem, 6vw, 2.5rem);
-  line-height: 0.95;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--accent);
-}
-/* Key art carries the brand visually; keep the h1 for SEO/a11y, sized not to fight it. */
-.mission-hero__sub {
-  margin: 0.75rem 0 0;
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 0.95rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--fg-secondary);
-}
 .mission-hero__tag {
+  order: 1;
   margin: 0;
   font-family: var(--font-title);
   font-weight: 400;
-  font-size: clamp(3rem, 7.5vw, 5.6rem);
+  font-size: clamp(2.6rem, 11vw, 4.4rem);
   line-height: 0.82;
   white-space: nowrap;
   letter-spacing: -0.01em;
   text-transform: uppercase;
   color: var(--accent);
-  text-shadow: 0 0 18px color-mix(in srgb, var(--accent) 45%, transparent);
-  transform: scaleY(1.35);
-  transform-origin: top left;
-  margin-bottom: 0.65em;
+  text-shadow: 0 0 22px color-mix(in srgb, var(--accent) 55%, transparent);
+  transform: scaleY(1.4);
+  transform-origin: top center;
+  text-align: center;
+  justify-self: center;
 }
 .mission-hero__tag > span:not(.sr-only) {
   display: block;
 }
-.mission-hero__about {
-  margin: 1.5rem 0 0;
-  max-width: 36rem;
-  color: var(--fg-secondary);
-  font-size: 0.95rem;
-  line-height: 1.55;
-}
-.mission-hero__about strong {
-  color: var(--fg-primary);
-}
-.mission-hero__latest {
+
+/* Value-for-Value band inside the hero */
+.mission-hero__v4v {
   display: grid;
-  grid-template-columns: 72px 1fr;
-  gap: 0.9rem;
-  align-items: center;
-  margin-top: 1rem;
-  max-width: 28rem;
-  padding: 0.75rem;
-  border: 1px solid var(--line-strong);
-  border-radius: var(--radius-md);
-  background: var(--bg-surface);
-  color: var(--fg-primary);
-  text-decoration: none;
+  gap: 1.25rem;
+  padding: 0.5rem 0 2.25rem;
+  align-items: start;
 }
-.mission-hero__latest:hover {
-  border-color: var(--accent);
-  text-decoration: none;
-  color: var(--fg-primary);
+.mission-hero__v4v-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  max-width: 14rem;
 }
-.mission-hero__latest-art {
-  width: 72px;
-  height: 72px;
-  border-radius: var(--radius-sm);
-  object-fit: cover;
-  background: var(--bg-elevated);
-}
-.mission-hero__latest-kicker {
-  display: block;
-  font-family: var(--font-display);
+.mission-hero__give,
+.mission-hero__patreon {
+  justify-content: center;
+  border-radius: 999px;
   font-weight: 700;
-  font-size: 0.7rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--accent);
+  letter-spacing: 0.16em;
+  padding: 0.95rem 1.6rem;
+  width: 100%;
 }
-.mission-hero__latest-title {
+.mission-hero__give {
+  background: var(--accent) !important;
+  color: var(--on-accent) !important;
+  border-color: transparent !important;
+  box-shadow: 0 0 18px color-mix(in srgb, var(--accent) 40%, transparent);
+}
+.mission-hero__give:hover {
+  background: var(--accent-2) !important;
+  color: var(--on-accent) !important;
+}
+.mission-hero__patreon {
+  background: var(--shield) !important;
+  color: #fff !important;
+  border-color: transparent !important;
+}
+.mission-hero__patreon:hover {
+  background: var(--shield-2) !important;
+  color: #fff !important;
+}
+.mission-hero__v4v-eyebrow {
   display: block;
   font-family: var(--font-display);
   font-weight: 600;
-  line-height: 1.25;
-}
-.mission-hero__latest-date {
-  display: block;
-  font-size: 0.8rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
   color: var(--fg-tertiary);
+  margin-bottom: 0.45rem;
 }
+.mission-hero__v4v-heading {
+  margin: 0 0 0.55rem;
+  font-family: var(--font-title);
+  font-weight: 400;
+  font-size: clamp(1.55rem, 3.2vw, 2.05rem);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-shadow: 0 0 14px color-mix(in srgb, var(--accent) 40%, transparent);
+}
+.mission-hero__v4v-copy p {
+  margin: 0;
+  max-width: 36rem;
+  color: var(--fg-secondary);
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+.mission-hero__v4v-copy strong {
+  color: var(--fg-primary);
+}
+
 @media (min-width: 768px) {
   .mission-hero__grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 2.5rem;
-    padding: 3.5rem 0;
+    grid-template-columns: minmax(11rem, 0.9fr) minmax(0, 1.15fr) minmax(10rem, 0.85fr);
+    gap: 1.5rem 1.75rem;
+    padding: 2.75rem 0 1.5rem;
+    align-items: center;
+  }
+  .mission-hero__intro {
+    order: 0;
+    justify-self: stretch;
+    max-width: none;
   }
   .mission-hero__art {
     order: 0;
-    /* Desktop: taller portrait — width ~22rem → ~25rem tall, beside copy */
-    max-width: min(31rem, 100%);
+    max-width: min(28rem, 100%);
+    max-height: min(78vh, 40rem);
+  }
+  .mission-hero__tag {
+    order: 0;
+    justify-self: end;
+    text-align: left;
+    transform-origin: top left;
+    font-size: clamp(3.4rem, 5.6vw, 5.8rem);
+  }
+  .mission-hero__v4v {
+    grid-template-columns: minmax(11rem, 14rem) minmax(0, 1fr);
+    gap: 2rem 2.5rem;
+    align-items: center;
+    padding: 0.75rem 0 3rem;
+  }
+}
+
+@media (min-width: 1100px) {
+  .mission-hero__grid {
+    grid-template-columns: minmax(14rem, 0.95fr) minmax(0, 1.2fr) minmax(12rem, 0.9fr);
+    gap: 2rem 2.25rem;
+  }
+  .mission-hero__art {
+    max-width: min(32rem, 100%);
     max-height: min(85vh, 46rem);
+  }
+  .mission-hero__tag {
+    font-size: clamp(4.2rem, 5.8vw, 6.4rem);
   }
 }
 
@@ -1297,12 +1394,12 @@ p {
   text-decoration: none;
 }
 .btn--primary {
-  background: var(--accent-on-bg);
-  color: var(--fg-inverse);
+  background: var(--accent);
+  color: var(--on-accent);
 }
 .btn--primary:hover {
   background: var(--accent-2);
-  color: var(--fg-inverse);
+  color: var(--on-accent);
 }
 .btn--ghost {
   background: transparent;
@@ -1349,7 +1446,7 @@ p {
 
 /* ---------- Newsletter ---------- */
 .signup {
-  background: linear-gradient(180deg, rgba(230, 180, 15, 0.1), transparent 100%), var(--bg-surface);
+  background: linear-gradient(180deg, rgba(232, 242, 42, 0.1), transparent 100%), var(--bg-surface);
   padding: var(--space-8) var(--space-5);
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
@@ -1869,7 +1966,7 @@ p {
 }
 .producer-tier--highlight {
   background:
-    linear-gradient(180deg, rgba(230, 180, 15, 0.12), transparent 100%), var(--bg-surface);
+    linear-gradient(180deg, rgba(232, 242, 42, 0.12), transparent 100%), var(--bg-surface);
   border: 2px solid var(--accent-on-bg);
 }
 .producer-tier--open {
@@ -2527,7 +2624,7 @@ p {
 }
 .art-modal__close:hover,
 .art-modal__nav:hover {
-  background: rgba(230, 180, 15, 0.25);
+  background: rgba(232, 242, 42, 0.25);
   border-color: var(--accent);
   color: var(--accent);
   transform: scale(1.05);
@@ -3615,12 +3712,6 @@ h2 {
   font-size: 1.1rem;
   text-transform: uppercase;
   color: var(--accent-on-bg);
-}
-@media (max-width: 767px) {
-  .mission-hero__tag {
-    text-align: center;
-    transform-origin: top center;
-  }
 }
 .ep-wall__head .page-hero__title-logo {
   margin: 0;

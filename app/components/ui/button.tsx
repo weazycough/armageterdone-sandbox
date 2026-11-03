@@ -23,7 +23,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         primary:
-          "border-transparent bg-accent text-(--fg-inverse) hover:-translate-y-px hover:bg-(--accent-2) hover:text-(--fg-inverse) data-hovered:bg-(--accent-2)",
+          "border-transparent bg-(--accent) text-(--on-accent) hover:-translate-y-px hover:bg-(--accent-2) hover:text-(--on-accent) data-hovered:bg-(--accent-2)",
         ghost:
           "border-input bg-transparent text-foreground hover:-translate-y-px hover:border-accent hover:text-accent data-hovered:border-accent data-hovered:text-accent",
         blue: "border-transparent bg-shield text-white hover:bg-(--shield-2) hover:text-white data-hovered:bg-(--shield-2)",
