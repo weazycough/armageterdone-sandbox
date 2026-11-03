@@ -35,8 +35,8 @@ export const SHOWS = [
     nav: "Live conversations",
     desc: "Open-mic conversations with the community. Wade into deep waters together.",
     art: "images/show-clubhouse.webp",
-    logo: null,
-    logoSize: null,
+    logo: "images/clubhouse-logo.svg",
+    logoSize: [710, 53],
   },
 ] as const;
 

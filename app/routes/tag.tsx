@@ -26,28 +26,18 @@ export function meta({ loaderData }: Route.MetaArgs): Route.MetaDescriptors {
   return pageTitle(`${loaderData.show.title}${suffix}`);
 }
 
-/** Title mark in the always-dark hero: real logo when `show.logo` is set, else a same-size placeholder. */
+/** Title logo in the always-dark hero. */
 function ShowTitleLogo({ show }: { show: Show }): React.ReactNode {
-  if (show.logo !== null) {
-    return (
-      <h1 className="page-hero__title-logo">
-        <img
-          className="page-hero__logo"
-          src={asset(show.logo)}
-          alt={show.title}
-          width={show.logoSize[0]}
-          height={show.logoSize[1]}
-          decoding="async"
-        />
-      </h1>
-    );
-  }
   return (
     <h1 className="page-hero__title-logo">
-      <span className="page-hero__logo page-hero__logo--placeholder">
-        <span className="page-hero__logo-name">{show.title}</span>
-        <span className="page-hero__logo-note">Logo art to come</span>
-      </span>
+      <img
+        className="page-hero__logo"
+        src={asset(show.logo)}
+        alt={show.title}
+        width={show.logoSize[0]}
+        height={show.logoSize[1]}
+        decoding="async"
+      />
     </h1>
   );
 }
