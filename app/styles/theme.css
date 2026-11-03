@@ -2636,9 +2636,8 @@ p {
   /* CQ width units scale the floor grid with the scene, not the viewport. */
   container-type: inline-size;
   container-name: shows-scene;
-  /* Neon grid-line border along the scene's bottom edge. */
-  border-bottom: 2px solid #6a3cff;
-  box-shadow: 0 1px 10px rgba(106, 60, 255, 0.55);
+  /* Thin gray bottom border, same as the footer's top rule. */
+  border-bottom: 1px solid var(--line);
   /* Near-black sky + floor; faint horizon glow only — desk/monitors stay focus. */
   background:
     radial-gradient(ellipse 70% 28% at 50% 50%, rgba(90, 50, 180, 0.14), transparent 70%),
