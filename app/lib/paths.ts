@@ -10,7 +10,7 @@ export const EPISODES_JSON = ".cache/episodes.json";
 export const SITE_JSON = ".cache/site.json";
 export const PAGES_DIR = "content/pages";
 
-export const EPISODES_PER_PAGE = 12;
+export const EPISODES_PER_PAGE = 16;
 
 /** Where the not-found page is prerendered before it becomes dist/404.html. */
 export const NOT_FOUND_PRERENDER_PATH = "/404/not-found/";

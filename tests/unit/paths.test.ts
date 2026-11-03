@@ -9,8 +9,8 @@ describe("paths", () => {
 
   it("pageCount", () => {
     expect(pageCount(0)).toBe(1);
-    expect(pageCount(12)).toBe(1);
-    expect(pageCount(13)).toBe(2);
+    expect(pageCount(16)).toBe(1);
+    expect(pageCount(17)).toBe(2);
   });
 
   it("withBase prefixes root-relative href/src only", () => {

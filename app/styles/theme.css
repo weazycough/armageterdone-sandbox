@@ -3557,7 +3557,7 @@ h2 {
     grid-template-columns: repeat(5, 1fr);
   }
   .ep-wall--full .ep-wall__grid {
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(8, 1fr);
   }
 }
 .ep-wall__tile {
