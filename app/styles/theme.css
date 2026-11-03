@@ -2808,7 +2808,7 @@ p {
   aspect-ratio: 1.18 / 1;
   /* Empty ~42% above caps scales with hero height — pull it under the arc so
      label→host gap stays ~8–12px from 360–430px. */
-  margin: calc(10px - 0.45rem - 94vw * 0.425 / 1.18) auto 0;
+  margin: calc(10px - 0.45rem - 94vw * 0.085 / 1.18) auto 0;
   overflow: visible;
   line-height: 0;
   pointer-events: none;
@@ -3174,9 +3174,9 @@ p {
        the hosts below the monitor wall. 16:9 art, capped at 78vh tall. */
     width: min(100%, calc(min(78vh, 52rem) * 16 / 9));
     max-width: none;
-    /* Art is transparent above the caps (top 42.5% of its 16:9 height ≈ 23.9%
+    /* Art is transparent above the caps (top 8.5% of its 16:9 height ≈ 4.8%
        of its width): tuck that empty band under the wall, keep a fixed gap. */
-    margin: calc(1.75rem - 0.239 * min(100cqw, calc(min(78vh, 52rem) * 16 / 9))) auto 0;
+    margin: calc(1.75rem - 0.048 * min(100cqw, calc(min(78vh, 52rem) * 16 / 9))) auto 0;
     height: auto;
     aspect-ratio: auto; /* cancel phone crop ratio */
     overflow: visible;

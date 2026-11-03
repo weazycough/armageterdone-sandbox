@@ -7,7 +7,6 @@ import type * as React from "react";
 import { Link } from "react-router";
 import { asset } from "../lib/asset";
 import { NETWORK_SHOWS, type NetworkShow } from "../lib/shows";
-import { CcWordmark } from "./cc-wordmark";
 
 function MonitorScreen({ show }: { show: NetworkShow }): React.ReactNode {
   if (show.art === null) {
@@ -78,13 +77,12 @@ export function ShowsControlRoom(): React.ReactNode {
             <source srcSet={asset("images/newsdesk-hosts.webp")} type="image/webp" />
             <img
               src={asset("images/newsdesk-hosts.png")}
-              alt="Basil and Gonz at the Canary Cry news desk"
+              alt="Basil and Gonz in anchor chairs at the Canary Cry news desk"
               width="1920"
               height="1080"
               decoding="async"
             />
           </picture>
-          <CcWordmark className="shows-studio__desk-mark" title="Canary Cry" />
         </div>
       </div>
     </section>
