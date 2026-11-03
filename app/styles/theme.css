@@ -87,7 +87,7 @@
   --bg-deep: #f0e4c2; /* footer */
 
   --fg-primary: #14110a; /* near-black ink */
-  --brand-mark: var(--accent-on-bg); /* wordmark matches site yellow */
+  --brand-mark: #1a1208; /* wordmark — near-black ink on cream */
   --fg-secondary: #4a3f33; /* muted ink */
   --fg-tertiary: #6b5d4d;
   --fg-inverse: #fdf8eb; /* text on dark buttons */
@@ -114,7 +114,7 @@
     --fg-secondary: #4a3f33;
     --fg-tertiary: #6b5d4d;
     --fg-inverse: #fdf8eb;
-    --brand-mark: var(--accent-on-bg);
+    --brand-mark: #1a1208;
     --accent-on-bg: var(--accent-deep);
     --line: #d6c89e;
     --line-strong: #b8a673;
