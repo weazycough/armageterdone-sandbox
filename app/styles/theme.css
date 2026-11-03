@@ -34,7 +34,7 @@
   --accent: #e6b40f; /* canary yellow (from current site CSS) */
   --accent-2: #f0ab1a; /* Libsyn-matched warm canary */
   --accent-deep: #a37a00; /* darker yellow for cream backgrounds (light mode) */
-  --brand-mark: #f0d78c; /* wordmark — bright gold / off-white on dark */
+  --brand-mark: var(--accent-on-bg); /* wordmark matches site yellow */
   --shield: #1e3a8a; /* heraldic blue from crest shield */
   --shield-2: #3a5cb8; /* lighter shield */
 
@@ -87,7 +87,7 @@
   --bg-deep: #f0e4c2; /* footer */
 
   --fg-primary: #14110a; /* near-black ink */
-  --brand-mark: #1a1208; /* wordmark — near-black ink on cream */
+  --brand-mark: var(--accent-on-bg); /* wordmark matches site yellow */
   --fg-secondary: #4a3f33; /* muted ink */
   --fg-tertiary: #6b5d4d;
   --fg-inverse: #fdf8eb; /* text on dark buttons */
@@ -114,7 +114,7 @@
     --fg-secondary: #4a3f33;
     --fg-tertiary: #6b5d4d;
     --fg-inverse: #fdf8eb;
-    --brand-mark: #1a1208;
+    --brand-mark: var(--accent-on-bg);
     --accent-on-bg: var(--accent-deep);
     --line: #d6c89e;
     --line-strong: #b8a673;
