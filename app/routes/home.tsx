@@ -101,13 +101,16 @@ export default function Home({ loaderData }: Route.ComponentProps): React.ReactN
       <section className="section section--alt">
         <div className="container">
           <div className="section__head">
-            <h2>
-              <span className="eyebrow eyebrow--no-rule">Three shows, one signal</span>
-              <br />
-              The Canary Cry Network
+            <h2 className="signal-head">
+              Three shows, one signal
+              <svg className="signal-head__icon" viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="5" cy="19" r="2.2" fill="currentColor" />
+                <path d="M4 11a9 9 0 0 1 9 9M4 4a16 16 0 0 1 16 16" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" />
+              </svg>
             </h2>
           </div>
           <ShowsStrip />
+          <hr className="signal-rule" />
           <div style={{ marginTop: "var(--space-7)" }}>
             <SupportRow eyebrow="Value-for-value" heading="No advertisers. Just producers.">
               Canary Cry doesn&apos;t take corporate ad money. The show runs on producers —

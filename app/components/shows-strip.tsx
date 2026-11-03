@@ -13,6 +13,14 @@ export function ShowsStrip(): React.ReactNode {
       {SHOWS.map((s) => (
         <Link className="show-card" to={tagPath(s.slug)} key={s.slug}>
           <img
+            className="show-card__logo"
+            src={asset(s.logo)}
+            alt={s.title}
+            width={s.logoSize[0]}
+            height={s.logoSize[1]}
+            loading="lazy"
+          />
+          <img
             className="show-card__art"
             src={asset(s.art)}
             alt=""
@@ -22,8 +30,7 @@ export function ShowsStrip(): React.ReactNode {
           />
           <div className="show-card__body">
             <span className="show-card__kicker">{s.kicker}</span>
-            <h3 className="show-card__title">{s.title}</h3>
-            <p className="show-card__desc">{s.desc}</p>
+                        <p className="show-card__desc">{s.desc}</p>
           </div>
         </Link>
       ))}
