@@ -74,9 +74,9 @@ export function ShowsControlRoom(): React.ReactNode {
 
         <div className="shows-studio__hero">
           <picture>
-            <source srcSet={asset("images/newsdesk-hosts-v3.webp")} type="image/webp" />
+            <source srcSet={asset("images/newsdesk-hosts-v4.webp")} type="image/webp" />
             <img
-              src={asset("images/newsdesk-hosts-v3.png")}
+              src={asset("images/newsdesk-hosts-v4.png")}
               alt="Basil and Gonz in anchor chairs at the Canary Cry news desk"
               width="1920"
               height="1080"
