@@ -4,12 +4,12 @@
 import { useState } from "react";
 import type * as React from "react";
 import { Link } from "react-router";
-import { asset } from "../../lib/asset";
 import { episodePath } from "../../lib/paths";
 import { formatShortDate } from "../../lib/dates";
 import { MainNav } from "./main-nav";
 import { SiteSearch } from "./site-search";
 import { ThemeToggle } from "./theme-toggle";
+import { CcWordmark } from "../cc-wordmark";
 
 export interface LatestEpisode {
   slug: string;
@@ -51,14 +51,7 @@ export function SiteBrand({ className }: { className?: string }): React.ReactNod
   const classes = ["site-brand", className].filter(Boolean).join(" ");
   return (
     <Link className={classes} to="/">
-      <img
-        className="site-brand__mark"
-        src={asset("images/cc-wordmark.webp")}
-        alt="Canary Cry"
-        width={1241}
-        height={387}
-        decoding="async"
-      />
+      <CcWordmark className="site-brand__mark" />
     </Link>
   );
 }

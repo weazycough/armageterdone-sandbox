@@ -43,6 +43,7 @@
         --fg-secondary: #c9c2b3;
         --fg-tertiary: #8b867a;
         --fg-inverse: #0a0a0a;
+        --brand-mark: #f0d78c;
         --accent: #e6b40f;
         --accent-2: #f0ab1a;
         --accent-deep: #a37a00;
@@ -251,6 +252,7 @@
         color: var(--fg-primary);
       }
       [data-theme="dark"] .preview {
+        --brand-mark: #f0d78c;
         --art-line: #c9c2b3;
         --hero-glow: radial-gradient(ellipse at top, rgba(230, 180, 15, 0.1), transparent 60%);
         color-scheme: dark;
@@ -264,6 +266,7 @@
         --bg-surface: #f5edd6;
         --bg-elevated: #ebe0c2;
         --fg-primary: #14110a;
+        --brand-mark: #1a1208;
         --fg-secondary: #4a3f33;
         --fg-tertiary: #6b5d4d;
         --fg-inverse: #fdf8eb;
@@ -282,12 +285,17 @@
         --fg-secondary: #c9c2b3;
         --fg-tertiary: #8b867a;
         --fg-inverse: #0a0a0a;
+        --brand-mark: #f0d78c;
         --accent-on-bg: var(--accent);
         --line: #2a2a2a;
         --line-strong: #3a3a3a;
         --art-line: #c9c2b3;
       }
 
+      /* unscoped wordmark color */
+      .site-brand__mark {
+        color: var(--brand-mark, #f0d78c);
+      }
       .mock-nav {
         display: flex;
         align-items: center;
@@ -298,9 +306,10 @@
         font-weight: 600;
         font-size: 0.85rem;
       }
-      .mock-nav img {
-        width: 28px;
-        height: 28px;
+      .mock-nav .site-brand__mark {
+        height: 22px;
+        width: auto;
+        color: var(--brand-mark, #f0d78c);
       }
       .mock-nav .links {
         margin-left: auto;
@@ -729,7 +738,17 @@
           <p class="theme-label">Dark theme</p>
           <div class="preview">
             <div class="mock-nav">
-              <img src="../../images/cc-wordmark.webp" alt="Canary Cry" height="22" style="height:22px;width:auto" />
+              <svg class="site-brand__mark" style="height:22px;width:auto" viewBox="0 0 376.56 53.04" role="img" aria-label="Canary Cry" xmlns="http://www.w3.org/2000/svg">
+  <path fill="currentColor" d="M.02,26.46C.02,11.76,11.46.04,25.07.04c12.81,0,20.82,9.69,23.07,19.08h-10.85c-1.16-4.3-5.31-9.03-12.23-9.03-7.86,0-14.63,6.91-14.64,16.38s6.77,16.38,14.63,16.38c6.92,0,11.07-4.73,12.6-8.95h10.85c-2.19,9.25-10.34,19-23.44,19C11.45,52.89.02,41.17.02,26.46Z"/>
+  <path fill="currentColor" d="M80.75,51.96l.05-10.48h-18.77l-7.71,10.48h-12.69L79.69,1h10.19l-.14,50.96h-9,0ZM80.76,13.96l-12.3,17.91h12.3s0-17.91,0-17.91Z"/>
+  <path fill="currentColor" d="M164.99,51.97l.05-10.48h-18.77l-7.71,10.48h-12.64L163.93,1.01h10.19l-.14,50.96h-9,.01ZM165,13.97l-12.3,17.91h12.3V13.97Z"/>
+  <path fill="currentColor" d="M124.98,1h10.05v50.96h-9.54l-22.63-33.35v33.34h-10.05V1h9.55l22.63,33.35V1h0Z"/>
+  <path fill="currentColor" d="M204.26,32.03c6.48-2.55,10.56-8.08,10.56-14.56,0-9.61-7.36-16.46-17.26-16.46h-20.67v50.96h10.41V10.91h9.97c4.08,0,7.14,2.77,7.14,6.63s-3.06,6.62-7.14,6.62h-8.47l15.46,27.81h12.01l-12.01-19.94h0Z"/>
+  <path fill="currentColor" d="M326.62,32.06c6.48-2.55,10.56-8.08,10.56-14.56,0-9.61-7.36-16.46-17.26-16.46h-20.67v50.96h10.41V10.94h9.97c4.08,0,7.14,2.77,7.14,6.63s-3.06,6.62-7.14,6.62h-8.47l15.46,27.81h12.01l-12.01-19.94h0Z"/>
+  <path fill="currentColor" d="M243.27,1.02h11.21l-16.6,31.96v19h-10.41v-19L210.88,1.02h11.58l10.41,20.9,10.41-20.89h-.01Z"/>
+  <path fill="currentColor" d="M248.75,26.51c0-14.71,11.43-26.42,25.05-26.42,12.81,0,20.82,9.69,23.07,19.08h-10.85c-1.16-4.3-5.31-9.03-12.23-9.03-7.86,0-14.63,6.91-14.64,16.38s6.77,16.38,14.63,16.38c6.92,0,11.07-4.73,12.6-8.95h10.85c-2.19,9.25-10.34,19-23.44,19s-25.04-11.73-25.04-26.43h0Z"/>
+  <path fill="currentColor" d="M365.35,1.05h11.21l-16.6,31.96v19h-10.41v-19l-16.59-31.96h11.58l10.41,20.9,10.41-20.89h0Z"/>
+</svg>
               <span class="links"><span>Episodes</span><span>Shows</span><span>Community</span><span>Support</span></span>
               <svg class="menu" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" /></svg>
             </div>
@@ -764,7 +783,17 @@
           <p class="theme-label">Light theme</p>
           <div class="preview">
             <div class="mock-nav">
-              <img src="../../images/cc-wordmark.webp" alt="Canary Cry" height="22" style="height:22px;width:auto" />
+              <svg class="site-brand__mark" style="height:22px;width:auto" viewBox="0 0 376.56 53.04" role="img" aria-label="Canary Cry" xmlns="http://www.w3.org/2000/svg">
+  <path fill="currentColor" d="M.02,26.46C.02,11.76,11.46.04,25.07.04c12.81,0,20.82,9.69,23.07,19.08h-10.85c-1.16-4.3-5.31-9.03-12.23-9.03-7.86,0-14.63,6.91-14.64,16.38s6.77,16.38,14.63,16.38c6.92,0,11.07-4.73,12.6-8.95h10.85c-2.19,9.25-10.34,19-23.44,19C11.45,52.89.02,41.17.02,26.46Z"/>
+  <path fill="currentColor" d="M80.75,51.96l.05-10.48h-18.77l-7.71,10.48h-12.69L79.69,1h10.19l-.14,50.96h-9,0ZM80.76,13.96l-12.3,17.91h12.3s0-17.91,0-17.91Z"/>
+  <path fill="currentColor" d="M164.99,51.97l.05-10.48h-18.77l-7.71,10.48h-12.64L163.93,1.01h10.19l-.14,50.96h-9,.01ZM165,13.97l-12.3,17.91h12.3V13.97Z"/>
+  <path fill="currentColor" d="M124.98,1h10.05v50.96h-9.54l-22.63-33.35v33.34h-10.05V1h9.55l22.63,33.35V1h0Z"/>
+  <path fill="currentColor" d="M204.26,32.03c6.48-2.55,10.56-8.08,10.56-14.56,0-9.61-7.36-16.46-17.26-16.46h-20.67v50.96h10.41V10.91h9.97c4.08,0,7.14,2.77,7.14,6.63s-3.06,6.62-7.14,6.62h-8.47l15.46,27.81h12.01l-12.01-19.94h0Z"/>
+  <path fill="currentColor" d="M326.62,32.06c6.48-2.55,10.56-8.08,10.56-14.56,0-9.61-7.36-16.46-17.26-16.46h-20.67v50.96h10.41V10.94h9.97c4.08,0,7.14,2.77,7.14,6.63s-3.06,6.62-7.14,6.62h-8.47l15.46,27.81h12.01l-12.01-19.94h0Z"/>
+  <path fill="currentColor" d="M243.27,1.02h11.21l-16.6,31.96v19h-10.41v-19L210.88,1.02h11.58l10.41,20.9,10.41-20.89h-.01Z"/>
+  <path fill="currentColor" d="M248.75,26.51c0-14.71,11.43-26.42,25.05-26.42,12.81,0,20.82,9.69,23.07,19.08h-10.85c-1.16-4.3-5.31-9.03-12.23-9.03-7.86,0-14.63,6.91-14.64,16.38s6.77,16.38,14.63,16.38c6.92,0,11.07-4.73,12.6-8.95h10.85c-2.19,9.25-10.34,19-23.44,19s-25.04-11.73-25.04-26.43h0Z"/>
+  <path fill="currentColor" d="M365.35,1.05h11.21l-16.6,31.96v19h-10.41v-19l-16.59-31.96h11.58l10.41,20.9,10.41-20.89h0Z"/>
+</svg>
               <span class="links"><span>Episodes</span><span>Shows</span><span>Community</span><span>Support</span></span>
               <svg class="menu" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" /></svg>
             </div>
@@ -823,7 +852,17 @@
           <p class="theme-label">Dark theme</p>
           <div class="preview">
             <div class="mock-nav">
-              <img src="../../images/cc-wordmark.webp" alt="Canary Cry" height="22" style="height:22px;width:auto" />
+              <svg class="site-brand__mark" style="height:22px;width:auto" viewBox="0 0 376.56 53.04" role="img" aria-label="Canary Cry" xmlns="http://www.w3.org/2000/svg">
+  <path fill="currentColor" d="M.02,26.46C.02,11.76,11.46.04,25.07.04c12.81,0,20.82,9.69,23.07,19.08h-10.85c-1.16-4.3-5.31-9.03-12.23-9.03-7.86,0-14.63,6.91-14.64,16.38s6.77,16.38,14.63,16.38c6.92,0,11.07-4.73,12.6-8.95h10.85c-2.19,9.25-10.34,19-23.44,19C11.45,52.89.02,41.17.02,26.46Z"/>
+  <path fill="currentColor" d="M80.75,51.96l.05-10.48h-18.77l-7.71,10.48h-12.69L79.69,1h10.19l-.14,50.96h-9,0ZM80.76,13.96l-12.3,17.91h12.3s0-17.91,0-17.91Z"/>
+  <path fill="currentColor" d="M164.99,51.97l.05-10.48h-18.77l-7.71,10.48h-12.64L163.93,1.01h10.19l-.14,50.96h-9,.01ZM165,13.97l-12.3,17.91h12.3V13.97Z"/>
+  <path fill="currentColor" d="M124.98,1h10.05v50.96h-9.54l-22.63-33.35v33.34h-10.05V1h9.55l22.63,33.35V1h0Z"/>
+  <path fill="currentColor" d="M204.26,32.03c6.48-2.55,10.56-8.08,10.56-14.56,0-9.61-7.36-16.46-17.26-16.46h-20.67v50.96h10.41V10.91h9.97c4.08,0,7.14,2.77,7.14,6.63s-3.06,6.62-7.14,6.62h-8.47l15.46,27.81h12.01l-12.01-19.94h0Z"/>
+  <path fill="currentColor" d="M326.62,32.06c6.48-2.55,10.56-8.08,10.56-14.56,0-9.61-7.36-16.46-17.26-16.46h-20.67v50.96h10.41V10.94h9.97c4.08,0,7.14,2.77,7.14,6.63s-3.06,6.62-7.14,6.62h-8.47l15.46,27.81h12.01l-12.01-19.94h0Z"/>
+  <path fill="currentColor" d="M243.27,1.02h11.21l-16.6,31.96v19h-10.41v-19L210.88,1.02h11.58l10.41,20.9,10.41-20.89h-.01Z"/>
+  <path fill="currentColor" d="M248.75,26.51c0-14.71,11.43-26.42,25.05-26.42,12.81,0,20.82,9.69,23.07,19.08h-10.85c-1.16-4.3-5.31-9.03-12.23-9.03-7.86,0-14.63,6.91-14.64,16.38s6.77,16.38,14.63,16.38c6.92,0,11.07-4.73,12.6-8.95h10.85c-2.19,9.25-10.34,19-23.44,19s-25.04-11.73-25.04-26.43h0Z"/>
+  <path fill="currentColor" d="M365.35,1.05h11.21l-16.6,31.96v19h-10.41v-19l-16.59-31.96h11.58l10.41,20.9,10.41-20.89h0Z"/>
+</svg>
               <span class="links"><span>Episodes</span><span>Shows</span><span>Community</span><span>Support</span></span>
               <svg class="menu" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" /></svg>
             </div>
@@ -855,7 +894,17 @@
           <p class="theme-label">Light theme</p>
           <div class="preview">
             <div class="mock-nav">
-              <img src="../../images/cc-wordmark.webp" alt="Canary Cry" height="22" style="height:22px;width:auto" />
+              <svg class="site-brand__mark" style="height:22px;width:auto" viewBox="0 0 376.56 53.04" role="img" aria-label="Canary Cry" xmlns="http://www.w3.org/2000/svg">
+  <path fill="currentColor" d="M.02,26.46C.02,11.76,11.46.04,25.07.04c12.81,0,20.82,9.69,23.07,19.08h-10.85c-1.16-4.3-5.31-9.03-12.23-9.03-7.86,0-14.63,6.91-14.64,16.38s6.77,16.38,14.63,16.38c6.92,0,11.07-4.73,12.6-8.95h10.85c-2.19,9.25-10.34,19-23.44,19C11.45,52.89.02,41.17.02,26.46Z"/>
+  <path fill="currentColor" d="M80.75,51.96l.05-10.48h-18.77l-7.71,10.48h-12.69L79.69,1h10.19l-.14,50.96h-9,0ZM80.76,13.96l-12.3,17.91h12.3s0-17.91,0-17.91Z"/>
+  <path fill="currentColor" d="M164.99,51.97l.05-10.48h-18.77l-7.71,10.48h-12.64L163.93,1.01h10.19l-.14,50.96h-9,.01ZM165,13.97l-12.3,17.91h12.3V13.97Z"/>
+  <path fill="currentColor" d="M124.98,1h10.05v50.96h-9.54l-22.63-33.35v33.34h-10.05V1h9.55l22.63,33.35V1h0Z"/>
+  <path fill="currentColor" d="M204.26,32.03c6.48-2.55,10.56-8.08,10.56-14.56,0-9.61-7.36-16.46-17.26-16.46h-20.67v50.96h10.41V10.91h9.97c4.08,0,7.14,2.77,7.14,6.63s-3.06,6.62-7.14,6.62h-8.47l15.46,27.81h12.01l-12.01-19.94h0Z"/>
+  <path fill="currentColor" d="M326.62,32.06c6.48-2.55,10.56-8.08,10.56-14.56,0-9.61-7.36-16.46-17.26-16.46h-20.67v50.96h10.41V10.94h9.97c4.08,0,7.14,2.77,7.14,6.63s-3.06,6.62-7.14,6.62h-8.47l15.46,27.81h12.01l-12.01-19.94h0Z"/>
+  <path fill="currentColor" d="M243.27,1.02h11.21l-16.6,31.96v19h-10.41v-19L210.88,1.02h11.58l10.41,20.9,10.41-20.89h-.01Z"/>
+  <path fill="currentColor" d="M248.75,26.51c0-14.71,11.43-26.42,25.05-26.42,12.81,0,20.82,9.69,23.07,19.08h-10.85c-1.16-4.3-5.31-9.03-12.23-9.03-7.86,0-14.63,6.91-14.64,16.38s6.77,16.38,14.63,16.38c6.92,0,11.07-4.73,12.6-8.95h10.85c-2.19,9.25-10.34,19-23.44,19s-25.04-11.73-25.04-26.43h0Z"/>
+  <path fill="currentColor" d="M365.35,1.05h11.21l-16.6,31.96v19h-10.41v-19l-16.59-31.96h11.58l10.41,20.9,10.41-20.89h0Z"/>
+</svg>
               <span class="links"><span>Episodes</span><span>Shows</span><span>Community</span><span>Support</span></span>
               <svg class="menu" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" /></svg>
             </div>
@@ -908,7 +957,17 @@
           <p class="theme-label">Dark theme</p>
           <div class="preview">
             <div class="mock-nav">
-              <img src="../../images/cc-wordmark.webp" alt="Canary Cry" height="22" style="height:22px;width:auto" />
+              <svg class="site-brand__mark" style="height:22px;width:auto" viewBox="0 0 376.56 53.04" role="img" aria-label="Canary Cry" xmlns="http://www.w3.org/2000/svg">
+  <path fill="currentColor" d="M.02,26.46C.02,11.76,11.46.04,25.07.04c12.81,0,20.82,9.69,23.07,19.08h-10.85c-1.16-4.3-5.31-9.03-12.23-9.03-7.86,0-14.63,6.91-14.64,16.38s6.77,16.38,14.63,16.38c6.92,0,11.07-4.73,12.6-8.95h10.85c-2.19,9.25-10.34,19-23.44,19C11.45,52.89.02,41.17.02,26.46Z"/>
+  <path fill="currentColor" d="M80.75,51.96l.05-10.48h-18.77l-7.71,10.48h-12.69L79.69,1h10.19l-.14,50.96h-9,0ZM80.76,13.96l-12.3,17.91h12.3s0-17.91,0-17.91Z"/>
+  <path fill="currentColor" d="M164.99,51.97l.05-10.48h-18.77l-7.71,10.48h-12.64L163.93,1.01h10.19l-.14,50.96h-9,.01ZM165,13.97l-12.3,17.91h12.3V13.97Z"/>
+  <path fill="currentColor" d="M124.98,1h10.05v50.96h-9.54l-22.63-33.35v33.34h-10.05V1h9.55l22.63,33.35V1h0Z"/>
+  <path fill="currentColor" d="M204.26,32.03c6.48-2.55,10.56-8.08,10.56-14.56,0-9.61-7.36-16.46-17.26-16.46h-20.67v50.96h10.41V10.91h9.97c4.08,0,7.14,2.77,7.14,6.63s-3.06,6.62-7.14,6.62h-8.47l15.46,27.81h12.01l-12.01-19.94h0Z"/>
+  <path fill="currentColor" d="M326.62,32.06c6.48-2.55,10.56-8.08,10.56-14.56,0-9.61-7.36-16.46-17.26-16.46h-20.67v50.96h10.41V10.94h9.97c4.08,0,7.14,2.77,7.14,6.63s-3.06,6.62-7.14,6.62h-8.47l15.46,27.81h12.01l-12.01-19.94h0Z"/>
+  <path fill="currentColor" d="M243.27,1.02h11.21l-16.6,31.96v19h-10.41v-19L210.88,1.02h11.58l10.41,20.9,10.41-20.89h-.01Z"/>
+  <path fill="currentColor" d="M248.75,26.51c0-14.71,11.43-26.42,25.05-26.42,12.81,0,20.82,9.69,23.07,19.08h-10.85c-1.16-4.3-5.31-9.03-12.23-9.03-7.86,0-14.63,6.91-14.64,16.38s6.77,16.38,14.63,16.38c6.92,0,11.07-4.73,12.6-8.95h10.85c-2.19,9.25-10.34,19-23.44,19s-25.04-11.73-25.04-26.43h0Z"/>
+  <path fill="currentColor" d="M365.35,1.05h11.21l-16.6,31.96v19h-10.41v-19l-16.59-31.96h11.58l10.41,20.9,10.41-20.89h0Z"/>
+</svg>
               <span class="links"><span>Episodes</span><span>Shows</span><span>Community</span><span>Support</span></span>
               <svg class="menu" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" /></svg>
             </div>
@@ -944,7 +1003,17 @@
           <p class="theme-label">Light theme</p>
           <div class="preview">
             <div class="mock-nav">
-              <img src="../../images/cc-wordmark.webp" alt="Canary Cry" height="22" style="height:22px;width:auto" />
+              <svg class="site-brand__mark" style="height:22px;width:auto" viewBox="0 0 376.56 53.04" role="img" aria-label="Canary Cry" xmlns="http://www.w3.org/2000/svg">
+  <path fill="currentColor" d="M.02,26.46C.02,11.76,11.46.04,25.07.04c12.81,0,20.82,9.69,23.07,19.08h-10.85c-1.16-4.3-5.31-9.03-12.23-9.03-7.86,0-14.63,6.91-14.64,16.38s6.77,16.38,14.63,16.38c6.92,0,11.07-4.73,12.6-8.95h10.85c-2.19,9.25-10.34,19-23.44,19C11.45,52.89.02,41.17.02,26.46Z"/>
+  <path fill="currentColor" d="M80.75,51.96l.05-10.48h-18.77l-7.71,10.48h-12.69L79.69,1h10.19l-.14,50.96h-9,0ZM80.76,13.96l-12.3,17.91h12.3s0-17.91,0-17.91Z"/>
+  <path fill="currentColor" d="M164.99,51.97l.05-10.48h-18.77l-7.71,10.48h-12.64L163.93,1.01h10.19l-.14,50.96h-9,.01ZM165,13.97l-12.3,17.91h12.3V13.97Z"/>
+  <path fill="currentColor" d="M124.98,1h10.05v50.96h-9.54l-22.63-33.35v33.34h-10.05V1h9.55l22.63,33.35V1h0Z"/>
+  <path fill="currentColor" d="M204.26,32.03c6.48-2.55,10.56-8.08,10.56-14.56,0-9.61-7.36-16.46-17.26-16.46h-20.67v50.96h10.41V10.91h9.97c4.08,0,7.14,2.77,7.14,6.63s-3.06,6.62-7.14,6.62h-8.47l15.46,27.81h12.01l-12.01-19.94h0Z"/>
+  <path fill="currentColor" d="M326.62,32.06c6.48-2.55,10.56-8.08,10.56-14.56,0-9.61-7.36-16.46-17.26-16.46h-20.67v50.96h10.41V10.94h9.97c4.08,0,7.14,2.77,7.14,6.63s-3.06,6.62-7.14,6.62h-8.47l15.46,27.81h12.01l-12.01-19.94h0Z"/>
+  <path fill="currentColor" d="M243.27,1.02h11.21l-16.6,31.96v19h-10.41v-19L210.88,1.02h11.58l10.41,20.9,10.41-20.89h-.01Z"/>
+  <path fill="currentColor" d="M248.75,26.51c0-14.71,11.43-26.42,25.05-26.42,12.81,0,20.82,9.69,23.07,19.08h-10.85c-1.16-4.3-5.31-9.03-12.23-9.03-7.86,0-14.63,6.91-14.64,16.38s6.77,16.38,14.63,16.38c6.92,0,11.07-4.73,12.6-8.95h10.85c-2.19,9.25-10.34,19-23.44,19s-25.04-11.73-25.04-26.43h0Z"/>
+  <path fill="currentColor" d="M365.35,1.05h11.21l-16.6,31.96v19h-10.41v-19l-16.59-31.96h11.58l10.41,20.9,10.41-20.89h0Z"/>
+</svg>
               <span class="links"><span>Episodes</span><span>Shows</span><span>Community</span><span>Support</span></span>
               <svg class="menu" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" /></svg>
             </div>

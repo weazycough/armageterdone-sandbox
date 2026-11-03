@@ -34,6 +34,7 @@
   --accent: #e6b40f; /* canary yellow (from current site CSS) */
   --accent-2: #f0ab1a; /* Libsyn-matched warm canary */
   --accent-deep: #a37a00; /* darker yellow for cream backgrounds (light mode) */
+  --brand-mark: #f0d78c; /* wordmark — bright gold / off-white on dark */
   --shield: #1e3a8a; /* heraldic blue from crest shield */
   --shield-2: #3a5cb8; /* lighter shield */
 
@@ -86,6 +87,7 @@
   --bg-deep: #f0e4c2; /* footer */
 
   --fg-primary: #14110a; /* near-black ink */
+  --brand-mark: #1a1208; /* wordmark — near-black ink on cream */
   --fg-secondary: #4a3f33; /* muted ink */
   --fg-tertiary: #6b5d4d;
   --fg-inverse: #fdf8eb; /* text on dark buttons */
@@ -112,6 +114,7 @@
     --fg-secondary: #4a3f33;
     --fg-tertiary: #6b5d4d;
     --fg-inverse: #fdf8eb;
+    --brand-mark: #1a1208;
     --accent-on-bg: var(--accent-deep);
     --line: #d6c89e;
     --line-strong: #b8a673;
@@ -279,41 +282,33 @@ p {
   text-decoration: none;
   opacity: 0.92;
 }
-/* Gold 3D wordmark — replaces crest + "Canary Cry" text. */
+/* Inline SVG wordmark — color via --brand-mark / currentColor. Flat, wide aspect (~7.1:1). */
 .site-brand__mark {
   display: block;
-  height: 1.65rem; /* phone */
+  height: 1.05rem; /* phone */
   width: auto;
-  max-width: min(52vw, 11.5rem);
+  max-width: min(72vw, 12.5rem);
   flex: 0 0 auto;
+  color: var(--brand-mark);
 }
 @media (min-width: 640px) {
   .site-brand__mark {
-    height: 1.9rem;
-    max-width: 13.5rem;
+    height: 1.2rem;
+    max-width: 14.5rem;
   }
 }
 @media (min-width: 1024px) {
   .site-brand__mark {
-    height: 2.15rem;
-    max-width: 15rem;
+    height: 1.35rem;
+    max-width: 16rem;
   }
 }
 .site-brand--footer {
   margin-bottom: var(--space-3);
 }
 .site-brand--footer .site-brand__mark {
-  height: 2rem;
-  max-width: 14rem;
-}
-/* Soft edge so gold reads on cream without a white halo from the asset. */
-:root[data-theme="light"] .site-brand__mark {
-  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.28)) drop-shadow(0 0 0.4px rgba(40, 20, 0, 0.35));
-}
-@media (prefers-color-scheme: light) {
-  :root:not([data-theme]) .site-brand__mark {
-    filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.28)) drop-shadow(0 0 0.4px rgba(40, 20, 0, 0.35));
-  }
+  height: 1.45rem;
+  max-width: 17rem;
 }
 
 /* ---------- Primary nav (desktop) ---------- */
