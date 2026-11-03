@@ -42,8 +42,7 @@ export default function Home({ loaderData }: Route.ComponentProps): React.ReactN
             <div className="mission-hero__copy">
               <h1 className="mission-hero__tag">
                 <span className="sr-only">Canary Cry: </span>
-                <span>Think</span>
-                <span>Outside</span>
+                <span>Think Outside</span>
                 <span>The Cage</span>
               </h1>
               <p className="mission-hero__about">
