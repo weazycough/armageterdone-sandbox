@@ -1084,7 +1084,7 @@ p {
   display: grid;
   gap: var(--space-4);
   grid-template-columns: 1fr;
-  padding: var(--space-7) 0;
+  padding: var(--space-4) 0 var(--space-7);
 }
 @media (min-width: 768px) {
   .shows-strip {
