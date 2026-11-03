@@ -3186,9 +3186,11 @@ p {
     bottom: auto;
     z-index: 1;
     order: 0;
-    width: 100%;
+    /* Shrink the whole art (never crop its top) so short/wide windows keep
+       the hosts below the monitor wall. 16:9 art, capped at 78vh tall. */
+    width: min(100%, calc(min(78vh, 52rem) * 16 / 9));
     max-width: none;
-    margin: 0; /* cancel phone negative pull-up */
+    margin: 0 auto; /* cancel phone negative pull-up */
     height: auto;
     aspect-ratio: auto; /* cancel phone crop ratio */
     overflow: visible;
@@ -3202,9 +3204,9 @@ p {
     display: block;
     width: 100%;
     height: auto;
-    max-height: min(78vh, 52rem);
+    max-height: none;
     min-height: 0;
-    object-fit: cover;
+    object-fit: contain;
     object-position: center bottom; /* cancel phone 62% bias */
     transform: none; /* phone scale must not apply on desktop */
     /* Light top feather into the shared studio wash (art bg is transparent). */
