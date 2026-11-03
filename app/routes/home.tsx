@@ -73,13 +73,13 @@ export default function Home({ loaderData }: Route.ComponentProps): React.ReactN
           <div className="mission-hero__v4v">
             <div className="mission-hero__v4v-actions">
               <Link
-                className={cn(buttonVariants(), "mission-hero__give")}
+                className={cn(buttonVariants(), "rounded-full mission-hero__give")}
                 to="/support/"
               >
                 $ Give
               </Link>
               <a
-                className={cn(buttonVariants({ variant: "blue" }), "mission-hero__patreon")}
+                className={cn(buttonVariants({ variant: "blue" }), "rounded-full mission-hero__patreon")}
                 href="https://www.patreon.com/ccnt"
                 rel="noopener"
               >
