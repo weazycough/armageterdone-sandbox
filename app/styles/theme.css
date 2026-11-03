@@ -3428,3 +3428,21 @@ p {
   background: var(--accent-on-bg);
   margin: 0;
 }
+
+/* ---------- Titles: Bebas Neue everywhere ---------- */
+:root {
+  --font-title: "Bebas Neue", "Jost", "Helvetica Neue", Arial, sans-serif;
+}
+:is(h1, h2, h3, h4, h5),
+[class*="__title"]:not([class*="__title-logo"]) {
+  font-family: var(--font-title);
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  line-height: 1.05;
+}
+h1 {
+  font-size: clamp(2.75rem, 6.5vw, 4.5rem);
+}
+h2 {
+  font-size: clamp(2rem, 4.2vw, 2.9rem);
+}
