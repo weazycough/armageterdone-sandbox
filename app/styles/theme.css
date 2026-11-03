@@ -899,12 +899,15 @@ p {
   margin: 0 0 0.55rem;
   font-family: var(--font-title);
   font-weight: 400;
-  font-size: clamp(3rem, 6.2vw, 4.1rem);
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+  font-size: clamp(2.55rem, 5.2vw, 3.45rem);
   line-height: 0.95;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--accent);
-  text-shadow: 0 0 14px color-mix(in srgb, var(--accent) 40%, transparent);
+  text-shadow: none;
+  -webkit-text-stroke: 0;
 }
 .mission-hero__v4v-copy p {
   margin: 0;
