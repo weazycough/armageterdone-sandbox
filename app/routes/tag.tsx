@@ -43,7 +43,7 @@ function ShowTitleLogo({ show }: { show: Show }): React.ReactNode {
 }
 
 export default function Tag({ loaderData }: Route.ComponentProps): React.ReactNode {
-  const { show, page, pages, total, episodes } = loaderData;
+  const { show, page, pages, episodes } = loaderData;
   return (
     <>
       <section className="section">
@@ -53,8 +53,7 @@ export default function Tag({ loaderData }: Route.ComponentProps): React.ReactNo
             <span className="ep-wall__rule" aria-hidden="true" />
           </div>
           <p className="muted ep-wall__count">
-            <span className="ep-wall__kicker">{show.kicker}</span> · {show.desc} {total} episodes,
-            newest first. <Link to="/episodes/">All episodes →</Link>
+            <span className="ep-wall__kicker">{show.kicker}</span> · {show.desc} <Link to="/episodes/">All episodes →</Link>
           </p>
           <EpisodeWall
             featured={page === 1 ? episodes[0] : undefined}
