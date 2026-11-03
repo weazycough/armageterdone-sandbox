@@ -28,7 +28,7 @@ function TickerSeq({
   const tab = hidden === true ? -1 : undefined;
   return (
     <span className="ticker__seq" aria-hidden={hidden}>
-      <span>📡 New episode</span>
+      <span>📡 New episode →</span>
       <span className="ticker__sep">·</span>
       <Link className="ticker__title" to={to} tabIndex={tab}>
         {latest.title}
