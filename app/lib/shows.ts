@@ -16,6 +16,7 @@ export const SHOWS = [
     art: "images/show-news-talk.webp",
     /** Title logo in the tag-page hero; null until art lands (placeholder). */
     logo: "images/newstalk-logo.svg",
+    logoSize: [662, 53],
   },
   {
     slug: "radio",
@@ -24,7 +25,8 @@ export const SHOWS = [
     nav: "Long-form interviews",
     desc: "Deep-cut interviews and conversations with discerners, theologians, and researchers.",
     art: "images/show-radio.webp",
-    logo: null,
+    logo: "images/radio-logo.svg",
+    logoSize: [556, 53],
   },
   {
     slug: "clubhouse",
@@ -34,6 +36,7 @@ export const SHOWS = [
     desc: "Open-mic conversations with the community. Wade into deep waters together.",
     art: "images/show-clubhouse.webp",
     logo: null,
+    logoSize: null,
   },
 ] as const;
 
