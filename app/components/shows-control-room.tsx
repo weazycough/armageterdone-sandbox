@@ -56,6 +56,8 @@ export function ShowsControlRoom(): React.ReactNode {
   return (
     <section className="shows-studio" aria-label="The Canary Cry Network shows">
       <div className="shows-studio__scene">
+        {/* Soft accent wash under the vapor grid (same plane + fade mask). */}
+        <div className="shows-studio__floor-glow" aria-hidden="true" />
         {/* Wall sits behind the desk art; hero is the foreground strip. */}
         <div className="shows-studio__wall">
           <header className="shows-studio__title">

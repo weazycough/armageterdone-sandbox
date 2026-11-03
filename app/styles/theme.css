@@ -2766,6 +2766,49 @@ p {
       #080510 100%
     );
 }
+/* Soft yellow floor wash BEHIND the vapor grid (z-index -1). Same perspective
+   plane + horizon fade as ::before; strongest near the bottom edge. */
+.shows-studio__floor-glow {
+  position: absolute;
+  left: -55%;
+  right: -55%;
+  top: 50%;
+  height: 65.8125cqw;
+  z-index: -1;
+  pointer-events: none;
+  --vapor-persp: 21.875cqw;
+  background: linear-gradient(
+    to top,
+    rgba(232, 242, 42, 0.34) 0%,
+    rgba(232, 242, 42, 0.16) 30%,
+    rgba(232, 242, 42, 0.05) 58%,
+    transparent 80%
+  );
+  transform: perspective(var(--vapor-persp)) rotateX(74deg);
+  transform-origin: 50% 0%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    transparent 6%,
+    rgba(0, 0, 0, 0.12) 14%,
+    rgba(0, 0, 0, 0.4) 28%,
+    rgba(0, 0, 0, 0.75) 42%,
+    #000 58%,
+    #000 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    transparent 6%,
+    rgba(0, 0, 0, 0.12) 14%,
+    rgba(0, 0, 0, 0.4) 28%,
+    rgba(0, 0, 0, 0.75) 42%,
+    #000 58%,
+    #000 100%
+  );
+}
 /* Strong wide-angle violet neon floor grid (reference-matched depth/stretch).
    Mobile: cqw fan via transformed VERTICALS only; HORIZONTALS are screen-space
    hairlines on ::after so rotateX cannot thicken them. Same color, no bloom.
@@ -2791,17 +2834,9 @@ p {
   background-color: #05040c;
   background-image:
     /* Verticals only — thickness is in X, not stretched by rotateX. */
-    linear-gradient(90deg, var(--vapor-hair) var(--vapor-line), transparent var(--vapor-line)),
-    /* Soft accent floor glow under the grid; strongest near, fades to horizon. */
-    linear-gradient(
-      to top,
-      color-mix(in srgb, var(--accent) 30%, transparent) 0%,
-      color-mix(in srgb, var(--accent) 14%, transparent) 28%,
-      color-mix(in srgb, var(--accent) 4%, transparent) 55%,
-      transparent 78%
-    );
-  background-size: var(--vapor-cell) 100%, 100% 100%;
-  background-position: 0 0, 0 0;
+    linear-gradient(90deg, var(--vapor-hair) var(--vapor-line), transparent var(--vapor-line));
+  background-size: var(--vapor-cell) 100%;
+  background-position: 0 0;
   transform: perspective(var(--vapor-persp)) rotateX(74deg);
   transform-origin: 50% 0%;
   -webkit-backface-visibility: hidden;
@@ -2915,8 +2950,8 @@ p {
 }
 @keyframes shows-vapor-grid {
   to {
-    /* Mobile: shift verticals; desktop 4-layer grid scrolls; yellow glow stays put. */
-    background-position: var(--vapor-cell) 0, 0 0, 0 var(--vapor-cell), 0 0, 0 0;
+    /* Mobile: shift verticals; desktop 4-layer grid still scrolls horizontals. */
+    background-position: var(--vapor-cell) 0, 0 0, 0 var(--vapor-cell), 0 0;
   }
 }
 
@@ -3205,6 +3240,42 @@ p {
     overflow: hidden;
     perspective: 1100px;
   }
+  /* Match desktop vapor plane geometry for the under-grid yellow wash. */
+  .shows-studio__floor-glow {
+    top: 50%;
+    height: 120%;
+    --vapor-persp: 280px;
+    transform: perspective(280px) rotateX(74deg);
+    background: linear-gradient(
+      to top,
+      rgba(232, 242, 42, 0.34) 0%,
+      rgba(232, 242, 42, 0.16) 30%,
+      rgba(232, 242, 42, 0.05) 58%,
+      transparent 80%
+    );
+    -webkit-backface-visibility: visible;
+    backface-visibility: visible;
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      transparent 8%,
+      rgba(0, 0, 0, 0.1) 16%,
+      rgba(0, 0, 0, 0.35) 30%,
+      rgba(0, 0, 0, 0.7) 45%,
+      #000 62%,
+      #000 100%
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      transparent 8%,
+      rgba(0, 0, 0, 0.1) 16%,
+      rgba(0, 0, 0, 0.35) 30%,
+      rgba(0, 0, 0, 0.7) 45%,
+      #000 62%,
+      #000 100%
+    );
+  }
   /* Keep the approved desktop vapor grid exactly (no cqw drift). */
   .shows-studio__scene::before {
     top: 50%;
@@ -3218,22 +3289,13 @@ p {
       linear-gradient(var(--vapor-neon-glow) var(--vapor-glow-line), transparent var(--vapor-glow-line)),
       linear-gradient(90deg, var(--vapor-neon-glow) var(--vapor-glow-line), transparent var(--vapor-glow-line)),
       linear-gradient(var(--vapor-neon-hot) var(--vapor-line), transparent var(--vapor-line)),
-      linear-gradient(90deg, var(--vapor-neon) var(--vapor-line), transparent var(--vapor-line)),
-      /* Soft accent floor glow under the grid (same mask/perspective as lines). */
-      linear-gradient(
-        to top,
-        color-mix(in srgb, var(--accent) 32%, transparent) 0%,
-        color-mix(in srgb, var(--accent) 14%, transparent) 28%,
-        color-mix(in srgb, var(--accent) 4%, transparent) 55%,
-        transparent 78%
-      );
+      linear-gradient(90deg, var(--vapor-neon) var(--vapor-line), transparent var(--vapor-line));
     background-size:
       100% var(--vapor-cell),
       var(--vapor-cell) 100%,
       100% var(--vapor-cell),
-      var(--vapor-cell) 100%,
-      100% 100%;
-    background-position: 0 0, 0 0, 0 0, 0 0, 0 0;
+      var(--vapor-cell) 100%;
+    background-position: 0 0, 0 0, 0 0, 0 0;
     transform: perspective(280px) rotateX(74deg);
     opacity: 0.88;
     filter: drop-shadow(0 0 6px rgba(106, 60, 255, 0.55));
