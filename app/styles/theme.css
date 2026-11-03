@@ -743,20 +743,19 @@ p {
     radial-gradient(ellipse 70% 90% at 50% -10%, rgba(75, 180, 170, 0.28), transparent 60%),
     radial-gradient(ellipse 50% 70% at 70% 0%, rgba(38, 81, 196, 0.22), transparent 55%);
 }
-/* Blue UFO beam: spills from mid-hero and widens into a bottom band */
+/* Soft blue band at the bottom of the hero — receives the UFO tractor beam */
 .mission-hero::after {
   content: "";
   position: absolute;
-  left: 50%;
-  top: 38%;
-  width: 140%;
-  height: 75%;
-  transform: translateX(-50%);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: min(42%, 22rem);
   pointer-events: none;
   z-index: 0;
   background:
-    radial-gradient(ellipse 45% 35% at 50% 8%, rgba(90, 190, 255, 0.55), rgba(38, 81, 196, 0.28) 35%, transparent 70%),
-    linear-gradient(180deg, transparent 0%, rgba(30, 74, 173, 0.18) 45%, rgba(30, 74, 173, 0.55) 100%);
+    radial-gradient(ellipse 70% 80% at 50% 0%, rgba(70, 160, 255, 0.38), rgba(30, 74, 173, 0.22) 45%, transparent 72%),
+    linear-gradient(180deg, transparent 0%, rgba(30, 74, 173, 0.28) 40%, rgba(20, 55, 140, 0.55) 100%);
 }
 .mission-hero__inner {
   position: relative;
@@ -811,6 +810,7 @@ p {
   width: 100%;
   position: relative;
   z-index: 1;
+  overflow: visible;
 }
 .mission-hero__art picture,
 .mission-hero__art img {
@@ -819,6 +819,45 @@ p {
   height: auto;
   max-height: inherit;
   object-fit: contain;
+  position: relative;
+  z-index: 1;
+}
+/* Soft cone tractor beam from the UFO underside (~bottom-center of the art)
+   down into the blue V4V band. Behind text/buttons (art stacking + later V4V). */
+.mission-hero__art::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  /* UFO underside sits ~90–99% down the key art */
+  top: 91%;
+  width: min(150vw, 64rem);
+  height: min(58vh, 32rem);
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 18% 10% at 50% 0%, rgba(180, 230, 255, 0.95), rgba(90, 180, 255, 0.55) 40%, transparent 70%),
+    linear-gradient(
+      180deg,
+      rgba(120, 200, 255, 0.7) 0%,
+      rgba(60, 140, 235, 0.45) 28%,
+      rgba(30, 74, 173, 0.38) 62%,
+      rgba(20, 55, 140, 0.12) 100%
+    );
+  clip-path: polygon(47.5% 0%, 52.5% 0%, 100% 100%, 0% 100%);
+  filter: blur(22px);
+  opacity: 0.92;
+  -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.85) 55%, transparent 100%);
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.85) 55%, transparent 100%);
+}
+@media (min-width: 768px) {
+  .mission-hero__art::after {
+    top: 90%;
+    width: min(120vw, 72rem);
+    height: min(52vh, 30rem);
+    filter: blur(26px);
+    clip-path: polygon(48% 0%, 52% 0%, 100% 100%, 0% 100%);
+  }
 }
 .mission-hero__tag {
   order: 1;
