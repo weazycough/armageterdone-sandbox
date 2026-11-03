@@ -77,7 +77,7 @@ export function ShowsControlRoom(): React.ReactNode {
           <picture>
             <source srcSet={asset("images/newsdesk-hosts.webp")} type="image/webp" />
             <img
-              src={asset("images/newsdesk-hosts.jpg")}
+              src={asset("images/newsdesk-hosts.png")}
               alt="Basil and Gonz at the Canary Cry news desk"
               width="1920"
               height="1080"
