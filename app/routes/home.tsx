@@ -1,6 +1,5 @@
 // home.tsx — the homepage: mission hero (lab #1 Option A split layout with
-// Option B's always-dark band; latest episode sits under the tagline with About
-// below it per Stefan's #1 feedback), then shows, value-for-value, recent episodes,
+// Option B's always-dark band; stretched tagline with About below it), then shows, value-for-value, recent episodes,
 // community art, and the newsletter signup (preview only).
 
 import type * as React from "react";
@@ -15,21 +14,11 @@ import { buttonVariants } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { asset } from "../lib/asset";
 import { loadEpisodes } from "../lib/content.server";
-import { formatLongDate, isoDay } from "../lib/dates";
 import { ART_RIBBON } from "../lib/fan-art";
-import { episodePath } from "../lib/paths";
 
 export function loader() {
   const episodes = loadEpisodes();
-  const latest = episodes[0];
-  if (latest === undefined) throw new Error("no episodes");
   return {
-    latest: {
-      slug: latest.slug,
-      title: latest.title,
-      published: latest.published,
-      artUrl: latest.artUrl,
-    },
     recent: episodes.slice(0, 11).map(({ slug, title, published, artUrl }) => ({
       slug,
       title,
@@ -44,37 +33,19 @@ export function meta(): Route.MetaDescriptors {
 }
 
 export default function Home({ loaderData }: Route.ComponentProps): React.ReactNode {
-  const { latest, recent } = loaderData;
-  const latestArt = latest.artUrl ?? asset("images/cc-logo.webp");
+  const { recent } = loaderData;
   return (
     <>
       <section className="mission-hero" aria-label="Canary Cry mission">
         <div className="container">
           <div className="mission-hero__grid">
             <div className="mission-hero__copy">
-              {/* Keep a real h1 for SEO/a11y; the wordmark art already shows the
-                  name, so the title is sized down rather than removed. */}
-              <h1 className="mission-hero__title">Canary Cry</h1>
-              <p className="mission-hero__sub">Canary Cry Radio | Canary Cry News Talk</p>
-              <p className="mission-hero__tag">Think Outside the Cage.</p>
-              <Link className="mission-hero__latest" to={episodePath(latest.slug)}>
-                <img
-                  className="mission-hero__latest-art"
-                  src={latestArt}
-                  alt=""
-                  width={72}
-                  height={72}
-                />
-                <span>
-                  <span className="mission-hero__latest-kicker">Latest episode</span>
-                  <span className="mission-hero__latest-title">{latest.title}</span>
-                  <span className="mission-hero__latest-date">
-                    <time dateTime={isoDay(latest.published)}>
-                      {formatLongDate(latest.published)}
-                    </time>
-                  </span>
-                </span>
-              </Link>
+              <h1 className="mission-hero__tag">
+                <span className="sr-only">Canary Cry: </span>
+                <span>Think</span>
+                <span>Outside</span>
+                <span>The Cage</span>
+              </h1>
               <p className="mission-hero__about">
                 <strong>A biblical take on the news and world events.</strong> CANARY CRY NEWS TALK
                 is a show that brings frequent updates on news and events happening around the world
