@@ -740,8 +740,8 @@ p {
 .mission-hero__art {
   margin: 0;
   /* Portrait sticker (≈0.87:1). Cap width so height stays sane on phone. */
-  max-width: min(13.5rem, 62vw);
-  max-height: min(72vh, 22rem);
+  max-width: min(19rem, 82vw);
+  max-height: min(78vh, 30rem);
   justify-self: center;
   order: -1; /* phone: art above the copy (Option A) */
   width: 100%;
@@ -850,15 +850,15 @@ p {
 }
 @media (min-width: 768px) {
   .mission-hero__grid {
-    grid-template-columns: 1.2fr 1fr;
-    gap: 3rem;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
     padding: 3.5rem 0;
   }
   .mission-hero__art {
     order: 0;
     /* Desktop: taller portrait — width ~22rem → ~25rem tall, beside copy */
-    max-width: min(22rem, 100%);
-    max-height: min(78vh, 34rem);
+    max-width: min(31rem, 100%);
+    max-height: min(85vh, 46rem);
   }
 }
 
