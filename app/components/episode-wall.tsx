@@ -31,12 +31,6 @@ export function WallHead({ title, as = "h2" }: { title: string; as?: "h1" | "h2"
     <div className="ep-wall__head">
       <H className="ep-wall__heading">{title}</H>
       <span className="ep-wall__rule" aria-hidden="true" />
-      <span className="ep-wall__badge" aria-hidden="true">
-        <svg viewBox="0 0 24 24">
-          <rect x="3" y="5" width="18" height="16" rx="2" fill="none" stroke="currentColor" strokeWidth="2" />
-          <path d="M3 10h18M8 3v4M16 3v4" stroke="currentColor" strokeWidth="2" />
-        </svg>
-      </span>
     </div>
   );
 }
