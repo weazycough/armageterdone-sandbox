@@ -3380,6 +3380,7 @@ p {
   height: 0.55em;
   color: var(--accent-on-bg);
   margin-left: 0.12em;
+  display: inline-block;
   vertical-align: baseline;
 }
 .shows-strip .show-card {
