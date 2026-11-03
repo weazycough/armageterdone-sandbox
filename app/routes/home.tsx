@@ -88,7 +88,7 @@ export default function Home({ loaderData }: Route.ComponentProps): React.ReactN
             </div>
             <div className="mission-hero__v4v-copy">
               <span className="mission-hero__v4v-eyebrow">No advertisers. Just producers</span>
-              <h2 className="mission-hero__v4v-heading">What is Value-for-Value…</h2>
+              <h2 className="mission-hero__v4v-heading">What is Value-for-Value?</h2>
               <p>
                 Canary Cry doesn&apos;t take corporate ad money. The show runs on producers —
                 listeners who return value with their <strong>time, talent, or treasure</strong> for
