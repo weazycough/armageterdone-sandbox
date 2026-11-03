@@ -81,11 +81,14 @@ export default function Home({ loaderData }: Route.ComponentProps): React.ReactN
         <div className="container">
           <div className="section__head">
             <h2 className="signal-head">
-              Three shows, one signal
+              <span className="signal-head__line">Three shows,</span>
+              <span className="signal-head__line">
+                One signal
               <svg className="signal-head__icon" viewBox="0 0 24 24" aria-hidden="true">
                 <circle cx="5" cy="19" r="2.2" fill="currentColor" />
                 <path d="M4 11a9 9 0 0 1 9 9M4 4a16 16 0 0 1 16 16" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" />
               </svg>
+              </span>
             </h2>
           </div>
           <ShowsStrip />
