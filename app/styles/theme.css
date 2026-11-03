@@ -2783,7 +2783,7 @@ p {
 
 @media (prefers-reduced-motion: no-preference) {
   .shows-studio__scene::before {
-    animation: shows-vapor-grid 32s linear infinite;
+    animation: shows-vapor-grid 20s linear infinite;
   }
 }
 @keyframes shows-vapor-grid {
