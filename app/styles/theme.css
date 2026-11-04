@@ -4180,3 +4180,18 @@ h2 {
   .mission-hero__shows .shows-strip .show-card,
   .mission-hero__shows .shows-strip .show-card + .show-card { border: 0; padding: 0; }
 }
+
+/* Home: smaller View all; V4V buttons match Latest Episode, centered. */
+.home-recent .ep-wall__action a { font-size: 0.95rem !important; }
+.mission-hero__v4v-actions { align-items: center; margin-inline: auto; width: 100%; }
+.mission-hero__give,
+.mission-hero__patreon {
+  border-radius: 0.6rem !important;
+  font-family: "Bebas Neue", var(--font-display);
+  font-weight: 400;
+  font-size: 1.3rem !important;
+  letter-spacing: 0.06em;
+  padding: 0.7rem 1.6rem;
+  width: 100%;
+  max-width: 12rem;
+}
