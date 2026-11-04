@@ -4069,7 +4069,7 @@ h2 {
   overflow: hidden;
   pointer-events: none;
   z-index: 0;
-  perspective: 40rem;
+  perspective: 22rem;
   perspective-origin: 50% 0%;
   -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 45%);
   mask-image: linear-gradient(to bottom, transparent 0%, #000 45%);
@@ -4081,13 +4081,13 @@ h2 {
   top: 0;
   height: 200%;
   transform-origin: 50% 0%;
-  transform: rotateX(60deg);
+  transform: rotateX(72deg);
   background-image:
-    linear-gradient(to right, rgba(150, 110, 255, 0.22) 1.5px, transparent 2px),
-    linear-gradient(to bottom, rgba(150, 110, 255, 0.22) 1.5px, transparent 2px);
+    linear-gradient(to right, rgba(150, 110, 255, 0.4) 1.5px, transparent 2px),
+    linear-gradient(to bottom, rgba(150, 110, 255, 0.4) 1.5px, transparent 2px);
   background-size: 2.5rem 2.5rem;
   background-position: center top;
-  filter: drop-shadow(0 0 2px rgba(140, 90, 255, 0.35));
+  filter: drop-shadow(0 0 3px rgba(140, 90, 255, 0.6));
 }
 
 /* Frosted tint behind the show cards inside the hero. */
