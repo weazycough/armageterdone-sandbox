@@ -187,22 +187,28 @@ export default function Home({ loaderData }: Route.ComponentProps): React.ReactN
         </div>
       </section>
 
-      <section className="section section--alt">
-        <div className="container">
-          <div className="signup">
-            <span className="eyebrow eyebrow--no-rule">Stay in the loop</span>
-            <h2>The dispatch — straight to your inbox</h2>
-            <p>
+      <section className="dispatch" aria-label="Canary Cry newsletter">
+        <div className="dispatch__strip" aria-hidden="true" />
+        <div className="container dispatch__inner">
+          <div className="dispatch__art" aria-hidden="true">
+            <span>Image coming soon</span>
+          </div>
+          <div className="dispatch__copy">
+            <span className="dispatch__eyebrow">Canary Cry Newsletter</span>
+            <h2 className="dispatch__heading">Straight to your inbox</h2>
+            <p className="dispatch__text">
               New episode notes, deeper-cut research, and dispatches from the news cycle worth your
               attention. No spam, unsubscribe any time.
             </p>
             <PreviewForm>
-              <TextField aria-label="Email address" type="email" className="flex-1">
-                <Input placeholder="you@email.com" />
-              </TextField>
-              <button className={buttonVariants()} type="submit">
-                Subscribe
-              </button>
+              <div className="dispatch__form">
+                <TextField aria-label="Email address" type="email" className="dispatch__field">
+                  <Input placeholder="you@email.com" className="dispatch__input" />
+                </TextField>
+                <button className="dispatch__btn" type="submit">
+                  Subscribe
+                </button>
+              </div>
             </PreviewForm>
           </div>
         </div>
