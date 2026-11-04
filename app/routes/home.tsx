@@ -6,7 +6,8 @@ import type * as React from "react";
 import { TextField } from "react-aria-components";
 import { Link } from "react-router";
 import type { Route } from "./+types/home";
-import { EpisodeWall, WallHead } from "../components/episode-wall";
+import { WallHead } from "../components/episode-wall";
+import { RecentGrid } from "../components/recent-grid";
 import { PreviewForm } from "../components/preview-form";
 import { ShowsStrip } from "../components/shows-strip";
 import { buttonVariants } from "../components/ui/button";
@@ -19,11 +20,12 @@ import { cn } from "../lib/utils";
 export function loader() {
   const episodes = loadEpisodes();
   return {
-    recent: episodes.slice(0, 6).map(({ slug, title, published, artUrl }) => ({
+    recent: episodes.slice(0, 5).map(({ slug, title, published, artUrl, duration }) => ({
       slug,
       title,
       published,
       artUrl,
+      duration,
     })),
   };
 }
@@ -75,7 +77,7 @@ export default function Home({ loaderData }: Route.ComponentProps): React.ReactN
               title="Recent episodes"
               action={<Link to="/episodes/">View all &rarr;</Link>}
             />
-            <EpisodeWall rest={recent} showTitles />
+            <RecentGrid episodes={recent} />
           </div>
         </div>
       </section>
