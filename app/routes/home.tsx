@@ -114,6 +114,24 @@ export default function Home({ loaderData }: Route.ComponentProps): React.ReactN
       <section className="mission-hero mission-hero--v4v" aria-label="Value for Value">
         <div className="container mission-hero__inner">
           <div className="mission-hero__v4v">
+            <img
+              className="mission-hero__v4v-art"
+              src={asset("images/v4v-mascots.webp")}
+              alt="Crowned pixel dog holding a dollar bill beside a yellow canary"
+              width={700}
+              height={627}
+              loading="lazy"
+            />
+            <div className="mission-hero__v4v-copy">
+              <span className="mission-hero__v4v-eyebrow">No advertisers. Just producers</span>
+              <h2 className="mission-hero__v4v-heading">What is Value-for-Value?</h2>
+              <p>
+                Canary Cry doesn&apos;t take corporate ad money. The show runs on producers —
+                listeners who return value with their <strong>time, talent, or treasure</strong> for
+                the value the show puts out. Patreon, one-time gifts, Cage Rattler Coffee, art
+                submissions, Speak Pipe calls — they all count.
+              </p>
+            </div>
             <div className="mission-hero__v4v-actions">
               <Link
                 className={cn(buttonVariants(), "rounded-full mission-hero__give")}
@@ -128,16 +146,6 @@ export default function Home({ loaderData }: Route.ComponentProps): React.ReactN
               >
                 Patreon
               </a>
-            </div>
-            <div className="mission-hero__v4v-copy">
-              <span className="mission-hero__v4v-eyebrow">No advertisers. Just producers</span>
-              <h2 className="mission-hero__v4v-heading">What is Value-for-Value?</h2>
-              <p>
-                Canary Cry doesn&apos;t take corporate ad money. The show runs on producers —
-                listeners who return value with their <strong>time, talent, or treasure</strong> for
-                the value the show puts out. Patreon, one-time gifts, Cage Rattler Coffee, art
-                submissions, Speak Pipe calls — they all count.
-              </p>
             </div>
           </div>
         </div>

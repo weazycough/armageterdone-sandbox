@@ -4138,3 +4138,26 @@ h2 {
   border: 0;
   padding: 0;
 }
+
+/* No yellow rule at the bottom of the hero. */
+.mission-hero__shows .signal-rule { display: none; }
+.mission-hero__shows { padding-bottom: 2.5rem !important; }
+
+/* V4V: mascot art left, copy middle, buttons right. */
+.mission-hero__v4v-art {
+  display: block;
+  width: 100%;
+  max-width: 15rem;
+  height: auto;
+  margin: 0 auto;
+}
+.mission-hero__give,
+.mission-hero__patreon {
+  font-size: 1.1rem !important;
+}
+@media (min-width: 900px) {
+  .mission-hero--v4v .mission-hero__v4v {
+    grid-template-columns: minmax(10rem, 14rem) minmax(0, 1fr) minmax(11rem, 14rem);
+    align-items: center;
+  }
+}
