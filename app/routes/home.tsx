@@ -75,7 +75,7 @@ export default function Home({ loaderData }: Route.ComponentProps): React.ReactN
               title="Recent episodes"
               action={<Link to="/episodes/">View all &rarr;</Link>}
             />
-            <EpisodeWall featured={recent[0]} rest={recent.slice(1)} showTitles />
+            <EpisodeWall rest={recent} showTitles />
           </div>
         </div>
       </section>

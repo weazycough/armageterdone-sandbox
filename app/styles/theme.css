@@ -3864,3 +3864,10 @@ h2 {
 .mission-hero--v4v .mission-hero__v4v {
   padding-top: 3rem;
 }
+
+/* Home: six equal tiles in one row on desktop (no featured column, no gap). */
+@media (min-width: 900px) {
+  .mission-hero__recent .ep-wall--full .ep-wall__grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
