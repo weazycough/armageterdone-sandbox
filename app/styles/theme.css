@@ -4238,3 +4238,4 @@ h2 {
   .dispatch__inner { grid-template-columns: minmax(14rem, 0.8fr) minmax(0, 1.2fr); gap: 3rem; padding-block: 2.5rem 3rem; }
   .dispatch__art { margin: 0; }
 }
+.dispatch input.dispatch__input { background: #f5f5f7 !important; color: #22222a !important; border: 0 !important; border-radius: 0.6rem !important; box-shadow: none !important; }
