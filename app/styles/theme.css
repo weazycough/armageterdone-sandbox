@@ -1521,8 +1521,8 @@ p {
 }
 .site-footer h4 {
   color: var(--accent-on-bg);
-  font-size: 0.75rem;
-  letter-spacing: 0.18em;
+  font-size: 1.2rem;
+  letter-spacing: 0.12em;
   margin-bottom: var(--space-3);
 }
 .site-footer ul {
