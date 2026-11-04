@@ -4172,3 +4172,6 @@ h2 {
   .mission-hero__tag > span:nth-child(2) { margin-right: 0.22em; }
   .mission-hero__latest { display: block; width: fit-content; margin-inline: auto; }
 }
+@media (max-width: 767px) {
+  .mission-hero__tag { margin-bottom: 0.85em; }
+}
