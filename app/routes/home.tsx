@@ -40,6 +40,7 @@ export default function Home({ loaderData }: Route.ComponentProps): React.ReactN
   return (
     <>
       <section className="mission-hero" aria-label="Canary Cry mission">
+        <div className="mission-hero__floor" aria-hidden="true"><div className="mission-hero__floor-grid" /></div>
         <div className="container mission-hero__inner">
           <div className="mission-hero__grid">
             <div className="mission-hero__intro">

@@ -4058,3 +4058,34 @@ h2 {
   .mission-hero__shows .section__head { justify-content: center; text-align: center; }
   .mission-hero__shows .signal-head { text-align: center; margin-inline: auto; }
 }
+
+/* Vaporwave perspective grid along the bottom of the hero. */
+.mission-hero__floor {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: min(48%, 26rem);
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+  perspective: 22rem;
+  perspective-origin: 50% 0%;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 45%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 45%);
+}
+.mission-hero__floor-grid {
+  position: absolute;
+  left: -60%;
+  right: -60%;
+  top: 0;
+  height: 200%;
+  transform-origin: 50% 0%;
+  transform: rotateX(72deg);
+  background-image:
+    linear-gradient(to right, rgba(110, 140, 255, 0.75) 2px, transparent 2px),
+    linear-gradient(to bottom, rgba(110, 140, 255, 0.75) 2px, transparent 2px);
+  background-size: 5rem 5rem;
+  background-position: center top;
+  filter: drop-shadow(0 0 4px rgba(90, 120, 255, 0.9));
+}
