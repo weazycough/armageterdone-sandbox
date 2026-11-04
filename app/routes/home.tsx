@@ -13,6 +13,7 @@ import { ShowsStrip } from "../components/shows-strip";
 import { buttonVariants } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { asset } from "../lib/asset";
+import { episodePath } from "../lib/paths";
 import { loadEpisodes } from "../lib/content.server";
 import { ART_RIBBON } from "../lib/fan-art";
 import { cn } from "../lib/utils";
@@ -52,6 +53,11 @@ export default function Home({ loaderData }: Route.ComponentProps): React.ReactN
                 hosted by us, Basil and Gonz of the Canary Cry Radio podcast.
               </p>
               <span className="mission-hero__bar" aria-hidden="true" />
+              {recent[0] ? (
+                <Link className="mission-hero__latest" to={episodePath(recent[0].slug)}>
+                  Latest Episode
+                </Link>
+              ) : null}
             </div>
             <figure className="mission-hero__art">
               <picture>
