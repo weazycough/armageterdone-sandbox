@@ -4026,3 +4026,16 @@ h2 {
     gap: 1.25rem 1.25rem;
   }
 }
+
+/* Shows block inside the hero; heading on one line on desktop. */
+.mission-hero__shows {
+  padding: 0.5rem 0 2.5rem;
+}
+@media (min-width: 900px) {
+  .mission-hero__shows .signal-head__line {
+    display: inline;
+  }
+  .mission-hero__shows .signal-head__line + .signal-head__line::before {
+    content: " ";
+  }
+}

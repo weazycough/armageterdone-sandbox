@@ -72,12 +72,21 @@ export default function Home({ loaderData }: Route.ComponentProps): React.ReactN
             </h1>
           </div>
 
-          <div className="mission-hero__recent">
-            <WallHead
-              title="Recent episodes"
-              action={<Link to="/episodes/">View all &rarr;</Link>}
-            />
-            <RecentGrid episodes={recent} />
+          <div className="mission-hero__shows">
+          <div className="section__head">
+            <h2 className="signal-head">
+              <span className="signal-head__line">Three shows,</span>
+              <span className="signal-head__line">
+                One signal
+              <svg className="signal-head__icon" viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="5" cy="19" r="2.2" fill="currentColor" />
+                <path d="M4 11a9 9 0 0 1 9 9M4 4a16 16 0 0 1 16 16" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" />
+              </svg>
+              </span>
+            </h2>
+          </div>
+          <ShowsStrip />
+          <hr className="signal-rule" />
           </div>
         </div>
       </section>
@@ -114,22 +123,15 @@ export default function Home({ loaderData }: Route.ComponentProps): React.ReactN
         </div>
       </section>
 
-      <section className="section section--alt">
+      <section className="section">
         <div className="container">
-          <div className="section__head">
-            <h2 className="signal-head">
-              <span className="signal-head__line">Three shows,</span>
-              <span className="signal-head__line">
-                One signal
-              <svg className="signal-head__icon" viewBox="0 0 24 24" aria-hidden="true">
-                <circle cx="5" cy="19" r="2.2" fill="currentColor" />
-                <path d="M4 11a9 9 0 0 1 9 9M4 4a16 16 0 0 1 16 16" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" />
-              </svg>
-              </span>
-            </h2>
+          <div className="home-recent">
+            <WallHead
+              title="Recent episodes"
+              action={<Link to="/episodes/">View all &rarr;</Link>}
+            />
+            <RecentGrid episodes={recent} />
           </div>
-          <ShowsStrip />
-          <hr className="signal-rule" />
         </div>
       </section>
 
