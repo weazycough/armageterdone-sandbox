@@ -4182,8 +4182,18 @@ h2 {
 }
 
 /* Home: smaller View all; V4V buttons match Latest Episode, centered. */
-.home-recent .ep-wall__action a { font-size: 0.95rem !important; }
-.mission-hero__v4v-actions { align-items: center; margin-inline: auto; width: 100%; }
+@media (max-width: 767px) {
+  .home-recent .ep-wall__action a { font-size: 0.95rem !important; }
+  .mission-hero__v4v-actions { align-items: center; margin-inline: auto; width: 100%; }
+  .mission-hero__v4v-heading .v4v-l1, .mission-hero__v4v-heading .v4v-l2 { display: block; }
+  .mission-hero__intro > .mission-hero__bar { display: none; }
+  .mission-hero__latest-row { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-top: 1.25rem; }
+  .mission-hero__latest-row .mission-hero__latest { margin: 0; }
+}
+.mission-hero__latest-bar { display: none; }
+@media (max-width: 767px) {
+  .mission-hero__latest-bar { display: block; width: 3.25rem; height: 4px; background: var(--accent); border-radius: 2px; }
+}
 .mission-hero__give,
 .mission-hero__patreon {
   border-radius: 0.6rem !important;
@@ -4193,5 +4203,5 @@ h2 {
   letter-spacing: 0.06em;
   padding: 0.7rem 1.6rem;
   width: 100%;
-  max-width: 12rem;
 }
+@media (max-width: 767px) { .mission-hero__give, .mission-hero__patreon { max-width: 12rem; } }

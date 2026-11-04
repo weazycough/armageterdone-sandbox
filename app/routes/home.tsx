@@ -55,9 +55,13 @@ export default function Home({ loaderData }: Route.ComponentProps): React.ReactN
               </p>
               <span className="mission-hero__bar" aria-hidden="true" />
               {recent[0] ? (
-                <Link className="mission-hero__latest" to={episodePath(recent[0].slug)}>
-                  Latest Episode
-                </Link>
+                <div className="mission-hero__latest-row">
+                  <span className="mission-hero__latest-bar" aria-hidden="true" />
+                  <Link className="mission-hero__latest" to={episodePath(recent[0].slug)}>
+                    Latest Episode
+                  </Link>
+                  <span className="mission-hero__latest-bar" aria-hidden="true" />
+                </div>
               ) : null}
             </div>
             <figure className="mission-hero__art">
@@ -123,7 +127,7 @@ export default function Home({ loaderData }: Route.ComponentProps): React.ReactN
             />
             <div className="mission-hero__v4v-copy">
               <span className="mission-hero__v4v-eyebrow">No advertisers. Just producers</span>
-              <h2 className="mission-hero__v4v-heading"><span className="block">What is</span><span className="block">Value-for-Value?</span></h2>
+              <h2 className="mission-hero__v4v-heading"><span className="v4v-l1">What is</span>{" "}<span className="v4v-l2">Value-for-Value?</span></h2>
               <p>
                 Canary Cry doesn&apos;t take corporate ad money. The show runs on producers —
                 listeners who return value with their <strong>time, talent, or treasure</strong> for
