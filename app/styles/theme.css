@@ -4207,7 +4207,7 @@ h2 {
 @media (max-width: 767px) { .mission-hero__give, .mission-hero__patreon { max-width: 12rem; } }
 
 /* Home: newsletter band (Dispatch) */
-.dispatch { position: relative; background: #e4e4e8; color: #4a4a55; overflow: hidden; }
+.dispatch { position: relative; background: #d6d6db; color: #4a4a55; overflow: hidden; }
 .dispatch__strip { height: 2.5rem; background: #1e4aad; }
 .dispatch__inner { display: grid; gap: 2rem; align-items: center; padding-block: 2.5rem 3rem; }
 .dispatch__art {
