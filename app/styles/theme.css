@@ -4175,3 +4175,8 @@ h2 {
 @media (max-width: 767px) {
   .mission-hero__tag { margin-bottom: 0.85em; }
 }
+@media (max-width: 767px) {
+  .mission-hero__shows .shows-strip { gap: 2.25rem; }
+  .mission-hero__shows .shows-strip .show-card,
+  .mission-hero__shows .shows-strip .show-card + .show-card { border: 0; padding: 0; }
+}
