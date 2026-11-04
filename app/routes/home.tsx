@@ -44,7 +44,9 @@ export default function Home({ loaderData }: Route.ComponentProps): React.ReactN
           <div className="mission-hero__grid">
             <div className="mission-hero__intro">
               <p className="mission-hero__kicker">
-                Your news and biblical views on world events
+                <span className="block">Your news</span>
+                <span className="block">and biblical views</span>
+                <span className="block">on world events</span>
               </p>
               <span className="mission-hero__bar" aria-hidden="true" />
               <p className="mission-hero__about">
