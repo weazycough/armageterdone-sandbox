@@ -4055,5 +4055,6 @@ h2 {
 }
 .mission-hero__latest:hover { background: #2a5fd6; color: #fff; }
 @media (min-width: 900px) {
-  .mission-hero__shows .signal-head { text-align: center; }
+  .mission-hero__shows .section__head { justify-content: center; text-align: center; }
+  .mission-hero__shows .signal-head { text-align: center; margin-inline: auto; }
 }
