@@ -19,7 +19,7 @@ import { cn } from "../lib/utils";
 export function loader() {
   const episodes = loadEpisodes();
   return {
-    recent: episodes.slice(0, 11).map(({ slug, title, published, artUrl }) => ({
+    recent: episodes.slice(0, 6).map(({ slug, title, published, artUrl }) => ({
       slug,
       title,
       published,
@@ -70,6 +70,18 @@ export default function Home({ loaderData }: Route.ComponentProps): React.ReactN
             </h1>
           </div>
 
+          <div className="mission-hero__recent">
+            <WallHead
+              title="Recent episodes"
+              action={<Link to="/episodes/">View all &rarr;</Link>}
+            />
+            <EpisodeWall featured={recent[0]} rest={recent.slice(1)} showTitles />
+          </div>
+        </div>
+      </section>
+
+      <section className="mission-hero mission-hero--v4v" aria-label="Value for Value">
+        <div className="container mission-hero__inner">
           <div className="mission-hero__v4v">
             <div className="mission-hero__v4v-actions">
               <Link
@@ -96,16 +108,6 @@ export default function Home({ loaderData }: Route.ComponentProps): React.ReactN
                 submissions, Speak Pipe calls — they all count.
               </p>
             </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="section">
-        <div className="container">
-          <WallHead title="Recent episodes" />
-          <EpisodeWall featured={recent[0]} rest={recent.slice(1)} />
-          <div className="ep-wall__all">
-            <Link to="/episodes/">View all &rarr;</Link>
           </div>
         </div>
       </section>

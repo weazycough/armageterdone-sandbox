@@ -25,12 +25,21 @@ function art(e: WallEpisode): string {
   return e.artUrl ?? asset("images/cc-logo.webp");
 }
 
-export function WallHead({ title, as = "h2" }: { title: string; as?: "h1" | "h2" }): React.ReactNode {
+export function WallHead({
+  title,
+  as = "h2",
+  action,
+}: {
+  title: string;
+  as?: "h1" | "h2";
+  action?: React.ReactNode;
+}): React.ReactNode {
   const H = as;
   return (
     <div className="ep-wall__head">
       <H className="ep-wall__heading">{title}</H>
       <span className="ep-wall__rule" aria-hidden="true" />
+      {action && <span className="ep-wall__action">{action}</span>}
     </div>
   );
 }
