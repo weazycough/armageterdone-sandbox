@@ -3817,3 +3817,23 @@ h2 {
   width: auto;
   max-width: 100%;
 }
+
+/* Floor glow: screen-space wash under the grid (overrides the 3D plane attempt). */
+.shows-studio__floor-glow,
+.shows-studio__floor-glow:is(*) {
+  left: 0 !important;
+  right: 0 !important;
+  top: 45% !important;
+  bottom: 0 !important;
+  height: auto !important;
+  transform: none !important;
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+  background:
+    radial-gradient(120% 85% at 50% 100%,
+      rgba(232, 242, 42, 0.38) 0%,
+      rgba(232, 242, 42, 0.18) 30%,
+      rgba(232, 242, 42, 0.06) 58%,
+      transparent 80%),
+    #05040c !important;
+}
