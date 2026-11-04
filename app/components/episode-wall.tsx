@@ -48,10 +48,12 @@ export function EpisodeWall({
   featured,
   rest,
   showTitles = false,
+  aside,
 }: {
   featured?: WallEpisode | undefined;
   rest: WallEpisode[];
   showTitles?: boolean;
+  aside?: React.ReactNode;
 }): React.ReactNode {
   return (
     <div className={featured ? "ep-wall" : "ep-wall ep-wall--full"}>
@@ -78,6 +80,7 @@ export function EpisodeWall({
           </li>
         ))}
       </ul>
+      {aside && <div className="ep-wall__aside">{aside}</div>}
     </div>
   );
 }

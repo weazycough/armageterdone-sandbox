@@ -3864,3 +3864,23 @@ h2 {
 .mission-hero--v4v .mission-hero__v4v {
   padding-top: 3rem;
 }
+
+/* Desktop: V4V tucked under the five recent cards; its own band shows only below 900px. */
+.ep-wall__aside {
+  display: none;
+}
+@media (min-width: 900px) {
+  .mission-hero__recent .ep-wall__feature {
+    grid-row: span 2;
+  }
+  .ep-wall__aside {
+    display: block;
+    grid-column: 2;
+  }
+  .ep-wall__aside .mission-hero__v4v {
+    padding: 1.25rem 0 0;
+  }
+  .mission-hero--v4v {
+    display: none;
+  }
+}

@@ -75,40 +75,14 @@ export default function Home({ loaderData }: Route.ComponentProps): React.ReactN
               title="Recent episodes"
               action={<Link to="/episodes/">View all &rarr;</Link>}
             />
-            <EpisodeWall featured={recent[0]} rest={recent.slice(1)} showTitles />
+            <EpisodeWall featured={recent[0]} rest={recent.slice(1)} showTitles aside={<V4V />} />
           </div>
         </div>
       </section>
 
       <section className="mission-hero mission-hero--v4v" aria-label="Value for Value">
         <div className="container mission-hero__inner">
-          <div className="mission-hero__v4v">
-            <div className="mission-hero__v4v-actions">
-              <Link
-                className={cn(buttonVariants(), "rounded-full mission-hero__give")}
-                to="/support/"
-              >
-                $ Give
-              </Link>
-              <a
-                className={cn(buttonVariants({ variant: "blue" }), "rounded-full mission-hero__patreon")}
-                href="https://www.patreon.com/ccnt"
-                rel="noopener"
-              >
-                Patreon
-              </a>
-            </div>
-            <div className="mission-hero__v4v-copy">
-              <span className="mission-hero__v4v-eyebrow">No advertisers. Just producers</span>
-              <h2 className="mission-hero__v4v-heading">What is Value-for-Value?</h2>
-              <p>
-                Canary Cry doesn&apos;t take corporate ad money. The show runs on producers —
-                listeners who return value with their <strong>time, talent, or treasure</strong> for
-                the value the show puts out. Patreon, one-time gifts, Cage Rattler Coffee, art
-                submissions, Speak Pipe calls — they all count.
-              </p>
-            </div>
-          </div>
+          <V4V />
         </div>
       </section>
 
@@ -184,5 +158,37 @@ export default function Home({ loaderData }: Route.ComponentProps): React.ReactN
         </div>
       </section>
     </>
+  );
+}
+
+function V4V(): React.ReactNode {
+  return (
+    <div className="mission-hero__v4v">
+      <div className="mission-hero__v4v-actions">
+        <Link
+          className={cn(buttonVariants(), "rounded-full mission-hero__give")}
+          to="/support/"
+        >
+          $ Give
+        </Link>
+        <a
+          className={cn(buttonVariants({ variant: "blue" }), "rounded-full mission-hero__patreon")}
+          href="https://www.patreon.com/ccnt"
+          rel="noopener"
+        >
+          Patreon
+        </a>
+      </div>
+      <div className="mission-hero__v4v-copy">
+        <span className="mission-hero__v4v-eyebrow">No advertisers. Just producers</span>
+        <h2 className="mission-hero__v4v-heading">What is Value-for-Value?</h2>
+        <p>
+          Canary Cry doesn&apos;t take corporate ad money. The show runs on producers —
+          listeners who return value with their <strong>time, talent, or treasure</strong> for
+          the value the show puts out. Patreon, one-time gifts, Cage Rattler Coffee, art
+          submissions, Speak Pipe calls — they all count.
+        </p>
+      </div>
+    </div>
   );
 }
