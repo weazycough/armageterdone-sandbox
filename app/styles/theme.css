@@ -4122,3 +4122,10 @@ h2 {
   }
 }
 .mission-hero__floor { opacity: 0.4; }
+/* Hero ends right on the yellow rule; tighter shows heading. */
+.mission-hero__shows { padding-bottom: 0 !important; }
+.mission-hero__shows .section__head {
+  border-bottom: 0;
+  padding-bottom: 0;
+  margin-bottom: 1rem;
+}
