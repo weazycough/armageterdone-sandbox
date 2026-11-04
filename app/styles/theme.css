@@ -4129,3 +4129,12 @@ h2 {
   padding-bottom: 0;
   margin-bottom: 1rem;
 }
+
+/* Show cards in hero: no background. */
+.mission-hero__shows .show-card {
+  background: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  border: 0;
+  padding: 0;
+}

@@ -6,8 +6,7 @@ import type * as React from "react";
 import { TextField } from "react-aria-components";
 import { Link } from "react-router";
 import type { Route } from "./+types/home";
-import { WallHead } from "../components/episode-wall";
-import { RecentGrid } from "../components/recent-grid";
+import { EpisodeWall, WallHead } from "../components/episode-wall";
 import { PreviewForm } from "../components/preview-form";
 import { ShowsStrip } from "../components/shows-strip";
 import { buttonVariants } from "../components/ui/button";
@@ -21,7 +20,7 @@ import { cn } from "../lib/utils";
 export function loader() {
   const episodes = loadEpisodes();
   return {
-    recent: episodes.slice(0, 5).map(({ slug, title, published, artUrl, duration }) => ({
+    recent: episodes.slice(0, 11).map(({ slug, title, published, artUrl, duration }) => ({
       slug,
       title,
       published,
@@ -100,6 +99,18 @@ export default function Home({ loaderData }: Route.ComponentProps): React.ReactN
         </div>
       </section>
 
+      <section className="section">
+        <div className="container">
+          <div className="home-recent">
+            <WallHead
+              title="Recent episodes"
+              action={<Link to="/episodes/">View all &rarr;</Link>}
+            />
+            <EpisodeWall featured={recent[0]} rest={recent.slice(1)} showTitles />
+          </div>
+        </div>
+      </section>
+
       <section className="mission-hero mission-hero--v4v" aria-label="Value for Value">
         <div className="container mission-hero__inner">
           <div className="mission-hero__v4v">
@@ -132,17 +143,6 @@ export default function Home({ loaderData }: Route.ComponentProps): React.ReactN
         </div>
       </section>
 
-      <section className="section">
-        <div className="container">
-          <div className="home-recent">
-            <WallHead
-              title="Recent episodes"
-              action={<Link to="/episodes/">View all &rarr;</Link>}
-            />
-            <RecentGrid episodes={recent} />
-          </div>
-        </div>
-      </section>
 
 
       <section className="art-ribbon">
