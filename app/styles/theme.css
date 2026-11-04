@@ -4161,3 +4161,14 @@ h2 {
     align-items: center;
   }
 }
+
+/* Mobile hero line breaks */
+.mission-hero__kicker .br-m { display: none; }
+@media (max-width: 767px) {
+  .mission-hero__kicker .br-d { display: none; }
+  .mission-hero__kicker .br-m { display: inline; }
+  .mission-hero__tag > span:nth-child(2),
+  .mission-hero__tag > span:nth-child(3) { display: inline-block; }
+  .mission-hero__tag > span:nth-child(2) { margin-right: 0.22em; }
+  .mission-hero__latest { display: block; width: fit-content; margin-inline: auto; }
+}
