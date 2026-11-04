@@ -4069,25 +4069,28 @@ h2 {
   overflow: hidden;
   pointer-events: none;
   z-index: 0;
-  perspective: 22rem;
-  perspective-origin: 50% 0%;
   -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 45%);
   mask-image: linear-gradient(to bottom, transparent 0%, #000 45%);
 }
 .mission-hero__floor-grid {
   position: absolute;
-  left: -60%;
-  right: -60%;
+  left: -55%;
+  right: -55%;
   top: 0;
-  height: 200%;
-  transform-origin: 50% 0%;
-  transform: rotateX(72deg);
+  height: 240%;
+  --vn: #6a3cff;
+  --vn-hot: #7b2fff;
+  --vn-glow: rgba(106, 60, 255, 0.45);
   background-image:
-    linear-gradient(to right, rgba(150, 110, 255, 0.4) 1.5px, transparent 2px),
-    linear-gradient(to bottom, rgba(150, 110, 255, 0.4) 1.5px, transparent 2px);
-  background-size: 2.5rem 2.5rem;
-  background-position: center top;
-  filter: drop-shadow(0 0 3px rgba(140, 90, 255, 0.6));
+    linear-gradient(var(--vn-glow) 3px, transparent 3px),
+    linear-gradient(90deg, var(--vn-glow) 3px, transparent 3px),
+    linear-gradient(var(--vn-hot) 1.5px, transparent 1.5px),
+    linear-gradient(90deg, var(--vn) 1.5px, transparent 1.5px);
+  background-size: 100% 1.65rem, 1.65rem 100%, 100% 1.65rem, 1.65rem 100%;
+  transform: perspective(280px) rotateX(74deg);
+  transform-origin: 50% 0%;
+  opacity: 0.88;
+  filter: drop-shadow(0 0 6px rgba(106, 60, 255, 0.55));
 }
 
 /* Frosted tint behind the show cards inside the hero. */
