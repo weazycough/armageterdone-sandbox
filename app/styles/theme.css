@@ -4340,3 +4340,4 @@ h2 {
   .dispatch__art--hosts { margin-top: -8rem; }
   .dispatch__art--hosts img { width: 150%; margin-left: -18%; }
 }
+@media (min-width: 768px) { .dispatch__art--hosts { margin-top: -3.5rem; } }
