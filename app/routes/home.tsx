@@ -192,8 +192,8 @@ export default function Home({ loaderData }: Route.ComponentProps): React.ReactN
       <section className="dispatch" aria-label="Canary Cry newsletter">
         <div className="dispatch__strip" aria-hidden="true" />
         <div className="container dispatch__inner">
-          <div className="dispatch__art" aria-hidden="true">
-            <span>Image coming soon</span>
+          <div className="dispatch__art dispatch__art--hosts">
+            <img src={asset("images/newsletter-hosts.webp")} alt="Sketch portraits of hosts basiL and gonZ" width="1100" height="638" loading="lazy" />
           </div>
           <div className="dispatch__copy">
             <span className="dispatch__eyebrow">Canary Cry Newsletter</span>
