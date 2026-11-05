@@ -70,18 +70,10 @@ export function ShowsControlRoom(): React.ReactNode {
         </div>
 
         <div className="shows-studio__stage">
-          <div className="shows-studio__mark" aria-hidden="true">
-            <svg
-              className="shows-studio__mark-svg"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 111.48 54.02"
-              fill="currentColor"
-            >
-              <path d="M0,54.02V0s10.01,0,10.01,0v35.55s.14,0,.14,0L34.39,0h12.34S8.69,54.02,8.69,54.02H0Z" />
-              <path d="M64.75,54.02V0s10.01,0,10.01,0v35.55s.14,0,.14,0L99.14,0h12.34s-38.04,54.01-38.04,54.01h-8.69Z" />
-              <path d="M51.77,0l-28.17,40.08h27.29v13.94s10,0,10,0V.01h-9.12ZM50.89,30.74h-8.91l8.76-12.92h.15v12.92Z" />
-            </svg>
-          </div>
+          <p className="shows-studio__kicker">
+            <span className="shows-studio__kicker-line">All the shows</span>
+            <span className="shows-studio__kicker-line">One network</span>
+          </p>
 
           <div className="shows-studio__hero">
             <picture>

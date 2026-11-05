@@ -4491,7 +4491,7 @@ h2 {
   }
 }
 
-/* Shows stage: NN mark left of desk, channel blurb right. Hosts/title unchanged. */
+/* Shows stage: two-line Bebas kicker left of desk, channel blurb right. Hosts/title unchanged. */
 .shows-studio__stage {
   position: relative;
   z-index: 1;
@@ -4503,19 +4503,27 @@ h2 {
   padding: 0 0.85rem 0.25rem;
   box-sizing: border-box;
 }
-.shows-studio__mark {
+.shows-studio__kicker {
   order: 0;
   flex: 0 0 auto;
-  width: min(42vw, 7.25rem);
+  margin: 0;
+  max-width: min(92vw, 14rem);
+  font-family: var(--font-title);
+  font-weight: 400;
+  font-size: clamp(1.35rem, 6.2vw, 1.85rem);
+  line-height: 0.82;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
   color: var(--accent);
-  filter: drop-shadow(0 0 10px color-mix(in srgb, var(--accent) 35%, transparent));
-  line-height: 0;
+  text-shadow: 0 0 18px color-mix(in srgb, var(--accent) 55%, transparent);
+  transform: scaleY(1.4);
+  transform-origin: top center;
+  text-align: center;
   pointer-events: none;
 }
-.shows-studio__mark-svg {
+.shows-studio__kicker-line {
   display: block;
-  width: 100%;
-  height: auto;
+  white-space: nowrap;
 }
 .shows-studio__stage .shows-studio__hero {
   order: 1;
@@ -4549,13 +4557,15 @@ h2 {
     row-gap: 0;
     padding: 0 clamp(1rem, 3.2vw, 2.75rem);
   }
-  .shows-studio__mark {
+  .shows-studio__kicker {
     order: 0;
     justify-self: end;
     align-self: center;
-    width: min(100%, 10.5rem);
-    /* Sit at desk body height, not up in the monitor band. */
+    max-width: min(100%, 12.5rem);
     margin-top: clamp(2.5rem, 8vh, 5.5rem);
+    font-size: clamp(1.55rem, 1.85vw, 2.15rem);
+    transform-origin: top right;
+    text-align: right;
   }
   .shows-studio__stage .shows-studio__hero {
     order: 0;
@@ -4578,6 +4588,9 @@ h2 {
   }
 }
 @media (min-width: 1100px) {
-  .shows-studio__mark { width: min(100%, 12rem); }
+  .shows-studio__kicker {
+    max-width: min(100%, 14.5rem);
+    font-size: clamp(1.85rem, 2.05vw, 2.45rem);
+  }
   .shows-studio__blurb { max-width: 17.5rem; }
 }
