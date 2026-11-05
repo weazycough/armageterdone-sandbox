@@ -4360,3 +4360,9 @@ h2 {
 @media (max-width: 767px) { .dispatch__art--hosts { margin-top: -3.5rem; } }
 /* Home shows strip: more room between cards on desktop. */
 @media (min-width: 768px) { .mission-hero__shows .shows-strip { column-gap: 2.75rem; } }
+/* Hero grid: reach a little further toward the horizon. */
+.mission-hero__floor {
+  height: min(56%, 30rem);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 38%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 38%);
+}
