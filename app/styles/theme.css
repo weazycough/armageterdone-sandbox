@@ -4383,3 +4383,7 @@ h2 {
   .mission-hero--v4v .mission-hero__v4v { grid-template-columns: 16rem minmax(10rem, 12rem) minmax(0, 1fr); }
   .mission-hero__v4v-art { max-width: 16rem; }
 }
+/* V4V: raise art and pull the bottom rule up with it (desktop). */
+@media (min-width: 900px) {
+  .mission-hero--v4v .mission-hero__v4v { padding-top: 1.75rem; padding-bottom: 1.5rem; }
+}
