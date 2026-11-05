@@ -4434,3 +4434,12 @@ h2 {
   --vn-glow: rgba(90, 120, 255, 0.45);
   filter: drop-shadow(0 0 6px rgba(90, 120, 255, 0.55));
 }
+/* Shows hero: hosts art at ~80% of previous size (closed news desk v5). */
+.shows-studio__hero { width: 76%; max-width: 76%; margin-top: calc(10px - 0.45rem - 76vw * 0.085 / 1.18); }
+@media (min-width: 768px) {
+  .shows-studio__hero {
+    width: min(80%, calc(min(62vh, 42rem) * 16 / 9));
+    max-width: none;
+    margin: calc(1.75rem - 0.048 * min(80cqw, calc(min(62vh, 42rem) * 16 / 9))) auto 0;
+  }
+}
