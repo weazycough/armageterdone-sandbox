@@ -4443,3 +4443,11 @@ h2 {
     margin: calc(1.75rem - 0.048 * min(80cqw, calc(min(62vh, 42rem) * 16 / 9))) auto 0;
   }
 }
+/* Shows hero: hosts smaller and set back on the grid (more floor in front). */
+.shows-studio__hero { width: 60%; max-width: 60%; margin-top: calc(10px - 0.45rem - 60vw * 0.085 / 1.18); margin-bottom: 3.5rem; }
+@media (min-width: 768px) {
+  .shows-studio__hero {
+    width: min(60%, calc(min(47vh, 32rem) * 16 / 9));
+    margin: calc(1.25rem - 0.048 * min(60cqw, calc(min(47vh, 32rem) * 16 / 9))) auto clamp(5rem, 14vh, 9rem);
+  }
+}
