@@ -4422,3 +4422,15 @@ h2 {
 @media (prefers-reduced-motion: no-preference) {
   .shows-studio__floor-grid { animation: shows-vapor-grid 20s linear infinite; }
 }
+/* Shows hero: blue grid + home blue bottom wash, no violet cast. */
+.shows-studio__scene {
+  background:
+    linear-gradient(180deg, transparent 0%, rgba(30, 74, 173, 0.2) 40%, rgba(20, 55, 140, 0.5) 100%) bottom / 100% min(38%, 20rem) no-repeat,
+    linear-gradient(180deg, #05040c 0%, #05050c 46%, #060814 52%, #05060e 100%);
+}
+.shows-studio__floor-grid {
+  --vn: #6e8cff;
+  --vn-hot: #5a78ff;
+  --vn-glow: rgba(90, 120, 255, 0.45);
+  filter: drop-shadow(0 0 6px rgba(90, 120, 255, 0.55));
+}
