@@ -4314,3 +4314,4 @@ h2 {
 .art-ribbon { --aw-head: 24rem; }
 .art-ribbon__big { font-weight: 700; }
 @media (max-width: 767px) { .art-ribbon { --aw-head: 21rem; } }
+.art-ribbon__script { color: #fff; text-shadow: 0 0 14px rgba(255,255,255,.25); }
