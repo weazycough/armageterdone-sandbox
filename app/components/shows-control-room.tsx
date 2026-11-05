@@ -71,8 +71,11 @@ export function ShowsControlRoom(): React.ReactNode {
 
         <div className="shows-studio__stage">
           <p className="shows-studio__kicker">
-            <span className="shows-studio__kicker-line">Canary</span>
-            <span className="shows-studio__kicker-line">Cry</span>
+            {/* Pair sized to CANARY so CRY centers under that word only. */}
+            <span className="shows-studio__kicker-pair">
+              <span className="shows-studio__kicker-line">Canary</span>
+              <span className="shows-studio__kicker-line">Cry</span>
+            </span>
             <span className="shows-studio__kicker-line">Network</span>
           </p>
 
