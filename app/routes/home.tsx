@@ -159,12 +159,18 @@ export default function Home({ loaderData }: Route.ComponentProps): React.ReactN
       <section className="art-ribbon">
         <div className="container">
           <div className="art-ribbon__head">
-            <span className="eyebrow">From the producers</span>
-            <h2>Community art wall</h2>
+            <span className="art-ribbon__rule" aria-hidden="true" />
+            <h2 className="art-ribbon__title">
+              <span className="art-ribbon__script">Community</span>
+              <span className="art-ribbon__big">Art Wall</span>
+            </h2>
             <p>
               Canary Cry has always been a producer-driven show. Sketches, edits, memes, and full
               pieces — submit yours below and it lands here.
             </p>
+            <Link className="art-ribbon__submit" to="/artsubmission/">
+              Submit your art
+            </Link>
           </div>
           <div className="art-ribbon__grid">
             {ART_RIBBON.map((t) => (
@@ -179,11 +185,7 @@ export default function Home({ loaderData }: Route.ComponentProps): React.ReactN
               </Link>
             ))}
           </div>
-          <div className="art-ribbon__cta">
-            <Link className={buttonVariants({ variant: "ghost" })} to="/artsubmission/">
-              Submit your work →
-            </Link>
-          </div>
+          
         </div>
       </section>
 

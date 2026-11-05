@@ -4275,3 +4275,39 @@ h2 {
   background: linear-gradient(180deg, transparent 0%, rgba(30,74,173,.35) 35%, #1e4aad 100%) !important;
 }
 .art-ribbon { background: #1e4aad !important; }
+
+/* ===== Art wall restyle (black header, blue depth wall) ===== */
+.mission-hero--v4v::after { display: none !important; }
+.art-ribbon {
+  padding: 0 0 var(--space-8) !important;
+  background:
+    linear-gradient(180deg, #0a0a0a 0, #0a0a0a var(--aw-head, 21rem), transparent var(--aw-head, 21rem)),
+    radial-gradient(ellipse 60% 55% at 50% 45%, rgba(90, 140, 255, 0.35), transparent 70%),
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.045) 0 2px, transparent 2px 46px, rgba(0,0,20,0.12) 46px 52px, transparent 52px 90px),
+    linear-gradient(180deg, #2a5ad0 0%, #1e4aad 45%, #142f78 100%) !important;
+  box-shadow: inset 0 40px 60px -30px rgba(0,0,0,.0);
+}
+.art-ribbon::after {
+  content: ""; position: absolute; inset: var(--aw-head, 21rem) 0 0 0; pointer-events: none;
+  box-shadow: inset 0 18px 30px -12px rgba(0,0,30,.55), inset 0 -40px 60px -20px rgba(0,0,30,.5);
+  background: radial-gradient(ellipse 120% 100% at 50% 50%, transparent 55%, rgba(5,10,40,.45) 100%);
+}
+.art-ribbon > .container { position: relative; z-index: 1; }
+.art-ribbon__head {
+  height: var(--aw-head, 21rem); display: flex; flex-direction: column; align-items: center;
+  justify-content: flex-start; position: relative; margin-bottom: 3rem !important;
+}
+.art-ribbon__rule { display: block; width: 100%; height: 4px; background: var(--accent); margin: 1.5rem 0 1.25rem; }
+.art-ribbon__title { margin: 0; line-height: .85; color: var(--accent) !important; text-shadow: 0 0 18px rgba(232,242,42,.35); }
+.art-ribbon__script { display: block; font-family: "Playfair Display", serif; font-style: italic; font-weight: 700; font-size: clamp(2.4rem, 5vw, 4rem); text-transform: none; letter-spacing: 0; }
+.art-ribbon__big { display: block; font-family: "Playfair Display", serif; font-weight: 900; font-size: clamp(4rem, 11vw, 9rem); text-transform: uppercase; letter-spacing: -0.02em; line-height: .9; }
+.art-ribbon .art-ribbon__head p { color: #c9c9cf !important; max-width: 38rem; margin: .9rem auto 0; font-size: .95rem; }
+.art-ribbon__submit {
+  position: absolute; bottom: 0; left: 50%; transform: translate(-50%, 50%);
+  background: var(--accent); color: #2a2a10; border-radius: 999px; padding: .85rem 3.5rem;
+  font-family: Jost, sans-serif; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; font-size: .85rem;
+  box-shadow: 0 0 22px rgba(232,242,42,.45); white-space: nowrap; z-index: 2;
+}
+.art-ribbon__submit:hover { filter: brightness(1.08); }
+.art-ribbon__grid img { box-shadow: 0 10px 24px rgba(0,0,30,.5); }
+@media (max-width: 767px) { .art-ribbon { --aw-head: 19rem; } }
