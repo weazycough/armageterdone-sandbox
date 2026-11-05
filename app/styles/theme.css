@@ -4491,8 +4491,8 @@ h2 {
   }
 }
 
-/* Shows stage flanks — left slogan: 3 lines, home .mission-hero__tag stretch
-   (scaleY 1.4 only, no scaleX). Right blurb = .mission-hero__about. Hosts/title unchanged. */
+/* Shows stage flanks — left slogan: CANARY / CRY / NETWORK, left-aligned,
+   home scaleY(1.4). Right blurb = .mission-hero__about. Hosts/title unchanged. */
 .shows-studio__stage {
   position: relative;
   z-index: 1;
@@ -4520,8 +4520,8 @@ h2 {
   color: var(--accent);
   text-shadow: 0 0 22px color-mix(in srgb, var(--accent) 55%, transparent);
   transform: scaleY(1.4);
-  transform-origin: top center;
-  text-align: center;
+  transform-origin: top left;
+  text-align: left;
   pointer-events: none;
 }
 .shows-studio__kicker-line {
@@ -4562,15 +4562,16 @@ h2 {
   .shows-studio__kicker {
     order: 0;
     justify-self: end;
-    align-self: center;
+    /* Raise toward top of desk band; stay below monitor wall. */
+    align-self: start;
     width: max-content;
     max-width: none;
-    margin-top: clamp(1.5rem, 5vh, 3.75rem);
+    margin-top: clamp(0.35rem, 1.25vh, 1rem);
     /* Home tag @768: clamp(4.4rem, 7.2vw, 7.5rem) — slightly under for flank. */
     font-size: clamp(4rem, 6.2vw, 6.5rem);
     transform: scaleY(1.4);
-    transform-origin: top right;
-    text-align: right;
+    transform-origin: top left;
+    text-align: left;
   }
   .shows-studio__stage .shows-studio__hero {
     order: 0;
