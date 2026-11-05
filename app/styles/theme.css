@@ -4345,3 +4345,4 @@ h2 {
   .dispatch__inner { padding-left: 3rem; column-gap: 5rem; }
   .dispatch__art--hosts img { width: 135%; margin-left: -8%; }
 }
+@media (min-width: 1024px) { .dispatch__inner { transform: translateX(5.5rem); } }
