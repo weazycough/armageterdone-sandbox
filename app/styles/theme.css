@@ -4311,3 +4311,6 @@ h2 {
 .art-ribbon__submit:hover { filter: brightness(1.08); }
 .art-ribbon__grid img { box-shadow: 0 10px 24px rgba(0,0,30,.5); }
 @media (max-width: 767px) { .art-ribbon { --aw-head: 19rem; } }
+.art-ribbon { --aw-head: 24rem; }
+.art-ribbon__big { font-weight: 700; }
+@media (max-width: 767px) { .art-ribbon { --aw-head: 21rem; } }
