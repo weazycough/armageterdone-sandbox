@@ -4491,31 +4491,35 @@ h2 {
   }
 }
 
-/* Shows stage: two-line Bebas kicker left of desk, channel blurb right. Hosts/title unchanged. */
+/* Shows stage flanks — typography mirrors home mission-hero__tag (left)
+   and mission-hero__about (right). Hosts/grid/network title unchanged. */
 .shows-studio__stage {
   position: relative;
   z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.85rem;
+  gap: 1rem;
   width: 100%;
-  padding: 0 0.85rem 0.25rem;
+  padding: 0 0.75rem 0.35rem;
   box-sizing: border-box;
+  overflow: visible;
 }
+/* Same face/stretch recipe as .mission-hero__tag; two longer lines → clamp
+   tuned to flank width while staying in the home slogan size band. */
 .shows-studio__kicker {
   order: 0;
   flex: 0 0 auto;
   margin: 0;
-  max-width: min(92vw, 14rem);
+  max-width: min(96vw, 20rem);
   font-family: var(--font-title);
   font-weight: 400;
-  font-size: clamp(1.35rem, 6.2vw, 1.85rem);
+  font-size: clamp(2.85rem, 12vw, 4.6rem); /* home tag base: 3.25–5.2rem */
   line-height: 0.82;
   letter-spacing: -0.02em;
   text-transform: uppercase;
   color: var(--accent);
-  text-shadow: 0 0 18px color-mix(in srgb, var(--accent) 55%, transparent);
+  text-shadow: 0 0 22px color-mix(in srgb, var(--accent) 55%, transparent);
   transform: scaleY(1.4);
   transform-origin: top center;
   text-align: center;
@@ -4527,43 +4531,45 @@ h2 {
 }
 .shows-studio__stage .shows-studio__hero {
   order: 1;
-  /* Keep the approved host size; stage owns horizontal centering. */
   margin-left: auto;
   margin-right: auto;
 }
+/* Exact .mission-hero__about tokens (home hero body copy). */
 .shows-studio__blurb {
   order: 2;
   margin: 0;
-  max-width: 22rem;
+  max-width: 22rem; /* home .mission-hero__intro */
   padding: 0 0.35rem;
   text-align: center;
-  font-family: var(--font-body, inherit);
-  font-size: clamp(0.78rem, 3.1vw, 0.92rem);
+  color: var(--fg-secondary);
+  font-size: 0.88rem;
+  line-height: 1.55;
   font-weight: 400;
-  line-height: 1.45;
-  letter-spacing: 0.01em;
-  color: color-mix(in srgb, #d8e0ff 72%, #9aa8c8 28%);
-  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.55);
+  letter-spacing: normal;
+  text-shadow: none;
 }
 @media (min-width: 768px) {
   .shows-studio__stage {
     display: grid;
+    /* Wider flanks so home-scale slogan/body can breathe; desk column keeps host size. */
     grid-template-columns:
-      minmax(8.5rem, 1fr)
+      minmax(13rem, 1.2fr)
       min(60%, calc(min(47vh, 32rem) * 16 / 9))
-      minmax(8.5rem, 1fr);
+      minmax(13rem, 1.15fr);
     align-items: center;
-    column-gap: clamp(0.65rem, 1.8vw, 1.6rem);
+    column-gap: clamp(0.35rem, 1.2vw, 1rem);
     row-gap: 0;
-    padding: 0 clamp(1rem, 3.2vw, 2.75rem);
+    padding: 0 clamp(0.65rem, 2vw, 1.75rem);
   }
   .shows-studio__kicker {
     order: 0;
     justify-self: end;
     align-self: center;
-    max-width: min(100%, 12.5rem);
-    margin-top: clamp(2.5rem, 8vh, 5.5rem);
-    font-size: clamp(1.55rem, 1.85vw, 2.15rem);
+    width: max-content;
+    max-width: none;
+    margin-top: clamp(1.75rem, 6vh, 4.5rem);
+    /* home .mission-hero__tag @768: clamp(4.4rem, 7.2vw, 7.5rem) — step down only enough for 2 longer lines */
+    font-size: clamp(3.4rem, 5vw, 5.4rem);
     transform-origin: top right;
     text-align: right;
   }
@@ -4579,18 +4585,19 @@ h2 {
     order: 0;
     justify-self: start;
     align-self: center;
-    max-width: 15.5rem;
-    margin-top: clamp(2.5rem, 8vh, 5.5rem);
+    max-width: 22rem;
+    margin-top: clamp(1.75rem, 6vh, 4.5rem);
     padding: 0;
     text-align: left;
-    font-size: clamp(0.82rem, 1.05vw, 0.98rem);
-    line-height: 1.42;
+    font-size: 0.88rem;
+    line-height: 1.55;
   }
 }
 @media (min-width: 1100px) {
   .shows-studio__kicker {
-    max-width: min(100%, 14.5rem);
-    font-size: clamp(1.85rem, 2.05vw, 2.45rem);
+    /* home tag @1100: clamp(5.5rem, 7.5vw, 8.3rem) — parallel band for 2-line flank */
+    font-size: clamp(4.1rem, 5.4vw, 6.2rem);
   }
-  .shows-studio__blurb { max-width: 17.5rem; }
+  .shows-studio__blurb { max-width: 22rem; }
 }
+
