@@ -4261,3 +4261,10 @@ h2 {
 .dispatch__art { position: relative; z-index: 2; }
 .dispatch { border-bottom: 0 !important; }
 .dispatch__strip { display: none !important; }
+/* V4V -> art wall: quick black to Patreon blue at the seam */
+.mission-hero--v4v { border-bottom: 0 !important; box-shadow: none !important; }
+.mission-hero--v4v::after { display: none !important; }
+.art-ribbon {
+  background: linear-gradient(180deg, #0a0a0a 0, #0f2563 3rem, #1e4aad 7rem, #1e4aad 100%) !important;
+  border-top: 0 !important;
+}
