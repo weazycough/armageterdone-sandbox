@@ -4520,15 +4520,9 @@ h2 {
   color: var(--accent);
   text-shadow: 0 0 22px color-mix(in srgb, var(--accent) 55%, transparent);
   transform: scaleY(1.4);
-  transform-origin: top left;
-  text-align: left;
+  transform-origin: top center;
+  text-align: center; /* all three words share one vertical centerline */
   pointer-events: none;
-}
-.shows-studio__kicker-pair {
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* center CRY under CANARY's actual width */
-  width: max-content;
 }
 .shows-studio__kicker-line {
   display: block;
@@ -4577,8 +4571,8 @@ h2 {
     /* Home tag @768: clamp(4.4rem, 7.2vw, 7.5rem) — slightly under for flank. */
     font-size: clamp(4rem, 6.2vw, 6.5rem);
     transform: scaleY(1.4);
-    transform-origin: top left;
-    text-align: left;
+    transform-origin: top center;
+    text-align: center;
   }
   .shows-studio__stage .shows-studio__hero {
     order: 0;
