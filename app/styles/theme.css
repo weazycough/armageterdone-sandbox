@@ -4491,8 +4491,9 @@ h2 {
   }
 }
 
-/* Shows stage flanks — typography mirrors home mission-hero__tag (left)
-   and mission-hero__about (right). Hosts/grid/network title unchanged. */
+/* Shows stage flanks — left slogan matches home tag *visible* tall/narrow
+   proportions (extra scaleY + slight scaleX for longer 2-line flank). Right
+   blurb stays on .mission-hero__about tokens. Hosts/grid/CCN title unchanged. */
 .shows-studio__stage {
   position: relative;
   z-index: 1;
@@ -4505,8 +4506,6 @@ h2 {
   box-sizing: border-box;
   overflow: visible;
 }
-/* Same face/stretch recipe as .mission-hero__tag; two longer lines → clamp
-   tuned to flank width while staying in the home slogan size band. */
 .shows-studio__kicker {
   order: 0;
   flex: 0 0 auto;
@@ -4514,16 +4513,21 @@ h2 {
   max-width: min(96vw, 20rem);
   font-family: var(--font-title);
   font-weight: 400;
-  font-size: clamp(2.85rem, 12vw, 4.6rem); /* home tag base: 3.25–5.2rem */
+  /* Keep home-tag size band; height comes from stronger vertical scale. */
+  font-size: clamp(2.85rem, 12vw, 4.6rem);
   line-height: 0.82;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
   text-transform: uppercase;
   color: var(--accent);
   text-shadow: 0 0 22px color-mix(in srgb, var(--accent) 55%, transparent);
-  transform: scaleY(1.4);
+  /* Home uses scaleY(1.4) on short words. Longer flank lines: more Y + slight X
+     condensation so glyphs read tall/narrow (~home ~75px cap height, not ~40px). */
+  transform: scale(0.82, 2.55);
   transform-origin: top center;
   text-align: center;
   pointer-events: none;
+  /* Reserve layout for post-transform height: 2 lines × line-height × (scaleY - 1). */
+  padding-bottom: calc(0.82em * 2 * 1.55);
 }
 .shows-studio__kicker-line {
   display: block;
@@ -4538,7 +4542,7 @@ h2 {
 .shows-studio__blurb {
   order: 2;
   margin: 0;
-  max-width: 22rem; /* home .mission-hero__intro */
+  max-width: 22rem;
   padding: 0 0.35rem;
   text-align: center;
   color: var(--fg-secondary);
@@ -4551,7 +4555,6 @@ h2 {
 @media (min-width: 768px) {
   .shows-studio__stage {
     display: grid;
-    /* Wider flanks so home-scale slogan/body can breathe; desk column keeps host size. */
     grid-template-columns:
       minmax(13rem, 1.2fr)
       min(60%, calc(min(47vh, 32rem) * 16 / 9))
@@ -4567,11 +4570,12 @@ h2 {
     align-self: center;
     width: max-content;
     max-width: none;
-    margin-top: clamp(1.75rem, 6vh, 4.5rem);
-    /* home .mission-hero__tag @768: clamp(4.4rem, 7.2vw, 7.5rem) — step down only enough for 2 longer lines */
-    font-size: clamp(3.4rem, 5vw, 5.4rem);
+    margin-top: clamp(1.25rem, 4.5vh, 3.5rem);
+    font-size: clamp(3.5rem, 5.2vw, 5.6rem);
+    transform: scale(0.78, 2.6);
     transform-origin: top right;
     text-align: right;
+    padding-bottom: calc(0.82em * 2 * 1.6);
   }
   .shows-studio__stage .shows-studio__hero {
     order: 0;
@@ -4595,9 +4599,10 @@ h2 {
 }
 @media (min-width: 1100px) {
   .shows-studio__kicker {
-    /* home tag @1100: clamp(5.5rem, 7.5vw, 8.3rem) — parallel band for 2-line flank */
-    font-size: clamp(4.1rem, 5.4vw, 6.2rem);
+    font-size: clamp(4rem, 5.5vw, 6.2rem);
+    transform: scale(0.76, 2.6);
   }
   .shows-studio__blurb { max-width: 22rem; }
 }
+
 
