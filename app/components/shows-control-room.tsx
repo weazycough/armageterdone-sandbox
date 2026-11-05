@@ -71,8 +71,9 @@ export function ShowsControlRoom(): React.ReactNode {
 
         <div className="shows-studio__stage">
           <p className="shows-studio__kicker">
-            <span className="shows-studio__kicker-line">All the shows</span>
-            <span className="shows-studio__kicker-line">One network</span>
+            <span className="shows-studio__kicker-line">All the</span>
+            <span className="shows-studio__kicker-line">shows one</span>
+            <span className="shows-studio__kicker-line">Network</span>
           </p>
 
           <div className="shows-studio__hero">

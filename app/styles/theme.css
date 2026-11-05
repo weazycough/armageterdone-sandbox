@@ -4491,9 +4491,8 @@ h2 {
   }
 }
 
-/* Shows stage flanks — left slogan matches home tag *visible* tall/narrow
-   proportions (extra scaleY + slight scaleX for longer 2-line flank). Right
-   blurb stays on .mission-hero__about tokens. Hosts/grid/CCN title unchanged. */
+/* Shows stage flanks — left slogan: 3 lines, home .mission-hero__tag stretch
+   (scaleY 1.4 only, no scaleX). Right blurb = .mission-hero__about. Hosts/title unchanged. */
 .shows-studio__stage {
   position: relative;
   z-index: 1;
@@ -4513,21 +4512,17 @@ h2 {
   max-width: min(96vw, 20rem);
   font-family: var(--font-title);
   font-weight: 400;
-  /* Keep home-tag size band; height comes from stronger vertical scale. */
-  font-size: clamp(2.85rem, 12vw, 4.6rem);
+  /* Near home tag base; 3 shorter lines fit the flank. */
+  font-size: clamp(3.25rem, 12vw, 5rem);
   line-height: 0.82;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
   text-transform: uppercase;
   color: var(--accent);
   text-shadow: 0 0 22px color-mix(in srgb, var(--accent) 55%, transparent);
-  /* Home uses scaleY(1.4) on short words. Longer flank lines: more Y + slight X
-     condensation so glyphs read tall/narrow (~home ~75px cap height, not ~40px). */
-  transform: scale(0.82, 2.55);
+  transform: scaleY(1.4);
   transform-origin: top center;
   text-align: center;
   pointer-events: none;
-  /* Reserve layout for post-transform height: 2 lines × line-height × (scaleY - 1). */
-  padding-bottom: calc(0.82em * 2 * 1.55);
 }
 .shows-studio__kicker-line {
   display: block;
@@ -4570,12 +4565,12 @@ h2 {
     align-self: center;
     width: max-content;
     max-width: none;
-    margin-top: clamp(1.25rem, 4.5vh, 3.5rem);
-    font-size: clamp(3.5rem, 5.2vw, 5.6rem);
-    transform: scale(0.78, 2.6);
+    margin-top: clamp(1.5rem, 5vh, 3.75rem);
+    /* Home tag @768: clamp(4.4rem, 7.2vw, 7.5rem) — slightly under for flank. */
+    font-size: clamp(4rem, 6.2vw, 6.5rem);
+    transform: scaleY(1.4);
     transform-origin: top right;
     text-align: right;
-    padding-bottom: calc(0.82em * 2 * 1.6);
   }
   .shows-studio__stage .shows-studio__hero {
     order: 0;
@@ -4599,10 +4594,11 @@ h2 {
 }
 @media (min-width: 1100px) {
   .shows-studio__kicker {
-    font-size: clamp(4rem, 5.5vw, 6.2rem);
-    transform: scale(0.76, 2.6);
+    /* Home tag @1100: clamp(5.5rem, 7.5vw, 8.3rem) — parallel, flank-safe. */
+    font-size: clamp(4.8rem, 6.6vw, 7.2rem);
   }
   .shows-studio__blurb { max-width: 22rem; }
 }
+
 
 
