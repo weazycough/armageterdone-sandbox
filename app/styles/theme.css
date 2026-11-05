@@ -4319,9 +4319,9 @@ h2 {
 .art-ribbon {
   background:
     linear-gradient(180deg, #0a0a0a 0, #0a0a0a var(--aw-head), transparent var(--aw-head)),
-    url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAARElEQVR4nGNgYFPOY2BgYCCbhnF6dv63IY9PqQtgJvXs/G+DbDJWGos8lVyAx4+E5KkcBmSECeUuwPQTqfzRdDDw6QAAh6u16T6oztoAAAAASUVORK5CYII=") repeat,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.6  0 0 0 0 0.72  0 0 0 0 1  0 0 0 0.55 -0.12'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E") repeat,
     radial-gradient(ellipse 60% 55% at 50% 45%, rgba(90, 140, 255, 0.35), transparent 70%),
     linear-gradient(180deg, #2a5ad0 0%, #1e4aad 45%, #142f78 100%) !important;
-  background-size: auto, 32px 32px, auto, auto !important;
-  image-rendering: pixelated;
+  background-size: auto, 240px 240px, auto, auto !important;
+  image-rendering: auto;
 }
