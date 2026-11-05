@@ -4157,7 +4157,7 @@ h2 {
 }
 @media (min-width: 900px) {
   .mission-hero--v4v .mission-hero__v4v {
-    grid-template-columns: minmax(14rem, 21rem) minmax(11rem, 14rem) minmax(0, 1fr);
+    grid-template-columns: 21rem minmax(11rem, 14rem) minmax(0, 1fr);
     align-items: center;
   }
   /* Desktop: buttons sit between the art and the copy. */
