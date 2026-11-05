@@ -4362,7 +4362,12 @@ h2 {
 @media (min-width: 768px) { .mission-hero__shows .shows-strip { column-gap: 2.75rem; } }
 /* Hero grid: reach a little further toward the horizon. */
 .mission-hero__floor {
-  height: min(56%, 30rem);
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 38%);
-  mask-image: linear-gradient(to bottom, transparent 0%, #000 38%);
+  height: min(68%, 38rem);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 28%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 28%);
+}
+/* Grid's own horizon fade starts sooner so distant lines show. */
+.mission-hero__floor-grid {
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, transparent 3%, rgba(0,0,0,.15) 10%, rgba(0,0,0,.4) 22%, rgba(0,0,0,.75) 36%, #000 52%, #000 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, transparent 3%, rgba(0,0,0,.15) 10%, rgba(0,0,0,.4) 22%, rgba(0,0,0,.75) 36%, #000 52%, #000 100%);
 }
