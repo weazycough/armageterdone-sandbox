@@ -4352,3 +4352,7 @@ h2 {
 }
 .art-ribbon { padding-bottom: calc(var(--space-8) + 2.5rem) !important; }
 @media (min-width: 768px) { .dispatch__art--hosts { margin-top: -4.75rem; } .dispatch__inner { padding-bottom: 0; } .dispatch { margin-top: 0; } }
+@media (max-width: 767px) {
+  .dispatch__art--hosts { margin-top: -3rem; margin-bottom: 0.5rem; }
+  .dispatch__art--hosts img { width: 115%; max-width: none; margin-left: -5%; }
+}
