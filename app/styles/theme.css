@@ -4242,7 +4242,7 @@ h2 {
 
 /* Art wall: continues V4V blue, fades to newsletter grey */
 .art-ribbon {
-  background: linear-gradient(180deg, rgb(15, 32, 76) 0%, rgb(22, 50, 120) 50%, rgb(30, 74, 173) 88%, #d6d6db 100%) !important;
+  background: linear-gradient(180deg, rgb(15, 32, 76) 0%, rgb(22, 50, 120) 50%, rgb(30, 74, 173) 100%) !important;
   border-top: 0 !important;
   border-bottom: 0 !important;
   padding-bottom: calc(var(--space-8) + 4rem);
@@ -4251,4 +4251,11 @@ h2 {
 .art-ribbon .art-ribbon__head p { color: #f2f4fa; }
 .art-ribbon .art-ribbon__head .eyebrow { color: var(--accent); }
 
-.dispatch__strip { display: none !important; }
+/* Newsletter borders like reference: thick blue top, dark bottom; art may overflow top */
+.dispatch { position: relative; overflow: visible !important; border-bottom: 2.5rem solid #0c0c10; }
+.dispatch__strip {
+  display: block !important; height: 5rem !important;
+  background: repeating-linear-gradient(90deg, #1e4aad 0 14px, #2552c4 14px 22px, #1a43a0 22px 31px) !important;
+  box-shadow: inset 0 -6px 12px rgba(0,0,0,.18);
+}
+.dispatch__art { position: relative; z-index: 2; }
