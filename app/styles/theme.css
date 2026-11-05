@@ -30,9 +30,9 @@
   --fg-inverse: #0a0a0a; /* text that needs to be dark (on yellow buttons) */
 
   /* Accents (constant across themes — these are the brand colors) */
-  --accent: #e8f22a; /* neon lemon canary (sampled from redesign mock) */
-  --accent-2: #f3fc52; /* lighter lemon hover */
-  --accent-deep: #6b7000; /* darker olive-yellow for cream backgrounds (AA) */
+  --accent: #f0e02a; /* lemon-gold canary (nudged warmer from #e8f22a) */
+  --accent-2: #f8eb52; /* lighter lemon-gold hover */
+  --accent-deep: #6e6200; /* darker olive-gold for cream backgrounds (AA) */
   --on-accent: #0a0a0a; /* text on bright yellow fills */
   --brand-mark: var(--accent-on-bg); /* wordmark matches site yellow */
   --shield: #1e4aad; /* royal blue (Patreon / UFO beam) */
@@ -46,7 +46,7 @@
   --accent-on-bg: var(--accent);
 
   /* Hero gradient mix */
-  --hero-glow: radial-gradient(ellipse at top, rgba(232, 242, 42, 0.1), transparent 60%);
+  --hero-glow: radial-gradient(ellipse at top, rgba(240, 224, 42, 0.1), transparent 60%);
 
   /* Header glass */
   --header-bg: rgba(10, 10, 10, 0.92);
@@ -1455,7 +1455,7 @@ p {
 
 /* ---------- Newsletter ---------- */
 .signup {
-  background: linear-gradient(180deg, rgba(232, 242, 42, 0.1), transparent 100%), var(--bg-surface);
+  background: linear-gradient(180deg, rgba(240, 224, 42, 0.1), transparent 100%), var(--bg-surface);
   padding: var(--space-8) var(--space-5);
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
@@ -1975,7 +1975,7 @@ p {
 }
 .producer-tier--highlight {
   background:
-    linear-gradient(180deg, rgba(232, 242, 42, 0.12), transparent 100%), var(--bg-surface);
+    linear-gradient(180deg, rgba(240, 224, 42, 0.12), transparent 100%), var(--bg-surface);
   border: 2px solid var(--accent-on-bg);
 }
 .producer-tier--open {
@@ -2633,7 +2633,7 @@ p {
 }
 .art-modal__close:hover,
 .art-modal__nav:hover {
-  background: rgba(232, 242, 42, 0.25);
+  background: rgba(240, 224, 42, 0.25);
   border-color: var(--accent);
   color: var(--accent);
   transform: scale(1.05);
@@ -2780,9 +2780,9 @@ p {
   background:
     linear-gradient(
       to top,
-      rgba(232, 242, 42, 0.34) 0%,
-      rgba(232, 242, 42, 0.16) 30%,
-      rgba(232, 242, 42, 0.05) 58%,
+      rgba(240, 224, 42, 0.34) 0%,
+      rgba(240, 224, 42, 0.16) 30%,
+      rgba(240, 224, 42, 0.05) 58%,
       transparent 80%
     ),
     #05040c;
@@ -3252,9 +3252,9 @@ p {
     background:
       linear-gradient(
         to top,
-        rgba(232, 242, 42, 0.34) 0%,
-        rgba(232, 242, 42, 0.16) 30%,
-        rgba(232, 242, 42, 0.05) 58%,
+        rgba(240, 224, 42, 0.34) 0%,
+        rgba(240, 224, 42, 0.16) 30%,
+        rgba(240, 224, 42, 0.05) 58%,
         transparent 80%
       ),
       #05040c;
@@ -3831,9 +3831,9 @@ h2 {
   mask-image: none !important;
   background:
     radial-gradient(120% 85% at 50% 100%,
-      rgba(232, 242, 42, 0.38) 0%,
-      rgba(232, 242, 42, 0.18) 30%,
-      rgba(232, 242, 42, 0.06) 58%,
+      rgba(240, 224, 42, 0.38) 0%,
+      rgba(240, 224, 42, 0.18) 30%,
+      rgba(240, 224, 42, 0.06) 58%,
       transparent 80%) !important;
 }
 
