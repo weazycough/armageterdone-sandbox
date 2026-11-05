@@ -4341,3 +4341,7 @@ h2 {
   .dispatch__art--hosts img { width: 150%; margin-left: -18%; }
 }
 @media (min-width: 768px) { .dispatch__art--hosts { margin-top: -3.5rem; } }
+@media (min-width: 768px) {
+  .dispatch__inner { padding-left: 3rem; column-gap: 5rem; }
+  .dispatch__art--hosts img { width: 135%; margin-left: -8%; }
+}
