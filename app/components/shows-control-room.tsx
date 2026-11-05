@@ -60,11 +60,6 @@ export function ShowsControlRoom(): React.ReactNode {
         <div className="shows-studio__floor" aria-hidden="true"><div className="shows-studio__floor-grid" /></div>
         {/* Wall sits behind the desk art; hero is the foreground strip. */}
         <div className="shows-studio__wall">
-          <header className="shows-studio__title">
-            <p className="shows-studio__eyebrow">The Canary Cry Network</p>
-            <h1>Shows</h1>
-          </header>
-
           <ul className="shows-arc" aria-label="Shows">
             {NETWORK_SHOWS.map((show) => (
               <li key={show.slug}>
@@ -87,6 +82,8 @@ export function ShowsControlRoom(): React.ReactNode {
           </picture>
         </div>
       </div>
+      {/* Same display style as home mission-hero__tag; one line; clips into scene bottom. */}
+      <h1 className="shows-studio__network-title">Canary Cry Network</h1>
     </section>
   );
 }
