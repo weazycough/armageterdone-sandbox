@@ -4566,7 +4566,8 @@ h2 {
     align-self: start;
     width: max-content;
     max-width: none;
-    margin-top: clamp(0.35rem, 1.25vh, 1rem);
+    /* Nudge ~1.15–1.5rem lower than prior top-of-band seat (desktop only). */
+    margin-top: clamp(1.5rem, calc(1.25vh + 1.15rem), 2.5rem);
     /* Home tag @768: clamp(4.4rem, 7.2vw, 7.5rem) — slightly under for flank. */
     font-size: clamp(4rem, 6.2vw, 6.5rem);
     transform: scaleY(1.4);
