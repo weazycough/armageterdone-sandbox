@@ -4387,3 +4387,38 @@ h2 {
 @media (min-width: 900px) {
   .mission-hero--v4v .mission-hero__v4v { padding-top: 1.75rem; padding-bottom: 1.5rem; }
 }
+/* Shows hero: old vapor grid + yellow glow off; use the home mission-hero grid. */
+.shows-studio__scene::before,
+.shows-studio__scene::after { content: none !important; display: none !important; animation: none !important; }
+.shows-studio__floor-glow { display: none !important; }
+.shows-studio__floor {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  height: min(68%, 38rem);
+  overflow: hidden; pointer-events: none; z-index: -1; opacity: 0.4;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 28%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 28%);
+}
+.shows-studio__floor-grid {
+  position: absolute; left: -55%; right: -55%; top: 0; height: 240%;
+  --vn: #6a3cff; --vn-hot: #7b2fff; --vn-glow: rgba(106, 60, 255, 0.45); --vapor-cell: 1.65rem;
+  background-image:
+    linear-gradient(var(--vn-glow) 3px, transparent 3px),
+    linear-gradient(90deg, var(--vn-glow) 3px, transparent 3px),
+    linear-gradient(var(--vn-hot) 1.5px, transparent 1.5px),
+    linear-gradient(90deg, var(--vn) 1.5px, transparent 1.5px);
+  background-size: 100% 1.65rem, 1.65rem 100%, 100% 1.65rem, 1.65rem 100%;
+  transform: perspective(280px) rotateX(74deg);
+  transform-origin: 50% 0%;
+  opacity: 0.88;
+  filter: drop-shadow(0 0 6px rgba(106, 60, 255, 0.55));
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, transparent 3%, rgba(0,0,0,.15) 10%, rgba(0,0,0,.4) 22%, rgba(0,0,0,.75) 36%, #000 52%, #000 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, transparent 3%, rgba(0,0,0,.15) 10%, rgba(0,0,0,.4) 22%, rgba(0,0,0,.75) 36%, #000 52%, #000 100%);
+}
+.shows-studio__floor::after {
+  content: ""; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 82% 72% at 50% 40%, transparent 48%, rgba(5, 4, 12, 0.62) 100%);
+  opacity: 0.75;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .shows-studio__floor-grid { animation: shows-vapor-grid 20s linear infinite; }
+}
