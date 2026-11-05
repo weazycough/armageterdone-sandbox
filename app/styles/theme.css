@@ -4331,3 +4331,12 @@ h2 {
   .dispatch__art--hosts { align-self: end; margin-top: -4rem; margin-bottom: -3rem; }
   .dispatch__art--hosts img { width: 125%; max-width: none; margin-left: -6%; }
 }
+.dispatch { z-index: 3; }
+.dispatch__inner { position: relative; z-index: 3; }
+@media (min-width: 768px) {
+  .dispatch__art--hosts { align-self: start; margin-top: -6.5rem; margin-bottom: 1.5rem; }
+}
+@media (min-width: 768px) {
+  .dispatch__art--hosts { margin-top: -8rem; }
+  .dispatch__art--hosts img { width: 150%; margin-left: -18%; }
+}
