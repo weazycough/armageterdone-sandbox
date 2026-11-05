@@ -4356,3 +4356,5 @@ h2 {
 }
 .art-ribbon { padding-bottom: calc(var(--space-8) + 2.5rem) !important; }
 @media (min-width: 768px) { .dispatch__art--hosts { margin-top: -4.75rem; } .dispatch__inner { padding-bottom: 0; } .dispatch { margin-top: 0; } }
+/* Mobile: pull hosts up so the art-wall blue barely clips their heads, like desktop. */
+@media (max-width: 767px) { .dispatch__art--hosts { margin-top: -3.5rem; } }
