@@ -12,7 +12,7 @@ export const SHOWS = [
     title: "Canary Cry News Talk",
     kicker: "The main show",
     nav: "The main show",
-    desc: "The flagship discernment broadcast — daily news through a Biblical worldview.",
+    desc: "The flagship discernment broadcast, covering daily news through a Biblical worldview.",
     art: "images/show-news-talk.webp",
     /** Title logo in the tag-page hero; null until art lands (placeholder). */
     logo: "images/newstalk-logo.svg",
@@ -87,7 +87,7 @@ export const NETWORK_SHOWS: NetworkShow[] = [
   {
     slug: "news-talk",
     title: "Canary Cry News Talk",
-    desc: "The flagship discernment broadcast — daily news through a Biblical worldview.",
+    desc: "The flagship discernment broadcast, covering daily news through a Biblical worldview.",
     href: "/tag/news-talk/",
     art: "images/show-news-talk.webp",
   },
