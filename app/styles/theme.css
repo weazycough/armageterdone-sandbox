@@ -4315,3 +4315,13 @@ h2 {
 .art-ribbon__big { font-weight: 700; }
 @media (max-width: 767px) { .art-ribbon { --aw-head: 21rem; } }
 .art-ribbon__script { color: #fff; text-shadow: 0 0 14px rgba(255,255,255,.25); }
+/* Art wall: dither instead of panel lines */
+.art-ribbon {
+  background:
+    linear-gradient(180deg, #0a0a0a 0, #0a0a0a var(--aw-head), transparent var(--aw-head)),
+    url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAANklEQVR4nGNg4NBwY2BgYCCbhnEqVv1XIo9PqQtQTEbio9O45Cl3weAJA3Lp4RQGMDCaDkinAfMXiGXfwwLdAAAAAElFTkSuQmCC") repeat,
+    radial-gradient(ellipse 60% 55% at 50% 45%, rgba(90, 140, 255, 0.35), transparent 70%),
+    linear-gradient(180deg, #2a5ad0 0%, #1e4aad 45%, #142f78 100%) !important;
+  background-size: auto, 4px 4px, auto, auto !important;
+  image-rendering: pixelated;
+}
