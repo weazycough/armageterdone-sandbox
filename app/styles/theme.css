@@ -4325,3 +4325,4 @@ h2 {
   background-size: auto, 240px 240px, auto, auto !important;
   image-rendering: auto;
 }
+.art-ribbon__script { font-family: var(--font-serif) !important; font-style: italic; font-weight: 400 !important; }
