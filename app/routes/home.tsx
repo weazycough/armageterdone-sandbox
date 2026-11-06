@@ -9,6 +9,7 @@ import type { Route } from "./+types/home";
 import { EpisodeWall, WallHead } from "../components/episode-wall";
 import { PreviewForm } from "../components/preview-form";
 import { ShowsStrip } from "../components/shows-strip";
+import { V4vWordmark } from "../components/v4v-wordmark";
 import { buttonVariants } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { asset } from "../lib/asset";
@@ -127,7 +128,10 @@ export default function Home({ loaderData }: Route.ComponentProps): React.ReactN
             />
             <div className="mission-hero__v4v-copy">
               <span className="mission-hero__v4v-eyebrow">No advertisers. Just producers</span>
-              <h2 className="mission-hero__v4v-heading"><span className="v4v-l1">What is</span>{" "}<span className="v4v-l2">Value-for-Value?</span></h2>
+              <h2 className="mission-hero__v4v-heading">
+                <span className="sr-only">Value for Value</span>
+                <V4vWordmark className="mission-hero__v4v-mark" decorative />
+              </h2>
               <p>
                 Canary Cry doesn&apos;t take corporate ad money. The show runs on producers —
                 listeners who return value with their <strong>time, talent, or treasure</strong> for

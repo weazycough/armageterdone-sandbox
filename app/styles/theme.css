@@ -899,17 +899,17 @@ p {
 }
 .mission-hero__v4v-heading {
   margin: 0 0 0.55rem;
-  font-family: var(--font-title);
-  font-weight: 400;
-  font-synthesis: none;
-  -webkit-font-smoothing: antialiased;
-  font-size: clamp(2.55rem, 5.2vw, 3.45rem);
-  line-height: 0.95;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--accent);
-  text-shadow: none;
-  -webkit-text-stroke: 0;
+  max-width: 100%;
+  /* Brand wordmark: site yellow on dark, near-black ink on light. */
+  color: var(--brand-mark);
+  line-height: 0;
+}
+.mission-hero__v4v-mark {
+  display: block;
+  width: 100%;
+  max-width: min(100%, 36rem);
+  height: auto;
+  aspect-ratio: 462.32 / 56.09;
 }
 .mission-hero__v4v-copy p {
   margin: 0;
@@ -4189,7 +4189,6 @@ h2 {
 @media (max-width: 767px) {
   .home-recent .ep-wall__action a { font-size: 0.95rem !important; }
   .mission-hero__v4v-actions { align-items: center; margin-inline: auto; width: 100%; }
-  .mission-hero__v4v-heading .v4v-l1, .mission-hero__v4v-heading .v4v-l2 { display: block; }
   .mission-hero__intro > .mission-hero__bar { display: none; }
   .mission-hero__latest-row { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-top: 1.25rem; }
   .mission-hero__latest-row .mission-hero__latest { margin: 0; }
@@ -4374,9 +4373,9 @@ h2 {
 /* V4V: larger mascot art. */
 .mission-hero__v4v-art { max-width: 19rem; }
 @media (min-width: 900px) { .mission-hero__v4v-art { max-width: 21rem; } }
-/* V4V: keep the heading on one line on desktop. */
+/* V4V: wordmark fills copy column; already one-line letterforms. */
 @media (min-width: 900px) {
-  .mission-hero__v4v-heading { white-space: nowrap; font-size: clamp(1.9rem, 3.3vw, 3.45rem); }
+  .mission-hero__v4v-mark { max-width: min(100%, 34rem); }
   .mission-hero--v4v .mission-hero__v4v { column-gap: 2rem; }
 }
 @media (min-width: 900px) and (max-width: 1199px) {
