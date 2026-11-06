@@ -4805,6 +4805,15 @@ h2 {
   --shows-network-scale-y: 1.4;
   --shows-network-asc: 0.95;
   --shows-network-desc: 0.35;
+  /* Same nudge for mark + rule so SVG tracks the translated bar (~6-8px gap). */
+  --shows-rule-nudge: calc(
+    var(--shows-network-size) * (
+      (
+        (var(--shows-network-lh) - (var(--shows-network-asc) + var(--shows-network-desc))) /
+          2 + var(--shows-network-asc)
+      ) * var(--shows-network-scale-y) - var(--shows-network-lh)
+    )
+  );
 }
 /* Stretches to NETWORK height; packs mark+rule at the bottom so the SVG
    sits just above the yellow line. */
@@ -4816,12 +4825,15 @@ h2 {
   justify-content: flex-end;
   align-items: flex-start;
   align-self: stretch;
-  gap: 0.4rem; /* small intentional air between Canarycry and the rule */
+  /* ~6-8 screenshot px; mark shares rule nudge so this stays the visual gap */
+  gap: 0.45rem;
 }
 .shows-hero__mark-wrap {
   display: block;
   line-height: 0;
   max-width: 100%;
+  /* Track rule translateY so mark sits just above the painted bar, not the pre-nudge box. */
+  transform: translateY(var(--shows-rule-nudge));
 }
 /* Medium white Canary Cry SVG (real CcWordmark paths); larger than nav mark. */
 .shows-hero__mark {
@@ -4858,16 +4870,7 @@ h2 {
   flex: 0 0 auto;
   min-width: 2.5rem;
   margin-bottom: 0;
-  transform: translateY(
-    calc(
-      var(--shows-network-size) * (
-        (
-          (var(--shows-network-lh) - (var(--shows-network-asc) + var(--shows-network-desc))) /
-            2 + var(--shows-network-asc)
-        ) * var(--shows-network-scale-y) - var(--shows-network-lh)
-      )
-    )
-  );
+  transform: translateY(var(--shows-rule-nudge));
 }
 
 .shows-hero__grid {
@@ -4949,7 +4952,7 @@ h2 {
     --shows-network-size: clamp(2.6rem, 14vw, 4.2rem);
   }
   .shows-hero__brand-left {
-    gap: 0.3rem;
+    gap: 0.4rem;
   }
   .shows-hero__row {
     gap: 0.45rem;

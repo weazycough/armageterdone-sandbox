@@ -70,7 +70,10 @@ describe("Shows hero (wordmark + NETWORK + 2×3 tiles)", () => {
     expect(css).toContain("--shows-network-scale-y:1.4");
     expect(css).toContain("--shows-network-asc:.95");
     expect(css).toContain("--shows-network-desc:.35");
-    expect(css).toContain("translateY(calc(var(--shows-network-size)");
+    expect(css).toContain("--shows-rule-nudge:calc(var(--shows-network-size)");
     expect(css).toContain("shows-network-asc");
+    // Mark and rule share the same nudge so Canarycry tracks the painted bar.
+    expect(css).toContain("translateY(var(--shows-rule-nudge))");
+    expect(css).toMatch(/shows-hero__mark-wrap\{[^}]*translateY\(var\(--shows-rule-nudge\)\)/);
   });
 });
