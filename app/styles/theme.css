@@ -4789,14 +4789,39 @@ h2 {
   /* scaleY(1.4) on NETWORK does not grow layout box; pad past visual glyphs */
   gap: clamp(2.75rem, 4.5vw, 3.75rem);
 }
+/* Brand row: left stack (mark above rule) + NETWORK on stage right.
+   Rule flexes to fill leftover width; bottoms share painted NETWORK glyphs. */
 .shows-hero__brand {
-  align-self: stretch;
-  text-align: left;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: var(--space-4);
+  width: 100%;
   max-width: 100%;
+  min-width: 0;
+  /* Bebas metrics (fontTools): upem=1000, winAsc=950, winDesc=350, yMin≈0 */
+  --shows-network-size: clamp(3.25rem, 11vw, 8.5rem);
+  --shows-network-lh: 0.82;
+  --shows-network-scale-y: 1.4;
+  --shows-network-asc: 0.95;
+  --shows-network-desc: 0.35;
+}
+/* Stretches to NETWORK height; packs mark+rule at the bottom so the SVG
+   sits just above the yellow line. */
+.shows-hero__brand-left {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  align-self: stretch;
+  gap: 0.4rem; /* small intentional air between Canarycry and the rule */
 }
 .shows-hero__mark-wrap {
   display: block;
   line-height: 0;
+  max-width: 100%;
 }
 /* Medium white Canary Cry SVG (real CcWordmark paths); larger than nav mark. */
 .shows-hero__mark {
@@ -4806,29 +4831,11 @@ h2 {
   max-width: min(100%, 18rem);
   color: #fff;
 }
-/* NETWORK + yellow rule: same flex pattern as .ep-wall__head; rule uses .ep-wall__rule. */
-.shows-hero__network-row {
-  /* Bebas Neue latin-400 metrics (fontTools on @fontsource woff):
-     upem=1000, sCapHeight=700, usWinAscent=950, usWinDescent=350,
-     NETWORK glyphs yMin≈0 (O -10). USE_TYPO_METRICS unset → win metrics.
-     Shared so rule translate tracks painted glyph bottom under scaleY. */
-  --shows-network-size: clamp(3.25rem, 11vw, 8.5rem);
-  --shows-network-lh: 0.82;
-  --shows-network-scale-y: 1.4;
-  --shows-network-asc: 0.95; /* 950/1000 */
-  --shows-network-desc: 0.35; /* 350/1000 */
-  display: flex;
-  align-items: flex-end;
-  gap: var(--space-4); /* match .ep-wall__head */
-  width: 100%;
-  min-width: 0;
-}
-/* Art-wall __big proportions, Bebas + home scaleY stretch, site yellow.
-   transform-origin top left: scale from border-box top (= line-box top). */
+/* Art-wall __big proportions, Bebas + scaleY stretch; stage-right edge. */
 .shows-hero__network {
   flex: 0 0 auto;
   min-width: 0;
-  margin: 0.35rem 0 0;
+  margin: 0;
   padding: 0;
   font-family: var(--font-title);
   font-weight: 400;
@@ -4836,20 +4843,19 @@ h2 {
   line-height: var(--shows-network-lh);
   letter-spacing: -0.02em;
   text-transform: uppercase;
+  text-align: right;
   color: var(--accent);
   text-shadow: 0 0 22px color-mix(in srgb, var(--accent) 50%, transparent);
   transform: scaleY(var(--shows-network-scale-y));
-  transform-origin: top left;
+  transform-origin: top right;
   white-space: nowrap;
 }
-/* .ep-wall__rule unchanged (5px / accent / flex:1).
-   cff87e8 used size*lh*(scaleY-1) (= line-box bottom after scale) and sat
-   ~10–13px below glyphs: caps do not fill the win-metric content box.
-   Glyph bottom from line-box top (yMin≈0):
-     half-leading + asc, half-leading = (lh - (asc+desc)) / 2
-   After scaleY from top: that * scaleY. translateY = painted - lh*size. */
+/* .ep-wall__rule: flex/height/color from shared class. Full width of left
+   column; translateY uses win-metric half-leading + ascent (4ed2d99). */
 .shows-hero__rule {
-  align-self: flex-end;
+  display: block;
+  width: 100%;
+  flex: 0 0 auto;
   min-width: 2.5rem;
   margin-bottom: 0;
   transform: translateY(
@@ -4863,6 +4869,7 @@ h2 {
     )
   );
 }
+
 .shows-hero__grid {
   display: flex;
   flex-direction: column;
@@ -4938,8 +4945,11 @@ h2 {
   .shows-hero__stage {
     gap: clamp(2.25rem, 8vw, 3rem);
   }
-  .shows-hero__network-row {
+  .shows-hero__brand {
     --shows-network-size: clamp(2.6rem, 14vw, 4.2rem);
+  }
+  .shows-hero__brand-left {
+    gap: 0.3rem;
   }
   .shows-hero__row {
     gap: 0.45rem;

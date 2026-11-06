@@ -1,4 +1,4 @@
-// Shows hero: Canary Cry SVG wordmark + stretched Bebas NETWORK (left), then
+// Shows hero: Canary Cry SVG above yellow rule (left); NETWORK stage-right;
 // two centered rows of three network tiles on the shared mission-hero shell.
 
 import { describe, expect, it } from "vite-plus/test";
@@ -19,18 +19,21 @@ describe("Shows hero (wordmark + NETWORK + 2×3 tiles)", () => {
 
     expect(shows).toContain('class="mission-hero shows-hero"');
     expect(shows).toContain("mission-hero__floor-grid");
+    expect(shows).toContain("shows-hero__stage");
+    expect(shows).toContain("shows-hero__brand-left");
     expect(shows).toContain("shows-hero__mark");
     expect(shows).toMatch(/<h1 class="shows-hero__network"/);
     expect(shows).toContain("NETWORK");
-    expect(shows).toContain("shows-hero__network-row");
     expect(shows).toMatch(/ep-wall__rule[^"]*shows-hero__rule|shows-hero__rule[^"]*ep-wall__rule/);
+    // Rule precedes NETWORK in DOM (left then right).
+    expect(shows.indexOf("shows-hero__rule")).toBeLessThan(shows.indexOf('class="shows-hero__network"'));
+    // Mark precedes rule (stacked above the line).
+    expect(shows.indexOf("shows-hero__mark")).toBeLessThan(shows.indexOf("shows-hero__rule"));
     // Real CcWordmark path data (not a text substitute).
     expect(shows).toContain("M.02,26.46C.02,11.76");
 
-    expect(shows).toContain("shows-hero__stage");
     expect(shows).toContain("shows-hero__grid");
     expect(shows).toContain("shows-hero__row");
-    // Row order labels present.
     for (const label of [
       "Canary Cry News Talk",
       "Canary Cry Radio",
@@ -45,30 +48,29 @@ describe("Shows hero (wordmark + NETWORK + 2×3 tiles)", () => {
     expect(shows).toContain("On the network");
     expect(shows).not.toContain("mission-hero--blank");
     expect(shows).not.toContain("shows-network__tile--news");
+    expect(shows).not.toContain("shows-hero__network-row");
   });
 
-  it("styles NETWORK with Bebas stretch, white mark, and shared stage width", () => {
+  it("styles NETWORK right, rule left fill, mark above rule, shared stage", () => {
     const cssName = read(SHOWS).match(/assets\/(root-[^"]+\.css)/)?.[1];
     expect(cssName).toBeTruthy();
     const css = read(`assets/${cssName}`);
     expect(css).toContain("shows-hero__network");
     expect(css).toContain("scaleY(var(--shows-network-scale-y))");
+    expect(css).toContain("transform-origin:100% 0");
     expect(css).toContain("color:#fff");
     expect(css).toContain("grid-template-columns:repeat(3");
     expect(css).toContain("43rem");
     expect(css).toContain("49rem");
     expect(css).toContain("54rem");
     expect(css).toContain("shows-hero__stage");
+    expect(css).toContain("shows-hero__brand-left");
     expect(css).toContain("height:5px");
     expect(css).toMatch(/\.ep-wall__rule\{[^}]*background:var\(--accent\)/);
-    expect(css).toContain("shows-hero__network-row");
     expect(css).toContain("--shows-network-scale-y:1.4");
     expect(css).toContain("--shows-network-asc:.95");
     expect(css).toContain("--shows-network-desc:.35");
-    expect(css).toContain("shows-hero__rule");
     expect(css).toContain("translateY(calc(var(--shows-network-size)");
     expect(css).toContain("shows-network-asc");
-    expect(css).toContain("shows-network-desc");
   });
-
 });

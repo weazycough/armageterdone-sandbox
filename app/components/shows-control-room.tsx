@@ -86,18 +86,18 @@ export function ShowsControlRoom({ tiles }: { tiles: NetworkShowTile[] }): React
         {/* Shared centered stage: title left edge == grid left edge; width drives both. */}
         <div className="shows-hero__stage">
           <header className="shows-hero__brand">
-            {/* Real brand SVG (CcWordmark paths); white; medium. Decorative — h1 names the page. */}
-            <span className="shows-hero__mark-wrap" aria-hidden="true">
-              <CcWordmark className="shows-hero__mark" />
-            </span>
-            <div className="shows-hero__network-row">
-              <h1 className="shows-hero__network">
-                <span className="sr-only">Canary Cry </span>
-                NETWORK
-              </h1>
+            {/* Left: mark just above rule; right: NETWORK. Rule fills leftover width. */}
+            <div className="shows-hero__brand-left">
+              <span className="shows-hero__mark-wrap" aria-hidden="true">
+                <CcWordmark className="shows-hero__mark" />
+              </span>
               {/* Exact home Recent Episodes header rule (ep-wall__rule). */}
               <span className="ep-wall__rule shows-hero__rule" aria-hidden="true" />
             </div>
+            <h1 className="shows-hero__network">
+              <span className="sr-only">Canary Cry </span>
+              NETWORK
+            </h1>
           </header>
 
           <div className="shows-hero__grid" aria-label="Network shows">
