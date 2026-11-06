@@ -4512,16 +4512,16 @@ h2 {
   max-width: min(96vw, 20rem);
   font-family: var(--font-title);
   font-weight: 400;
-  /* Near home tag base; 3 shorter lines fit the flank. */
-  font-size: clamp(3.25rem, 12vw, 5rem);
+  /* ~20% under prior flank sizes; left-aligned stack. */
+  font-size: clamp(2.6rem, 9.6vw, 4rem);
   line-height: 0.82;
   letter-spacing: -0.02em;
   text-transform: uppercase;
   color: var(--accent);
   text-shadow: 0 0 22px color-mix(in srgb, var(--accent) 55%, transparent);
   transform: scaleY(1.4);
-  transform-origin: top center;
-  text-align: center; /* all three words share one vertical centerline */
+  transform-origin: top left;
+  text-align: left;
   pointer-events: none;
 }
 .shows-studio__kicker-line {
@@ -4568,11 +4568,11 @@ h2 {
     max-width: none;
     /* +40px total from 97697fe (+20 from 0d1dfbb). */
     margin-top: clamp(calc(1.5rem + 40px), calc(1.25vh + 1.15rem + 40px), calc(2.5rem + 40px));
-    /* Home tag @768: clamp(4.4rem, 7.2vw, 7.5rem) — slightly under for flank. */
-    font-size: clamp(4rem, 6.2vw, 6.5rem);
+    /* ~20% under prior @768 flank size. */
+    font-size: clamp(3.2rem, 4.96vw, 5.2rem);
     transform: scaleY(1.4);
-    transform-origin: top center;
-    text-align: center;
+    transform-origin: top left;
+    text-align: left;
   }
   .shows-studio__stage .shows-studio__hero {
     order: 0;
@@ -4596,8 +4596,8 @@ h2 {
 }
 @media (min-width: 1100px) {
   .shows-studio__kicker {
-    /* Home tag @1100: clamp(5.5rem, 7.5vw, 8.3rem) — parallel, flank-safe. */
-    font-size: clamp(4.8rem, 6.6vw, 7.2rem);
+    /* ~20% under prior @1100 flank size. */
+    font-size: clamp(3.84rem, 5.28vw, 5.76rem);
   }
   .shows-studio__blurb { max-width: 22rem; }
 }
