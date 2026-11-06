@@ -4786,8 +4786,8 @@ h2 {
   margin-inline: auto;
   display: flex;
   flex-direction: column;
-  /* scaleY on NETWORK does not grow layout box; pad past visual glyphs */
-  gap: clamp(2.75rem, 4.5vw, 3.75rem);
+  /* Gap clears rule nudge into tiles; ~half prior air (~12-18px painted). */
+  gap: clamp(1.375rem, 2.25vw, 1.875rem);
 }
 /* Brand row: left stack (mark above rule) + NETWORK on stage right.
    Rule flexes to fill leftover width; bottoms share painted NETWORK glyphs. */
@@ -4946,7 +4946,7 @@ h2 {
     padding: 1.35rem 0 1.75rem;
   }
   .shows-hero__stage {
-    gap: clamp(2.25rem, 8vw, 3rem);
+    gap: clamp(1.125rem, 4vw, 1.5rem);
   }
   .shows-hero__brand {
     --shows-network-size: clamp(2.21rem, 11.9vw, 3.57rem); /* ~85% of prior 2.6/14/4.2 */
@@ -4968,7 +4968,7 @@ h2 {
   }
   .shows-hero__stage {
     --shows-hero-stage: min(100%, 49rem); /* was 64rem */
-    gap: clamp(3rem, 4vw, 3.75rem);
+    gap: clamp(1.5rem, 2vw, 1.875rem);
   }
   .shows-hero__grid {
     gap: 1rem;

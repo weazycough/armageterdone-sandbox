@@ -78,5 +78,9 @@ describe("Shows hero (wordmark + NETWORK + 2×3 tiles)", () => {
     // Mark and rule share the same nudge so Canarycry tracks the painted bar.
     expect(css).toContain("translateY(var(--shows-rule-nudge))");
     expect(css).toMatch(/shows-hero__mark-wrap\{[^}]*translateY\(var\(--shows-rule-nudge\)\)/);
+    // Header→grid stage gap ~half prior (keeps rule-nudge clearance).
+    expect(css).toContain("gap:clamp(1.375rem,2.25vw,1.875rem)");
+    expect(css).toContain("gap:clamp(1.125rem,4vw,1.5rem)");
+    expect(css).toContain("gap:clamp(1.5rem,2vw,1.875rem)");
   });
 });
