@@ -4456,37 +4456,9 @@ h2 {
 .shows-studio {
   overflow: visible;
 }
-.shows-studio__network-title {
-  position: relative;
-  z-index: 6;
-  display: block;
-  width: fit-content;
-  max-width: calc(100% - 1rem);
-  margin: 0.85rem auto 1.5rem;
-  padding: 0 0.35rem 0.55em; /* room under scaleY stretch */
-  box-sizing: border-box;
-  font-family: var(--font-title);
-  font-weight: 400;
-  font-size: clamp(2.1rem, 9.5vw, 5.5rem);
-  line-height: 0.82;
-  white-space: nowrap;
-  letter-spacing: -0.02em;
-  text-transform: uppercase;
-  color: var(--accent);
-  text-shadow: 0 0 22px color-mix(in srgb, var(--accent) 55%, transparent);
-  transform: scaleY(1.4);
-  transform-origin: top center;
-  text-align: center;
-  pointer-events: none;
-}
-@media (min-width: 768px) {
-  .shows-studio__network-title {
-    margin: 1rem auto 1.85rem;
-    padding: 0 0.75rem 0.55em;
-    max-width: calc(100% - 2rem);
-    font-size: clamp(3.4rem, 7.5vw, 6.5rem);
-  }
-}
+/* Former under-scene network title removed — title lives in center column. */
+.shows-studio__network-title { display: none !important; }
+
 /* Shows redesign t233u: desk/monitors/flanks removed — tile wall only. */
 .shows-studio__wall,
 .shows-arc,
@@ -4496,70 +4468,117 @@ h2 {
 .shows-studio__kicker,
 .shows-studio__blurb { display: none !important; }
 
-/* Landscape bento mosaic — 4 cols × 2 rows (~2:1), labels overlaid on frames. */
+/* Wide three-column Shows wall: tile stacks | title+copy | tile stacks. */
 .shows-network {
-  --shows-gutter: 0.4rem;
+  --shows-gutter: 0.65rem;
   position: relative;
   z-index: 2;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  grid-template-rows: 1fr 1fr;
-  gap: var(--shows-gutter);
-  width: min(100% - 1.25rem, 56rem);
-  aspect-ratio: 2 / 1;
-  margin: 1.75rem auto 1.25rem;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2.35fr) minmax(0, 1fr);
+  align-items: center;
+  column-gap: clamp(0.75rem, 2vw, 1.75rem);
+  row-gap: 1.25rem;
+  width: min(100% - 1.25rem, 72rem);
+  margin: 1.75rem auto 2rem;
   padding: 0;
   box-sizing: border-box;
-  align-items: stretch;
+}
+.shows-network__col {
+  display: grid;
+  grid-template-rows: repeat(3, minmax(0, 1fr));
+  gap: var(--shows-gutter);
+  min-width: 0;
+  min-height: 0;
+  align-self: stretch;
+}
+.shows-network__center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-width: 0;
+  padding: 0.35rem 0.25rem 0.75rem;
+  /* Room under scaleY so NETWORK doesn't collide with kicker. */
+  gap: 0;
+}
+.shows-network__title {
+  margin: 0 0 0.15em;
+  padding: 0 0 0.45em; /* scaleY overflow */
+  font-family: var(--font-title);
+  font-weight: 400;
+  /* Wide enough that CANARY CRY stays one line on desktop. */
+  font-size: clamp(2.4rem, 6.2vw, 5.6rem);
+  line-height: 0.82;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-shadow: 0 0 22px color-mix(in srgb, var(--accent) 55%, transparent);
+  transform: scaleY(1.4);
+  transform-origin: top center;
+  max-width: 100%;
+}
+.shows-network__title-line {
+  display: block;
+  white-space: nowrap;
+}
+.shows-network__kicker {
+  /* Match home .mission-hero__kicker (grey Bebas subheading). */
+  margin: 0.85rem 0 0.65rem;
+  font-family: var(--font-title);
+  font-weight: 400;
+  font-size: clamp(1.15rem, 2.4vw, 1.85rem);
+  line-height: 1.05;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #b8b3a8;
+}
+.shows-network__blurb {
+  margin: 0;
+  max-width: 28rem;
+  color: var(--fg-secondary);
+  font-size: 0.88rem;
+  line-height: 1.55;
 }
 .shows-network__tile {
-  position: relative;
-  display: block;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
   min-width: 0;
   min-height: 0;
   color: var(--shows-label, #f5efe2);
   text-decoration: none;
-  overflow: hidden;
-  border-radius: var(--radius-sm);
 }
 .shows-network__tile:hover { text-decoration: none; }
 .shows-network__tile:hover .shows-network__frame img {
-  transform: scale(1.03);
+  transform: translateY(-2px);
 }
-/* Placement — Radio top-left; News Talk wide center-top; Clubhouse tall right;
-   Joyspiracy bottom-left; Burning Man + Bunker under News Talk. */
-.shows-network__tile--radio { grid-column: 1; grid-row: 1; }
-.shows-network__tile--joy { grid-column: 1; grid-row: 2; }
-.shows-network__tile--news { grid-column: 2 / span 2; grid-row: 1; }
-.shows-network__tile--burn { grid-column: 2; grid-row: 2; }
-.shows-network__tile--bunker { grid-column: 3; grid-row: 2; }
-.shows-network__tile--club { grid-column: 4; grid-row: 1 / span 2; }
-
 .shows-network__frame {
   display: block;
-  position: absolute;
-  inset: 0;
+  position: relative;
   overflow: hidden;
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: var(--radius-sm);
   background: #0a0a12;
   border: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
-  border-radius: inherit;
   line-height: 0;
-}
-.shows-network__tile--news .shows-network__frame {
-  border-left: 5px solid var(--accent);
 }
 .shows-network__frame img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 0.25s var(--ease);
+  transition: transform 0.2s var(--ease);
 }
 .shows-network__missing {
   display: grid;
   place-items: center;
   width: 100%;
   height: 100%;
+  min-height: 4.5rem;
   padding: 0.55rem;
   font-family: var(--font-display);
   font-size: 0.65rem;
@@ -4569,73 +4588,69 @@ h2 {
   text-align: center;
   line-height: 1.3;
 }
-/* Label integrated on tile so mosaic geometry stays ~2:1. */
 .shows-network__label {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 1;
-  margin: 0;
-  padding: 1.35rem 0.55rem 0.45rem;
+  flex: 0 0 auto;
   font-family: var(--font-title);
-  font-size: clamp(0.72rem, 1.5vw, 0.95rem);
+  font-size: clamp(0.78rem, 1.5vw, 1rem);
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--accent);
-  line-height: 1.1;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.85);
-  background: linear-gradient(to top, rgba(5, 4, 12, 0.88) 0%, rgba(5, 4, 12, 0.45) 55%, transparent 100%);
-  pointer-events: none;
-}
-.shows-network__tile--news .shows-network__label {
-  font-size: clamp(0.95rem, 2vw, 1.25rem);
-  padding: 1.6rem 0.7rem 0.5rem;
-}
-.shows-network__tile--club .shows-network__label {
-  font-size: clamp(0.8rem, 1.6vw, 1.05rem);
+  line-height: 1.15;
 }
 .shows-network__tile--soon { opacity: 0.85; cursor: default; }
 
 @media (min-width: 768px) {
   .shows-network {
-    --shows-gutter: 0.45rem;
-    width: min(100% - 2.5rem, 60rem);
-    margin: 2.25rem auto 1.5rem;
+    --shows-gutter: 0.7rem;
+    width: min(100% - 2rem, 74rem);
+    margin: 2.35rem auto 2.35rem;
+    min-height: clamp(22rem, 48vh, 32rem);
+  }
+  .shows-network__col {
+    height: 100%;
+  }
+  .shows-network__frame {
+    aspect-ratio: auto;
+    height: 100%;
+  }
+  .shows-network__title {
+    font-size: clamp(3.2rem, 5.4vw, 5.8rem);
+  }
+}
+
+@media (min-width: 1100px) {
+  .shows-network {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2.5fr) minmax(0, 1fr);
+    width: min(100% - 2.5rem, 78rem);
+  }
+  .shows-network__title {
+    font-size: clamp(4rem, 5.2vw, 6.4rem);
   }
 }
 
 @media (max-width: 767px) {
   .shows-network {
-    --shows-gutter: 0.5rem;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
+    width: min(100% - 1.25rem, 26rem);
+    margin: 1.35rem auto 1.75rem;
+  }
+  .shows-network__center {
+    order: -1;
+    padding-bottom: 0.25rem;
+  }
+  .shows-network__title {
+    font-size: clamp(2.5rem, 12vw, 3.6rem);
+  }
+  .shows-network__title-line {
+    white-space: nowrap;
+  }
+  .shows-network__col {
     grid-template-rows: none;
-    aspect-ratio: auto;
-    width: min(100% - 1.25rem, 28rem);
-  }
-  .shows-network__tile--news {
-    grid-column: 1 / -1;
-    grid-row: auto;
-    aspect-ratio: 2 / 1;
-  }
-  .shows-network__tile--club {
-    grid-column: 1 / -1;
-    grid-row: auto;
-    aspect-ratio: 16 / 9;
-  }
-  .shows-network__tile--radio,
-  .shows-network__tile--joy,
-  .shows-network__tile--burn,
-  .shows-network__tile--bunker {
-    grid-column: auto;
-    grid-row: auto;
-    aspect-ratio: 4 / 3;
-  }
-  .shows-network__tile {
-    position: relative;
   }
   .shows-network__frame {
-    position: absolute;
+    aspect-ratio: 16 / 10;
+    height: auto;
+    flex: none;
   }
 }
 

@@ -1,6 +1,6 @@
-// shows-control-room.tsx — Shows page hero: blue perspective grid with a
-// landscape bento mosaic (4×2): Radio / Joyspiracy left; News Talk wide
-// center-top; Burning Man + Bunker under it; Clubhouse tall right.
+// shows-control-room.tsx — Shows page hero: blue perspective grid with a wide
+// three-column wall — News Talk/Radio/Clubhouse left; CANARY CRY / NETWORK +
+// grey Bebas subhead + blurb center; Joyspiracy/Burning Man/Bunker right.
 // Thumbs = each show's latest episode art from build-time feeds.
 
 import type * as React from "react";
@@ -15,17 +15,10 @@ function tileHref(show: NetworkShowTile): string | null {
   return null;
 }
 
-function ShowTile({
-  show,
-  slot,
-}: {
-  show: NetworkShowTile;
-  slot: string;
-}): React.ReactNode {
+function ShowTile({ show }: { show: NetworkShowTile }): React.ReactNode {
   const href = tileHref(show);
   const art = show.latest?.artUrl;
-  const className = `shows-network__tile ${slot}`;
-  const featured = slot.includes("--news");
+  const className = "shows-network__tile";
 
   const body = (
     <>
@@ -34,9 +27,9 @@ function ShowTile({
           <img
             src={art}
             alt=""
-            width={featured ? 640 : 280}
-            height={featured ? 280 : 280}
-            loading={featured ? "eager" : "lazy"}
+            width={400}
+            height={300}
+            loading="lazy"
             decoding="async"
           />
         ) : (
@@ -62,26 +55,17 @@ function ShowTile({
   );
 }
 
-/** Desktop bento placement (4 cols × 2 rows). */
 export const SHOWS_NETWORK_LAYOUT = {
-  radio: "col1 row1",
-  joyspiracy: "col1 row2",
-  "news-talk": "cols2-3 row1",
-  "burning-man-research": "col2 row2",
-  "basils-bunker": "col3 row2",
-  clubhouse: "col4 rows1-2",
+  left: ["news-talk", "radio", "clubhouse"],
+  right: ["joyspiracy", "burning-man-research", "basils-bunker"],
 } as const;
 
 export function ShowsControlRoom({ tiles }: { tiles: NetworkShowTile[] }): React.ReactNode {
   const bySlug = Object.fromEntries(tiles.map((t) => [t.slug, t]));
-  const news = bySlug["news-talk"];
-  const radio = bySlug.radio;
-  const clubhouse = bySlug.clubhouse;
-  const joyspiracy = bySlug.joyspiracy;
-  const burning = bySlug["burning-man-research"];
-  const bunker = bySlug["basils-bunker"];
+  const left = SHOWS_NETWORK_LAYOUT.left.map((s) => bySlug[s]);
+  const right = SHOWS_NETWORK_LAYOUT.right.map((s) => bySlug[s]);
 
-  if (!news || !radio || !clubhouse || !joyspiracy || !burning || !bunker) {
+  if (left.some((t) => !t) || right.some((t) => !t)) {
     throw new Error("ShowsControlRoom: expected all six network show tiles");
   }
 
@@ -92,17 +76,32 @@ export function ShowsControlRoom({ tiles }: { tiles: NetworkShowTile[] }): React
           <div className="shows-studio__floor-grid" />
         </div>
 
-        <div className="shows-network" aria-label="Shows">
-          <ShowTile show={radio} slot="shows-network__tile--radio" />
-          <ShowTile show={news} slot="shows-network__tile--news" />
-          <ShowTile show={clubhouse} slot="shows-network__tile--club" />
-          <ShowTile show={joyspiracy} slot="shows-network__tile--joy" />
-          <ShowTile show={burning} slot="shows-network__tile--burn" />
-          <ShowTile show={bunker} slot="shows-network__tile--bunker" />
+        <div className="shows-network">
+          <div className="shows-network__col shows-network__col--left" aria-label="Flagship shows">
+            {left.map((show) => (
+              <ShowTile key={show!.slug} show={show!} />
+            ))}
+          </div>
+
+          <div className="shows-network__center">
+            <h1 className="shows-network__title">
+              <span className="shows-network__title-line">Canary Cry</span>
+              <span className="shows-network__title-line">Network</span>
+            </h1>
+            <p className="shows-network__kicker">Two hosts - One mission</p>
+            <p className="shows-network__blurb">
+              The shows and projects that Basil and Gonz have created over the years. All
+              their best work in one place.
+            </p>
+          </div>
+
+          <div className="shows-network__col shows-network__col--right" aria-label="More network shows">
+            {right.map((show) => (
+              <ShowTile key={show!.slug} show={show!} />
+            ))}
+          </div>
         </div>
       </div>
-
-      <h1 className="shows-studio__network-title">Canary Cry Network</h1>
     </section>
   );
 }
