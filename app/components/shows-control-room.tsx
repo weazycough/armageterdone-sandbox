@@ -1,6 +1,6 @@
 // shows-control-room.tsx — Shows page hero on the shared home mission-hero
 // background: left-aligned Canary Cry wordmark + stretched Bebas NETWORK,
- // then two centered rows of three network show tiles.
+// then two centered rows of three network show tiles.
 
 import type * as React from "react";
 import type { NetworkShowTile } from "../lib/network-latest.server";
@@ -26,8 +26,7 @@ function tileHref(show: NetworkShowTile): string | null {
 function ShowTile({ show }: { show: NetworkShowTile }): React.ReactNode {
   const href = tileHref(show);
   // Prefer live latest thumb; fall back to roster art via asset() (public/).
-  const artSrc =
-    show.latest?.artUrl ?? (show.art ? asset(show.art) : null);
+  const artSrc = show.latest?.artUrl ?? (show.art ? asset(show.art) : null);
 
   const body = (
     <>
@@ -84,27 +83,30 @@ export function ShowsControlRoom({ tiles }: { tiles: NetworkShowTile[] }): React
     <section className="mission-hero shows-hero" aria-label="Canary Cry Network shows">
       <MissionHeroFloor />
       <div className="container mission-hero__inner shows-hero__inner">
-        <header className="shows-hero__brand">
-          {/* Real brand SVG (CcWordmark paths); white; medium. Decorative — h1 names the page. */}
-          <span className="shows-hero__mark-wrap" aria-hidden="true">
-            <CcWordmark className="shows-hero__mark" />
-          </span>
-          <h1 className="shows-hero__network">
-            <span className="sr-only">Canary Cry </span>
-            NETWORK
-          </h1>
-        </header>
+        {/* Shared centered stage: title left edge == grid left edge; width drives both. */}
+        <div className="shows-hero__stage">
+          <header className="shows-hero__brand">
+            {/* Real brand SVG (CcWordmark paths); white; medium. Decorative — h1 names the page. */}
+            <span className="shows-hero__mark-wrap" aria-hidden="true">
+              <CcWordmark className="shows-hero__mark" />
+            </span>
+            <h1 className="shows-hero__network">
+              <span className="sr-only">Canary Cry </span>
+              NETWORK
+            </h1>
+          </header>
 
-        <div className="shows-hero__grid" aria-label="Network shows">
-          {SHOWS_HERO_ROWS.map((row) => (
-            <div className="shows-hero__row" key={row.join("-")}>
-              {row.map((slug) => {
-                const show = bySlug[slug];
-                if (!show) throw new Error(`ShowsControlRoom: missing tile ${slug}`);
-                return <ShowTile key={slug} show={show} />;
-              })}
-            </div>
-          ))}
+          <div className="shows-hero__grid" aria-label="Network shows">
+            {SHOWS_HERO_ROWS.map((row) => (
+              <div className="shows-hero__row" key={row.join("-")}>
+                {row.map((slug) => {
+                  const show = bySlug[slug];
+                  if (!show) throw new Error(`ShowsControlRoom: missing tile ${slug}`);
+                  return <ShowTile key={slug} show={show} />;
+                })}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

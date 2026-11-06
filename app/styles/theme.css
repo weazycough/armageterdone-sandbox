@@ -4766,20 +4766,31 @@ h2 {
 
 
 /* -------------------------------------------------------------------------
-   Shows hero (t251u): shared .mission-hero background (glow + floor grid).
-   Art-wall-like title stack — medium white CcWordmark SVG, much larger yellow
-   stretched Bebas NETWORK, both left-aligned. Two centered rows of 3 tiles.
+   Shows hero: shared .mission-hero background. Title + 2×3 tiles share one
+   centered stage (~23% narrower than prior 56/64/70rem caps) so Canary Cry
+   SVG and NETWORK left edges align to the grid left edge. Extra stage gap
+   clears Bebas scaleY(1.4) visual overflow (was ~3px title→panels).
    ------------------------------------------------------------------------- */
 .shows-hero .shows-hero__inner {
   position: relative;
   z-index: 1;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  align-items: stretch;
   padding: 1.75rem 0 2.25rem;
 }
+/* Common width + horizontal center — brand and grid share the same left edge. */
+.shows-hero__stage {
+  --shows-hero-stage: min(100%, 43rem); /* was 56rem (~23% narrower) */
+  width: var(--shows-hero-stage);
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  /* scaleY(1.4) on NETWORK does not grow layout box; pad past visual glyphs */
+  gap: clamp(2.75rem, 4.5vw, 3.75rem);
+}
 .shows-hero__brand {
-  align-self: flex-start;
+  align-self: stretch;
   text-align: left;
   max-width: 100%;
 }
@@ -4792,7 +4803,7 @@ h2 {
   display: block;
   height: clamp(1.65rem, 3.2vw, 2.35rem);
   width: auto;
-  max-width: min(72vw, 18rem);
+  max-width: min(100%, 18rem);
   color: #fff;
 }
 /* Art-wall __big proportions, Bebas + home scaleY stretch, site yellow. */
@@ -4815,8 +4826,8 @@ h2 {
   display: flex;
   flex-direction: column;
   gap: 0.85rem;
-  width: min(100%, 56rem);
-  margin-inline: auto;
+  width: 100%;
+  margin: 0;
 }
 .shows-hero__row {
   display: grid;
@@ -4881,12 +4892,13 @@ h2 {
 
 @media (max-width: 639px) {
   .shows-hero .shows-hero__inner {
-    gap: 1.25rem;
     padding: 1.35rem 0 1.75rem;
+  }
+  .shows-hero__stage {
+    gap: clamp(2.25rem, 8vw, 3rem);
   }
   .shows-hero__network {
     font-size: clamp(2.6rem, 14vw, 4.2rem);
-    /* scaleY stretch can overflow; keep left origin */
   }
   .shows-hero__row {
     gap: 0.45rem;
@@ -4898,11 +4910,13 @@ h2 {
 
 @media (min-width: 768px) {
   .shows-hero .shows-hero__inner {
-    gap: 1.75rem;
     padding: 2.25rem 0 2.75rem;
   }
+  .shows-hero__stage {
+    --shows-hero-stage: min(100%, 49rem); /* was 64rem */
+    gap: clamp(3rem, 4vw, 3.75rem);
+  }
   .shows-hero__grid {
-    width: min(100%, 64rem);
     gap: 1rem;
   }
   .shows-hero__row { gap: 0.75rem; }
@@ -4913,8 +4927,8 @@ h2 {
     height: 2.5rem;
     max-width: 20rem;
   }
-  .shows-hero__grid {
-    width: min(100%, 70rem);
+  .shows-hero__stage {
+    --shows-hero-stage: min(100%, 54rem); /* was 70rem */
   }
 }
 

@@ -25,6 +25,7 @@ describe("Shows hero (wordmark + NETWORK + 2×3 tiles)", () => {
     // Real CcWordmark path data (not a text substitute).
     expect(shows).toContain("M.02,26.46C.02,11.76");
 
+    expect(shows).toContain("shows-hero__stage");
     expect(shows).toContain("shows-hero__grid");
     expect(shows).toContain("shows-hero__row");
     // Row order labels present.
@@ -44,12 +45,17 @@ describe("Shows hero (wordmark + NETWORK + 2×3 tiles)", () => {
     expect(shows).not.toContain("shows-network__tile--news");
   });
 
-  it("styles NETWORK with Bebas stretch and white mark", () => {
+  it("styles NETWORK with Bebas stretch, white mark, and shared stage width", () => {
     const cssName = read(SHOWS).match(/assets\/(root-[^"]+\.css)/)?.[1];
     expect(cssName).toBeTruthy();
     const css = read(`assets/${cssName}`);
     expect(css).toMatch(/\.shows-hero__network\{[^}]*scaleY\(1\.4\)/);
     expect(css).toMatch(/\.shows-hero__mark\{[^}]*color:#fff/);
     expect(css).toMatch(/\.shows-hero__row\{[^}]*grid-template-columns:repeat\(3/);
+    // Shared centered stage (~23% under prior 56/64/70rem caps).
+    expect(css).toContain("43rem");
+    expect(css).toContain("49rem");
+    expect(css).toContain("54rem");
+    expect(css).toMatch(/\.shows-hero__stage\{/);
   });
 });
