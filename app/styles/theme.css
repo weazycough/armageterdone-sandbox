@@ -4470,7 +4470,9 @@ h2 {
 
 /* Wide three-column Shows wall: tile stacks | title+copy | tile stacks. */
 .shows-network {
-  --shows-gutter: 0.65rem;
+  --shows-gutter: 0.55rem;
+  /* Desktop side tile target ~11.5rem wide (~2/3 of prior ~17rem 1fr flanks). */
+  --shows-tile-w: 11.5rem;
   position: relative;
   z-index: 2;
   display: grid;
@@ -4485,11 +4487,14 @@ h2 {
 }
 .shows-network__col {
   display: grid;
-  grid-template-rows: repeat(3, minmax(0, 1fr));
+  grid-template-rows: repeat(3, auto);
   gap: var(--shows-gutter);
   min-width: 0;
   min-height: 0;
-  align-self: stretch;
+  align-self: center;
+  justify-self: center;
+  width: 100%;
+  max-width: var(--shows-tile-w);
 }
 .shows-network__center {
   display: flex;
@@ -4601,17 +4606,28 @@ h2 {
 
 @media (min-width: 768px) {
   .shows-network {
-    --shows-gutter: 0.7rem;
+    --shows-gutter: 0.55rem;
+    --shows-tile-w: 11.5rem; /* ~33% under prior ~17rem flank */
+    grid-template-columns:
+      minmax(0, var(--shows-tile-w))
+      minmax(0, 1fr)
+      minmax(0, var(--shows-tile-w));
     width: min(100% - 2rem, 74rem);
     margin: 2.35rem auto 2.35rem;
-    min-height: clamp(22rem, 48vh, 32rem);
+    /* No shared min-height — side stacks size to their tiles, not the title. */
+    min-height: 0;
+    align-items: center;
   }
   .shows-network__col {
-    height: 100%;
+    width: var(--shows-tile-w);
+    max-width: var(--shows-tile-w);
+    height: auto;
   }
   .shows-network__frame {
-    aspect-ratio: auto;
-    height: 100%;
+    /* Keep natural 16:10; do not stretch to center column height. */
+    flex: none;
+    aspect-ratio: 16 / 10;
+    height: auto;
   }
   .shows-network__title {
     font-size: clamp(3.2rem, 5.4vw, 5.8rem);
@@ -4620,7 +4636,11 @@ h2 {
 
 @media (min-width: 1100px) {
   .shows-network {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 2.5fr) minmax(0, 1fr);
+    --shows-tile-w: 12rem;
+    grid-template-columns:
+      minmax(0, var(--shows-tile-w))
+      minmax(0, 1fr)
+      minmax(0, var(--shows-tile-w));
     width: min(100% - 2.5rem, 78rem);
   }
   .shows-network__title {
@@ -4630,6 +4650,7 @@ h2 {
 
 @media (max-width: 767px) {
   .shows-network {
+    --shows-tile-w: none;
     grid-template-columns: 1fr;
     width: min(100% - 1.25rem, 26rem);
     margin: 1.35rem auto 1.75rem;
@@ -4646,6 +4667,8 @@ h2 {
   }
   .shows-network__col {
     grid-template-rows: none;
+    max-width: none;
+    width: 100%;
   }
   .shows-network__frame {
     aspect-ratio: 16 / 10;
