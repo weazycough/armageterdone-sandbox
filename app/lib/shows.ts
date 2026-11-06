@@ -108,8 +108,8 @@ export const NETWORK_SHOWS: NetworkShow[] = [
   {
     slug: "joyspiracy",
     title: "The Joyspiracy Theory",
-    desc: null,
-    href: null,
+    desc: "Basil's joy-focused interviews and conversations — a separate Libsyn show outside the main CCNT feed.",
+    href: "https://thejoyspiracytheory.libsyn.com/",
     art: null,
   },
   {
@@ -128,7 +128,5 @@ export const NETWORK_SHOWS: NetworkShow[] = [
   },
 ];
 
-/** Shows on the network page that still need a link and/or art. */
-export const NETWORK_SHOW_OPEN_ITEMS = NETWORK_SHOWS.filter(
-  (s) => s.href === null || s.art === null,
-);
+/** Shows on the network page that still need a destination link. */
+export const NETWORK_SHOW_OPEN_ITEMS = NETWORK_SHOWS.filter((s) => s.href === null);

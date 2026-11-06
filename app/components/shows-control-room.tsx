@@ -1,102 +1,107 @@
-// shows-control-room.tsx — Option C from lab #9: six show monitors as a
-// news-station wall behind the commissioned Basil & Gonz desk art. The studio
-// stays dark in both themes. Desktop: a wide perspective arc. Phone: a 2×3
-// monitor panel behind the hosts (no swipe row).
+// shows-control-room.tsx — Shows page hero: blue perspective grid background
+// with a centered six-show tile wall (News Talk feature + Radio/Clubhouse under
+// it; Joyspiracy / Burning Man Research / Basil's Bunker on the right). Each
+// tile uses that show's latest episode thumbnail from build-time feed data.
 
 import type * as React from "react";
-import { Link } from "react-router";
-import { asset } from "../lib/asset";
-import { NETWORK_SHOWS, type NetworkShow } from "../lib/shows";
+import type { NetworkShowTile } from "../lib/network-latest.server";
+import { episodePath } from "../lib/paths";
+import { SmartLink } from "./smart-link";
 
-function MonitorScreen({ show }: { show: NetworkShow }): React.ReactNode {
-  if (show.art === null) {
-    return (
-      <span className="shows-monitor__screen shows-monitor__screen--testcard">
-        <span>Art to come</span>
-      </span>
-    );
-  }
-  return (
-    <span className="shows-monitor__screen">
-      <img src={asset(show.art)} alt="" width="512" height="512" loading="lazy" />
-    </span>
-  );
+function tileHref(show: NetworkShowTile): string | null {
+  if (show.href) return show.href;
+  if (show.latest?.slug) return episodePath(show.latest.slug);
+  if (show.latest?.externalUrl) return show.latest.externalUrl;
+  return null;
 }
 
-function Monitor({ show }: { show: NetworkShow }): React.ReactNode {
+function ShowTile({
+  show,
+  featured = false,
+}: {
+  show: NetworkShowTile;
+  featured?: boolean;
+}): React.ReactNode {
+  const href = tileHref(show);
+  const art = show.latest?.artUrl;
+  const className = featured ? "shows-network__tile shows-network__tile--feature" : "shows-network__tile";
+
   const body = (
     <>
-      <span className="shows-monitor__bezel">
-        <MonitorScreen show={show} />
-        <span className="shows-monitor__led" aria-hidden="true" />
+      <span className="shows-network__frame">
+        {art ? (
+          <img
+            src={art}
+            alt=""
+            width={featured ? 640 : 320}
+            height={featured ? 360 : 320}
+            loading={featured ? "eager" : "lazy"}
+            decoding="async"
+          />
+        ) : (
+          <span className="shows-network__missing">Latest episode art unavailable</span>
+        )}
       </span>
-      <span className="shows-monitor__label">{show.title}</span>
+      <span className="shows-network__label">{show.title}</span>
     </>
   );
 
-  if (show.href === null) {
+  if (href === null) {
     return (
-      <span
-        className="shows-monitor shows-monitor--soon"
-        aria-label={`${show.title}: page and art to come`}
-      >
+      <span className={`${className} shows-network__tile--soon`} aria-label={`${show.title}: destination to come`}>
         {body}
       </span>
     );
   }
 
   return (
-    <Link className="shows-monitor" to={show.href}>
+    <SmartLink className={className} href={href} title={show.latest?.title ?? show.title}>
       {body}
-    </Link>
+    </SmartLink>
   );
 }
 
-export function ShowsControlRoom(): React.ReactNode {
+const LEFT_SLUGS = ["news-talk", "radio", "clubhouse"] as const;
+const RIGHT_SLUGS = ["joyspiracy", "burning-man-research", "basils-bunker"] as const;
+
+export function ShowsControlRoom({ tiles }: { tiles: NetworkShowTile[] }): React.ReactNode {
+  const bySlug = Object.fromEntries(tiles.map((t) => [t.slug, t]));
+  const news = bySlug["news-talk"];
+  const radio = bySlug.radio;
+  const clubhouse = bySlug.clubhouse;
+  const right = RIGHT_SLUGS.map((s) => bySlug[s]).filter(Boolean) as NetworkShowTile[];
+
+  if (!news || !radio || !clubhouse) {
+    throw new Error("ShowsControlRoom: expected News Talk, Radio, and Clubhouse tiles");
+  }
+
   return (
     <section className="shows-studio" aria-label="The Canary Cry Network shows">
       <div className="shows-studio__scene">
-        {/* Home-style perspective grid along the bottom of the scene. */}
-        <div className="shows-studio__floor" aria-hidden="true"><div className="shows-studio__floor-grid" /></div>
-        {/* Wall sits behind the desk art; hero is the foreground strip. */}
-        <div className="shows-studio__wall">
-          <ul className="shows-arc" aria-label="Shows">
-            {NETWORK_SHOWS.map((show) => (
-              <li key={show.slug}>
-                <Monitor show={show} />
-              </li>
-            ))}
-          </ul>
+        <div className="shows-studio__floor" aria-hidden="true">
+          <div className="shows-studio__floor-grid" />
         </div>
 
-        <div className="shows-studio__stage">
-          <p className="shows-studio__kicker">
-            <span className="shows-studio__kicker-line">Canary</span>
-            <span className="shows-studio__kicker-line">Cry</span>
-            <span className="shows-studio__kicker-line">Network</span>
-          </p>
-
-          <div className="shows-studio__hero">
-            <picture>
-              <source srcSet={asset("images/newsdesk-hosts-v5.webp")} type="image/webp" />
-              <img
-                src={asset("images/newsdesk-hosts-v5.png")}
-                alt="Basil and Gonz in anchor chairs at the Canary Cry news desk"
-                width="1920"
-                height="1080"
-                decoding="async"
-              />
-            </picture>
+        <div className="shows-network">
+          <div className="shows-network__main">
+            <ShowTile show={news} featured />
+            <div className="shows-network__pair" aria-label="Radio and Clubhouse">
+              <ShowTile show={radio} />
+              <ShowTile show={clubhouse} />
+            </div>
           </div>
-
-          <p className="shows-studio__blurb">
-            Explore the shows Basil and Gonz have been part of, together or on their
-            own. One network. All their broadcasts.
-          </p>
+          <div className="shows-network__side" aria-label="More network shows">
+            {right.map((show) => (
+              <ShowTile key={show.slug} show={show} />
+            ))}
+          </div>
         </div>
       </div>
-      {/* Same display style as home mission-hero__tag; one line; clips into scene bottom. */}
+
       <h1 className="shows-studio__network-title">Canary Cry Network</h1>
     </section>
   );
 }
+
+// Keep slug order references for tests / future layout tweaks.
+export const SHOWS_NETWORK_LAYOUT = { left: LEFT_SLUGS, right: RIGHT_SLUGS };

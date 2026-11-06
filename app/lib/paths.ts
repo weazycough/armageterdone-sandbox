@@ -8,6 +8,10 @@ export const FEED_URL = "https://rss.libsyn.com/shows/84402/destinations/400745.
 export const FEED_CACHE = ".cache/libsyn-feed.xml";
 export const EPISODES_JSON = ".cache/episodes.json";
 export const SITE_JSON = ".cache/site.json";
+/** Separate Libsyn show; not in the main CCNT feed. */
+export const JOYSPIRACY_FEED_URL = "https://thejoyspiracytheory.libsyn.com/rss";
+export const JOYSPIRACY_FEED_CACHE = ".cache/joyspiracy-feed.xml";
+export const NETWORK_LATEST_JSON = ".cache/network-latest.json";
 export const PAGES_DIR = "content/pages";
 
 export const EPISODES_PER_PAGE = 16;

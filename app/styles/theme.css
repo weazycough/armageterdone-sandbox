@@ -4462,13 +4462,12 @@ h2 {
   display: block;
   width: fit-content;
   max-width: calc(100% - 1rem);
-  margin: -0.4em auto 1.25rem;
-  padding: 0 0.35rem;
+  margin: 0.85rem auto 1.5rem;
+  padding: 0 0.35rem 0.55em; /* room under scaleY stretch */
   box-sizing: border-box;
   font-family: var(--font-title);
   font-weight: 400;
-  /* Bigger than prior 5.1/5.6rem caps; still one line via vw + max-width. */
-  font-size: clamp(2.35rem, 11.5vw, 6.25rem);
+  font-size: clamp(2.1rem, 9.5vw, 5.5rem);
   line-height: 0.82;
   white-space: nowrap;
   letter-spacing: -0.02em;
@@ -4482,13 +4481,136 @@ h2 {
 }
 @media (min-width: 768px) {
   .shows-studio__network-title {
-    /* Pull = ~1/3 of post-scaleY glyph height (0.82*1.4/3 ≈ 0.383em). */
-    margin: -0.4em auto 1.6rem;
-    padding: 0 0.75rem;
+    margin: 1rem auto 1.85rem;
+    padding: 0 0.75rem 0.55em;
     max-width: calc(100% - 2rem);
-    font-size: clamp(4rem, 9.2vw, 7.5rem);
+    font-size: clamp(3.4rem, 7.5vw, 6.5rem);
   }
 }
+/* Shows redesign t233u: desk/monitors/flanks removed — tile wall only. */
+.shows-studio__wall,
+.shows-arc,
+.shows-monitor,
+.shows-studio__stage,
+.shows-studio__hero,
+.shows-studio__kicker,
+.shows-studio__blurb { display: none !important; }
+
+/* Centered six-show tile wall on the grid (home ep-wall–inspired). */
+.shows-network {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: 0.85rem;
+  width: min(100% - 1.5rem, 58rem);
+  margin: 1.75rem auto 1.25rem;
+  padding: 0;
+  box-sizing: border-box;
+}
+.shows-network__main {
+  display: grid;
+  gap: 0.85rem;
+}
+.shows-network__pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+.shows-network__side {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+.shows-network__tile {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  color: var(--shows-label, #f5efe2);
+  text-decoration: none;
+  min-width: 0;
+}
+.shows-network__tile:hover { text-decoration: none; }
+.shows-network__tile:hover .shows-network__frame img {
+  transform: translateY(-3px);
+}
+.shows-network__frame {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+  background: #0a0a12;
+  border: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
+  line-height: 0;
+}
+.shows-network__tile--feature .shows-network__frame {
+  border-left: 6px solid var(--accent);
+  aspect-ratio: 16 / 10;
+}
+.shows-network__tile:not(.shows-network__tile--feature) .shows-network__frame {
+  aspect-ratio: 1;
+}
+.shows-network__frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.2s var(--ease);
+}
+.shows-network__missing {
+  display: grid;
+  place-items: center;
+  aspect-ratio: inherit;
+  min-height: 6rem;
+  padding: 0.75rem;
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-tertiary);
+  text-align: center;
+  line-height: 1.35;
+}
+.shows-network__label {
+  font-family: var(--font-title);
+  font-size: clamp(0.95rem, 2.4vw, 1.2rem);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--accent);
+  line-height: 1.15;
+}
+.shows-network__tile--feature .shows-network__label {
+  font-size: clamp(1.15rem, 2.8vw, 1.55rem);
+}
+.shows-network__tile--soon { opacity: 0.85; cursor: default; }
+
+@media (min-width: 768px) {
+  .shows-network {
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+    align-items: stretch;
+    gap: 1rem;
+    width: min(100% - 2.5rem, 64rem);
+    margin: 2.25rem auto 1.5rem;
+  }
+  .shows-network__side {
+    /* Three equal tiles — overall height tracks the left feature+pair stack. */
+    grid-template-rows: repeat(3, 1fr);
+    gap: 0.85rem;
+  }
+  .shows-network__main {
+    grid-template-rows: minmax(0, 1.35fr) minmax(0, 1fr);
+  }
+  .shows-network__pair { gap: 0.85rem; }
+}
+
+@media (max-width: 767px) {
+  .shows-network {
+    margin-top: 1.35rem;
+  }
+  .shows-network__side {
+    grid-template-columns: 1fr;
+  }
+}
+
 
 /* Shows stage flanks — left slogan: CANARY / CRY / NETWORK, left-aligned,
    home scaleY(1.4). Right blurb = .mission-hero__about. Hosts/title unchanged. */
