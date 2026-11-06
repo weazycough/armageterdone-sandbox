@@ -67,7 +67,7 @@ describe("Shows hero (wordmark + NETWORK + 2×3 tiles)", () => {
     expect(css).toContain("shows-hero__brand-left");
     expect(css).toContain("height:5px");
     expect(css).toMatch(/\.ep-wall__rule\{[^}]*background:var\(--accent\)/);
-    expect(css).toContain("--shows-network-scale-y:1.4");
+    expect(css).toContain("--shows-network-scale-y:1.3");
     expect(css).toContain("--shows-network-asc:.95");
     expect(css).toContain("--shows-network-desc:.35");
     expect(css).toContain("--shows-rule-nudge:calc(var(--shows-network-size)");
