@@ -4766,12 +4766,159 @@ h2 {
 
 
 /* -------------------------------------------------------------------------
-   Blank Shows hero: same MissionHeroBody markup as home (h1/h2/picture>img/
-   ShowsStrip). visibility:hidden + inert; media uses transparent SVG data-URIs
-   so <img width/height> box model matches home without network art. Prior
-   rem sizer and aspect-ratio div / span placeholders drifted (~245px, then
-   ~+4px vs home) because the tree was not identical.
+   Shows hero (t251u): shared .mission-hero background (glow + floor grid).
+   Art-wall-like title stack — medium white CcWordmark SVG, much larger yellow
+   stretched Bebas NETWORK, both left-aligned. Two centered rows of 3 tiles.
    ------------------------------------------------------------------------- */
+.shows-hero .shows-hero__inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1.75rem 0 2.25rem;
+}
+.shows-hero__brand {
+  align-self: flex-start;
+  text-align: left;
+  max-width: 100%;
+}
+.shows-hero__mark-wrap {
+  display: block;
+  line-height: 0;
+}
+/* Medium white Canary Cry SVG (real CcWordmark paths); larger than nav mark. */
+.shows-hero__mark {
+  display: block;
+  height: clamp(1.65rem, 3.2vw, 2.35rem);
+  width: auto;
+  max-width: min(72vw, 18rem);
+  color: #fff;
+}
+/* Art-wall __big proportions, Bebas + home scaleY stretch, site yellow. */
+.shows-hero__network {
+  margin: 0.35rem 0 0;
+  padding: 0;
+  font-family: var(--font-title);
+  font-weight: 400;
+  font-size: clamp(3.25rem, 11vw, 8.5rem);
+  line-height: 0.82;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-shadow: 0 0 22px color-mix(in srgb, var(--accent) 50%, transparent);
+  transform: scaleY(1.4);
+  transform-origin: top left;
+  white-space: nowrap;
+}
+.shows-hero__grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  width: min(100%, 56rem);
+  margin-inline: auto;
+}
+.shows-hero__row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.65rem;
+  width: 100%;
+}
+.shows-hero__tile {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
+  color: #f5efe2;
+  text-decoration: none;
+}
+.shows-hero__tile:hover { text-decoration: none; }
+.shows-hero__tile:hover .shows-hero__frame img {
+  transform: translateY(-2px);
+}
+.shows-hero__frame {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: var(--radius-sm);
+  background: #0a0a12;
+  border: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
+  line-height: 0;
+}
+.shows-hero__frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.2s var(--ease);
+}
+.shows-hero__missing {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  min-height: 4rem;
+  padding: 0.45rem;
+  font-family: var(--font-display);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg-tertiary);
+  text-align: center;
+  line-height: 1.3;
+}
+.shows-hero__label {
+  font-family: var(--font-title);
+  font-size: clamp(0.72rem, 1.4vw, 0.95rem);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--accent);
+  line-height: 1.15;
+}
+.shows-hero__tile--soon { opacity: 0.85; cursor: default; }
+
+@media (max-width: 639px) {
+  .shows-hero .shows-hero__inner {
+    gap: 1.25rem;
+    padding: 1.35rem 0 1.75rem;
+  }
+  .shows-hero__network {
+    font-size: clamp(2.6rem, 14vw, 4.2rem);
+    /* scaleY stretch can overflow; keep left origin */
+  }
+  .shows-hero__row {
+    gap: 0.45rem;
+  }
+  .shows-hero__label {
+    font-size: 0.65rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .shows-hero .shows-hero__inner {
+    gap: 1.75rem;
+    padding: 2.25rem 0 2.75rem;
+  }
+  .shows-hero__grid {
+    width: min(100%, 64rem);
+    gap: 1rem;
+  }
+  .shows-hero__row { gap: 0.75rem; }
+}
+
+@media (min-width: 1100px) {
+  .shows-hero__mark {
+    height: 2.5rem;
+    max-width: 20rem;
+  }
+  .shows-hero__grid {
+    width: min(100%, 70rem);
+  }
+}
+
+/* Blank sizing shell unused on Shows now; keep rule harmless if referenced. */
 .mission-hero--blank .mission-hero__inner {
   visibility: hidden;
   pointer-events: none;

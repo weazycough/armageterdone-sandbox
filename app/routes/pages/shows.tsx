@@ -1,20 +1,27 @@
-// shows.tsx — Canary Cry Network Shows page: blank home-matching hero shell
-// plus the lower network roster.
+// shows.tsx — Canary Cry Network Shows page: hero (wordmark + NETWORK + tile grid) on the home mission-hero background, then the lower roster.
 
 import type * as React from "react";
 import type { Route } from "./+types/shows";
 import { ShowsControlRoom } from "../../components/shows-control-room";
 import { Section } from "../../components/page-parts";
 import { SmartLink } from "../../components/smart-link";
+import { loadEpisodes } from "../../lib/content.server";
 import { pageTitle } from "../../lib/meta";
+import { loadNetworkLatestFile, networkShowTiles } from "../../lib/network-latest.server";
 import { NETWORK_SHOW_OPEN_ITEMS, NETWORK_SHOWS } from "../../lib/shows";
 
 export const meta = () => pageTitle("Shows");
 
-export default function ShowsPage(_props: Route.ComponentProps): React.ReactNode {
+export function loader(_args: Route.LoaderArgs) {
+  const tiles = networkShowTiles(loadEpisodes(), loadNetworkLatestFile());
+  return { tiles };
+}
+
+export default function ShowsPage({ loaderData }: Route.ComponentProps): React.ReactNode {
+  const { tiles } = loaderData;
   return (
     <article className="page shows-page">
-      <ShowsControlRoom />
+      <ShowsControlRoom tiles={tiles} />
 
       <Section>
         <div className="shows-roster">
