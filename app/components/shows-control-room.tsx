@@ -1,6 +1,6 @@
 // shows-control-room.tsx — Shows page hero: blue perspective grid with a
-// centered three-column show wall — News Talk (large left), Radio + Clubhouse
-// (medium middle), Joyspiracy / Burning Man / Basil's Bunker (small right).
+// landscape bento mosaic (4×2): Radio / Joyspiracy left; News Talk wide
+// center-top; Burning Man + Bunker under it; Clubhouse tall right.
 // Thumbs = each show's latest episode art from build-time feeds.
 
 import type * as React from "react";
@@ -17,15 +17,15 @@ function tileHref(show: NetworkShowTile): string | null {
 
 function ShowTile({
   show,
-  size,
+  slot,
 }: {
   show: NetworkShowTile;
-  size: "feature" | "mid" | "small";
+  slot: string;
 }): React.ReactNode {
   const href = tileHref(show);
   const art = show.latest?.artUrl;
-  const className = `shows-network__tile shows-network__tile--${size}`;
-  const dims = size === "feature" ? [640, 800] : size === "mid" ? [400, 300] : [280, 180];
+  const className = `shows-network__tile ${slot}`;
+  const featured = slot.includes("--news");
 
   const body = (
     <>
@@ -34,9 +34,9 @@ function ShowTile({
           <img
             src={art}
             alt=""
-            width={dims[0]}
-            height={dims[1]}
-            loading={size === "feature" ? "eager" : "lazy"}
+            width={featured ? 640 : 280}
+            height={featured ? 280 : 280}
+            loading={featured ? "eager" : "lazy"}
             decoding="async"
           />
         ) : (
@@ -62,10 +62,14 @@ function ShowTile({
   );
 }
 
+/** Desktop bento placement (4 cols × 2 rows). */
 export const SHOWS_NETWORK_LAYOUT = {
-  left: ["news-talk"],
-  middle: ["radio", "clubhouse"],
-  right: ["joyspiracy", "burning-man-research", "basils-bunker"],
+  radio: "col1 row1",
+  joyspiracy: "col1 row2",
+  "news-talk": "cols2-3 row1",
+  "burning-man-research": "col2 row2",
+  "basils-bunker": "col3 row2",
+  clubhouse: "col4 rows1-2",
 } as const;
 
 export function ShowsControlRoom({ tiles }: { tiles: NetworkShowTile[] }): React.ReactNode {
@@ -89,18 +93,12 @@ export function ShowsControlRoom({ tiles }: { tiles: NetworkShowTile[] }): React
         </div>
 
         <div className="shows-network" aria-label="Shows">
-          <div className="shows-network__col shows-network__col--feature">
-            <ShowTile show={news} size="feature" />
-          </div>
-          <div className="shows-network__col shows-network__col--mid" aria-label="Radio and Clubhouse">
-            <ShowTile show={radio} size="mid" />
-            <ShowTile show={clubhouse} size="mid" />
-          </div>
-          <div className="shows-network__col shows-network__col--small" aria-label="More network shows">
-            <ShowTile show={joyspiracy} size="small" />
-            <ShowTile show={burning} size="small" />
-            <ShowTile show={bunker} size="small" />
-          </div>
+          <ShowTile show={radio} slot="shows-network__tile--radio" />
+          <ShowTile show={news} slot="shows-network__tile--news" />
+          <ShowTile show={clubhouse} slot="shows-network__tile--club" />
+          <ShowTile show={joyspiracy} slot="shows-network__tile--joy" />
+          <ShowTile show={burning} slot="shows-network__tile--burn" />
+          <ShowTile show={bunker} slot="shows-network__tile--bunker" />
         </div>
       </div>
 
