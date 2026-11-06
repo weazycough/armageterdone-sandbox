@@ -4766,26 +4766,28 @@ h2 {
 
 
 /* -------------------------------------------------------------------------
-   Blank Shows hero (t250u): reuse .mission-hero background layers exactly
-   (::before top teal/blue glow, ::after bottom navy wash, __floor grid +
-   vignette + drift). No images/text. Height: desktop min matches verified
-   home hero @ 1920×1072 (~459px, y≈57→516 under nav). Home stays
-   content-driven and visually unchanged.
+   Blank Shows hero: identical home MissionHeroBody tree, invisible.
+   visibility:hidden preserves layout (content-driven height matches home at
+   every breakpoint). inert + aria-hidden avoid accessible duplicates.
+   Art uses non-loading aspect-ratio sizer (900/1036); strip uses sized boxes
+   without image requests. Do NOT use rem min-height — that drifted under
+   zoom/root (acfb212 measured ~245px vs home ~459px @ 1920×1072).
    ------------------------------------------------------------------------- */
-.mission-hero--blank {
-  /* Inherit .mission-hero canvas / glow / wash / floor; no extra paints. */
+.mission-hero--blank .mission-hero__inner {
+  visibility: hidden;
+  pointer-events: none;
+  user-select: none;
 }
-.mission-hero--blank .mission-hero__blank-sizer {
+.mission-hero--blank .mission-hero__art-sizer {
   display: block;
   width: 100%;
-  pointer-events: none;
-  /* Mobile/narrow: representative non-collapsing floor (home stacks taller;
-     exact mobile parity not measured this turn — desktop is the verified baseline). */
-  min-height: 28rem;
+  height: auto;
+  max-height: inherit;
+  aspect-ratio: 900 / 1036;
 }
-@media (min-width: 768px) {
-  .mission-hero--blank .mission-hero__blank-sizer {
-    /* 459px — parent-verified home hero height at 1920×1072 */
-    min-height: 28.6875rem;
-  }
+/* Blank strip placeholders: keep 88px art footprint like .show-card__art. */
+.mission-hero--blank .show-card__art {
+  display: block;
+  width: 88px;
+  height: 88px;
 }

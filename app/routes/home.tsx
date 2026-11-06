@@ -8,13 +8,12 @@ import { Link } from "react-router";
 import type { Route } from "./+types/home";
 import { EpisodeWall, WallHead } from "../components/episode-wall";
 import { PreviewForm } from "../components/preview-form";
+import { MissionHeroBody } from "../components/mission-hero-body";
 import { MissionHeroFloor } from "../components/mission-hero-floor";
-import { ShowsStrip } from "../components/shows-strip";
 import { V4vWordmark } from "../components/v4v-wordmark";
 import { buttonVariants } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { asset } from "../lib/asset";
-import { episodePath } from "../lib/paths";
 import { loadEpisodes } from "../lib/content.server";
 import { ART_RIBBON } from "../lib/fan-art";
 import { cn } from "../lib/utils";
@@ -42,66 +41,7 @@ export default function Home({ loaderData }: Route.ComponentProps): React.ReactN
     <>
       <section className="mission-hero" aria-label="Canary Cry mission">
         <MissionHeroFloor />
-        <div className="container mission-hero__inner">
-          <div className="mission-hero__grid">
-            <div className="mission-hero__intro">
-              <p className="mission-hero__kicker">
-                Your news<br className="br-d" />{" "}and biblical<br className="br-m" />{" "}views
-                <br className="br-d" />{" "}on world events
-              </p>
-              <span className="mission-hero__bar" aria-hidden="true" />
-              <p className="mission-hero__about">
-                Canary Cry NewsTalk is a show that brings frequent updates on news and
-                events happening around the world from an Alt. Christian worldview,
-                hosted by us, Basil and Gonz of the Canary Cry Radio podcast.
-              </p>
-              <span className="mission-hero__bar" aria-hidden="true" />
-              {recent[0] ? (
-                <div className="mission-hero__latest-row">
-                  <span className="mission-hero__latest-bar" aria-hidden="true" />
-                  <Link className="mission-hero__latest" to={episodePath(recent[0].slug)}>
-                    Latest Episode
-                  </Link>
-                  <span className="mission-hero__latest-bar" aria-hidden="true" />
-                </div>
-              ) : null}
-            </div>
-            <figure className="mission-hero__art">
-              <picture>
-                <source srcSet={asset("images/canary-cry-key-art.webp")} type="image/webp" />
-                <img
-                  src={asset("images/canary-cry-key-art.png")}
-                  alt="Canary Cry sticker poster of hosts Basil and Gonz with a cat, UFO, and show symbols"
-                  width={900}
-                  height={1036}
-                />
-              </picture>
-            </figure>
-            <h1 className="mission-hero__tag">
-              <span className="sr-only">Canary Cry: </span>
-              <span>Think</span>
-              <span>Outside</span>
-              <span>The Cage</span>
-            </h1>
-          </div>
-
-          <div className="mission-hero__shows">
-          <div className="section__head">
-            <h2 className="signal-head">
-              <span className="signal-head__line">Three shows,</span>
-              <span className="signal-head__line">
-                One signal
-              <svg className="signal-head__icon" viewBox="0 0 24 24" aria-hidden="true">
-                <circle cx="5" cy="19" r="2.2" fill="currentColor" />
-                <path d="M4 11a9 9 0 0 1 9 9M4 4a16 16 0 0 1 16 16" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" />
-              </svg>
-              </span>
-            </h2>
-          </div>
-          <ShowsStrip />
-          <hr className="signal-rule" />
-          </div>
-        </div>
+        <MissionHeroBody latestSlug={recent[0]?.slug ?? null} />
       </section>
 
       <section className="section home-recent">
