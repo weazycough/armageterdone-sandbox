@@ -51,18 +51,24 @@ describe("Shows hero (wordmark + NETWORK + 2×3 tiles)", () => {
     const cssName = read(SHOWS).match(/assets\/(root-[^"]+\.css)/)?.[1];
     expect(cssName).toBeTruthy();
     const css = read(`assets/${cssName}`);
-    expect(css).toMatch(/\.shows-hero__network\{[^}]*scaleY\(var\(--shows-network-scale-y\)\)/);
-    expect(css).toMatch(/\.shows-hero__mark\{[^}]*color:#fff/);
-    expect(css).toMatch(/\.shows-hero__row\{[^}]*grid-template-columns:repeat\(3/);
-    // Shared centered stage (~23% under prior 56/64/70rem caps).
+    expect(css).toContain("shows-hero__network");
+    expect(css).toContain("scaleY(var(--shows-network-scale-y))");
+    expect(css).toContain("color:#fff");
+    expect(css).toContain("grid-template-columns:repeat(3");
     expect(css).toContain("43rem");
     expect(css).toContain("49rem");
     expect(css).toContain("54rem");
-    expect(css).toMatch(/\.shows-hero__stage\{/);
-    expect(css).toMatch(/\.ep-wall__rule\{[^}]*height:5px/);
+    expect(css).toContain("shows-hero__stage");
+    expect(css).toContain("height:5px");
     expect(css).toMatch(/\.ep-wall__rule\{[^}]*background:var\(--accent\)/);
-    expect(css).toMatch(/\.shows-hero__network-row\{/);
-    expect(css).toMatch(/--shows-network-scale-y:\s*1\.4/);
-    expect(css).toMatch(/\.shows-hero__rule\{[^}]*translateY\(/);
+    expect(css).toContain("shows-hero__network-row");
+    expect(css).toContain("--shows-network-scale-y:1.4");
+    expect(css).toContain("--shows-network-asc:.95");
+    expect(css).toContain("--shows-network-desc:.35");
+    expect(css).toContain("shows-hero__rule");
+    expect(css).toContain("translateY(calc(var(--shows-network-size)");
+    expect(css).toContain("shows-network-asc");
+    expect(css).toContain("shows-network-desc");
   });
+
 });

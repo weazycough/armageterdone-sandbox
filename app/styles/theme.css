@@ -4808,17 +4808,23 @@ h2 {
 }
 /* NETWORK + yellow rule: same flex pattern as .ep-wall__head; rule uses .ep-wall__rule. */
 .shows-hero__network-row {
-  /* Shared metrics so the rule can track painted NETWORK bottom under scaleY. */
+  /* Bebas Neue latin-400 metrics (fontTools on @fontsource woff):
+     upem=1000, sCapHeight=700, usWinAscent=950, usWinDescent=350,
+     NETWORK glyphs yMin≈0 (O -10). USE_TYPO_METRICS unset → win metrics.
+     Shared so rule translate tracks painted glyph bottom under scaleY. */
   --shows-network-size: clamp(3.25rem, 11vw, 8.5rem);
   --shows-network-lh: 0.82;
   --shows-network-scale-y: 1.4;
+  --shows-network-asc: 0.95; /* 950/1000 */
+  --shows-network-desc: 0.35; /* 350/1000 */
   display: flex;
-  align-items: flex-end; /* layout bottoms; rule then translateY to painted bottom */
+  align-items: flex-end;
   gap: var(--space-4); /* match .ep-wall__head */
   width: 100%;
   min-width: 0;
 }
-/* Art-wall __big proportions, Bebas + home scaleY stretch, site yellow. */
+/* Art-wall __big proportions, Bebas + home scaleY stretch, site yellow.
+   transform-origin top left: scale from border-box top (= line-box top). */
 .shows-hero__network {
   flex: 0 0 auto;
   min-width: 0;
@@ -4836,18 +4842,24 @@ h2 {
   transform-origin: top left;
   white-space: nowrap;
 }
-/* .ep-wall__rule: flex:1; height:5px; background:var(--accent); border-radius:3px.
-   Layout box ends at unscaled bottom; painted glyphs extend
-   size*lh*(scaleY-1) further. translateY drops rule so its bottom shares
-   the visible NETWORK bottom edge. */
+/* .ep-wall__rule unchanged (5px / accent / flex:1).
+   cff87e8 used size*lh*(scaleY-1) (= line-box bottom after scale) and sat
+   ~10–13px below glyphs: caps do not fill the win-metric content box.
+   Glyph bottom from line-box top (yMin≈0):
+     half-leading + asc, half-leading = (lh - (asc+desc)) / 2
+   After scaleY from top: that * scaleY. translateY = painted - lh*size. */
 .shows-hero__rule {
   align-self: flex-end;
   min-width: 2.5rem;
   margin-bottom: 0;
   transform: translateY(
     calc(
-      var(--shows-network-size) * var(--shows-network-lh) *
-        (var(--shows-network-scale-y) - 1)
+      var(--shows-network-size) * (
+        (
+          (var(--shows-network-lh) - (var(--shows-network-asc) + var(--shows-network-desc))) /
+            2 + var(--shows-network-asc)
+        ) * var(--shows-network-scale-y) - var(--shows-network-lh)
+      )
     )
   );
 }
