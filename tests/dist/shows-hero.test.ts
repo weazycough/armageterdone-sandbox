@@ -68,6 +68,9 @@ describe("Shows hero (wordmark + NETWORK + 2×3 tiles)", () => {
     expect(css).toContain("height:5px");
     expect(css).toMatch(/\.ep-wall__rule\{[^}]*background:var\(--accent\)/);
     expect(css).toContain("--shows-network-scale-y:1.3");
+    // NETWORK ~15% smaller (85% of prior clamps); scaleY shape kept.
+    expect(css).toContain("--shows-network-size:clamp(2.7625rem, 9.35vw, 7.225rem)");
+    expect(css).toContain("--shows-network-size:clamp(2.21rem, 11.9vw, 3.57rem)");
     expect(css).toContain("--shows-network-asc:.95");
     expect(css).toContain("--shows-network-desc:.35");
     expect(css).toContain("--shows-rule-nudge:calc(var(--shows-network-size)");
