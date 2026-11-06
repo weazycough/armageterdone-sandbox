@@ -4766,28 +4766,14 @@ h2 {
 
 
 /* -------------------------------------------------------------------------
-   Blank Shows hero: identical home MissionHeroBody tree, invisible.
-   visibility:hidden preserves layout (content-driven height matches home at
-   every breakpoint). inert + aria-hidden avoid accessible duplicates.
-   Art uses non-loading aspect-ratio sizer (900/1036); strip uses sized boxes
-   without image requests. Do NOT use rem min-height — that drifted under
-   zoom/root (acfb212 measured ~245px vs home ~459px @ 1920×1072).
+   Blank Shows hero: same MissionHeroBody markup as home (h1/h2/picture>img/
+   ShowsStrip). visibility:hidden + inert; media uses transparent SVG data-URIs
+   so <img width/height> box model matches home without network art. Prior
+   rem sizer and aspect-ratio div / span placeholders drifted (~245px, then
+   ~+4px vs home) because the tree was not identical.
    ------------------------------------------------------------------------- */
 .mission-hero--blank .mission-hero__inner {
   visibility: hidden;
   pointer-events: none;
   user-select: none;
-}
-.mission-hero--blank .mission-hero__art-sizer {
-  display: block;
-  width: 100%;
-  height: auto;
-  max-height: inherit;
-  aspect-ratio: 900 / 1036;
-}
-/* Blank strip placeholders: keep 88px art footprint like .show-card__art. */
-.mission-hero--blank .show-card__art {
-  display: block;
-  width: 88px;
-  height: 88px;
 }

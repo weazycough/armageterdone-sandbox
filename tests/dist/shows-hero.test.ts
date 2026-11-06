@@ -1,5 +1,6 @@
-// Blank Shows hero must share home mission-hero sizing structure (hidden),
-// not a rem min-height shell that drifted under zoom (acfb212 → ~245px vs ~459px).
+// Blank Shows hero must share home mission-hero sizing structure (hidden).
+// Markup semantics match home (h1/h2/picture>img/ShowsStrip); blank only
+// swaps media to data-URI placeholders (no network art).
 
 import { describe, expect, it } from "vite-plus/test";
 import { read } from "./dist-files";
@@ -18,6 +19,7 @@ const SIZING_MARKERS = [
   "mission-hero__shows",
   "shows-strip",
   "show-card",
+  "show-card__art",
   "signal-head",
 ] as const;
 
@@ -34,17 +36,27 @@ describe("Shows blank hero sizing shell", () => {
       expect(shows, `shows missing ${marker}`).toContain(marker);
     }
 
-    // Non-loading art sizer on Shows; real key art only on home.
-    expect(shows).toContain("mission-hero__art-sizer");
-    expect(shows).not.toContain("canary-cry-key-art");
-    expect(home).toContain("canary-cry-key-art");
-    expect(home).not.toContain("mission-hero__art-sizer");
+    // Same heading semantics as home (not div stand-ins).
+    expect(shows).toMatch(/<h1 class="mission-hero__tag"/);
+    expect(shows).toMatch(/<h2 class="signal-head"/);
+    expect(home).toMatch(/<h1 class="mission-hero__tag"/);
+    expect(home).toMatch(/<h2 class="signal-head"/);
 
-    // No visible tile wall / old copy in hero.
+    // Key art: home loads files; Shows uses transparent SVG data-URI <img> (same box model).
+    expect(home).toContain("canary-cry-key-art");
+    expect(shows).not.toContain("canary-cry-key-art");
+    expect(shows).toContain("data:image/svg+xml");
+    expect(shows).toMatch(/<img[^>]*width="900"[^>]*height="1036"/);
+    expect(home).toMatch(/<img[^>]*width="900"[^>]*height="1036"/);
+    // No aspect-ratio div sizer (that path drifted vs <img>).
+    expect(shows).not.toContain("mission-hero__art-sizer");
+
+    // Strip art uses <img width=96 height=96> on both (CSS sizes to 88px) — not span+inline 96.
+    expect(shows).toMatch(/show-card__art"[^>]*width="96"[^>]*height="96"/);
+    expect(home).toMatch(/show-card__art"[^>]*width="96"[^>]*height="96"/);
+
     expect(shows).not.toContain("shows-network__tile--news");
     expect(shows).toContain("On the network");
-
-    // Inert sizing tree (no accessible duplicate of home hero).
     expect(shows).toMatch(/mission-hero__inner[^>]*\binert\b/);
   });
 
@@ -57,5 +69,6 @@ describe("Shows blank hero sizing shell", () => {
     );
     expect(css).not.toContain("28.6875rem");
     expect(css).not.toContain("blank-sizer");
+    expect(css).not.toContain("art-sizer");
   });
 });
