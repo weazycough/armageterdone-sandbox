@@ -4764,3 +4764,28 @@ h2 {
 
 
 
+
+/* -------------------------------------------------------------------------
+   Blank Shows hero (t250u): reuse .mission-hero background layers exactly
+   (::before top teal/blue glow, ::after bottom navy wash, __floor grid +
+   vignette + drift). No images/text. Height: desktop min matches verified
+   home hero @ 1920×1072 (~459px, y≈57→516 under nav). Home stays
+   content-driven and visually unchanged.
+   ------------------------------------------------------------------------- */
+.mission-hero--blank {
+  /* Inherit .mission-hero canvas / glow / wash / floor; no extra paints. */
+}
+.mission-hero--blank .mission-hero__blank-sizer {
+  display: block;
+  width: 100%;
+  pointer-events: none;
+  /* Mobile/narrow: representative non-collapsing floor (home stacks taller;
+     exact mobile parity not measured this turn — desktop is the verified baseline). */
+  min-height: 28rem;
+}
+@media (min-width: 768px) {
+  .mission-hero--blank .mission-hero__blank-sizer {
+    /* 459px — parent-verified home hero height at 1920×1072 */
+    min-height: 28.6875rem;
+  }
+}

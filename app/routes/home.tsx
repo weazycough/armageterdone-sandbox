@@ -8,6 +8,7 @@ import { Link } from "react-router";
 import type { Route } from "./+types/home";
 import { EpisodeWall, WallHead } from "../components/episode-wall";
 import { PreviewForm } from "../components/preview-form";
+import { MissionHeroFloor } from "../components/mission-hero-floor";
 import { ShowsStrip } from "../components/shows-strip";
 import { V4vWordmark } from "../components/v4v-wordmark";
 import { buttonVariants } from "../components/ui/button";
@@ -40,7 +41,7 @@ export default function Home({ loaderData }: Route.ComponentProps): React.ReactN
   return (
     <>
       <section className="mission-hero" aria-label="Canary Cry mission">
-        <div className="mission-hero__floor" aria-hidden="true"><div className="mission-hero__floor-grid" /></div>
+        <MissionHeroFloor />
         <div className="container mission-hero__inner">
           <div className="mission-hero__grid">
             <div className="mission-hero__intro">
