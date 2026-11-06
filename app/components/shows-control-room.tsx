@@ -1,7 +1,6 @@
-// shows-control-room.tsx — Shows page hero: blue perspective grid with a wide
-// three-column wall — News Talk/Radio/Clubhouse left; CANARY CRY / NETWORK +
-// grey Bebas subhead + blurb center; Joyspiracy/Burning Man/Bunker right.
-// Thumbs = each show's latest episode art from build-time feeds.
+// shows-control-room.tsx — Shows page hero: blue perspective grid with an
+// integrated 4×2 landscape board — News Talk | title (2 cols) | Radio on top;
+// Joyspiracy | Burning Man | Bunker | Clubhouse below. Thumbs from build feeds.
 
 import type * as React from "react";
 import type { NetworkShowTile } from "../lib/network-latest.server";
@@ -15,10 +14,16 @@ function tileHref(show: NetworkShowTile): string | null {
   return null;
 }
 
-function ShowTile({ show }: { show: NetworkShowTile }): React.ReactNode {
+function ShowTile({
+  show,
+  slot,
+}: {
+  show: NetworkShowTile;
+  slot: string;
+}): React.ReactNode {
   const href = tileHref(show);
   const art = show.latest?.artUrl;
-  const className = "shows-network__tile";
+  const className = `shows-network__tile ${slot}`;
 
   const body = (
     <>
@@ -27,8 +32,8 @@ function ShowTile({ show }: { show: NetworkShowTile }): React.ReactNode {
           <img
             src={art}
             alt=""
-            width={400}
-            height={300}
+            width={320}
+            height={200}
             loading="lazy"
             decoding="async"
           />
@@ -55,17 +60,22 @@ function ShowTile({ show }: { show: NetworkShowTile }): React.ReactNode {
   );
 }
 
+/** Desktop 4×2 placement. */
 export const SHOWS_NETWORK_LAYOUT = {
-  left: ["news-talk", "radio", "clubhouse"],
-  right: ["joyspiracy", "burning-man-research", "basils-bunker"],
+  top: ["news-talk", "radio"],
+  bottom: ["joyspiracy", "burning-man-research", "basils-bunker", "clubhouse"],
 } as const;
 
 export function ShowsControlRoom({ tiles }: { tiles: NetworkShowTile[] }): React.ReactNode {
   const bySlug = Object.fromEntries(tiles.map((t) => [t.slug, t]));
-  const left = SHOWS_NETWORK_LAYOUT.left.map((s) => bySlug[s]);
-  const right = SHOWS_NETWORK_LAYOUT.right.map((s) => bySlug[s]);
+  const news = bySlug["news-talk"];
+  const radio = bySlug.radio;
+  const joyspiracy = bySlug.joyspiracy;
+  const burning = bySlug["burning-man-research"];
+  const bunker = bySlug["basils-bunker"];
+  const clubhouse = bySlug.clubhouse;
 
-  if (left.some((t) => !t) || right.some((t) => !t)) {
+  if (!news || !radio || !joyspiracy || !burning || !bunker || !clubhouse) {
     throw new Error("ShowsControlRoom: expected all six network show tiles");
   }
 
@@ -76,13 +86,8 @@ export function ShowsControlRoom({ tiles }: { tiles: NetworkShowTile[] }): React
           <div className="shows-studio__floor-grid" />
         </div>
 
-        <div className="shows-network">
-          <div className="shows-network__col shows-network__col--left" aria-label="Flagship shows">
-            {left.map((show) => (
-              <ShowTile key={show!.slug} show={show!} />
-            ))}
-          </div>
-
+        <div className="shows-network" aria-label="Shows">
+          <ShowTile show={news} slot="shows-network__tile--news" />
           <div className="shows-network__center">
             <h1 className="shows-network__title">
               <span className="shows-network__title-line">Canary Cry</span>
@@ -94,12 +99,11 @@ export function ShowsControlRoom({ tiles }: { tiles: NetworkShowTile[] }): React
               their best work in one place.
             </p>
           </div>
-
-          <div className="shows-network__col shows-network__col--right" aria-label="More network shows">
-            {right.map((show) => (
-              <ShowTile key={show!.slug} show={show!} />
-            ))}
-          </div>
+          <ShowTile show={radio} slot="shows-network__tile--radio" />
+          <ShowTile show={joyspiracy} slot="shows-network__tile--joy" />
+          <ShowTile show={burning} slot="shows-network__tile--burn" />
+          <ShowTile show={bunker} slot="shows-network__tile--bunker" />
+          <ShowTile show={clubhouse} slot="shows-network__tile--club" />
         </div>
       </div>
     </section>
