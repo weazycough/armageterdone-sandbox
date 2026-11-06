@@ -1,7 +1,7 @@
 // shows-control-room.tsx — Shows page hero: blue perspective grid with a
-// centered six-show mosaic (reference 3×3: News Talk 2×2 feature; Joyspiracy
-// + Burning Man stacked right; Radio / Clubhouse / Basil's Bunker on the
-// bottom row). Thumbs = each show's latest episode art from build-time feeds.
+// centered three-column show wall — News Talk (large left), Radio + Clubhouse
+// (medium middle), Joyspiracy / Burning Man / Basil's Bunker (small right).
+// Thumbs = each show's latest episode art from build-time feeds.
 
 import type * as React from "react";
 import type { NetworkShowTile } from "../lib/network-latest.server";
@@ -17,23 +17,15 @@ function tileHref(show: NetworkShowTile): string | null {
 
 function ShowTile({
   show,
-  featured = false,
-  slot,
+  size,
 }: {
   show: NetworkShowTile;
-  featured?: boolean;
-  /** Mosaic placement class, e.g. shows-network__tile--joy */
-  slot: string;
+  size: "feature" | "mid" | "small";
 }): React.ReactNode {
   const href = tileHref(show);
   const art = show.latest?.artUrl;
-  const className = [
-    "shows-network__tile",
-    featured ? "shows-network__tile--feature" : "",
-    slot,
-  ]
-    .filter(Boolean)
-    .join(" ");
+  const className = `shows-network__tile shows-network__tile--${size}`;
+  const dims = size === "feature" ? [640, 800] : size === "mid" ? [400, 300] : [280, 180];
 
   const body = (
     <>
@@ -42,9 +34,9 @@ function ShowTile({
           <img
             src={art}
             alt=""
-            width={featured ? 480 : 234}
-            height={featured ? 362 : 174}
-            loading={featured ? "eager" : "lazy"}
+            width={dims[0]}
+            height={dims[1]}
+            loading={size === "feature" ? "eager" : "lazy"}
             decoding="async"
           />
         ) : (
@@ -70,21 +62,19 @@ function ShowTile({
   );
 }
 
-/** Desktop mosaic order (CSS grid places by slot class). */
 export const SHOWS_NETWORK_LAYOUT = {
-  feature: "news-talk",
-  topRight: "joyspiracy",
-  midRight: "burning-man-research",
-  bottom: ["radio", "clubhouse", "basils-bunker"],
+  left: ["news-talk"],
+  middle: ["radio", "clubhouse"],
+  right: ["joyspiracy", "burning-man-research", "basils-bunker"],
 } as const;
 
 export function ShowsControlRoom({ tiles }: { tiles: NetworkShowTile[] }): React.ReactNode {
   const bySlug = Object.fromEntries(tiles.map((t) => [t.slug, t]));
   const news = bySlug["news-talk"];
-  const joyspiracy = bySlug.joyspiracy;
-  const burning = bySlug["burning-man-research"];
   const radio = bySlug.radio;
   const clubhouse = bySlug.clubhouse;
+  const joyspiracy = bySlug.joyspiracy;
+  const burning = bySlug["burning-man-research"];
   const bunker = bySlug["basils-bunker"];
 
   if (!news || !radio || !clubhouse || !joyspiracy || !burning || !bunker) {
@@ -99,12 +89,18 @@ export function ShowsControlRoom({ tiles }: { tiles: NetworkShowTile[] }): React
         </div>
 
         <div className="shows-network" aria-label="Shows">
-          <ShowTile show={news} featured slot="shows-network__tile--news" />
-          <ShowTile show={joyspiracy} slot="shows-network__tile--joy" />
-          <ShowTile show={burning} slot="shows-network__tile--burn" />
-          <ShowTile show={radio} slot="shows-network__tile--radio" />
-          <ShowTile show={clubhouse} slot="shows-network__tile--club" />
-          <ShowTile show={bunker} slot="shows-network__tile--bunker" />
+          <div className="shows-network__col shows-network__col--feature">
+            <ShowTile show={news} size="feature" />
+          </div>
+          <div className="shows-network__col shows-network__col--mid" aria-label="Radio and Clubhouse">
+            <ShowTile show={radio} size="mid" />
+            <ShowTile show={clubhouse} size="mid" />
+          </div>
+          <div className="shows-network__col shows-network__col--small" aria-label="More network shows">
+            <ShowTile show={joyspiracy} size="small" />
+            <ShowTile show={burning} size="small" />
+            <ShowTile show={bunker} size="small" />
+          </div>
         </div>
       </div>
 
