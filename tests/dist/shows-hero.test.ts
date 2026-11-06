@@ -22,6 +22,8 @@ describe("Shows hero (wordmark + NETWORK + 2×3 tiles)", () => {
     expect(shows).toContain("shows-hero__mark");
     expect(shows).toMatch(/<h1 class="shows-hero__network"/);
     expect(shows).toContain("NETWORK");
+    expect(shows).toContain("shows-hero__network-row");
+    expect(shows).toMatch(/ep-wall__rule[^"]*shows-hero__rule|shows-hero__rule[^"]*ep-wall__rule/);
     // Real CcWordmark path data (not a text substitute).
     expect(shows).toContain("M.02,26.46C.02,11.76");
 
@@ -57,5 +59,8 @@ describe("Shows hero (wordmark + NETWORK + 2×3 tiles)", () => {
     expect(css).toContain("49rem");
     expect(css).toContain("54rem");
     expect(css).toMatch(/\.shows-hero__stage\{/);
+    expect(css).toMatch(/\.ep-wall__rule\{[^}]*height:5px/);
+    expect(css).toMatch(/\.ep-wall__rule\{[^}]*background:var\(--accent\)/);
+    expect(css).toMatch(/\.shows-hero__network-row\{/);
   });
 });

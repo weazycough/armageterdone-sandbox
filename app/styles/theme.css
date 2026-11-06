@@ -3808,7 +3808,7 @@ h2 {
 }
 .ep-wall__head .page-hero__title-logo {
   margin: 0;
-  flex: 0 1 auto;
+  flex: 0 0 auto;
   min-width: 0;
 }
 .ep-wall__head .page-hero__logo {
@@ -4806,8 +4806,18 @@ h2 {
   max-width: min(100%, 18rem);
   color: #fff;
 }
+/* NETWORK + yellow rule: same flex pattern as .ep-wall__head; rule uses .ep-wall__rule. */
+.shows-hero__network-row {
+  display: flex;
+  align-items: flex-end; /* near NETWORK lower/baseline edge */
+  gap: var(--space-4); /* match .ep-wall__head */
+  width: 100%;
+  min-width: 0;
+}
 /* Art-wall __big proportions, Bebas + home scaleY stretch, site yellow. */
 .shows-hero__network {
+  flex: 0 0 auto;
+  min-width: 0;
   margin: 0.35rem 0 0;
   padding: 0;
   font-family: var(--font-title);
@@ -4821,6 +4831,13 @@ h2 {
   transform: scaleY(1.4);
   transform-origin: top left;
   white-space: nowrap;
+}
+/* .ep-wall__rule already: flex:1; height:5px; background:var(--accent); border-radius:3px.
+   Nudge to visual baseline under scaleY(1.4) (layout box ends above painted glyphs). */
+.shows-hero__rule {
+  margin-bottom: 0.12em;
+  align-self: flex-end;
+  min-width: 2.5rem;
 }
 .shows-hero__grid {
   display: flex;

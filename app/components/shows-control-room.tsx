@@ -90,10 +90,14 @@ export function ShowsControlRoom({ tiles }: { tiles: NetworkShowTile[] }): React
             <span className="shows-hero__mark-wrap" aria-hidden="true">
               <CcWordmark className="shows-hero__mark" />
             </span>
-            <h1 className="shows-hero__network">
-              <span className="sr-only">Canary Cry </span>
-              NETWORK
-            </h1>
+            <div className="shows-hero__network-row">
+              <h1 className="shows-hero__network">
+                <span className="sr-only">Canary Cry </span>
+                NETWORK
+              </h1>
+              {/* Exact home Recent Episodes header rule (ep-wall__rule). */}
+              <span className="ep-wall__rule shows-hero__rule" aria-hidden="true" />
+            </div>
           </header>
 
           <div className="shows-hero__grid" aria-label="Network shows">
