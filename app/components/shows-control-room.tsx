@@ -1,7 +1,7 @@
-// shows-control-room.tsx — Shows page hero: blue perspective grid background
-// with a centered six-show tile wall (News Talk feature + Radio/Clubhouse under
-// it; Joyspiracy / Burning Man Research / Basil's Bunker on the right). Each
-// tile uses that show's latest episode thumbnail from build-time feed data.
+// shows-control-room.tsx — Shows page hero: blue perspective grid with a
+// centered six-show mosaic (reference 3×3: News Talk 2×2 feature; Joyspiracy
+// + Burning Man stacked right; Radio / Clubhouse / Basil's Bunker on the
+// bottom row). Thumbs = each show's latest episode art from build-time feeds.
 
 import type * as React from "react";
 import type { NetworkShowTile } from "../lib/network-latest.server";
@@ -18,13 +18,22 @@ function tileHref(show: NetworkShowTile): string | null {
 function ShowTile({
   show,
   featured = false,
+  slot,
 }: {
   show: NetworkShowTile;
   featured?: boolean;
+  /** Mosaic placement class, e.g. shows-network__tile--joy */
+  slot: string;
 }): React.ReactNode {
   const href = tileHref(show);
   const art = show.latest?.artUrl;
-  const className = featured ? "shows-network__tile shows-network__tile--feature" : "shows-network__tile";
+  const className = [
+    "shows-network__tile",
+    featured ? "shows-network__tile--feature" : "",
+    slot,
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   const body = (
     <>
@@ -33,8 +42,8 @@ function ShowTile({
           <img
             src={art}
             alt=""
-            width={featured ? 640 : 320}
-            height={featured ? 360 : 320}
+            width={featured ? 480 : 234}
+            height={featured ? 362 : 174}
             loading={featured ? "eager" : "lazy"}
             decoding="async"
           />
@@ -61,18 +70,25 @@ function ShowTile({
   );
 }
 
-const LEFT_SLUGS = ["news-talk", "radio", "clubhouse"] as const;
-const RIGHT_SLUGS = ["joyspiracy", "burning-man-research", "basils-bunker"] as const;
+/** Desktop mosaic order (CSS grid places by slot class). */
+export const SHOWS_NETWORK_LAYOUT = {
+  feature: "news-talk",
+  topRight: "joyspiracy",
+  midRight: "burning-man-research",
+  bottom: ["radio", "clubhouse", "basils-bunker"],
+} as const;
 
 export function ShowsControlRoom({ tiles }: { tiles: NetworkShowTile[] }): React.ReactNode {
   const bySlug = Object.fromEntries(tiles.map((t) => [t.slug, t]));
   const news = bySlug["news-talk"];
+  const joyspiracy = bySlug.joyspiracy;
+  const burning = bySlug["burning-man-research"];
   const radio = bySlug.radio;
   const clubhouse = bySlug.clubhouse;
-  const right = RIGHT_SLUGS.map((s) => bySlug[s]).filter(Boolean) as NetworkShowTile[];
+  const bunker = bySlug["basils-bunker"];
 
-  if (!news || !radio || !clubhouse) {
-    throw new Error("ShowsControlRoom: expected News Talk, Radio, and Clubhouse tiles");
+  if (!news || !radio || !clubhouse || !joyspiracy || !burning || !bunker) {
+    throw new Error("ShowsControlRoom: expected all six network show tiles");
   }
 
   return (
@@ -82,19 +98,13 @@ export function ShowsControlRoom({ tiles }: { tiles: NetworkShowTile[] }): React
           <div className="shows-studio__floor-grid" />
         </div>
 
-        <div className="shows-network">
-          <div className="shows-network__main">
-            <ShowTile show={news} featured />
-            <div className="shows-network__pair" aria-label="Radio and Clubhouse">
-              <ShowTile show={radio} />
-              <ShowTile show={clubhouse} />
-            </div>
-          </div>
-          <div className="shows-network__side" aria-label="More network shows">
-            {right.map((show) => (
-              <ShowTile key={show.slug} show={show} />
-            ))}
-          </div>
+        <div className="shows-network" aria-label="Shows">
+          <ShowTile show={news} featured slot="shows-network__tile--news" />
+          <ShowTile show={joyspiracy} slot="shows-network__tile--joy" />
+          <ShowTile show={burning} slot="shows-network__tile--burn" />
+          <ShowTile show={radio} slot="shows-network__tile--radio" />
+          <ShowTile show={clubhouse} slot="shows-network__tile--club" />
+          <ShowTile show={bunker} slot="shows-network__tile--bunker" />
         </div>
       </div>
 
@@ -102,6 +112,3 @@ export function ShowsControlRoom({ tiles }: { tiles: NetworkShowTile[] }): React
     </section>
   );
 }
-
-// Keep slug order references for tests / future layout tweaks.
-export const SHOWS_NETWORK_LAYOUT = { left: LEFT_SLUGS, right: RIGHT_SLUGS };
