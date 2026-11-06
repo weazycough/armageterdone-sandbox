@@ -4777,7 +4777,7 @@ h2 {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  padding: 1.75rem 0 2.25rem;
+  padding: 1.75rem 0 3.75rem; /* +1.5rem blue under tiles */
 }
 /* Common width + horizontal center — brand and grid share the same left edge. */
 .shows-hero__stage {
@@ -4943,7 +4943,7 @@ h2 {
 
 @media (max-width: 639px) {
   .shows-hero .shows-hero__inner {
-    padding: 1.35rem 0 1.75rem;
+    padding: 1.35rem 0 2.75rem; /* +1rem mobile under tiles */
   }
   .shows-hero__stage {
     gap: clamp(1.125rem, 4vw, 1.5rem);
@@ -4964,7 +4964,7 @@ h2 {
 
 @media (min-width: 768px) {
   .shows-hero .shows-hero__inner {
-    padding: 2.25rem 0 2.75rem;
+    padding: 2.25rem 0 4.25rem; /* +1.5rem desktop under tiles */
   }
   .shows-hero__stage {
     --shows-hero-stage: min(100%, 49rem); /* was 64rem */

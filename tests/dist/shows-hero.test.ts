@@ -82,5 +82,9 @@ describe("Shows hero (wordmark + NETWORK + 2×3 tiles)", () => {
     expect(css).toContain("gap:clamp(1.375rem,2.25vw,1.875rem)");
     expect(css).toContain("gap:clamp(1.125rem,4vw,1.5rem)");
     expect(css).toContain("gap:clamp(1.5rem,2vw,1.875rem)");
+    // Shows-only bottom padding extended for extra blue under tiles.
+    expect(css).toContain("padding:1.75rem 0 3.75rem");
+    expect(css).toContain("padding:1.35rem 0 2.75rem");
+    expect(css).toContain("padding:2.25rem 0 4.25rem");
   });
 });
