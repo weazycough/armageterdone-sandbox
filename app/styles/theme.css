@@ -4808,8 +4808,12 @@ h2 {
 }
 /* NETWORK + yellow rule: same flex pattern as .ep-wall__head; rule uses .ep-wall__rule. */
 .shows-hero__network-row {
+  /* Shared metrics so the rule can track painted NETWORK bottom under scaleY. */
+  --shows-network-size: clamp(3.25rem, 11vw, 8.5rem);
+  --shows-network-lh: 0.82;
+  --shows-network-scale-y: 1.4;
   display: flex;
-  align-items: flex-end; /* near NETWORK lower/baseline edge */
+  align-items: flex-end; /* layout bottoms; rule then translateY to painted bottom */
   gap: var(--space-4); /* match .ep-wall__head */
   width: 100%;
   min-width: 0;
@@ -4822,22 +4826,30 @@ h2 {
   padding: 0;
   font-family: var(--font-title);
   font-weight: 400;
-  font-size: clamp(3.25rem, 11vw, 8.5rem);
-  line-height: 0.82;
+  font-size: var(--shows-network-size);
+  line-height: var(--shows-network-lh);
   letter-spacing: -0.02em;
   text-transform: uppercase;
   color: var(--accent);
   text-shadow: 0 0 22px color-mix(in srgb, var(--accent) 50%, transparent);
-  transform: scaleY(1.4);
+  transform: scaleY(var(--shows-network-scale-y));
   transform-origin: top left;
   white-space: nowrap;
 }
-/* .ep-wall__rule already: flex:1; height:5px; background:var(--accent); border-radius:3px.
-   Nudge to visual baseline under scaleY(1.4) (layout box ends above painted glyphs). */
+/* .ep-wall__rule: flex:1; height:5px; background:var(--accent); border-radius:3px.
+   Layout box ends at unscaled bottom; painted glyphs extend
+   size*lh*(scaleY-1) further. translateY drops rule so its bottom shares
+   the visible NETWORK bottom edge. */
 .shows-hero__rule {
-  margin-bottom: 0.12em;
   align-self: flex-end;
   min-width: 2.5rem;
+  margin-bottom: 0;
+  transform: translateY(
+    calc(
+      var(--shows-network-size) * var(--shows-network-lh) *
+        (var(--shows-network-scale-y) - 1)
+    )
+  );
 }
 .shows-hero__grid {
   display: flex;
@@ -4914,8 +4926,8 @@ h2 {
   .shows-hero__stage {
     gap: clamp(2.25rem, 8vw, 3rem);
   }
-  .shows-hero__network {
-    font-size: clamp(2.6rem, 14vw, 4.2rem);
+  .shows-hero__network-row {
+    --shows-network-size: clamp(2.6rem, 14vw, 4.2rem);
   }
   .shows-hero__row {
     gap: 0.45rem;

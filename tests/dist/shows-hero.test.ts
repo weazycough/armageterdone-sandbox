@@ -51,7 +51,7 @@ describe("Shows hero (wordmark + NETWORK + 2×3 tiles)", () => {
     const cssName = read(SHOWS).match(/assets\/(root-[^"]+\.css)/)?.[1];
     expect(cssName).toBeTruthy();
     const css = read(`assets/${cssName}`);
-    expect(css).toMatch(/\.shows-hero__network\{[^}]*scaleY\(1\.4\)/);
+    expect(css).toMatch(/\.shows-hero__network\{[^}]*scaleY\(var\(--shows-network-scale-y\)\)/);
     expect(css).toMatch(/\.shows-hero__mark\{[^}]*color:#fff/);
     expect(css).toMatch(/\.shows-hero__row\{[^}]*grid-template-columns:repeat\(3/);
     // Shared centered stage (~23% under prior 56/64/70rem caps).
@@ -62,5 +62,7 @@ describe("Shows hero (wordmark + NETWORK + 2×3 tiles)", () => {
     expect(css).toMatch(/\.ep-wall__rule\{[^}]*height:5px/);
     expect(css).toMatch(/\.ep-wall__rule\{[^}]*background:var\(--accent\)/);
     expect(css).toMatch(/\.shows-hero__network-row\{/);
+    expect(css).toMatch(/--shows-network-scale-y:\s*1\.4/);
+    expect(css).toMatch(/\.shows-hero__rule\{[^}]*translateY\(/);
   });
 });
