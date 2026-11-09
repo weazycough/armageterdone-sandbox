@@ -1,6 +1,6 @@
 // Shows hero: equal-size pyramid — slot wrappers; top card = one bottom card,
 // centered over pair gap; title + crest centered; nav-width stage.
-// ≥900px: crest under NETWORK; pitch copy in the old mid slot.
+// ≥900px: flanks own row-gap; center stacks NETWORK + bird + pitch.
 
 import { describe, expect, it } from "vite-plus/test";
 import { read } from "./dist-files";
@@ -25,6 +25,8 @@ describe("Shows hero (equal-size pyramid sketch)", () => {
     expect(shows).toContain("NETWORK");
     expect(shows).toContain("images/cc-bird-v3.webp");
     expect(shows).toContain("shows-hero__crest");
+    expect(shows).toContain("shows-hero__flank");
+    expect(shows).toContain("shows-hero__center");
     expect(shows).toContain("shows-hero__slot--tl");
     expect(shows).toContain("shows-hero__slot--tr");
     expect(shows).toContain("shows-hero__slot--blo");
@@ -93,14 +95,15 @@ describe("Shows hero (equal-size pyramid sketch)", () => {
     ).toBe(true);
     expect(css).not.toContain("shows-sm-scale");
     expect(css).not.toContain("--shows-card-w");
-    // ≥900px crest-under-NETWORK + pitch slot.
+    // ≥900px flanks + center pitch.
     expect(css).toContain("shows-hero__pitch");
     expect(css).toContain("shows-hero__pitch-headline");
     expect(css).toContain("shows-hero__pitch-rule");
-    // Lightning CSS rewrites min-width media to width>=N.
+    expect(css).toContain("shows-hero__flank");
+    expect(css).toContain("shows-hero__center");
     expect(css.includes("@media (width>=900px)") || css.includes("@media (min-width: 900px)")).toBe(
       true,
     );
-    expect(css).toContain("blo bli pitch bri bro");
+    expect(css).toContain("text-align:center");
   });
 });

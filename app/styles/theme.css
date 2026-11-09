@@ -4770,7 +4770,9 @@ h2 {
    span the pair columns and center a child tile sized to exactly one card
    (calc against the 2-col span). Bottom tiles are width:100% of a 1fr card
    column — same rendered size. Title vertically centered with top cards.
-   ≥900px: crest row under NETWORK; pitch copy in the old mid slot.
+   ≥900px: left/right flanks own row-gap (~b1152aa 32px clearance); center
+   column stacks NETWORK + bird + pitch independently (bird may overlap the
+   inter-row band; must not hit title or pitch).
    padding-block only so .container inline pad = nav content edges.
    ------------------------------------------------------------------------- */
 .shows-hero .shows-hero__inner {
@@ -4782,9 +4784,16 @@ h2 {
   /* Extra bottom pad so card descriptions clear the hero edge */
   padding-block: 1.85rem 5.75rem;
 }
+
+/* <900px: flanks/center are transparent so children keep grid areas. */
+.shows-hero__flank,
+.shows-hero__center {
+  display: contents;
+}
+
 .shows-hero__stage {
   --shows-gap: 0.55rem;
-  /* Separate top-row card+desc from bottom cards */
+  /* Separate top-row card+desc from bottom cards (b1152aa ~32px @1920) */
   --shows-row-gap: 1.55rem;
   width: 100%;
   margin-inline: 0;
@@ -4803,7 +4812,7 @@ h2 {
 .shows-hero__brand { grid-area: brand; }
 .shows-hero__slot--blo { grid-area: blo; }
 .shows-hero__slot--bli { grid-area: bli; }
-.shows-hero__crest { grid-area: crest; }
+.shows-hero__crest--mid { grid-area: crest; }
 .shows-hero__pitch { grid-area: pitch; }
 .shows-hero__slot--bri { grid-area: bri; }
 .shows-hero__slot--bro { grid-area: bro; }
@@ -4849,14 +4858,15 @@ h2 {
 .shows-hero__brand {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   justify-content: center;
   gap: 0.3rem;
-  width: 100%;
+  width: fit-content;
   max-width: 100%;
   min-width: 0;
+  margin-inline: auto;
   text-align: center;
-  /* Sit beside the card frames (not mid-description) */
+  /* Sit beside the card frames (not mid-description) — b1152aa values */
   align-self: start;
   padding-top: clamp(1.25rem, 3.5vw, 2.75rem);
   overflow: visible;
@@ -4868,15 +4878,20 @@ h2 {
 .shows-hero__mark-wrap {
   display: block;
   line-height: 0;
+  /* width:0 + min-width:100% so SVG intrinsic size can't widen the brand;
+     brand column is sized by NETWORK text, mark stretches to match. */
+  width: 0;
+  min-width: 100%;
   max-width: 100%;
 }
 .shows-hero__mark {
   display: block;
-  height: clamp(1.72rem, 3vw, 2.61rem); /* +11% on prior */
-  width: auto;
-  max-width: min(100%, 18.9rem);
-  margin-inline: auto;
+  width: 100%;
+  height: auto;
+  max-width: none;
+  margin-inline: 0;
   color: #fff;
+  aspect-ratio: 376.56 / 53.04;
 }
 .shows-hero__network {
   margin: 0;
@@ -4909,6 +4924,8 @@ h2 {
   /* With align-items:start on stage, keep the bird mid among bottom cards */
   margin-block: auto;
 }
+.shows-hero__crest--mid { grid-area: crest; }
+.shows-hero__crest--hang { display: none; }
 
 /* Pitch is desktop-only (≥900px); keep out of <900 layouts. */
 .shows-hero__pitch {
@@ -4917,18 +4934,16 @@ h2 {
   width: 100%;
   max-width: 100%;
   min-width: 0;
-  align-self: center;
-  justify-self: stretch;
-  padding: 0.15rem 0.15rem 0.25rem;
-  text-align: left; /* match reference */
+  text-align: center;
   color: #f5efe2;
 }
 
 .shows-hero__pitch-headline {
   margin: 0;
-  padding: 0;
+  padding: 0 0.55rem;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 0;
   font-family: var(--font-title);
   font-weight: 400;
@@ -4936,6 +4951,7 @@ h2 {
   line-height: 0.92;
   letter-spacing: 0.01em;
   text-transform: uppercase;
+  text-align: center;
   color: #f5efe2;
   text-wrap: balance;
 }
@@ -4944,20 +4960,23 @@ h2 {
 }
 .shows-hero__pitch-rule {
   display: block;
-  width: 2.75rem;
+  /* Full pitch-column width; small card-gap is the stage column-gap outside. */
+  width: 100%;
   height: 0.28rem;
   margin: 0.7rem 0;
+  padding: 0;
   background: var(--accent);
   border-radius: 1px;
   box-shadow: 0 0 10px color-mix(in srgb, var(--accent) 45%, transparent);
 }
 .shows-hero__pitch-body {
   margin: 0;
-  padding: 0;
+  padding: 0 0.55rem;
   font-family: var(--font-body);
   font-size: clamp(0.72rem, 0.85vw, 0.88rem);
   font-weight: 400;
   line-height: 1.45;
+  text-align: center;
   color: var(--fg-secondary);
   text-wrap: pretty;
 }
@@ -5053,13 +5072,15 @@ h2 {
     --shows-network-size: clamp(3.16rem, 16.5vw, 4.77rem); /* +11% */
   }
   .shows-hero__mark {
-    height: clamp(1.5rem, 7vw, 2.1rem);
-    max-width: min(100%, 16rem);
+    /* Mobile: keep a sensible cap (NETWORK is narrower). */
+    width: min(100%, 16rem);
+    height: auto;
   }
-  .shows-hero__crest {
+  .shows-hero__crest--mid {
     width: min(24vw, 5.5rem);
     justify-self: center;
   }
+  .shows-hero__crest--hang { display: none; }
   .shows-hero__pitch {
     display: none;
   }
@@ -5072,68 +5093,153 @@ h2 {
   }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 768px) and (max-width: 899px) {
   .shows-hero .shows-hero__inner {
     padding-block: 2.35rem 6.5rem;
   }
   .shows-hero__stage {
     --shows-gap: 0.6rem;
     --shows-row-gap: 1.75rem;
+    /* Mid crest between bottom pairs (pre-pitch layout). */
+    grid-template-areas:
+      "tl   tl    brand  tr    tr"
+      "blo  bli   crest  bri   bro";
+  }
+  .shows-hero__pitch {
+    display: none;
   }
 }
 
-/* Desktop: bird under NETWORK; pitch in the old mid slot. Top slots span
-   two rows so cards stay top-aligned while the crest sits under the title. */
 @media (min-width: 900px) {
-  .shows-hero__stage {
-    --shows-row-gap: 1.35rem;
-    grid-template-areas:
-      "tl   tl    brand  tr    tr"
-      "tl   tl    crest  tr    tr"
-      "blo  bli   pitch  bri   bro";
+  .shows-hero .shows-hero__inner {
+    padding-block: 2.35rem 6.5rem;
   }
-  .shows-hero__slot--tl,
-  .shows-hero__slot--tr {
+  .shows-hero__stage {
+    --shows-gap: 0.65rem;
+    /* Match b1152aa flank clearance (~2rem → ~32px between top desc and bottom frames). */
+    --shows-row-gap: 2rem;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(13.5rem, 1.35fr) minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    grid-template-areas: none;
+    column-gap: var(--shows-gap);
+    row-gap: var(--shows-row-gap);
+    align-items: stretch;
+  }
+  .shows-hero__flank,
+  .shows-hero__center {
+    min-width: 0;
+    grid-row: 1 / -1;
+    display: grid;
+    grid-template-rows: subgrid;
+  }
+  .shows-hero__flank {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: var(--shows-gap);
+    align-items: start;
+  }
+  /* Clear named grid-area from the <900 stage template so flank rows work. */
+  .shows-hero__flank .shows-hero__slot {
+    grid-area: auto;
+  }
+  .shows-hero__center .shows-hero__brand,
+  .shows-hero__center .shows-hero__crest,
+  .shows-hero__center .shows-hero__pitch {
+    grid-area: auto;
+  }
+  .shows-hero__flank--left .shows-hero__slot--tl,
+  .shows-hero__flank--right .shows-hero__slot--tr {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    justify-self: center;
+    width: calc((100% - var(--shows-gap)) / 2);
+    max-width: calc((100% - var(--shows-gap)) / 2);
+  }
+  .shows-hero__flank--left .shows-hero__slot--tl .shows-hero__tile,
+  .shows-hero__flank--right .shows-hero__slot--tr .shows-hero__tile {
+    width: 100%;
+    max-width: 100%;
+  }
+  .shows-hero__flank--left .shows-hero__slot--blo { grid-column: 1; grid-row: 2; }
+  .shows-hero__flank--left .shows-hero__slot--bli { grid-column: 2; grid-row: 2; }
+  .shows-hero__flank--right .shows-hero__slot--bri { grid-column: 1; grid-row: 2; }
+  .shows-hero__flank--right .shows-hero__slot--bro { grid-column: 2; grid-row: 2; }
+
+  .shows-hero__center {
+    position: relative;
+    justify-items: center;
     align-items: start;
   }
   .shows-hero__brand {
-    /* NETWORK sits with the top card frames; crest is the next grid row */
-    padding-top: clamp(1.1rem, 3vw, 2.4rem);
-    /* Reserve space for scaleY(1.3) glyph overflow below the layout box */
+    grid-row: 1;
+    grid-column: 1;
+    padding-top: clamp(1.25rem, 3.5vw, 2.75rem);
+    /* Reserve scaleY overflow so the hung bird clears NETWORK glyphs */
     padding-bottom: calc(
-      var(--shows-network-size) * var(--shows-network-lh) * (var(--shows-network-scale-y) - 1) + 0.35rem
+      var(--shows-network-size) * var(--shows-network-lh) * (var(--shows-network-scale-y) - 1)
     );
     justify-content: flex-start;
-  }
-  .shows-hero__crest {
-    width: min(68%, 8.75rem);
-    max-width: min(68%, 8.75rem);
     align-self: start;
     justify-self: center;
-    margin: 0.35rem auto 0;
+    width: fit-content;
+    max-width: 100%;
+    position: relative;
+    z-index: 2;
+    --shows-network-size: clamp(3.61rem, 6.77vw, 7.1rem);
+    overflow: visible;
+  }
+  .shows-hero__mark {
+    width: 100%;
+    height: auto;
+    max-width: none;
+  }
+  .shows-hero__crest--mid {
+    display: none;
+  }
+  .shows-hero__crest--hang {
+    display: block;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 100%;
+    /* Sized to sit under NETWORK and dip into the inter-row band without
+       entering the pitch / bottom-card track (~3.1–3.6rem tall). */
+    width: auto;
+    /* Larger bird under NETWORK; may dip into pitch padding (not content). */
+    height: clamp(5.5rem, 7vw, 7rem);
+    max-width: min(85%, 9rem);
+    aspect-ratio: 1;
+    margin: 0.15rem 0 0;
+    z-index: 1;
+    pointer-events: none;
   }
   .shows-hero__pitch {
     display: block;
+    grid-row: 2;
+    grid-column: 1;
+    width: 100%;
     align-self: start;
-    padding-top: 0.2rem;
+    justify-self: stretch;
+    margin-top: 0;
+    /* Clear the hung crest that dips into this track from row 1. */
+    padding-top: clamp(3.75rem, 5vw, 4.75rem);
+    position: relative;
+    z-index: 2;
+    background: transparent;
   }
 }
 
 @media (min-width: 1100px) {
-  .shows-hero__mark {
-    height: 2.83rem; /* +11% */
-    max-width: 21.6rem;
-  }
   .shows-hero__stage {
     --shows-gap: 0.65rem;
-    --shows-row-gap: 1.5rem;
+    --shows-row-gap: 2rem;
   }
   .shows-hero__brand {
-    --shows-network-size: clamp(3.61rem, 6.77vw, 7.1rem); /* +11% */
+    --shows-network-size: clamp(3.61rem, 6.77vw, 7.1rem); /* +11% — b1152aa */
   }
-  .shows-hero__crest {
-    width: min(66%, 9.5rem);
-    max-width: min(66%, 9.5rem);
+  .shows-hero__crest--hang {
+    height: clamp(5.75rem, 6.2vw, 7.25rem);
+    max-width: min(85%, 9.5rem);
   }
   .shows-hero__pitch-headline {
     font-size: clamp(1.75rem, 2.05vw, 2.55rem);

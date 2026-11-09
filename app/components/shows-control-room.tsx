@@ -1,8 +1,8 @@
 // shows-control-room.tsx — Shows hero on shared mission-hero background.
 // Equal-size pyramid: each top card is the same pixel size as the bottom
-// cards and centered over its side's bottom-pair gap (slot wrappers make the
-// width calc resolve against the 2-col span). Title centered in the top row;
-// desktop (≥900px): crest under NETWORK, pitch copy in the old mid slot.
+// cards and centered over its side's bottom-pair gap. ≥900px: left/right
+// flanks own their row gap (b1152aa ~32px clearance); center column stacks
+// NETWORK + bird + pitch independently so the bird doesn't push side cards.
 // Stage = nav .container content box.
 
 import type * as React from "react";
@@ -134,59 +134,74 @@ export function ShowsControlRoom({ tiles }: { tiles: NetworkShowTile[] }): React
       <MissionHeroFloor />
       <div className="container mission-hero__inner shows-hero__inner">
         <div className="shows-hero__stage">
-          {/* Wrappers own grid-area; top wrappers span the pair so card width
-              calc((100% - gap) / 2) resolves against the 2-col span (= 1 card). */}
-          <div className="shows-hero__slot shows-hero__slot--tl">
-            <ShowTile show={must(S.topLeft)} />
-          </div>
-          <header className="shows-hero__brand">
-            <span className="shows-hero__mark-wrap" aria-hidden="true">
-              <CcWordmark className="shows-hero__mark" />
-            </span>
-            <h1 className="shows-hero__network">
-              <span className="sr-only">Canary Cry </span>
-              NETWORK
-            </h1>
-          </header>
-          <div className="shows-hero__slot shows-hero__slot--tr">
-            <ShowTile show={must(S.topRight)} />
+          {/* ≥900px: flanks own top↔bottom spacing; center stacks title+bird+pitch.
+              <900px: display:contents so children keep the prior grid areas. */}
+          <div className="shows-hero__flank shows-hero__flank--left">
+            <div className="shows-hero__slot shows-hero__slot--tl">
+              <ShowTile show={must(S.topLeft)} />
+            </div>
+            <div className="shows-hero__slot shows-hero__slot--blo">
+              <ShowTile show={must(S.bottomLeftOuter)} />
+            </div>
+            <div className="shows-hero__slot shows-hero__slot--bli">
+              <ShowTile show={must(S.bottomLeftInner)} />
+            </div>
           </div>
 
-          {/* ≥900px: crest sits on its own row under NETWORK; <900: mid between bottom pairs / mobile row. */}
-          <img
-            className="shows-hero__crest"
-            src={asset("images/cc-bird-v3.webp")}
-            alt=""
-            width={640}
-            height={640}
-            decoding="async"
-            aria-hidden="true"
-          />
+          <div className="shows-hero__center">
+            <header className="shows-hero__brand">
+              <span className="shows-hero__mark-wrap" aria-hidden="true">
+                <CcWordmark className="shows-hero__mark" />
+              </span>
+              <h1 className="shows-hero__network">
+                <span className="sr-only">Canary Cry </span>
+                NETWORK
+              </h1>
+              {/* ≥900px: hangs under NETWORK (absolute); hidden below. */}
+              <img
+                className="shows-hero__crest shows-hero__crest--hang"
+                src={asset("images/cc-bird-v3.webp")}
+                alt=""
+                width={640}
+                height={640}
+                decoding="async"
+                aria-hidden="true"
+              />
+            </header>
+            {/* <900px: mid-column / mobile crest row. Hidden on ≥900. */}
+            <img
+              className="shows-hero__crest shows-hero__crest--mid"
+              src={asset("images/cc-bird-v3.webp")}
+              alt=""
+              width={640}
+              height={640}
+              decoding="async"
+              aria-hidden="true"
+            />
+            <aside className="shows-hero__pitch" aria-label="About the Canary Cry Network">
+              <p className="shows-hero__pitch-headline">
+                {SHOWS_HERO_PITCH.headline.map((line) => (
+                  <span key={line} className="shows-hero__pitch-line">
+                    {line}
+                  </span>
+                ))}
+              </p>
+              <span className="shows-hero__pitch-rule" aria-hidden="true" />
+              <p className="shows-hero__pitch-body">{SHOWS_HERO_PITCH.description}</p>
+              <span className="shows-hero__pitch-rule" aria-hidden="true" />
+            </aside>
+          </div>
 
-          <div className="shows-hero__slot shows-hero__slot--blo">
-            <ShowTile show={must(S.bottomLeftOuter)} />
-          </div>
-          <div className="shows-hero__slot shows-hero__slot--bli">
-            <ShowTile show={must(S.bottomLeftInner)} />
-          </div>
-          {/* ≥900px: pitch fills the old crest slot between Clubhouse & Joyspiracy. Hidden below. */}
-          <aside className="shows-hero__pitch" aria-label="About the Canary Cry Network">
-            <p className="shows-hero__pitch-headline">
-              {SHOWS_HERO_PITCH.headline.map((line) => (
-                <span key={line} className="shows-hero__pitch-line">
-                  {line}
-                </span>
-              ))}
-            </p>
-            <span className="shows-hero__pitch-rule" aria-hidden="true" />
-            <p className="shows-hero__pitch-body">{SHOWS_HERO_PITCH.description}</p>
-            <span className="shows-hero__pitch-rule" aria-hidden="true" />
-          </aside>
-          <div className="shows-hero__slot shows-hero__slot--bri">
-            <ShowTile show={must(S.bottomRightInner)} />
-          </div>
-          <div className="shows-hero__slot shows-hero__slot--bro">
-            <ShowTile show={must(S.bottomRightOuter)} />
+          <div className="shows-hero__flank shows-hero__flank--right">
+            <div className="shows-hero__slot shows-hero__slot--tr">
+              <ShowTile show={must(S.topRight)} />
+            </div>
+            <div className="shows-hero__slot shows-hero__slot--bri">
+              <ShowTile show={must(S.bottomRightInner)} />
+            </div>
+            <div className="shows-hero__slot shows-hero__slot--bro">
+              <ShowTile show={must(S.bottomRightOuter)} />
+            </div>
           </div>
         </div>
       </div>
