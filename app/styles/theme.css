@@ -5143,6 +5143,8 @@ h2 {
     --shows-bottom-drop: 4.6rem; /* ~74px — covers ~60px overlap + ~14px gap @1280 */
     /* Pull bottom 4 cards toward bird; ~32px side gap (pair gap + card size unchanged). */
     --shows-bottom-inward: 3.325rem; /* ~53.2px; birdGap 85.2 → ~32 */
+    /* Top cards only: ~30px @1920, scales with viewport (20px@1280 … 40px@2560). */
+    --shows-top-nudge: 1.5625vw;
   }
   /* Drop News Talk / Burning Man frames to the wordmark ink top. */
   .shows-hero__slot--tl,
@@ -5150,10 +5152,10 @@ h2 {
     padding-top: var(--shows-title-pad-top);
     box-sizing: border-box;
   }
-  /* Top cards: same shift as 1626542 (title stack unlifted). */
+  /* Top cards: base shift + small downward nudge (News Talk / Burning Man only). */
   .shows-hero__flank .shows-hero__slot--tl,
   .shows-hero__flank .shows-hero__slot--tr {
-    transform: translateY(var(--shows-cards-shift));
+    transform: translateY(calc(var(--shows-cards-shift) + var(--shows-top-nudge)));
   }
   /* Bottom row: Y drop for pitch clearance + X inward toward bird. */
   .shows-hero__flank .shows-hero__slot--blo,
