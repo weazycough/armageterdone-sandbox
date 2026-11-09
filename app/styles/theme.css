@@ -4782,7 +4782,7 @@ h2 {
   flex-direction: column;
   align-items: stretch;
   /* Wordmark / top-card shared inset; bottom pad = breathing room under labels. */
-  --shows-title-pad-top: clamp(0.85rem, 2vw, 1.5rem);
+  --shows-title-pad-top: clamp(1.25rem, 3.5vw, 2.75rem);
   padding-block: 1.85rem 4.5rem;
 }
 
@@ -5135,12 +5135,12 @@ h2 {
 
 @media (min-width: 900px) {
   .shows-hero .shows-hero__inner {
-    /* ~64–80px under lowest hero content (pitch may extend past labels). */
-    padding-block: 2.35rem 4.75rem; /* ~76px under bird */
-    /* Shift only the six show cards (unchanged). */
+    /* Bottom pad grows with --shows-bottom-drop so lowered bottom cards keep breath. */
+    padding-block: 2.35rem calc(4.75rem + var(--shows-bottom-drop));
+    /* Shared base shift (top+bottom as in 1626542); bottom adds --shows-bottom-drop. */
     --shows-cards-shift: 2.4925rem; /* ~40px — half of prior 80px */
-    /* Pull title+pitch+bird (+ top cards) up so pitch clears bottom-row tops. */
-    --shows-lift: clamp(3.9rem, 5.7vw, 4.75rem);
+    /* Extra bottom-row drop so pitch rule clears card tops ~12–16px. */
+    --shows-bottom-drop: 4.6rem; /* ~74px — covers ~60px overlap + ~14px gap @1280 */
   }
   /* Drop News Talk / Burning Man frames to the wordmark ink top. */
   .shows-hero__slot--tl,
@@ -5148,22 +5148,17 @@ h2 {
     padding-top: var(--shows-title-pad-top);
     box-sizing: border-box;
   }
-  /* Lift title/pitch/bird so pitch clears bottom cards; top cards follow.
-     Bottom-row shift stays at --shows-cards-shift (unchanged positions). */
-  .shows-hero__center > .shows-hero__brand,
-  .shows-hero__center > .shows-hero__pitch,
-  .shows-hero__center > .shows-hero__crest--hang {
-    transform: translateY(calc(-1 * var(--shows-lift)));
-  }
+  /* Top cards: same shift as 1626542 (title stack unlifted). */
   .shows-hero__flank .shows-hero__slot--tl,
   .shows-hero__flank .shows-hero__slot--tr {
-    transform: translateY(calc(var(--shows-cards-shift) - var(--shows-lift)));
+    transform: translateY(var(--shows-cards-shift));
   }
+  /* Bottom row: base shift + optional drop so pitch rule clears card tops. */
   .shows-hero__flank .shows-hero__slot--blo,
   .shows-hero__flank .shows-hero__slot--bli,
   .shows-hero__flank .shows-hero__slot--bri,
   .shows-hero__flank .shows-hero__slot--bro {
-    transform: translateY(var(--shows-cards-shift));
+    transform: translateY(calc(var(--shows-cards-shift) + var(--shows-bottom-drop)));
   }
   .shows-hero__stage {
     --shows-gap: 0.65rem;
@@ -5309,20 +5304,23 @@ h2 {
   }
 }
 
-/* Card-only vertical shift: match bottom labels to pitch bottom rule. */
+/* Card shift (all rows) + bottom-row drop for pitch clearance. */
 @media (min-width: 1440px) {
   .shows-hero .shows-hero__inner {
     --shows-cards-shift: 2.6325rem; /* ~42px — half of prior 84px */
+    --shows-bottom-drop: 4.45rem; /* ~71px */
   }
 }
 @media (min-width: 1536px) {
   .shows-hero .shows-hero__inner {
     --shows-cards-shift: 3.69rem; /* ~59px — half of prior 118px */
+    --shows-bottom-drop: 3.4rem; /* ~54px */
   }
 }
 @media (min-width: 1680px) {
   .shows-hero .shows-hero__inner {
     --shows-cards-shift: 4.0675rem; /* ~65px — half of prior 130px */
+    --shows-bottom-drop: 3.3rem; /* ~53px — covers 1920/2560 too */
   }
 }
 
