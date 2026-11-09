@@ -21,6 +21,7 @@ describe("Shows hero (equal-size pyramid sketch)", () => {
     expect(shows).toContain("mission-hero__floor-grid");
     expect(shows).toContain("shows-hero__stage");
     expect(shows).toContain("shows-hero__brand");
+    expect(shows).toContain("shows-hero__title-stack");
     expect(shows).toMatch(/<h1 class="shows-hero__network"/);
     expect(shows).toContain("NETWORK");
     expect(shows).toContain("images/cc-bird-v3.webp");
@@ -74,7 +75,7 @@ describe("Shows hero (equal-size pyramid sketch)", () => {
     expect(css).toContain("shows-hero__network");
     expect(css).toContain("scaleY(var(--shows-network-scale-y))");
     expect(css).toContain("--shows-network-scale-y:1.3");
-    expect(css).toContain("--shows-network-size:clamp(3.16rem, 7.5vw, 6.77rem)");
+    expect(css).toContain("--shows-network-size:clamp(3.16rem, 5.5vw, 5.95rem)");
     expect(css).toContain("transform-origin:50% 0");
     expect(css).toContain("shows-hero__stage");
     expect(css).toContain("shows-hero__crest");

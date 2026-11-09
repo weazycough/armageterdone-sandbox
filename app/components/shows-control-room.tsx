@@ -150,13 +150,15 @@ export function ShowsControlRoom({ tiles }: { tiles: NetworkShowTile[] }): React
 
           <div className="shows-hero__center">
             <header className="shows-hero__brand">
-              <span className="shows-hero__mark-wrap" aria-hidden="true">
-                <CcWordmark className="shows-hero__mark" />
-              </span>
-              <h1 className="shows-hero__network">
-                <span className="sr-only">Canary Cry </span>
-                NETWORK
-              </h1>
+              <div className="shows-hero__title-stack">
+                <span className="shows-hero__mark-wrap" aria-hidden="true">
+                  <CcWordmark className="shows-hero__mark" />
+                </span>
+                <h1 className="shows-hero__network">
+                  <span className="sr-only">Canary Cry </span>
+                  {"NETWORK"}
+                </h1>
+              </div>
               {/* ≥900px: hangs under NETWORK (absolute); hidden below. */}
               <img
                 className="shows-hero__crest shows-hero__crest--hang"
