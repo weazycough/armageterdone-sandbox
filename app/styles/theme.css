@@ -4940,15 +4940,16 @@ h2 {
 
 .shows-hero__pitch-headline {
   margin: 0;
-  padding: 0 0.55rem;
+  padding: 0 0.35rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0;
   font-family: var(--font-title);
   font-weight: 400;
-  font-size: clamp(1.55rem, 2.15vw, 2.35rem);
-  line-height: 0.92;
+  /* Slightly tighter so the pitch fits the bottom-card row height. */
+  font-size: clamp(1.2rem, 1.55vw, 1.7rem);
+  line-height: 0.9;
   letter-spacing: 0.01em;
   text-transform: uppercase;
   text-align: center;
@@ -4960,10 +4961,10 @@ h2 {
 }
 .shows-hero__pitch-rule {
   display: block;
-  /* Full pitch-column width; small card-gap is the stage column-gap outside. */
+  /* Full pitch-column width; thick short-bar like the reference (~5–6px). */
   width: 100%;
-  height: 0.28rem;
-  margin: 0.7rem 0;
+  height: 0.375rem; /* 6px */
+  margin: 0.45rem 0;
   padding: 0;
   background: var(--accent);
   border-radius: 1px;
@@ -4971,11 +4972,11 @@ h2 {
 }
 .shows-hero__pitch-body {
   margin: 0;
-  padding: 0 0.55rem;
+  padding: 0 0.35rem;
   font-family: var(--font-body);
-  font-size: clamp(0.72rem, 0.85vw, 0.88rem);
+  font-size: clamp(0.58rem, 0.68vw, 0.7rem);
   font-weight: 400;
-  line-height: 1.45;
+  line-height: 1.3;
   text-align: center;
   color: var(--fg-secondary);
   text-wrap: pretty;
@@ -5116,65 +5117,62 @@ h2 {
   }
   .shows-hero__stage {
     --shows-gap: 0.65rem;
-    /* Match b1152aa flank clearance (~2rem → ~32px between top desc and bottom frames). */
     --shows-row-gap: 2rem;
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(13.5rem, 1.35fr) minmax(0, 1fr);
+    /* Exact b1152aa 5-track recipe so cards match ~199.7px @1120 stage. */
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(12.5rem, 1.4fr) minmax(0, 1fr) minmax(0, 1fr);
     grid-template-rows: auto auto;
     grid-template-areas: none;
     column-gap: var(--shows-gap);
     row-gap: var(--shows-row-gap);
     align-items: stretch;
   }
-  .shows-hero__flank,
+  /* Flanks dissolve so children sit on the 5 stage tracks (same as b1152aa). */
+  .shows-hero__flank {
+    display: contents;
+  }
   .shows-hero__center {
-    min-width: 0;
-    grid-row: 1 / -1;
     display: grid;
     grid-template-rows: subgrid;
-  }
-  .shows-hero__flank {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    column-gap: var(--shows-gap);
+    grid-column: 3;
+    grid-row: 1 / -1;
+    min-width: 0;
+    position: relative;
+    justify-items: center;
     align-items: start;
   }
-  /* Clear named grid-area from the <900 stage template so flank rows work. */
-  .shows-hero__flank .shows-hero__slot {
-    grid-area: auto;
-  }
-  .shows-hero__center .shows-hero__brand,
-  .shows-hero__center .shows-hero__crest,
-  .shows-hero__center .shows-hero__pitch {
-    grid-area: auto;
-  }
-  .shows-hero__flank--left .shows-hero__slot--tl,
-  .shows-hero__flank--right .shows-hero__slot--tr {
-    grid-column: 1 / -1;
+  /* Higher specificity than base grid-area names; set placement in one rule. */
+  .shows-hero__flank .shows-hero__slot--tl {
+    grid-area: unset;
+    grid-column: 1 / 3;
     grid-row: 1;
     justify-self: center;
     width: calc((100% - var(--shows-gap)) / 2);
     max-width: calc((100% - var(--shows-gap)) / 2);
   }
-  .shows-hero__flank--left .shows-hero__slot--tl .shows-hero__tile,
-  .shows-hero__flank--right .shows-hero__slot--tr .shows-hero__tile {
+  .shows-hero__flank .shows-hero__slot--tr {
+    grid-area: unset;
+    grid-column: 4 / 6;
+    grid-row: 1;
+    justify-self: center;
+    width: calc((100% - var(--shows-gap)) / 2);
+    max-width: calc((100% - var(--shows-gap)) / 2);
+  }
+  .shows-hero__flank .shows-hero__slot--tl .shows-hero__tile,
+  .shows-hero__flank .shows-hero__slot--tr .shows-hero__tile {
     width: 100%;
     max-width: 100%;
   }
-  .shows-hero__flank--left .shows-hero__slot--blo { grid-column: 1; grid-row: 2; }
-  .shows-hero__flank--left .shows-hero__slot--bli { grid-column: 2; grid-row: 2; }
-  .shows-hero__flank--right .shows-hero__slot--bri { grid-column: 1; grid-row: 2; }
-  .shows-hero__flank--right .shows-hero__slot--bro { grid-column: 2; grid-row: 2; }
+  .shows-hero__flank .shows-hero__slot--blo { grid-area: unset; grid-column: 1; grid-row: 2; }
+  .shows-hero__flank .shows-hero__slot--bli { grid-area: unset; grid-column: 2; grid-row: 2; }
+  .shows-hero__flank .shows-hero__slot--bri { grid-area: unset; grid-column: 4; grid-row: 2; }
+  .shows-hero__flank .shows-hero__slot--bro { grid-area: unset; grid-column: 5; grid-row: 2; }
 
-  .shows-hero__center {
-    position: relative;
-    justify-items: center;
-    align-items: start;
-  }
-  .shows-hero__brand {
+  .shows-hero__center .shows-hero__brand {
+    grid-area: unset;
     grid-row: 1;
     grid-column: 1;
     padding-top: clamp(1.25rem, 3.5vw, 2.75rem);
-    /* Reserve scaleY overflow so the hung bird clears NETWORK glyphs */
     padding-bottom: calc(
       var(--shows-network-size) * var(--shows-network-lh) * (var(--shows-network-scale-y) - 1)
     );
@@ -5202,30 +5200,34 @@ h2 {
     left: 50%;
     transform: translateX(-50%);
     top: 100%;
-    /* Sized to sit under NETWORK and dip into the inter-row band without
-       entering the pitch / bottom-card track (~3.1–3.6rem tall). */
     width: auto;
-    /* Larger bird under NETWORK; may dip into pitch padding (not content). */
-    height: clamp(5.5rem, 7vw, 7rem);
-    max-width: min(85%, 9rem);
+    height: clamp(3.25rem, 4vw, 4.25rem);
+    max-width: min(70%, 6.5rem);
     aspect-ratio: 1;
-    margin: 0.15rem 0 0;
+    margin: 0.1rem 0 0;
     z-index: 1;
     pointer-events: none;
   }
-  .shows-hero__pitch {
-    display: block;
+  .shows-hero__center .shows-hero__pitch {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    grid-area: unset;
     grid-row: 2;
     grid-column: 1;
     width: 100%;
-    align-self: start;
+    max-width: 100%;
+    align-self: stretch;
     justify-self: stretch;
     margin-top: 0;
-    /* Clear the hung crest that dips into this track from row 1. */
-    padding-top: clamp(3.75rem, 5vw, 4.75rem);
+    padding-top: 0;
+    padding-bottom: 0;
     position: relative;
     z-index: 2;
-    background: transparent;
+    box-sizing: border-box;
+    max-height: 100%;
+    overflow: hidden;
   }
 }
 
@@ -5238,11 +5240,11 @@ h2 {
     --shows-network-size: clamp(3.61rem, 6.77vw, 7.1rem); /* +11% — b1152aa */
   }
   .shows-hero__crest--hang {
-    height: clamp(5.75rem, 6.2vw, 7.25rem);
-    max-width: min(85%, 9.5rem);
+    height: clamp(3.5rem, 3.8vw, 4.5rem);
+    max-width: min(70%, 7rem);
   }
   .shows-hero__pitch-headline {
-    font-size: clamp(1.75rem, 2.05vw, 2.55rem);
+    font-size: clamp(1.3rem, 1.45vw, 1.75rem);
   }
 }
 
