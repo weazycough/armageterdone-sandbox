@@ -31,6 +31,9 @@ describe("Shows hero (equal-size pyramid sketch)", () => {
     expect(shows).toContain("shows-hero__slot--bri");
     expect(shows).toContain("shows-hero__slot--bro");
     expect(shows).toContain("images/show-joyspiracy.webp");
+    // Hero-only Joyspiracy destination (share.google as given).
+    expect(shows).toContain("https://share.google/dCjcd3aFLkk10RFJX");
+    expect(shows).toContain('target="_blank"');
     expect(shows).not.toContain("shows-hero__tile--contain");
     expect(shows).not.toContain("shows-hero__tile--sm");
     expect(shows).not.toContain("shows-hero__rule");

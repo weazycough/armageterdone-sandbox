@@ -42,7 +42,15 @@ export const SHOWS_HERO_RIGHT = [
 ] as const;
 export const SHOWS_HERO_ROWS = [SHOWS_HERO_LEFT, SHOWS_HERO_RIGHT] as const;
 
+/** Hero-only destinations (roster keeps NETWORK_SHOWS.href). */
+const HERO_HREF_OVERRIDE: Partial<Record<string, string>> = {
+  // share.google resolves to a Google interstitial, not a stable show URL — keep as given.
+  joyspiracy: "https://share.google/dCjcd3aFLkk10RFJX",
+};
+
 function tileHref(show: NetworkShowTile): string | null {
+  const override = HERO_HREF_OVERRIDE[show.slug];
+  if (override) return override;
   if (show.href) return show.href;
   if (show.latest?.slug) return episodePath(show.latest.slug);
   if (show.latest?.externalUrl) return show.latest.externalUrl;
@@ -86,8 +94,14 @@ function ShowTile({ show }: { show: NetworkShowTile }): React.ReactNode {
     );
   }
 
+  const external = !href.startsWith("/") || href.startsWith("//");
   return (
-    <SmartLink className={className} href={href} title={show.latest?.title ?? show.title}>
+    <SmartLink
+      className={className}
+      href={href}
+      title={show.latest?.title ?? show.title}
+      {...(external ? { target: "_blank" } : {})}
+    >
       {body}
     </SmartLink>
   );
