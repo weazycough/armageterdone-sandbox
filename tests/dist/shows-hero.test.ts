@@ -83,7 +83,7 @@ describe("Shows hero (equal-size pyramid sketch)", () => {
     expect(css).toContain("object-fit:contain");
     expect(css).toContain("padding-block:1.85rem 4.5rem");
     expect(css).toContain("padding-block:1.35rem 3.5rem");
-    expect(css).toContain("padding-block:2.35rem 4.5rem");
+    expect(css).toContain("padding-block:2.35rem 5rem");
     expect(css).toContain("--shows-title-pad-top");
     expect(css).toContain("--shows-row-gap");
     // Top tile sized to one card against the 2-col wrapper.
