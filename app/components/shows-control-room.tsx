@@ -1,7 +1,8 @@
 // shows-control-room.tsx — Shows hero on shared mission-hero background.
-// Symmetric pyramids: each top card (same size as the rest) is centered over
-// the gap between its side's two bottom cards. Title centered above; bannerless
-// crest between the bottom pairs. Stage = nav .container content box.
+// Equal-size pyramid: each top card is the same pixel size as the bottom
+// cards and centered over its side's bottom-pair gap (slot wrappers make the
+// width calc resolve against the 2-col span). Title centered in the top row;
+// bannerless crest between bottom pairs. Stage = nav .container content box.
 
 import type * as React from "react";
 import type { NetworkShowTile } from "../lib/network-latest.server";
@@ -11,7 +12,6 @@ import { CcWordmark } from "./cc-wordmark";
 import { MissionHeroFloor } from "./mission-hero-floor";
 import { SmartLink } from "./smart-link";
 
-/** Sketch slots (desktop pyramids). */
 export const SHOWS_HERO_SLOTS = {
   topLeft: "news-talk",
   bottomLeftOuter: "radio",
@@ -30,7 +30,6 @@ export const SHOWS_HERO_ORDER = [
   SHOWS_HERO_SLOTS.bottomRightOuter,
 ] as const;
 
-/** @deprecated prior API. */
 export const SHOWS_HERO_LEFT = [
   SHOWS_HERO_SLOTS.topLeft,
   SHOWS_HERO_SLOTS.bottomLeftOuter,
@@ -43,7 +42,6 @@ export const SHOWS_HERO_RIGHT = [
 ] as const;
 export const SHOWS_HERO_ROWS = [SHOWS_HERO_LEFT, SHOWS_HERO_RIGHT] as const;
 
-/** Wide / text-heavy thumbs that look better letterboxed than center-cropped. */
 const FIT_CONTAIN = new Set(["joyspiracy"]);
 
 function tileHref(show: NetworkShowTile): string | null {
@@ -53,17 +51,11 @@ function tileHref(show: NetworkShowTile): string | null {
   return null;
 }
 
-function ShowTile({
-  show,
-  slot,
-}: {
-  show: NetworkShowTile;
-  slot: string;
-}): React.ReactNode {
+function ShowTile({ show }: { show: NetworkShowTile }): React.ReactNode {
   const href = tileHref(show);
   const artSrc = show.latest?.artUrl ?? (show.art ? asset(show.art) : null);
-  const fit = FIT_CONTAIN.has(show.slug) ? "shows-hero__tile--contain" : "";
-  const className = ["shows-hero__tile", slot, fit].filter(Boolean).join(" ");
+  const fit = FIT_CONTAIN.has(show.slug) ? " shows-hero__tile--contain" : "";
+  const className = `shows-hero__tile${fit}`;
 
   const body = (
     <>
@@ -116,8 +108,11 @@ export function ShowsControlRoom({ tiles }: { tiles: NetworkShowTile[] }): React
       <MissionHeroFloor />
       <div className="container mission-hero__inner shows-hero__inner">
         <div className="shows-hero__stage">
-          {/* Top cards span their pair columns and center over the gap. */}
-          <ShowTile show={must(S.topLeft)} slot="shows-hero__slot--tl" />
+          {/* Wrappers own grid-area; top wrappers span the pair so card width
+              calc((100% - gap) / 2) resolves against the 2-col span (= 1 card). */}
+          <div className="shows-hero__slot shows-hero__slot--tl">
+            <ShowTile show={must(S.topLeft)} />
+          </div>
           <header className="shows-hero__brand">
             <span className="shows-hero__mark-wrap" aria-hidden="true">
               <CcWordmark className="shows-hero__mark" />
@@ -127,10 +122,16 @@ export function ShowsControlRoom({ tiles }: { tiles: NetworkShowTile[] }): React
               NETWORK
             </h1>
           </header>
-          <ShowTile show={must(S.topRight)} slot="shows-hero__slot--tr" />
+          <div className="shows-hero__slot shows-hero__slot--tr">
+            <ShowTile show={must(S.topRight)} />
+          </div>
 
-          <ShowTile show={must(S.bottomLeftOuter)} slot="shows-hero__slot--blo" />
-          <ShowTile show={must(S.bottomLeftInner)} slot="shows-hero__slot--bli" />
+          <div className="shows-hero__slot shows-hero__slot--blo">
+            <ShowTile show={must(S.bottomLeftOuter)} />
+          </div>
+          <div className="shows-hero__slot shows-hero__slot--bli">
+            <ShowTile show={must(S.bottomLeftInner)} />
+          </div>
           <img
             className="shows-hero__crest"
             src={asset("images/cc-bird-crest.webp")}
@@ -140,8 +141,12 @@ export function ShowsControlRoom({ tiles }: { tiles: NetworkShowTile[] }): React
             decoding="async"
             aria-hidden="true"
           />
-          <ShowTile show={must(S.bottomRightInner)} slot="shows-hero__slot--bri" />
-          <ShowTile show={must(S.bottomRightOuter)} slot="shows-hero__slot--bro" />
+          <div className="shows-hero__slot shows-hero__slot--bri">
+            <ShowTile show={must(S.bottomRightInner)} />
+          </div>
+          <div className="shows-hero__slot shows-hero__slot--bro">
+            <ShowTile show={must(S.bottomRightOuter)} />
+          </div>
         </div>
       </div>
     </section>

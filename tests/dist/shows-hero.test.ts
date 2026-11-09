@@ -1,5 +1,5 @@
-// Shows hero: equal-size pyramid sketch — top card centered over bottom-pair
-// gap; title + crest centered; nav-width stage; bannerless crest.
+// Shows hero: equal-size pyramid — slot wrappers; top card = one bottom card,
+// centered over pair gap; title + crest centered; nav-width stage.
 
 import { describe, expect, it } from "vite-plus/test";
 import { read } from "./dist-files";
@@ -30,10 +30,8 @@ describe("Shows hero (equal-size pyramid sketch)", () => {
     expect(shows).toContain("shows-hero__slot--bli");
     expect(shows).toContain("shows-hero__slot--bri");
     expect(shows).toContain("shows-hero__slot--bro");
-    // No sm/lg size split — all cards equal.
+    expect(shows).toContain("shows-hero__tile--contain");
     expect(shows).not.toContain("shows-hero__tile--sm");
-    expect(shows).not.toContain("shows-hero__tile--lg");
-    expect(shows).toContain("shows-hero__tile--contain"); // joyspiracy
     expect(shows).not.toContain("shows-hero__rule");
     expect(shows).toContain("M.02,26.46C.02,11.76");
 
@@ -50,7 +48,7 @@ describe("Shows hero (equal-size pyramid sketch)", () => {
     expect(shows).toContain("On the network");
   });
 
-  it("styles equal cards, pyramid span, cover/contain, nav padding-block", () => {
+  it("styles equal cards via slot wrappers, cover/contain, nav padding-block", () => {
     const cssName = read(SHOWS).match(/assets\/(root-[^"]+\.css)/)?.[1];
     expect(cssName).toBeTruthy();
     const css = read(`assets/${cssName}`);
@@ -67,12 +65,12 @@ describe("Shows hero (equal-size pyramid sketch)", () => {
     expect(css).toContain("padding-block:1.75rem 3.75rem");
     expect(css).toContain("padding-block:1.35rem 2.75rem");
     expect(css).toContain("padding-block:2.25rem 4.25rem");
-    // Top card width formula centers over pair gap.
+    // Top tile sized to one card against the 2-col wrapper.
     expect(
       css.includes("width:calc((100% - var(--shows-gap)) / 2)") ||
         css.includes("width:calc((100% - var(--shows-gap))/2)"),
     ).toBe(true);
     expect(css).not.toContain("shows-sm-scale");
-    expect(css).not.toContain("shows-hero__tile--sm");
+    expect(css).not.toContain("--shows-card-w");
   });
 });
