@@ -2,7 +2,7 @@
 // Equal-size pyramid: each top card is the same pixel size as the bottom
 // cards and centered over its side's bottom-pair gap (slot wrappers make the
 // width calc resolve against the 2-col span). Title centered in the top row;
-// bannerless crest between bottom pairs. Stage = nav .container content box.
+// transparent bird (no circle/banner) between bottom pairs. Stage = nav .container content box.
 
 import type * as React from "react";
 import type { NetworkShowTile } from "../lib/network-latest.server";
@@ -149,7 +149,7 @@ export function ShowsControlRoom({ tiles }: { tiles: NetworkShowTile[] }): React
           </div>
           <img
             className="shows-hero__crest"
-            src={asset("images/cc-bird-crest.webp")}
+            src={asset("images/cc-bird.webp")}
             alt=""
             width={640}
             height={640}
