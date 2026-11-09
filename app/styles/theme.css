@@ -5133,12 +5133,17 @@ h2 {
   .shows-hero .shows-hero__inner {
     /* ~64–80px under lowest hero content (pitch may extend past labels). */
     padding-block: 2.35rem 5rem;
+    /* Shift only the six show cards down to the pitch bottom rule. */
+    --shows-cards-shift: 4.985rem; /* ~80px @1280–1366 */
   }
   /* Drop News Talk / Burning Man frames to the wordmark ink top. */
   .shows-hero__slot--tl,
   .shows-hero__slot--tr {
     padding-top: var(--shows-title-pad-top);
     box-sizing: border-box;
+  }
+  .shows-hero__flank .shows-hero__slot {
+    transform: translateY(var(--shows-cards-shift));
   }
   .shows-hero__stage {
     --shows-gap: 0.65rem;
@@ -5283,6 +5288,23 @@ h2 {
   }
   .shows-hero__pitch-headline {
     font-size: clamp(1.6rem, 1.85vw, 1.85rem);
+  }
+}
+
+/* Card-only vertical shift: match bottom labels to pitch bottom rule. */
+@media (min-width: 1440px) {
+  .shows-hero .shows-hero__inner {
+    --shows-cards-shift: 5.265rem; /* ~84px */
+  }
+}
+@media (min-width: 1536px) {
+  .shows-hero .shows-hero__inner {
+    --shows-cards-shift: 7.38rem; /* ~118px */
+  }
+}
+@media (min-width: 1680px) {
+  .shows-hero .shows-hero__inner {
+    --shows-cards-shift: 8.135rem; /* ~130px */
   }
 }
 
