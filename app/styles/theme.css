@@ -4770,6 +4770,7 @@ h2 {
    span the pair columns and center a child tile sized to exactly one card
    (calc against the 2-col span). Bottom tiles are width:100% of a 1fr card
    column — same rendered size. Title vertically centered with top cards.
+   ≥900px: crest row under NETWORK; pitch copy in the old mid slot.
    padding-block only so .container inline pad = nav content edges.
    ------------------------------------------------------------------------- */
 .shows-hero .shows-hero__inner {
@@ -4803,6 +4804,7 @@ h2 {
 .shows-hero__slot--blo { grid-area: blo; }
 .shows-hero__slot--bli { grid-area: bli; }
 .shows-hero__crest { grid-area: crest; }
+.shows-hero__pitch { grid-area: pitch; }
 .shows-hero__slot--bri { grid-area: bri; }
 .shows-hero__slot--bro { grid-area: bro; }
 
@@ -4908,6 +4910,58 @@ h2 {
   margin-block: auto;
 }
 
+/* Pitch is desktop-only (≥900px); keep out of <900 layouts. */
+.shows-hero__pitch {
+  display: none;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  align-self: center;
+  justify-self: stretch;
+  padding: 0.15rem 0.15rem 0.25rem;
+  text-align: left; /* match reference */
+  color: #f5efe2;
+}
+
+.shows-hero__pitch-headline {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  font-family: var(--font-title);
+  font-weight: 400;
+  font-size: clamp(1.55rem, 2.15vw, 2.35rem);
+  line-height: 0.92;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: #f5efe2;
+  text-wrap: balance;
+}
+.shows-hero__pitch-line {
+  display: block;
+}
+.shows-hero__pitch-rule {
+  display: block;
+  width: 2.75rem;
+  height: 0.28rem;
+  margin: 0.7rem 0;
+  background: var(--accent);
+  border-radius: 1px;
+  box-shadow: 0 0 10px color-mix(in srgb, var(--accent) 45%, transparent);
+}
+.shows-hero__pitch-body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-body);
+  font-size: clamp(0.72rem, 0.85vw, 0.88rem);
+  font-weight: 400;
+  line-height: 1.45;
+  color: var(--fg-secondary);
+  text-wrap: pretty;
+}
+
 .shows-hero__frame {
   display: block;
   position: relative;
@@ -5006,6 +5060,9 @@ h2 {
     width: min(24vw, 5.5rem);
     justify-self: center;
   }
+  .shows-hero__pitch {
+    display: none;
+  }
   .shows-hero__label {
     font-size: 0.62rem;
   }
@@ -5025,6 +5082,43 @@ h2 {
   }
 }
 
+/* Desktop: bird under NETWORK; pitch in the old mid slot. Top slots span
+   two rows so cards stay top-aligned while the crest sits under the title. */
+@media (min-width: 900px) {
+  .shows-hero__stage {
+    --shows-row-gap: 1.35rem;
+    grid-template-areas:
+      "tl   tl    brand  tr    tr"
+      "tl   tl    crest  tr    tr"
+      "blo  bli   pitch  bri   bro";
+  }
+  .shows-hero__slot--tl,
+  .shows-hero__slot--tr {
+    align-items: start;
+  }
+  .shows-hero__brand {
+    /* NETWORK sits with the top card frames; crest is the next grid row */
+    padding-top: clamp(1.1rem, 3vw, 2.4rem);
+    /* Reserve space for scaleY(1.3) glyph overflow below the layout box */
+    padding-bottom: calc(
+      var(--shows-network-size) * var(--shows-network-lh) * (var(--shows-network-scale-y) - 1) + 0.35rem
+    );
+    justify-content: flex-start;
+  }
+  .shows-hero__crest {
+    width: min(68%, 8.75rem);
+    max-width: min(68%, 8.75rem);
+    align-self: start;
+    justify-self: center;
+    margin: 0.35rem auto 0;
+  }
+  .shows-hero__pitch {
+    display: block;
+    align-self: start;
+    padding-top: 0.2rem;
+  }
+}
+
 @media (min-width: 1100px) {
   .shows-hero__mark {
     height: 2.83rem; /* +11% */
@@ -5032,10 +5126,17 @@ h2 {
   }
   .shows-hero__stage {
     --shows-gap: 0.65rem;
-    --shows-row-gap: 2rem;
+    --shows-row-gap: 1.5rem;
   }
   .shows-hero__brand {
     --shows-network-size: clamp(3.61rem, 6.77vw, 7.1rem); /* +11% */
+  }
+  .shows-hero__crest {
+    width: min(66%, 9.5rem);
+    max-width: min(66%, 9.5rem);
+  }
+  .shows-hero__pitch-headline {
+    font-size: clamp(1.75rem, 2.05vw, 2.55rem);
   }
 }
 

@@ -2,7 +2,8 @@
 // Equal-size pyramid: each top card is the same pixel size as the bottom
 // cards and centered over its side's bottom-pair gap (slot wrappers make the
 // width calc resolve against the 2-col span). Title centered in the top row;
-// transparent bird (no circle/banner) between bottom pairs. Stage = nav .container content box.
+// desktop (≥900px): crest under NETWORK, pitch copy in the old mid slot.
+// Stage = nav .container content box.
 
 import type * as React from "react";
 import type { NetworkShowTile } from "../lib/network-latest.server";
@@ -47,6 +48,13 @@ const HERO_HREF_OVERRIDE: Partial<Record<string, string>> = {
   // share.google resolves to a Google interstitial, not a stable show URL — keep as given.
   joyspiracy: "https://share.google/dCjcd3aFLkk10RFJX",
 };
+
+/** Desktop mid-column pitch (Bebas headline + yellow rules + body, per reference). */
+export const SHOWS_HERO_PITCH = {
+  headline: ["EVERY SHOW.", "EVERY PROJECT.", "ONE NETWORK."],
+  description:
+    "A collection of the shows and projects Basil and Gonz have built over the years, from daily news and deep-cut interviews to call-ins, research and side projects, all under the Canary Cry banner.",
+} as const;
 
 function tileHref(show: NetworkShowTile): string | null {
   const override = HERO_HREF_OVERRIDE[show.slug];
@@ -144,12 +152,7 @@ export function ShowsControlRoom({ tiles }: { tiles: NetworkShowTile[] }): React
             <ShowTile show={must(S.topRight)} />
           </div>
 
-          <div className="shows-hero__slot shows-hero__slot--blo">
-            <ShowTile show={must(S.bottomLeftOuter)} />
-          </div>
-          <div className="shows-hero__slot shows-hero__slot--bli">
-            <ShowTile show={must(S.bottomLeftInner)} />
-          </div>
+          {/* ≥900px: crest sits on its own row under NETWORK; <900: mid between bottom pairs / mobile row. */}
           <img
             className="shows-hero__crest"
             src={asset("images/cc-bird-v3.webp")}
@@ -159,6 +162,26 @@ export function ShowsControlRoom({ tiles }: { tiles: NetworkShowTile[] }): React
             decoding="async"
             aria-hidden="true"
           />
+
+          <div className="shows-hero__slot shows-hero__slot--blo">
+            <ShowTile show={must(S.bottomLeftOuter)} />
+          </div>
+          <div className="shows-hero__slot shows-hero__slot--bli">
+            <ShowTile show={must(S.bottomLeftInner)} />
+          </div>
+          {/* ≥900px: pitch fills the old crest slot between Clubhouse & Joyspiracy. Hidden below. */}
+          <aside className="shows-hero__pitch" aria-label="About the Canary Cry Network">
+            <p className="shows-hero__pitch-headline">
+              {SHOWS_HERO_PITCH.headline.map((line) => (
+                <span key={line} className="shows-hero__pitch-line">
+                  {line}
+                </span>
+              ))}
+            </p>
+            <span className="shows-hero__pitch-rule" aria-hidden="true" />
+            <p className="shows-hero__pitch-body">{SHOWS_HERO_PITCH.description}</p>
+            <span className="shows-hero__pitch-rule" aria-hidden="true" />
+          </aside>
           <div className="shows-hero__slot shows-hero__slot--bri">
             <ShowTile show={must(S.bottomRightInner)} />
           </div>

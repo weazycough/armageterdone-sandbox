@@ -1,5 +1,6 @@
 // Shows hero: equal-size pyramid — slot wrappers; top card = one bottom card,
 // centered over pair gap; title + crest centered; nav-width stage.
+// ≥900px: crest under NETWORK; pitch copy in the old mid slot.
 
 import { describe, expect, it } from "vite-plus/test";
 import { read } from "./dist-files";
@@ -36,7 +37,6 @@ describe("Shows hero (equal-size pyramid sketch)", () => {
     expect(shows).toContain('target="_blank"');
     expect(shows).not.toContain("shows-hero__tile--contain");
     expect(shows).not.toContain("shows-hero__tile--sm");
-    expect(shows).not.toContain("shows-hero__rule");
     expect(shows).toContain("M.02,26.46C.02,11.76");
 
     for (const label of [
@@ -54,6 +54,15 @@ describe("Shows hero (equal-size pyramid sketch)", () => {
     expect(shows).toContain("shows-hero__desc");
     expect(shows).toContain("The flagship discernment broadcast");
     expect(shows).toContain("Deep-cut interviews and conversations");
+
+    // Desktop pitch block (copy + yellow rules).
+    expect(shows).toContain("shows-hero__pitch");
+    expect(shows).toContain("shows-hero__pitch-headline");
+    expect(shows).toContain("shows-hero__pitch-rule");
+    expect(shows).toContain("EVERY SHOW.");
+    expect(shows).toContain("EVERY PROJECT.");
+    expect(shows).toContain("ONE NETWORK.");
+    expect(shows).toContain("A collection of the shows and projects Basil and Gonz");
   });
 
   it("styles equal cards via slot wrappers, cover/contain, nav padding-block", () => {
@@ -84,5 +93,14 @@ describe("Shows hero (equal-size pyramid sketch)", () => {
     ).toBe(true);
     expect(css).not.toContain("shows-sm-scale");
     expect(css).not.toContain("--shows-card-w");
+    // ≥900px crest-under-NETWORK + pitch slot.
+    expect(css).toContain("shows-hero__pitch");
+    expect(css).toContain("shows-hero__pitch-headline");
+    expect(css).toContain("shows-hero__pitch-rule");
+    // Lightning CSS rewrites min-width media to width>=N.
+    expect(css.includes("@media (width>=900px)") || css.includes("@media (min-width: 900px)")).toBe(
+      true,
+    );
+    expect(css).toContain("blo bli pitch bri bro");
   });
 });
