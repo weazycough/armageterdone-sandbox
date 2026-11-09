@@ -50,6 +50,10 @@ describe("Shows hero (equal-size pyramid sketch)", () => {
       expect(shows).toContain(label);
     }
     expect(shows).toContain("On the network");
+    // Hero reuses NETWORK_SHOWS.desc (same strings as the roster below).
+    expect(shows).toContain("shows-hero__desc");
+    expect(shows).toContain("The flagship discernment broadcast");
+    expect(shows).toContain("Deep-cut interviews and conversations");
   });
 
   it("styles equal cards via slot wrappers, cover/contain, nav padding-block", () => {
@@ -59,7 +63,7 @@ describe("Shows hero (equal-size pyramid sketch)", () => {
     expect(css).toContain("shows-hero__network");
     expect(css).toContain("scaleY(var(--shows-network-scale-y))");
     expect(css).toContain("--shows-network-scale-y:1.3");
-    expect(css).toContain("--shows-network-size:clamp(2.85rem, 6.75vw, 6.1rem)");
+    expect(css).toContain("--shows-network-size:clamp(3.16rem, 7.5vw, 6.77rem)");
     expect(css).toContain("transform-origin:50% 0");
     expect(css).toContain("shows-hero__stage");
     expect(css).toContain("shows-hero__crest");
@@ -67,9 +71,12 @@ describe("Shows hero (equal-size pyramid sketch)", () => {
     expect(css).toContain("object-fit:cover");
     expect(css).toContain("object-position:center");
     expect(css).toContain("object-fit:contain");
-    expect(css).toContain("padding-block:1.75rem 3.75rem");
-    expect(css).toContain("padding-block:1.35rem 2.75rem");
-    expect(css).toContain("padding-block:2.25rem 4.25rem");
+    expect(css).toContain("padding-block:1.85rem 5.75rem");
+    expect(css).toContain("padding-block:1.35rem 4.25rem");
+    expect(css).toContain("padding-block:2.35rem 6.5rem");
+    expect(css).toContain("shows-hero__desc");
+    expect(css).toContain("-webkit-line-clamp:3");
+    expect(css).toContain("--shows-row-gap");
     // Top tile sized to one card against the 2-col wrapper.
     expect(
       css.includes("width:calc((100% - var(--shows-gap)) / 2)") ||

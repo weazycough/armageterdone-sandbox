@@ -66,6 +66,8 @@ function ShowTile({ show }: { show: NetworkShowTile }): React.ReactNode {
       : show.latest?.artUrl ?? (show.art ? asset(show.art) : null);
   const className = "shows-hero__tile";
 
+  // desc comes from NETWORK_SHOWS via NetworkShowTile — same string as "On the network".
+  const desc = show.desc ?? "[Description to come]";
   const body = (
     <>
       <span className="shows-hero__frame">
@@ -83,6 +85,7 @@ function ShowTile({ show }: { show: NetworkShowTile }): React.ReactNode {
         )}
       </span>
       <span className="shows-hero__label">{show.title}</span>
+      <span className="shows-hero__desc">{desc}</span>
     </>
   );
 
