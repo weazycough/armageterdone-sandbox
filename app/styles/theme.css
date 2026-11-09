@@ -4797,6 +4797,7 @@ h2 {
   --shows-row-gap: 1.55rem;
   width: 100%;
   margin-inline: 0;
+  overflow: visible;
   display: grid;
   /* Equal card tracks; center slightly wider for NETWORK. */
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(12.5rem, 1.4fr) minmax(0, 1fr) minmax(0, 1fr);
@@ -5159,6 +5160,7 @@ h2 {
     position: relative;
     justify-items: center;
     align-items: start;
+    overflow: visible;
   }
   /* Higher specificity than base grid-area names; set placement in one rule. */
   .shows-hero__flank .shows-hero__slot--tl {
@@ -5197,13 +5199,21 @@ h2 {
     );
     justify-content: flex-start;
     align-self: start;
-    justify-self: center;
-    width: fit-content;
-    max-width: 100%;
+    justify-self: stretch;
+    /* Brand stays column-wide so the hung bird centers on the track; title spills. */
+    width: 100%;
+    max-width: none;
     position: relative;
     z-index: 2;
-    --shows-network-size: clamp(3.61rem, 5.5vw, 5.95rem);
+    /* ~1.35–1.45× center ink width (≈380–400px @1920); shared by mark+NETWORK. */
+    --shows-network-size: clamp(8.5rem, 7.3vw, 8.75rem);
     overflow: visible;
+  }
+  .shows-hero__center .shows-hero__title-stack {
+    /* Wider than the brand column; brand align-items:center spills equally both sides. */
+    width: max-content;
+    max-width: none;
+    margin-inline: 0;
   }
   .shows-hero__mark {
     width: 100%;
@@ -5224,7 +5234,8 @@ h2 {
     max-width: 90%;
     height: auto;
     aspect-ratio: 1;
-    margin: 0.15rem 0 0;
+    /* Sit slightly deeper in the row-gap band under the taller title. */
+    margin: 0.45rem 0 0;
     z-index: 1;
     pointer-events: none;
   }
@@ -5241,8 +5252,8 @@ h2 {
     align-self: start; /* don't stretch past card-tile height */
     justify-self: stretch;
     margin-top: 0;
-    /* Room for the hung ~160px bird dipping from row 1 through the gap. */
-    padding-top: clamp(3.5rem, 4.4vw, 4.15rem);
+    /* Room for hung ~160px bird under the spilled title. */
+    padding-top: clamp(7.25rem, 8.5vw, 8rem);
     padding-bottom: 0;
     position: relative;
     z-index: 2;
@@ -5259,7 +5270,7 @@ h2 {
     --shows-row-gap: 2rem;
   }
   .shows-hero__brand {
-    --shows-network-size: clamp(3.61rem, 5.5vw, 5.95rem);
+    --shows-network-size: clamp(8.5rem, 7.3vw, 8.75rem);
   }
   .shows-hero__crest--hang {
     width: 10.125rem;
