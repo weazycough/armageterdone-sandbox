@@ -42,8 +42,6 @@ export const SHOWS_HERO_RIGHT = [
 ] as const;
 export const SHOWS_HERO_ROWS = [SHOWS_HERO_LEFT, SHOWS_HERO_RIGHT] as const;
 
-const FIT_CONTAIN = new Set(["joyspiracy"]);
-
 function tileHref(show: NetworkShowTile): string | null {
   if (show.href) return show.href;
   if (show.latest?.slug) return episodePath(show.latest.slug);
@@ -53,9 +51,12 @@ function tileHref(show: NetworkShowTile): string | null {
 
 function ShowTile({ show }: { show: NetworkShowTile }): React.ReactNode {
   const href = tileHref(show);
-  const artSrc = show.latest?.artUrl ?? (show.art ? asset(show.art) : null);
-  const fit = FIT_CONTAIN.has(show.slug) ? " shows-hero__tile--contain" : "";
-  const className = `shows-hero__tile${fit}`;
+  // Joyspiracy uses dedicated square cover art; other shows keep latest thumbs.
+  const artSrc =
+    show.slug === "joyspiracy" && show.art
+      ? asset(show.art)
+      : show.latest?.artUrl ?? (show.art ? asset(show.art) : null);
+  const className = "shows-hero__tile";
 
   const body = (
     <>

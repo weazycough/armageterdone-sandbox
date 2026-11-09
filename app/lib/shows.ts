@@ -110,7 +110,7 @@ export const NETWORK_SHOWS: NetworkShow[] = [
     title: "The Joyspiracy Theory",
     desc: "Basil's joy-focused interviews and conversations — a separate Libsyn show outside the main CCNT feed.",
     href: "https://thejoyspiracytheory.libsyn.com/",
-    art: null,
+    art: "images/show-joyspiracy.webp",
   },
   {
     slug: "burning-man-research",
