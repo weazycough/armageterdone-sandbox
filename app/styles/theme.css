@@ -4890,8 +4890,9 @@ h2 {
 
 .shows-hero__crest {
   display: block;
-  width: 100%;
-  max-width: 100%;
+  /* ~58% of prior full-column size; still centered between card pairs */
+  width: 58%;
+  max-width: 58%;
   height: auto;
   aspect-ratio: 1;
   object-fit: contain;
@@ -4973,7 +4974,7 @@ h2 {
     --shows-network-size: clamp(2.85rem, 14.85vw, 4.3rem);
   }
   .shows-hero__crest {
-    width: min(42vw, 9.5rem);
+    width: min(24vw, 5.5rem);
     justify-self: center;
   }
   .shows-hero__label {
