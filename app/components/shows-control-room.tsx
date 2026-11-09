@@ -1,7 +1,7 @@
-// shows-control-room.tsx — Shows page hero on the shared home mission-hero
-// background: three columns — left show stack, centered Canary Cry / NETWORK
-// + bird crest (no News Talk banner), right show stack. Width matches nav
-// .container edges (--max-w).
+// shows-control-room.tsx — Shows hero on shared mission-hero background.
+// Two-row symmetric sketch: small top cards over the inner big cards,
+// centered Canary Cry / NETWORK above bannerless bird crest, four big
+// cards in the bottom row. Stage width = nav .container content box.
 
 import type * as React from "react";
 import type { NetworkShowTile } from "../lib/network-latest.server";
@@ -11,16 +11,37 @@ import { CcWordmark } from "./cc-wordmark";
 import { MissionHeroFloor } from "./mission-hero-floor";
 import { SmartLink } from "./smart-link";
 
-/** Left column top→bottom (sketch). */
-export const SHOWS_HERO_LEFT = ["news-talk", "radio", "clubhouse"] as const;
-/** Right column top→bottom (sketch). */
-export const SHOWS_HERO_RIGHT = [
-  "joyspiracy",
-  "burning-man-research",
-  "basils-bunker",
+/** Sketch slots (desktop). */
+export const SHOWS_HERO_SLOTS = {
+  topLeft: "news-talk",
+  bottomLeftOuter: "radio",
+  bottomLeftInner: "clubhouse",
+  topRight: "burning-man-research",
+  bottomRightInner: "joyspiracy",
+  bottomRightOuter: "basils-bunker",
+} as const;
+
+/** Flat order for mobile 2-up + validation. */
+export const SHOWS_HERO_ORDER = [
+  SHOWS_HERO_SLOTS.topLeft,
+  SHOWS_HERO_SLOTS.topRight,
+  SHOWS_HERO_SLOTS.bottomLeftOuter,
+  SHOWS_HERO_SLOTS.bottomLeftInner,
+  SHOWS_HERO_SLOTS.bottomRightInner,
+  SHOWS_HERO_SLOTS.bottomRightOuter,
 ] as const;
 
-/** @deprecated kept for any import that still expects rows; prefer LEFT/RIGHT. */
+/** @deprecated prior API; maps to left/right stacks for any leftover import. */
+export const SHOWS_HERO_LEFT = [
+  SHOWS_HERO_SLOTS.topLeft,
+  SHOWS_HERO_SLOTS.bottomLeftOuter,
+  SHOWS_HERO_SLOTS.bottomLeftInner,
+] as const;
+export const SHOWS_HERO_RIGHT = [
+  SHOWS_HERO_SLOTS.topRight,
+  SHOWS_HERO_SLOTS.bottomRightInner,
+  SHOWS_HERO_SLOTS.bottomRightOuter,
+] as const;
 export const SHOWS_HERO_ROWS = [SHOWS_HERO_LEFT, SHOWS_HERO_RIGHT] as const;
 
 function tileHref(show: NetworkShowTile): string | null {
@@ -30,9 +51,18 @@ function tileHref(show: NetworkShowTile): string | null {
   return null;
 }
 
-function ShowTile({ show }: { show: NetworkShowTile }): React.ReactNode {
+function ShowTile({
+  show,
+  size,
+  slot,
+}: {
+  show: NetworkShowTile;
+  size: "sm" | "lg";
+  slot: string;
+}): React.ReactNode {
   const href = tileHref(show);
   const artSrc = show.latest?.artUrl ?? (show.art ? asset(show.art) : null);
+  const className = `shows-hero__tile shows-hero__tile--${size} ${slot}`;
 
   const body = (
     <>
@@ -41,8 +71,8 @@ function ShowTile({ show }: { show: NetworkShowTile }): React.ReactNode {
           <img
             src={artSrc}
             alt=""
-            width={320}
-            height={200}
+            width={size === "lg" ? 320 : 200}
+            height={size === "lg" ? 320 : 200}
             loading="lazy"
             decoding="async"
           />
@@ -56,87 +86,61 @@ function ShowTile({ show }: { show: NetworkShowTile }): React.ReactNode {
 
   if (href === null) {
     return (
-      <span
-        className="shows-hero__tile shows-hero__tile--soon"
-        aria-label={`${show.title}: destination to come`}
-      >
+      <span className={`${className} shows-hero__tile--soon`} aria-label={`${show.title}: destination to come`}>
         {body}
       </span>
     );
   }
 
   return (
-    <SmartLink
-      className="shows-hero__tile"
-      href={href}
-      title={show.latest?.title ?? show.title}
-    >
+    <SmartLink className={className} href={href} title={show.latest?.title ?? show.title}>
       {body}
     </SmartLink>
-  );
-}
-
-function TileColumn({
-  slugs,
-  bySlug,
-  side,
-}: {
-  slugs: readonly string[];
-  bySlug: Record<string, NetworkShowTile>;
-  side: "left" | "right";
-}): React.ReactNode {
-  return (
-    <div
-      className={`shows-hero__col shows-hero__col--${side}`}
-      aria-label={side === "left" ? "Shows column left" : "Shows column right"}
-    >
-      {slugs.map((slug) => {
-        const show = bySlug[slug];
-        if (!show) throw new Error(`ShowsControlRoom: missing tile ${slug}`);
-        return <ShowTile key={slug} show={show} />;
-      })}
-    </div>
   );
 }
 
 export function ShowsControlRoom({ tiles }: { tiles: NetworkShowTile[] }): React.ReactNode {
   const bySlug = Object.fromEntries(tiles.map((t) => [t.slug, t]));
 
-  for (const slug of [...SHOWS_HERO_LEFT, ...SHOWS_HERO_RIGHT]) {
-    if (!bySlug[slug]) throw new Error(`ShowsControlRoom: missing tile ${slug}`);
+  function must(slug: string): NetworkShowTile {
+    const show = bySlug[slug];
+    if (!show) throw new Error(`ShowsControlRoom: missing tile ${slug}`);
+    return show;
   }
+
+  const S = SHOWS_HERO_SLOTS;
 
   return (
     <section className="mission-hero shows-hero" aria-label="Canary Cry Network shows">
       <MissionHeroFloor />
       <div className="container mission-hero__inner shows-hero__inner">
-        {/* Stage fills .container content box (inline pad intact = nav edges). */}
+        {/* Content box inherits .container inline pad = nav logo→edge. */}
         <div className="shows-hero__stage">
-          <TileColumn slugs={SHOWS_HERO_LEFT} bySlug={bySlug} side="left" />
+          <ShowTile show={must(S.topLeft)} size="sm" slot="shows-hero__slot--tl" />
+          <header className="shows-hero__brand">
+            <span className="shows-hero__mark-wrap" aria-hidden="true">
+              <CcWordmark className="shows-hero__mark" />
+            </span>
+            <h1 className="shows-hero__network">
+              <span className="sr-only">Canary Cry </span>
+              NETWORK
+            </h1>
+          </header>
+          <ShowTile show={must(S.topRight)} size="sm" slot="shows-hero__slot--tr" />
 
-          <div className="shows-hero__center">
-            <header className="shows-hero__brand">
-              <span className="shows-hero__mark-wrap" aria-hidden="true">
-                <CcWordmark className="shows-hero__mark" />
-              </span>
-              <h1 className="shows-hero__network">
-                <span className="sr-only">Canary Cry </span>
-                NETWORK
-              </h1>
-            </header>
-            {/* Crest from public/images/cc-logo.webp with NEWSTALK banner removed. */}
-            <img
-              className="shows-hero__crest"
-              src={asset("images/cc-bird-crest.webp")}
-              alt=""
-              width={640}
-              height={640}
-              decoding="async"
-              aria-hidden="true"
-            />
-          </div>
-
-          <TileColumn slugs={SHOWS_HERO_RIGHT} bySlug={bySlug} side="right" />
+          <ShowTile show={must(S.bottomLeftOuter)} size="lg" slot="shows-hero__slot--blo" />
+          <ShowTile show={must(S.bottomLeftInner)} size="lg" slot="shows-hero__slot--bli" />
+          <img
+            className="shows-hero__crest"
+            src={asset("images/cc-bird-crest.webp")}
+            alt=""
+            width={640}
+            height={640}
+            decoding="async"
+            aria-hidden="true"
+          />
+          <ShowTile show={must(S.bottomRightInner)} size="lg" slot="shows-hero__slot--bri" />
+          <ShowTile show={must(S.bottomRightOuter)} size="lg" slot="shows-hero__slot--bro" />
         </div>
       </div>
     </section>

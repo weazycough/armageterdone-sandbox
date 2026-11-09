@@ -4766,9 +4766,10 @@ h2 {
 
 
 /* -------------------------------------------------------------------------
-   Shows hero: shared .mission-hero background. Three columns inside the same
-   .container as the nav (logo→last item edges): left tile stack, centered
-   Canary Cry + NETWORK + bird crest (bannerless), right tile stack.
+   Shows hero: two-row symmetric sketch inside nav .container content box
+   (padding-block only — inline pad from .container = logo→nav edges).
+   Top: small cards over inner bigs + centered Canary Cry / NETWORK.
+   Bottom: [big][big] crest [big][big]. Square-ish cards; bannerless crest.
    ------------------------------------------------------------------------- */
 .shows-hero .shows-hero__inner {
   position: relative;
@@ -4776,66 +4777,61 @@ h2 {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  /* Block only — keep .container inline pad so edges match nav content box. */
+  /* Block only — keep .container inline pad (= nav content edges). */
   padding-block: 1.75rem 3.75rem;
 }
-/* Stage fills container content box (= logo→tools/nav pad edges). */
 .shows-hero__stage {
+  --shows-pair-gap: 0.5rem;
+  --shows-row-gap: 0.85rem;
+  --shows-sm-scale: 0.62; /* ~60-65% of big card */
   width: 100%;
   margin-inline: 0;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(11rem, 20rem) minmax(0, 1fr);
-  grid-template-areas: "left center right";
-  /* Tighter center gutters; side tiles shrink via remaining free space. */
-  gap: clamp(0.5rem, 1.2vw, 1rem);
-  align-items: center;
+  /* 5 cols: outerL innerL center innerR outerR — bottom row flush to edges */
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(10.5rem, 1.15fr) minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-areas:
+    ".    tl    brand  tr    ."
+    "blo  bli   crest  bri   bro";
+  column-gap: var(--shows-pair-gap);
+  row-gap: var(--shows-row-gap);
+  align-items: end;
 }
-.shows-hero__col--left { grid-area: left; }
-.shows-hero__center { grid-area: center; }
-.shows-hero__col--right { grid-area: right; }
+.shows-hero__slot--tl { grid-area: tl; }
+.shows-hero__slot--tr { grid-area: tr; }
+.shows-hero__brand { grid-area: brand; }
+.shows-hero__slot--blo { grid-area: blo; }
+.shows-hero__slot--bli { grid-area: bli; }
+.shows-hero__crest { grid-area: crest; }
+.shows-hero__slot--bri { grid-area: bri; }
+.shows-hero__slot--bro { grid-area: bro; }
 
-.shows-hero__col {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  min-width: 0;
-}
-
-.shows-hero__center {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: clamp(0.65rem, 1.5vw, 1.1rem);
-  min-width: 0;
-  text-align: center;
-  /* Bebas metrics kept for scaleY shape */
-  --shows-network-size: clamp(2.4rem, 6.5vw, 5.5rem);
-  --shows-network-lh: 0.82;
-  --shows-network-scale-y: 1.3;
-}
-
+/* Centered title between the two small top cards. */
 .shows-hero__brand {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.35rem;
+  justify-content: flex-end;
+  gap: 0.3rem;
   width: 100%;
   max-width: 100%;
   min-width: 0;
+  text-align: center;
+  align-self: end;
+  padding-bottom: 0.15rem;
+  --shows-network-size: clamp(2.2rem, 5.5vw, 4.75rem);
+  --shows-network-lh: 0.82;
+  --shows-network-scale-y: 1.3;
 }
-
 .shows-hero__mark-wrap {
   display: block;
   line-height: 0;
   max-width: 100%;
 }
-/* White Canary Cry SVG above NETWORK (centered). */
 .shows-hero__mark {
   display: block;
-  height: clamp(1.35rem, 2.6vw, 2rem);
+  height: clamp(1.2rem, 2.2vw, 1.85rem);
   width: auto;
-  max-width: min(100%, 14rem);
+  max-width: min(100%, 13rem);
   margin-inline: auto;
   color: #fff;
 }
@@ -4855,21 +4851,24 @@ h2 {
   transform-origin: top center;
   white-space: nowrap;
 }
-/* Bannerless crest (from cc-logo.webp; NEWSTALK ribbon removed). */
+
+/* Bird ≈ big-card height; sits in center bottom cell. */
 .shows-hero__crest {
   display: block;
-  width: clamp(7.5rem, 18vw, 12.5rem);
+  width: 100%;
+  max-width: 100%;
   height: auto;
-  max-width: min(100%, 14rem);
-  margin-inline: auto;
-  /* scaleY on NETWORK doesn't grow layout; modest pad under painted glyphs */
-  margin-top: clamp(0.35rem, 1vw, 0.75rem);
+  aspect-ratio: 1;
+  object-fit: contain;
+  justify-self: center;
+  align-self: center;
+  margin: 0;
 }
 
 .shows-hero__tile {
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+  gap: 0.3rem;
   min-width: 0;
   color: #f5efe2;
   text-decoration: none;
@@ -4878,12 +4877,22 @@ h2 {
 .shows-hero__tile:hover .shows-hero__frame img {
   transform: translateY(-2px);
 }
+/* Big bottom cards — square-ish, fill column. */
+.shows-hero__tile--lg {
+  width: 100%;
+}
+/* Small top cards — ~62% of column, centered over inner big card. */
+.shows-hero__tile--sm {
+  width: calc(var(--shows-sm-scale) * 100%);
+  justify-self: center;
+  align-self: end;
+}
 .shows-hero__frame {
   display: block;
   position: relative;
   overflow: hidden;
   width: 100%;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 1 / 1;
   border-radius: var(--radius-sm);
   background: #0a0a12;
   border: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
@@ -4901,7 +4910,7 @@ h2 {
   place-items: center;
   width: 100%;
   height: 100%;
-  min-height: 4rem;
+  min-height: 3.5rem;
   padding: 0.45rem;
   font-family: var(--font-display);
   font-size: 0.62rem;
@@ -4913,15 +4922,19 @@ h2 {
 }
 .shows-hero__label {
   font-family: var(--font-title);
-  font-size: clamp(0.72rem, 1.4vw, 0.95rem);
+  font-size: clamp(0.68rem, 1.2vw, 0.88rem);
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--accent);
   line-height: 1.15;
+  text-align: center;
+}
+.shows-hero__tile--sm .shows-hero__label {
+  font-size: clamp(0.6rem, 1vw, 0.75rem);
 }
 .shows-hero__tile--soon { opacity: 0.85; cursor: default; }
 
-/* Mobile: title+crest first, then 2-up tile grid (left then right order). */
+/* Mobile: title, bird, then cards 2-up (sketch order). */
 @media (max-width: 767px) {
   .shows-hero .shows-hero__inner {
     padding-block: 1.35rem 2.75rem;
@@ -4929,33 +4942,29 @@ h2 {
   .shows-hero__stage {
     grid-template-columns: 1fr 1fr;
     grid-template-areas:
-      "center center"
-      "left right";
-    gap: 0.85rem 0.5rem;
+      "brand brand"
+      "crest crest"
+      "tl    tr"
+      "blo   bli"
+      "bri   bro";
+    column-gap: 0.55rem;
+    row-gap: 0.7rem;
     align-items: start;
   }
-  .shows-hero__center {
-    --shows-network-size: clamp(2.2rem, 12vw, 3.4rem);
-    margin-bottom: 0.35rem;
+  .shows-hero__tile--sm {
+    width: 100%;
+    justify-self: stretch;
+  }
+  .shows-hero__brand {
+    --shows-network-size: clamp(2.1rem, 11vw, 3.2rem);
+    align-self: center;
   }
   .shows-hero__crest {
-    width: clamp(6.5rem, 36vw, 9.5rem);
-  }
-  .shows-hero__col {
-    gap: 0.55rem;
+    width: min(42vw, 9.5rem);
+    justify-self: center;
   }
   .shows-hero__label {
-    font-size: 0.65rem;
-  }
-}
-
-@media (max-width: 419px) {
-  .shows-hero__stage {
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      "center"
-      "left"
-      "right";
+    font-size: 0.62rem;
   }
 }
 
@@ -4963,22 +4972,24 @@ h2 {
   .shows-hero .shows-hero__inner {
     padding-block: 2.25rem 4.25rem;
   }
-  .shows-hero__col {
-    gap: 0.85rem;
+  .shows-hero__stage {
+    --shows-pair-gap: 0.55rem;
+    --shows-row-gap: 1rem;
   }
 }
 
 @media (min-width: 1100px) {
   .shows-hero__mark {
-    height: 2.15rem;
-    max-width: 16rem;
+    height: 2rem;
+    max-width: 15rem;
   }
   .shows-hero__stage {
-    grid-template-columns: minmax(0, 1fr) minmax(13rem, 22rem) minmax(0, 1fr);
-    gap: clamp(0.65rem, 1.25vw, 1.1rem);
+    --shows-pair-gap: 0.65rem;
+    --shows-row-gap: 1.1rem;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(12rem, 1.2fr) minmax(0, 1fr) minmax(0, 1fr);
   }
-  .shows-hero__crest {
-    width: clamp(9rem, 14vw, 13.5rem);
+  .shows-hero__brand {
+    --shows-network-size: clamp(2.6rem, 4.8vw, 5rem);
   }
 }
 
