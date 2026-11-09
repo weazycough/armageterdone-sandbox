@@ -4776,16 +4776,18 @@ h2 {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  padding: 1.75rem 0 3.75rem; /* blue under tiles */
+  /* Block only — keep .container inline pad so edges match nav content box. */
+  padding-block: 1.75rem 3.75rem;
 }
-/* Full nav-content width (container already applies --max-w + pad). */
+/* Stage fills container content box (= logo→tools/nav pad edges). */
 .shows-hero__stage {
   width: 100%;
   margin-inline: 0;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(11rem, 22rem) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(11rem, 20rem) minmax(0, 1fr);
   grid-template-areas: "left center right";
-  gap: clamp(0.85rem, 2vw, 1.75rem);
+  /* Tighter center gutters; side tiles shrink via remaining free space. */
+  gap: clamp(0.5rem, 1.2vw, 1rem);
   align-items: center;
 }
 .shows-hero__col--left { grid-area: left; }
@@ -4922,14 +4924,14 @@ h2 {
 /* Mobile: title+crest first, then 2-up tile grid (left then right order). */
 @media (max-width: 767px) {
   .shows-hero .shows-hero__inner {
-    padding: 1.35rem 0 2.75rem;
+    padding-block: 1.35rem 2.75rem;
   }
   .shows-hero__stage {
     grid-template-columns: 1fr 1fr;
     grid-template-areas:
       "center center"
       "left right";
-    gap: 1rem 0.65rem;
+    gap: 0.85rem 0.5rem;
     align-items: start;
   }
   .shows-hero__center {
@@ -4959,7 +4961,7 @@ h2 {
 
 @media (min-width: 768px) {
   .shows-hero .shows-hero__inner {
-    padding: 2.25rem 0 4.25rem;
+    padding-block: 2.25rem 4.25rem;
   }
   .shows-hero__col {
     gap: 0.85rem;
@@ -4972,8 +4974,8 @@ h2 {
     max-width: 16rem;
   }
   .shows-hero__stage {
-    grid-template-columns: minmax(0, 1fr) minmax(14rem, 24rem) minmax(0, 1fr);
-    gap: clamp(1.1rem, 2vw, 2rem);
+    grid-template-columns: minmax(0, 1fr) minmax(13rem, 22rem) minmax(0, 1fr);
+    gap: clamp(0.65rem, 1.25vw, 1.1rem);
   }
   .shows-hero__crest {
     width: clamp(9rem, 14vw, 13.5rem);

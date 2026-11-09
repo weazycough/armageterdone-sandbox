@@ -110,7 +110,7 @@ export function ShowsControlRoom({ tiles }: { tiles: NetworkShowTile[] }): React
     <section className="mission-hero shows-hero" aria-label="Canary Cry Network shows">
       <MissionHeroFloor />
       <div className="container mission-hero__inner shows-hero__inner">
-        {/* Full container width = nav content edges (--max-w + container pad). */}
+        {/* Stage fills .container content box (inline pad intact = nav edges). */}
         <div className="shows-hero__stage">
           <TileColumn slugs={SHOWS_HERO_LEFT} bySlug={bySlug} side="left" />
 

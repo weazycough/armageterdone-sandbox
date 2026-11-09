@@ -74,9 +74,14 @@ describe("Shows hero (centered title + crest + side columns)", () => {
     // No rule nudge / brand-left from prior layout.
     expect(css).not.toContain("shows-rule-nudge");
     expect(css).not.toContain("shows-hero__brand-left");
-    // Shows-only bottom padding (extra blue under tiles).
-    expect(css).toContain("padding:1.75rem 0 3.75rem");
-    expect(css).toContain("padding:1.35rem 0 2.75rem");
-    expect(css).toContain("padding:2.25rem 0 4.25rem");
+    // Shows-only block padding — inline pad stays on .container (nav edges).
+    expect(css).toContain("padding-block:1.75rem 3.75rem");
+    expect(css).toContain("padding-block:1.35rem 2.75rem");
+    expect(css).toContain("padding-block:2.25rem 4.25rem");
+    // Tighter center gutters (LightningCSS may drop leading zeros).
+    expect(
+      css.includes("gap:clamp(.5rem,1.2vw,1rem)") ||
+        css.includes("gap:clamp(0.5rem,1.2vw,1rem)"),
+    ).toBe(true);
   });
 });
