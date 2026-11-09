@@ -149,7 +149,7 @@ export function ShowsControlRoom({ tiles }: { tiles: NetworkShowTile[] }): React
           </div>
           <img
             className="shows-hero__crest"
-            src={asset("images/cc-bird.webp")}
+            src={asset("images/cc-bird-v3.webp")}
             alt=""
             width={640}
             height={640}

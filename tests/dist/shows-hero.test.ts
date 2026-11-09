@@ -22,7 +22,7 @@ describe("Shows hero (equal-size pyramid sketch)", () => {
     expect(shows).toContain("shows-hero__brand");
     expect(shows).toMatch(/<h1 class="shows-hero__network"/);
     expect(shows).toContain("NETWORK");
-    expect(shows).toContain("images/cc-bird.webp");
+    expect(shows).toContain("images/cc-bird-v3.webp");
     expect(shows).toContain("shows-hero__crest");
     expect(shows).toContain("shows-hero__slot--tl");
     expect(shows).toContain("shows-hero__slot--tr");
