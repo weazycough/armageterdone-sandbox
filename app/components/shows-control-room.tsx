@@ -51,7 +51,7 @@ const HERO_HREF_OVERRIDE: Partial<Record<string, string>> = {
 
 /** Desktop mid-column pitch (Bebas headline + yellow rules + body, per reference). */
 export const SHOWS_HERO_PITCH = {
-  headline: ["EVERY SHOW.", "EVERY PROJECT.", "ONE NETWORK."],
+  headline: ["EVERY SHOW. EVERY PROJECT.", "ONE NETWORK."],
   description:
     "A collection of the shows and projects Basil and Gonz have built over the years, from daily news and deep-cut interviews to call-ins, research and side projects, all under the Canary Cry banner.",
 } as const;
@@ -157,27 +157,8 @@ export function ShowsControlRoom({ tiles }: { tiles: NetworkShowTile[] }): React
                   {"NETWORK"}
                 </h1>
               </div>
-              {/* ≥900px: hangs under NETWORK (absolute); hidden below. */}
-              <img
-                className="shows-hero__crest shows-hero__crest--hang"
-                src={asset("images/cc-bird-v3.webp")}
-                alt=""
-                width={640}
-                height={640}
-                decoding="async"
-                aria-hidden="true"
-              />
             </header>
-            {/* <900px: mid-column / mobile crest row. Hidden on ≥900. */}
-            <img
-              className="shows-hero__crest shows-hero__crest--mid"
-              src={asset("images/cc-bird-v3.webp")}
-              alt=""
-              width={640}
-              height={640}
-              decoding="async"
-              aria-hidden="true"
-            />
+            {/* ≥900: under title; width matched to NETWORK. Hidden &lt;900. */}
             <aside className="shows-hero__pitch" aria-label="About the Canary Cry Network">
               <p className="shows-hero__pitch-headline">
                 {SHOWS_HERO_PITCH.headline.map((line) => (
@@ -190,6 +171,26 @@ export function ShowsControlRoom({ tiles }: { tiles: NetworkShowTile[] }): React
               <p className="shows-hero__pitch-body">{SHOWS_HERO_PITCH.description}</p>
               <span className="shows-hero__pitch-rule" aria-hidden="true" />
             </aside>
+            {/* ≥900: under pitch. &lt;900 uses --mid instead. */}
+            <img
+              className="shows-hero__crest shows-hero__crest--hang"
+              src={asset("images/cc-bird-v3.webp")}
+              alt=""
+              width={640}
+              height={640}
+              decoding="async"
+              aria-hidden="true"
+            />
+            {/* <900px: mid-column / mobile crest row. Hidden on ≥900. */}
+            <img
+              className="shows-hero__crest shows-hero__crest--mid"
+              src={asset("images/cc-bird-v3.webp")}
+              alt=""
+              width={640}
+              height={640}
+              decoding="async"
+              aria-hidden="true"
+            />
           </div>
 
           <div className="shows-hero__flank shows-hero__flank--right">
