@@ -53,10 +53,8 @@ describe("Shows hero (equal-size pyramid sketch)", () => {
       expect(shows).toContain(label);
     }
     expect(shows).toContain("On the network");
-    // Hero reuses NETWORK_SHOWS.desc (same strings as the roster below).
-    expect(shows).toContain("shows-hero__desc");
-    expect(shows).toContain("The flagship discernment broadcast");
-    expect(shows).toContain("Deep-cut interviews and conversations");
+    // Hero tiles: label only (descs live in the roster below, not under cards).
+    expect(shows).not.toContain("shows-hero__desc");
 
     // Desktop pitch block (copy + yellow rules).
     expect(shows).toContain("shows-hero__pitch");
@@ -83,11 +81,10 @@ describe("Shows hero (equal-size pyramid sketch)", () => {
     expect(css).toContain("object-fit:cover");
     expect(css).toContain("object-position:center");
     expect(css).toContain("object-fit:contain");
-    expect(css).toContain("padding-block:1.85rem 5.75rem");
-    expect(css).toContain("padding-block:1.35rem 4.25rem");
-    expect(css).toContain("padding-block:2.35rem 6.5rem");
-    expect(css).toContain("shows-hero__desc");
-    expect(css).toContain("-webkit-line-clamp:3");
+    expect(css).toContain("padding-block:1.85rem 4.5rem");
+    expect(css).toContain("padding-block:1.35rem 3.5rem");
+    expect(css).toContain("padding-block:2.35rem 4.5rem");
+    expect(css).toContain("--shows-title-pad-top");
     expect(css).toContain("--shows-row-gap");
     // Top tile sized to one card against the 2-col wrapper.
     expect(
