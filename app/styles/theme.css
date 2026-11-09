@@ -5141,6 +5141,8 @@ h2 {
     --shows-cards-shift: 2.4925rem; /* ~40px — half of prior 80px */
     /* Extra bottom-row drop so pitch rule clears card tops ~12–16px. */
     --shows-bottom-drop: 4.6rem; /* ~74px — covers ~60px overlap + ~14px gap @1280 */
+    /* Pull bottom 4 cards toward bird; ~32px side gap (pair gap + card size unchanged). */
+    --shows-bottom-inward: 3.325rem; /* ~53.2px; birdGap 85.2 → ~32 */
   }
   /* Drop News Talk / Burning Man frames to the wordmark ink top. */
   .shows-hero__slot--tl,
@@ -5153,12 +5155,20 @@ h2 {
   .shows-hero__flank .shows-hero__slot--tr {
     transform: translateY(var(--shows-cards-shift));
   }
-  /* Bottom row: base shift + optional drop so pitch rule clears card tops. */
+  /* Bottom row: Y drop for pitch clearance + X inward toward bird. */
   .shows-hero__flank .shows-hero__slot--blo,
-  .shows-hero__flank .shows-hero__slot--bli,
+  .shows-hero__flank .shows-hero__slot--bli {
+    transform: translate(
+      var(--shows-bottom-inward),
+      calc(var(--shows-cards-shift) + var(--shows-bottom-drop))
+    );
+  }
   .shows-hero__flank .shows-hero__slot--bri,
   .shows-hero__flank .shows-hero__slot--bro {
-    transform: translateY(calc(var(--shows-cards-shift) + var(--shows-bottom-drop)));
+    transform: translate(
+      calc(-1 * var(--shows-bottom-inward)),
+      calc(var(--shows-cards-shift) + var(--shows-bottom-drop))
+    );
   }
   .shows-hero__stage {
     --shows-gap: 0.65rem;

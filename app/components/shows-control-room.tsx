@@ -51,7 +51,7 @@ const HERO_HREF_OVERRIDE: Partial<Record<string, string>> = {
 
 /** Desktop mid-column pitch (Bebas headline + yellow rules + body, per reference). */
 export const SHOWS_HERO_PITCH = {
-  headline: ["EVERY SHOW. EVERY PROJECT.", "ONE NETWORK."],
+  headline: ["EVERY SHOW. EVERY PROJECT."],
   description:
     "A collection of the shows and projects Basil and Gonz have built over the years, from daily news and deep-cut interviews to call-ins, research and side projects, all under the Canary Cry banner.",
 } as const;
