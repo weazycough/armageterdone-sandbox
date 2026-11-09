@@ -4766,10 +4766,9 @@ h2 {
 
 
 /* -------------------------------------------------------------------------
-   Shows hero: shared .mission-hero background. Title + 2×3 tiles share one
-   centered stage (~23% narrower than prior 56/64/70rem caps) so Canary Cry
-   SVG and NETWORK left edges align to the grid left edge. Extra stage gap
-   clears Bebas scaleY(1.4) visual overflow (was ~3px title→panels).
+   Shows hero: shared .mission-hero background. Three columns inside the same
+   .container as the nav (logo→last item edges): left tile stack, centered
+   Canary Cry + NETWORK + bird crest (bannerless), right tile stack.
    ------------------------------------------------------------------------- */
 .shows-hero .shows-hero__inner {
   position: relative;
@@ -4777,76 +4776,68 @@ h2 {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  padding: 1.75rem 0 3.75rem; /* +1.5rem blue under tiles */
+  padding: 1.75rem 0 3.75rem; /* blue under tiles */
 }
-/* Common width + horizontal center — brand and grid share the same left edge. */
+/* Full nav-content width (container already applies --max-w + pad). */
 .shows-hero__stage {
-  --shows-hero-stage: min(100%, 43rem); /* was 56rem (~23% narrower) */
-  width: var(--shows-hero-stage);
-  margin-inline: auto;
+  width: 100%;
+  margin-inline: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(11rem, 22rem) minmax(0, 1fr);
+  grid-template-areas: "left center right";
+  gap: clamp(0.85rem, 2vw, 1.75rem);
+  align-items: center;
+}
+.shows-hero__col--left { grid-area: left; }
+.shows-hero__center { grid-area: center; }
+.shows-hero__col--right { grid-area: right; }
+
+.shows-hero__col {
   display: flex;
   flex-direction: column;
-  /* Gap clears rule nudge into tiles; ~half prior air (~12-18px painted). */
-  gap: clamp(1.375rem, 2.25vw, 1.875rem);
+  gap: 0.75rem;
+  min-width: 0;
 }
-/* Brand row: left stack (mark above rule) + NETWORK on stage right.
-   Rule flexes to fill leftover width; bottoms share painted NETWORK glyphs. */
+
+.shows-hero__center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.65rem, 1.5vw, 1.1rem);
+  min-width: 0;
+  text-align: center;
+  /* Bebas metrics kept for scaleY shape */
+  --shows-network-size: clamp(2.4rem, 6.5vw, 5.5rem);
+  --shows-network-lh: 0.82;
+  --shows-network-scale-y: 1.3;
+}
+
 .shows-hero__brand {
   display: flex;
-  flex-direction: row;
-  align-items: flex-end;
-  gap: var(--space-4);
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
   width: 100%;
   max-width: 100%;
   min-width: 0;
-  /* Bebas metrics (fontTools): upem=1000, winAsc=950, winDesc=350, yMin≈0 */
-  --shows-network-size: clamp(2.7625rem, 9.35vw, 7.225rem); /* ~85% of prior 3.25/11/8.5 */
-  --shows-network-lh: 0.82;
-  --shows-network-scale-y: 1.3;
-  --shows-network-asc: 0.95;
-  --shows-network-desc: 0.35;
-  /* Same nudge for mark + rule so SVG tracks the translated bar (~6-8px gap). */
-  --shows-rule-nudge: calc(
-    var(--shows-network-size) * (
-      (
-        (var(--shows-network-lh) - (var(--shows-network-asc) + var(--shows-network-desc))) /
-          2 + var(--shows-network-asc)
-      ) * var(--shows-network-scale-y) - var(--shows-network-lh)
-    )
-  );
 }
-/* Stretches to NETWORK height; packs mark+rule at the bottom so the SVG
-   sits just above the yellow line. */
-.shows-hero__brand-left {
-  flex: 1 1 auto;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: flex-start;
-  align-self: stretch;
-  /* ~6-8 screenshot px; mark shares rule nudge so this stays the visual gap */
-  gap: 0.45rem;
-}
+
 .shows-hero__mark-wrap {
   display: block;
   line-height: 0;
   max-width: 100%;
-  /* Track rule translateY so mark sits just above the painted bar, not the pre-nudge box. */
-  transform: translateY(var(--shows-rule-nudge));
 }
-/* Medium white Canary Cry SVG (real CcWordmark paths); larger than nav mark. */
+/* White Canary Cry SVG above NETWORK (centered). */
 .shows-hero__mark {
   display: block;
-  height: clamp(1.65rem, 3.2vw, 2.35rem);
+  height: clamp(1.35rem, 2.6vw, 2rem);
   width: auto;
-  max-width: min(100%, 18rem);
+  max-width: min(100%, 14rem);
+  margin-inline: auto;
   color: #fff;
 }
-/* Art-wall __big proportions, Bebas + scaleY stretch; stage-right edge. */
 .shows-hero__network {
-  flex: 0 0 auto;
-  min-width: 0;
   margin: 0;
   padding: 0;
   font-family: var(--font-title);
@@ -4855,37 +4846,24 @@ h2 {
   line-height: var(--shows-network-lh);
   letter-spacing: -0.02em;
   text-transform: uppercase;
-  text-align: right;
+  text-align: center;
   color: var(--accent);
   text-shadow: 0 0 22px color-mix(in srgb, var(--accent) 50%, transparent);
   transform: scaleY(var(--shows-network-scale-y));
-  transform-origin: top right;
+  transform-origin: top center;
   white-space: nowrap;
 }
-/* .ep-wall__rule: flex/height/color from shared class. Full width of left
-   column; translateY uses win-metric half-leading + ascent (4ed2d99). */
-.shows-hero__rule {
+/* Bannerless crest (from cc-logo.webp; NEWSTALK ribbon removed). */
+.shows-hero__crest {
   display: block;
-  width: 100%;
-  flex: 0 0 auto;
-  min-width: 2.5rem;
-  margin-bottom: 0;
-  transform: translateY(var(--shows-rule-nudge));
+  width: clamp(7.5rem, 18vw, 12.5rem);
+  height: auto;
+  max-width: min(100%, 14rem);
+  margin-inline: auto;
+  /* scaleY on NETWORK doesn't grow layout; modest pad under painted glyphs */
+  margin-top: clamp(0.35rem, 1vw, 0.75rem);
 }
 
-.shows-hero__grid {
-  display: flex;
-  flex-direction: column;
-  gap: 0.85rem;
-  width: 100%;
-  margin: 0;
-}
-.shows-hero__row {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.65rem;
-  width: 100%;
-}
 .shows-hero__tile {
   display: flex;
   flex-direction: column;
@@ -4941,48 +4919,64 @@ h2 {
 }
 .shows-hero__tile--soon { opacity: 0.85; cursor: default; }
 
-@media (max-width: 639px) {
+/* Mobile: title+crest first, then 2-up tile grid (left then right order). */
+@media (max-width: 767px) {
   .shows-hero .shows-hero__inner {
-    padding: 1.35rem 0 2.75rem; /* +1rem mobile under tiles */
+    padding: 1.35rem 0 2.75rem;
   }
   .shows-hero__stage {
-    gap: clamp(1.125rem, 4vw, 1.5rem);
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "center center"
+      "left right";
+    gap: 1rem 0.65rem;
+    align-items: start;
   }
-  .shows-hero__brand {
-    --shows-network-size: clamp(2.21rem, 11.9vw, 3.57rem); /* ~85% of prior 2.6/14/4.2 */
+  .shows-hero__center {
+    --shows-network-size: clamp(2.2rem, 12vw, 3.4rem);
+    margin-bottom: 0.35rem;
   }
-  .shows-hero__brand-left {
-    gap: 0.4rem;
+  .shows-hero__crest {
+    width: clamp(6.5rem, 36vw, 9.5rem);
   }
-  .shows-hero__row {
-    gap: 0.45rem;
+  .shows-hero__col {
+    gap: 0.55rem;
   }
   .shows-hero__label {
     font-size: 0.65rem;
   }
 }
 
+@media (max-width: 419px) {
+  .shows-hero__stage {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "center"
+      "left"
+      "right";
+  }
+}
+
 @media (min-width: 768px) {
   .shows-hero .shows-hero__inner {
-    padding: 2.25rem 0 4.25rem; /* +1.5rem desktop under tiles */
+    padding: 2.25rem 0 4.25rem;
   }
-  .shows-hero__stage {
-    --shows-hero-stage: min(100%, 49rem); /* was 64rem */
-    gap: clamp(1.5rem, 2vw, 1.875rem);
+  .shows-hero__col {
+    gap: 0.85rem;
   }
-  .shows-hero__grid {
-    gap: 1rem;
-  }
-  .shows-hero__row { gap: 0.75rem; }
 }
 
 @media (min-width: 1100px) {
   .shows-hero__mark {
-    height: 2.5rem;
-    max-width: 20rem;
+    height: 2.15rem;
+    max-width: 16rem;
   }
   .shows-hero__stage {
-    --shows-hero-stage: min(100%, 54rem); /* was 70rem */
+    grid-template-columns: minmax(0, 1fr) minmax(14rem, 24rem) minmax(0, 1fr);
+    gap: clamp(1.1rem, 2vw, 2rem);
+  }
+  .shows-hero__crest {
+    width: clamp(9rem, 14vw, 13.5rem);
   }
 }
 
