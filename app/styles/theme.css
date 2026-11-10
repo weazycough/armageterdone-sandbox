@@ -730,6 +730,10 @@ p {
   color-scheme: dark;
   border-bottom: 1px solid var(--line-strong);
   background: var(--bg-canvas);
+  /* Shared accent-rule tokens (home intro bars + Shows pitch rules). */
+  --hero-accent-rule-height: 4px;
+  --hero-accent-rule-radius: 2px;
+  --hero-accent-rule-shadow: 0 0 10px color-mix(in srgb, var(--accent) 55%, transparent);
 }
 /* Faint teal/blue glow at the top of the hero */
 .mission-hero::before {
@@ -792,11 +796,11 @@ p {
 .mission-hero__bar {
   display: block;
   width: 3.25rem;
-  height: 4px;
+  height: var(--hero-accent-rule-height);
   margin: 0.85rem 0;
   background: var(--accent);
-  box-shadow: 0 0 10px color-mix(in srgb, var(--accent) 55%, transparent);
-  border-radius: 2px;
+  box-shadow: var(--hero-accent-rule-shadow);
+  border-radius: var(--hero-accent-rule-radius);
 }
 .mission-hero__about {
   margin: 0;
@@ -4981,14 +4985,14 @@ h2 {
 }
 .shows-hero__pitch-rule {
   display: block;
-  /* Match NETWORK ink / pitch column width. */
+  /* Same thickness, caps, and glow as .mission-hero__bar; span NETWORK ink. */
   width: 100%;
-  height: 0.35rem;
+  height: var(--hero-accent-rule-height);
   margin: 0.15rem 0;
   padding: 0;
   background: var(--accent);
-  border-radius: 1px;
-  box-shadow: 0 0 10px color-mix(in srgb, var(--accent) 45%, transparent);
+  border-radius: var(--hero-accent-rule-radius);
+  box-shadow: var(--hero-accent-rule-shadow);
 }
 .shows-hero__pitch-body {
   margin: 0;
@@ -5045,12 +5049,14 @@ h2 {
 }
 .shows-hero__label {
   font-family: var(--font-title);
-  font-size: clamp(0.65rem, 1.15vw, 0.85rem);
-  letter-spacing: 0.04em;
+  /* ~1.45× prior clamp(0.65rem, 1.15vw, 0.85rem); one line within card width. */
+  font-size: clamp(0.94rem, 1.67vw, 1.23rem);
+  letter-spacing: 0.02em;
   text-transform: uppercase;
   color: var(--accent);
   line-height: 1.15;
   text-align: center;
+  white-space: nowrap;
 }
 .shows-hero__desc {
   margin: 0;
@@ -5108,7 +5114,7 @@ h2 {
     display: none;
   }
   .shows-hero__label {
-    font-size: 0.62rem;
+    font-size: 0.9rem; /* ~1.45× prior 0.62rem */
   }
   .shows-hero__desc {
     font-size: 0.68rem;
@@ -5136,7 +5142,7 @@ h2 {
 @media (min-width: 900px) {
   .shows-hero .shows-hero__inner {
     /* Bottom pad grows with --shows-bottom-drop so lowered bottom cards keep breath. */
-    padding-block: 2.35rem calc(4.75rem + var(--shows-bottom-drop));
+    padding-block: 2.35rem calc(5.5rem + var(--shows-bottom-drop)); /* +0.75rem for larger labels */
     /* Shared base shift (top+bottom as in 1626542); bottom adds --shows-bottom-drop. */
     --shows-cards-shift: 2.4925rem; /* ~40px — half of prior 80px */
     /* Extra bottom-row drop so pitch rule clears card tops ~12–16px. */
@@ -5201,6 +5207,8 @@ h2 {
     --shows-network-size: clamp(8.5rem, 7.3vw, 8.75rem);
     /* Bebas "NETWORK" advance ≈2.792×font-size (ink ≈ box). */
     --shows-network-ink-width: calc(var(--shows-network-size) * 2.792);
+    /* Pull headline up into NETWORK line-box slack; ~12px ink-to-ink @1920. */
+    --shows-network-headline-pull: calc(var(--shows-network-size) * -0.067);
   }
   /* Higher specificity than base grid-area names; set placement in one rule. */
   .shows-hero__flank .shows-hero__slot--tl {
@@ -5266,7 +5274,8 @@ h2 {
     max-width: 90%;
     height: auto;
     aspect-ratio: 1;
-    margin: 0.75rem 0 0;
+    /* Prior 0.75rem + former 0.1rem pitch margin + two rules' 0.35rem→4px thinning. */
+    margin: calc(0.85rem + 2 * (0.35rem - var(--hero-accent-rule-height)) - var(--shows-network-headline-pull)) 0 0;
     z-index: 1;
     pointer-events: none;
     flex: 0 0 auto;
@@ -5281,8 +5290,8 @@ h2 {
     max-width: none;
     height: auto;
     align-self: center;
-    /* Tight under NETWORK — keep pitch above bottom-row card tops. */
-    margin-top: 0.1rem;
+    /* Pull defined on .shows-hero__center; bird margin compensates so crest stays. */
+    margin-top: var(--shows-network-headline-pull);
     padding-top: 0;
     padding-bottom: 0;
     gap: 0.05rem;
