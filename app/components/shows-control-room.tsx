@@ -75,7 +75,7 @@ function ShowTile({ show }: { show: NetworkShowTile }): React.ReactNode {
       : show.latest?.artUrl ?? (show.art ? asset(show.art) : null);
   const className = "shows-hero__tile";
 
-  // NETWORK_SHOWS.desc still feeds "On the network" below; hero shows label only.
+  // Hero tiles are label-only; descriptions live on the catalog cards below.
   const body = (
     <>
       <span className="shows-hero__frame">

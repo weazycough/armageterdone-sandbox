@@ -2783,7 +2783,8 @@ p {
 /* The studio is artwork: it stays dark in both themes. Desk art sits in
    front on desktop; the six monitors form a wall behind/above the hosts. */
 .shows-page {
-  padding-bottom: var(--space-8);
+  /* V4V is the last block; don't leave a 4rem dead strip above the footer. */
+  padding-bottom: 0;
 }
 .shows-studio {
   --shows-label: #f5efe2;
@@ -3535,54 +3536,6 @@ p {
   }
 }
 
-/* Roster under the studio: text fallback + open-item notes. */
-.shows-roster {
-  max-width: 44rem;
-  margin: 0 auto;
-}
-.shows-roster__heading {
-  font-family: var(--font-display);
-  font-size: 1.25rem;
-  font-weight: 700;
-  margin: 0 0 var(--space-4);
-}
-.shows-roster__list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: var(--space-4);
-}
-.shows-roster__title {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 1.05rem;
-  color: var(--fg-primary);
-  text-decoration: none;
-}
-.shows-roster__title:hover {
-  color: var(--accent-on-bg);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-.shows-roster__title--soon {
-  color: var(--fg-secondary);
-}
-.shows-roster__desc {
-  margin: 0.25rem 0 0;
-  color: var(--fg-secondary);
-  font-size: 0.92rem;
-  line-height: 1.5;
-}
-.shows-roster__open {
-  color: var(--fg-tertiary);
-  font-style: italic;
-}
-.shows-roster__note {
-  margin-top: var(--space-6);
-  font-size: 0.9rem;
-}
-
 /* ---------- Utility ---------- */
 .sr-only {
   position: absolute;
@@ -3828,6 +3781,11 @@ p {
 .shows-page > .section:has(+ .shows-v4v) {
   /* Leave a short landing strip for the mark to spill into, not a 4rem gap. */
   padding-bottom: 1.75rem;
+}
+/* V4V is the last Shows block; drop the footer's usual 6rem page gap so the
+   band meets the footer rule cleanly (footer still has its own padding). */
+main:has(.shows-v4v) + .site-footer {
+  margin-top: 0;
 }
 .shows-v4v {
   --bg-canvas: #0a0a0a;

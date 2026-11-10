@@ -1,4 +1,5 @@
-// shows.tsx — Canary Cry Network Shows page: hero (wordmark + NETWORK + tile grid) on the home mission-hero background, then the lower roster.
+// shows.tsx — Canary Cry Network Shows page: hero (wordmark + NETWORK + tile grid),
+// then The Big Three / Other Works catalog and the Value for Value band.
 
 import type * as React from "react";
 import type { Route } from "./+types/shows";
@@ -8,12 +9,11 @@ import { Section } from "../../components/page-parts";
 import { FaceLikeTheSunCard } from "../../components/face-like-the-sun-card";
 import { ShowsV4v } from "../../components/shows-v4v";
 import { ShowsStrip, type ShowsStripItem } from "../../components/shows-strip";
-import { SmartLink } from "../../components/smart-link";
 import { loadEpisodes } from "../../lib/content.server";
 import { pageTitle } from "../../lib/meta";
 import { loadNetworkLatestFile, networkShowTiles, type NetworkShowTile } from "../../lib/network-latest.server";
 import { episodePath } from "../../lib/paths";
-import { NETWORK_SHOW_OPEN_ITEMS, NETWORK_SHOWS, SHOWS } from "../../lib/shows";
+import { SHOWS } from "../../lib/shows";
 
 const BIG_THREE_SLUGS = new Set<string>(SHOWS.map((s) => s.slug));
 
@@ -71,39 +71,6 @@ export default function ShowsPage({ loaderData }: Route.ComponentProps): React.R
       </Section>
 
       <ShowsV4v />
-
-      <Section>
-        <div className="shows-roster">
-          <h2 className="shows-roster__heading">On the network</h2>
-          <ul className="shows-roster__list">
-            {NETWORK_SHOWS.map((show) => (
-              <li key={show.slug} className="shows-roster__item">
-                {show.href !== null ? (
-                  <SmartLink href={show.href} className="shows-roster__title">
-                    {show.title}
-                  </SmartLink>
-                ) : (
-                  <span className="shows-roster__title shows-roster__title--soon">{show.title}</span>
-                )}
-                <p className="shows-roster__desc">
-                  {show.desc ?? "[Description to come]"}
-                  {show.href === null && (
-                    <span className="shows-roster__open"> · Link still open</span>
-                  )}
-                </p>
-              </li>
-            ))}
-          </ul>
-
-          {NETWORK_SHOW_OPEN_ITEMS.length > 0 && (
-            <p className="shows-roster__note muted">
-              Open items:{" "}
-              {NETWORK_SHOW_OPEN_ITEMS.map((s) => s.title).join(" and ")} still need a
-              destination page and/or roster art.
-            </p>
-          )}
-        </div>
-      </Section>
     </article>
   );
 }

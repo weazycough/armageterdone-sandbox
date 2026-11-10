@@ -52,8 +52,9 @@ describe("Shows hero (equal-size pyramid sketch)", () => {
     ]) {
       expect(shows).toContain(label);
     }
-    expect(shows).toContain("On the network");
-    // Hero tiles: label only (descs live in the roster below, not under cards).
+    expect(shows).not.toContain("On the network");
+    expect(shows).not.toContain("shows-roster");
+    // Hero tiles: label only (descs live on the catalog cards, not under hero tiles).
     expect(shows).not.toContain("shows-hero__desc");
 
     // Desktop pitch block (copy + yellow rules).
