@@ -24,11 +24,18 @@ function otherWorkItems(tiles: NetworkShowTile[]): ShowsStripItem[] {
         (t.latest?.slug ? episodePath(t.latest.slug) : null) ??
         t.latest?.externalUrl ??
         null;
+      // Basil's Bunker has no roster art; use a same-origin copy of the
+      // show logo (latest episode cover) so the round frame isn't a
+      // cross-origin Libsyn URL that can fail to paint.
+      const art =
+        t.slug === "basils-bunker"
+          ? (t.art ?? "images/show-basils-bunker.webp")
+          : (t.art ?? t.latest?.artUrl ?? null);
       return {
         slug: t.slug,
         title: t.title,
         desc: t.desc ?? "[Description to come]",
-        art: t.art ?? t.latest?.artUrl ?? null,
+        art,
         href,
       };
     });

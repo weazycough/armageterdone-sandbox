@@ -3674,6 +3674,11 @@ p {
 .shows-catalog .shows-strip {
   padding-top: 0;
 }
+/* Keep the art/text row tight under the title, even when a card has no kicker
+   (default align-items:center drops the shorter body and opens a visual gap). */
+.shows-catalog .shows-strip .show-card {
+  align-items: start;
+}
 :root:not([data-theme="light"]) .show-card__logo {
   background: var(--accent-on-bg);
 }
