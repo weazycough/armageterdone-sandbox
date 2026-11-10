@@ -82,9 +82,13 @@ describe("Shows hero, Other Works, and V4V", () => {
     expect(shows).toContain("content/images/e2f8d5c0-83360211-6a87-d7bf-6741-59b8ca567492.jpg");
     expect(shows).toContain("images/show-basils-bunker.webp");
     expect(shows).toContain("images/show-facelikethesun.webp");
-    expect(shows).toContain("YouTube Channel");
-    expect(shows).toContain("GonzoShimura.com");
-    expect(shows).toContain("Inhuman");
+    expect(shows).toContain("FaceLikeTheSun");
+    expect(shows).not.toContain("YouTube Channel");
+    expect(shows).not.toContain("GonzoShimura.com");
+    expect(shows).not.toContain("images/youtube-play.svg");
+    expect(shows).not.toContain("images/gonz-headshot.webp");
+    expect(shows).not.toContain("images/inhuman-film.webp");
+    expect(shows).not.toContain("show-card__links");
   });
 
   it("restyles the Shows V4V band only, leaving home V4V alone", () => {
@@ -94,8 +98,8 @@ describe("Shows hero, Other Works, and V4V", () => {
     expect(shows).toContain("shows-v4v__wordmark");
     expect(shows).toContain("images/value4value-wordmark.svg");
     expect(shows).toContain("No advertisers, just producers.");
-    expect(shows).toContain("shows-v4v__give");
-    expect(shows).toContain("shows-v4v__patreon");
+    expect(shows).toContain("mission-hero__give");
+    expect(shows).toContain("mission-hero__patreon");
     expect(shows).toContain('href="/armageterdone-sandbox/support/"');
     expect(shows).toContain("https://www.patreon.com/ccnt");
     expect(shows).not.toContain("$ Give");
@@ -138,7 +142,13 @@ describe("Shows hero, Other Works, and V4V", () => {
 
     expect(css).toContain("shows-catalog__works");
     expect(css).toContain("shows-v4v__kicker");
-    expect(css).not.toContain("shows-v4v::after");
-    expect(css).not.toContain("ellipse 110% 90%");
+    expect(
+      css.includes("clamp(1.65rem, 2.4vw, 2.25rem)") ||
+        css.includes("clamp(1.65rem,2.4vw,2.25rem)"),
+    ).toBe(true);
+    expect(
+      css.includes("shows-v4v::after") || css.includes("shows-v4v:after"),
+    ).toBe(true);
+    expect(css).toContain("110% 90% at 50% 120%");
   });
 });

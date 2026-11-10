@@ -3710,75 +3710,17 @@ p {
   background: none;
   justify-self: start;
 }
-.show-card__links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-3) var(--space-5);
-  list-style: none;
-  margin: var(--space-3) 0 0;
-  padding: 0;
-}
-.show-card__link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.65rem;
-  color: var(--fg-primary);
-  text-decoration: none;
-  min-width: 0;
-}
-.show-card__link:hover {
-  color: var(--accent-on-bg);
-  text-decoration: none;
-}
-.show-card__thumb {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  object-fit: cover;
-  flex-shrink: 0;
-  background: var(--bg-surface);
-  display: block;
-}
-.show-card__thumb--contain {
-  object-fit: contain;
-  padding: 6px;
-  box-sizing: border-box;
-}
-.show-card__link-text {
-  display: flex;
-  flex-direction: column;
-  gap: 0.05rem;
-  min-width: 0;
-}
-.show-card__link-label {
-  font-size: 0.88rem;
-  line-height: 1.3;
-}
-.show-card__link-note {
-  font-size: 0.7rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--fg-secondary);
-}
-.show-card__link:hover .show-card__link-note {
-  color: var(--accent-on-bg);
-}
 @media (max-width: 767px) {
   .shows-catalog .show-card--wide .show-card__art--logo {
     width: 88px;
     height: 88px;
-  }
-  .show-card__links {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-3);
   }
 }
 
 
 /* Other Works: 2×2 grid. Square cover art on the left, yellow Bebas title
    plus description on the right. FaceLikeTheSun keeps its transparent lion
-   (contain, not a crop) and a compact row of links under the copy. */
+   (contain, not a crop). */
 .shows-catalog__works .shows-strip {
   grid-template-columns: 1fr;
   gap: var(--space-6);
@@ -3817,18 +3759,6 @@ p {
   /* Same cap height as The Big Three wordmarks (1.35rem). */
   font-size: calc(1.35rem / 0.7);
 }
-.shows-catalog__works .show-card__links {
-  flex-wrap: wrap;
-  gap: 0.45rem 0.75rem;
-  margin-top: 0.55rem;
-}
-.shows-catalog__works .show-card__thumb {
-  width: 32px;
-  height: 32px;
-}
-.shows-catalog__works .show-card__link-label {
-  font-size: 0.78rem;
-}
 @media (max-width: 767px) {
   .shows-catalog__works .shows-strip {
     gap: 0;
@@ -3845,8 +3775,8 @@ p {
 
 /* ---------- Shows page: Value for Value band under Other Works ---------- */
 /* Wordmark + kicker left, copy in the middle with a vertical rule, stacked
-   Give / Patreon on the right. Thin rules above and below the band. Home
-   V4V is unchanged. */
+   Give / Patreon on the right. Thin rules above and below; blue glow rises
+   from the bottom. Home V4V is unchanged. */
 .shows-page > .section:has(+ .shows-v4v) {
   padding-bottom: var(--space-7);
 }
@@ -3874,6 +3804,22 @@ main:has(.shows-v4v) + .site-footer {
   border-top: 1px solid var(--line-strong);
   border-bottom: 1px solid var(--line-strong);
 }
+.shows-v4v::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 110% 90% at 50% 120%, rgba(30, 74, 173, 0.95), transparent 62%),
+    linear-gradient(
+      180deg,
+      transparent 0%,
+      rgba(30, 74, 173, 0.18) 32%,
+      rgba(30, 74, 173, 0.55) 68%,
+      rgba(20, 55, 140, 0.88) 100%
+    );
+}
 .shows-v4v__inner {
   position: relative;
   z-index: 1;
@@ -3899,11 +3845,13 @@ main:has(.shows-v4v) + .site-footer {
   aspect-ratio: 367.12 / 55.17;
 }
 .shows-v4v__kicker {
-  margin: 0.55rem 0 0;
-  font-family: var(--font-body, var(--font-display));
-  font-size: 0.92rem;
-  line-height: 1.4;
-  color: var(--fg-secondary);
+  margin: 0.45rem 0 0;
+  font-family: var(--font-title);
+  font-weight: 400;
+  font-size: clamp(1.65rem, 2.4vw, 2.25rem);
+  letter-spacing: 0.03em;
+  line-height: 1;
+  color: #fff;
 }
 .shows-v4v__copy {
   min-width: 0;
@@ -3922,24 +3870,8 @@ main:has(.shows-v4v) + .site-footer {
   display: flex;
   flex-direction: column;
   gap: 0.65rem;
-  max-width: 12rem;
+  max-width: 14rem;
   width: 100%;
-}
-.shows-v4v__give,
-.shows-v4v__patreon {
-  justify-content: center;
-  width: 100%;
-}
-.shows-v4v__patreon {
-  background: transparent;
-  color: var(--fg-primary);
-  border-color: var(--fg-primary);
-}
-.shows-v4v__patreon:hover,
-.shows-v4v__patreon[data-hovered] {
-  border-color: var(--accent);
-  color: var(--accent);
-  background: transparent;
 }
 @media (min-width: 900px) {
   .shows-v4v__inner {
@@ -3956,7 +3888,7 @@ main:has(.shows-v4v) + .site-footer {
   }
   .shows-v4v__actions {
     justify-self: end;
-    max-width: 11rem;
+    max-width: 14rem;
   }
 }
 @media (max-width: 899px) {
@@ -3965,7 +3897,7 @@ main:has(.shows-v4v) + .site-footer {
   }
   .shows-v4v__actions {
     justify-self: start;
-    max-width: 12rem;
+    max-width: 14rem;
   }
   .shows-v4v__wordmark {
     max-width: 22rem;

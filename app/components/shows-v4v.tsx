@@ -32,11 +32,11 @@ export function ShowsV4v(): React.ReactNode {
           </p>
         </div>
         <div className="shows-v4v__actions">
-          <Link className={cn(buttonVariants(), "shows-v4v__give")} to="/support/">
+          <Link className={cn(buttonVariants(), "mission-hero__give")} to="/support/">
             Give
           </Link>
           <a
-            className={cn(buttonVariants({ variant: "ghost" }), "shows-v4v__patreon")}
+            className={cn(buttonVariants({ variant: "blue" }), "mission-hero__patreon")}
             href="https://www.patreon.com/ccnt"
             rel="noopener"
           >
