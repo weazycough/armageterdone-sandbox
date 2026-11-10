@@ -1544,6 +1544,10 @@ p {
   color: var(--accent-on-bg);
   text-decoration: none;
 }
+/* Column nav links: ~17.5% smaller than the inherited 1rem body size. */
+.site-footer li a {
+  font-size: 0.825rem;
+}
 .site-footer__brand-stack {
   display: flex;
   flex-direction: column;
@@ -1577,7 +1581,7 @@ p {
   padding-top: var(--space-4);
   border-top: 1px solid var(--line);
   color: var(--fg-tertiary);
-  font-size: 0.8rem;
+  font-size: 0.675rem; /* was 0.8rem; ~16% smaller, keeps the row consistent */
   display: flex;
   gap: var(--space-4);
   flex-wrap: wrap;
@@ -1585,7 +1589,7 @@ p {
 }
 .site-footer__socials {
   display: flex;
-  gap: var(--space-3);
+  gap: 0.65rem; /* proportional to the smaller 30px buttons */
   flex-wrap: wrap;
   margin-top: var(--space-3);
 }
@@ -1593,8 +1597,8 @@ p {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 30px; /* was 36px; ~17% smaller */
+  height: 30px;
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
   color: var(--fg-secondary);
@@ -1604,8 +1608,8 @@ p {
   color: var(--accent-on-bg);
 }
 .site-footer__socials svg {
-  width: 16px;
-  height: 16px;
+  width: 13px; /* was 16px */
+  height: 13px;
 }
 
 /* ---------- Pagination ---------- */
