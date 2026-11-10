@@ -26,17 +26,21 @@ export function meta({ loaderData }: Route.MetaArgs): Route.MetaDescriptors {
   return pageTitle(`${loaderData.show.title}${suffix}`);
 }
 
-/** Title logo in the always-dark hero. */
+/** Title wordmark (CANARYCRY + show name), painted via CSS mask so it can
+ *  be white in dark theme and black in light without changing the gold SVGs
+ *  used as masks on the home / Shows strips. */
 function ShowTitleLogo({ show }: { show: Show }): React.ReactNode {
   return (
     <h1 className="page-hero__title-logo">
-      <img
+      <span
         className="page-hero__logo"
-        src={asset(show.logo)}
-        alt={show.title}
-        width={show.logoSize[0]}
-        height={show.logoSize[1]}
-        decoding="async"
+        role="img"
+        aria-label={show.title}
+        style={{
+          maskImage: `url(${asset(show.logo)})`,
+          WebkitMaskImage: `url(${asset(show.logo)})`,
+          aspectRatio: `${String(show.logoSize[0])} / ${String(show.logoSize[1])}`,
+        }}
       />
     </h1>
   );

@@ -4157,6 +4157,22 @@ h2 {
   height: clamp(1.6rem, 4vw, 2.6rem);
   width: auto;
   max-width: 100%;
+  /* Gold SVG is used as a mask; paint white/black by theme. */
+  background: #fff;
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: left center;
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: left center;
+}
+:root[data-theme="light"] .ep-wall__head .page-hero__logo {
+  background: #000;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) .ep-wall__head .page-hero__logo {
+    background: #000;
+  }
 }
 
 /* Floor glow: screen-space wash under the grid (overrides the 3D plane attempt). */
