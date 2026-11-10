@@ -4983,6 +4983,29 @@ h2 {
   white-space: nowrap;
   text-align: center;
 }
+.shows-hero__pitch-dot {
+  /* Inline-block 1cap strut (baseline = cap bottom); bullet absolutely centered. */
+  display: inline-block;
+  width: 0.18em;
+  height: 1cap;
+  margin-inline: 0.35em;
+  padding: 0;
+  vertical-align: baseline;
+  position: relative;
+  background: none;
+}
+.shows-hero__pitch-dot::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 0.18em;
+  height: 0.18em;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 6px color-mix(in srgb, var(--accent) 45%, transparent);
+}
 .shows-hero__pitch-rule {
   display: block;
   /* Same thickness, caps, and glow as .mission-hero__bar; span NETWORK ink. */
@@ -5274,8 +5297,14 @@ h2 {
     max-width: 90%;
     height: auto;
     aspect-ratio: 1;
-    /* Prior 0.75rem + former 0.1rem pitch margin + two rules' 0.35rem→4px thinning. */
-    margin: calc(0.85rem + 2 * (0.35rem - var(--hero-accent-rule-height)) - var(--shows-network-headline-pull)) 0 0;
+    /* Prior 0.75rem + former 0.1rem pitch margin + two rules' 0.35rem→4px thinning
+       + headline line-box shrink (8.9→9.51 divisor) so the bird stays put. */
+    margin: calc(
+      0.85rem
+      + 2 * (0.35rem - var(--hero-accent-rule-height))
+      - var(--shows-network-headline-pull)
+      + var(--shows-network-ink-width) * 0.95 * (1 / 8.9 - 1 / 9.51)
+    ) 0 0;
     z-index: 1;
     pointer-events: none;
     flex: 0 0 auto;
@@ -5304,9 +5333,13 @@ h2 {
     container-name: shows-pitch;
   }
   .shows-hero__center .shows-hero__pitch-headline {
-    /* Fit "EVERY SHOW. EVERY PROJECT." across NETWORK ink width (advance ≈8.9×). */
-    font-size: calc(var(--shows-network-ink-width) / 8.9);
+    /* Fit "EVERY SHOW • EVERY PROJECT" across NETWORK ink width (advance ≈9.51×). */
+    font-size: calc(var(--shows-network-ink-width) / 9.51);
     line-height: 0.95;
+  }
+  .shows-hero__center .shows-hero__pitch-line {
+    /* Match NETWORK's optical translateX (em is NETWORK size, not headline size). */
+    transform: translateX(calc(var(--shows-network-size) * -0.0235));
   }
 }
 

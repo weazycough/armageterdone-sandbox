@@ -51,7 +51,8 @@ const HERO_HREF_OVERRIDE: Partial<Record<string, string>> = {
 
 /** Desktop mid-column pitch (Bebas headline + yellow rules + body, per reference). */
 export const SHOWS_HERO_PITCH = {
-  headline: ["EVERY SHOW. EVERY PROJECT."],
+  headline: "EVERY SHOW EVERY PROJECT",
+  accessibleHeadline: "Every show, every project",
   description:
     "A collection of the shows and projects Basil and Gonz have built over the years, from daily news and deep-cut interviews to call-ins, research and side projects, all under the Canary Cry banner.",
 } as const;
@@ -161,11 +162,8 @@ export function ShowsControlRoom({ tiles }: { tiles: NetworkShowTile[] }): React
             {/* ≥900: under title; width matched to NETWORK. Hidden &lt;900. */}
             <aside className="shows-hero__pitch" aria-label="About the Canary Cry Network">
               <p className="shows-hero__pitch-headline">
-                {SHOWS_HERO_PITCH.headline.map((line) => (
-                  <span key={line} className="shows-hero__pitch-line">
-                    {line}
-                  </span>
-                ))}
+                <span className="sr-only">{SHOWS_HERO_PITCH.accessibleHeadline}</span>
+                <span className="shows-hero__pitch-line" aria-hidden="true">EVERY SHOW<span className="shows-hero__pitch-dot" aria-hidden="true" />EVERY PROJECT</span>
               </p>
               <span className="shows-hero__pitch-rule" aria-hidden="true" />
               <p className="shows-hero__pitch-body">{SHOWS_HERO_PITCH.description}</p>

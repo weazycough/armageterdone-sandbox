@@ -60,7 +60,11 @@ describe("Shows hero (equal-size pyramid sketch)", () => {
     expect(shows).toContain("shows-hero__pitch");
     expect(shows).toContain("shows-hero__pitch-headline");
     expect(shows).toContain("shows-hero__pitch-rule");
-    expect(shows).toContain("EVERY SHOW. EVERY PROJECT.");
+    expect(shows).toContain("EVERY SHOW");
+    expect(shows).toContain("EVERY PROJECT");
+    expect(shows).toContain("Every show, every project");
+    expect(shows).toContain("shows-hero__pitch-dot");
+    expect(shows).not.toContain("EVERY SHOW. EVERY PROJECT.");
     expect(shows).not.toContain("ONE NETWORK.");
     expect(shows).toContain("A collection of the shows and projects Basil and Gonz");
   });
