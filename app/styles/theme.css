@@ -1536,15 +1536,20 @@ p {
   color: var(--accent-on-bg);
   font-size: 1.2rem;
   letter-spacing: 0.12em;
-  margin-bottom: var(--space-3);
+  margin-bottom: 0.5rem; /* was space-3 (0.75rem); slightly tighter to match closer link rows */
 }
 .site-footer ul {
   list-style: none;
   padding: 0;
   margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem; /* was 0.5rem li margin; ~50% tighter between rows */
 }
 .site-footer li {
-  margin-bottom: var(--space-2);
+  margin-bottom: 0;
+  font-size: 0.825rem; /* match the links so the li strut isn't a 16px body line */
+  line-height: 1.25;
 }
 .site-footer a {
   color: var(--fg-secondary);
@@ -1556,6 +1561,15 @@ p {
 /* Column nav links: ~17.5% smaller than the inherited 1rem body size. */
 .site-footer li a {
   font-size: 0.825rem;
+  line-height: 1.25; /* 16.5px at 13.2px type; row pitch ~20.5px on desktop */
+  display: inline-block;
+}
+/* Keep a reasonable tap target on phones without loosening desktop rows. */
+@media (max-width: 639px) {
+  .site-footer li a {
+    display: block;
+    padding-block: 0.25rem; /* ~24.5px hit area */
+  }
 }
 .site-footer__brand-stack {
   display: flex;
