@@ -75,7 +75,7 @@ export default function Home({ loaderData }: Route.ComponentProps): React.ReactN
               </h2>
               <p>
                 Canary Cry doesn’t take corporate ad money. It runs on producers: the
-                listeners who give back with time, talent, or treasure. Patreon, one-time
+                listeners who give back with <strong>time, talent, or treasure</strong>. Patreon, one-time
                 gifts, Cage Rattler Coffee, art, and Speak Pipe calls all count.
               </p>
             </div>
