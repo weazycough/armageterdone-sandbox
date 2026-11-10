@@ -40,7 +40,7 @@ function TickerSeq({
         All episodes →
       </Link>
       <span className="ticker__sep">·</span>
-      <span>Cogitare extra caveam</span>
+      <span>Think Outside the Cage</span>
       <span className="ticker__sep">·</span>
     </span>
   );
