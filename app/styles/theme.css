@@ -1520,7 +1520,16 @@ p {
 }
 @media (min-width: 1024px) {
   .site-footer__cols {
-    grid-template-columns: repeat(3, 1fr) 1fr 1fr;
+    /* Size each column to its content and spread leftover space evenly
+       so brand → Listen → … → Hosts gaps match, and Hosts lines up
+       with the container/legal right edge. */
+    grid-template-columns: max-content repeat(4, max-content);
+    justify-content: space-between;
+    column-gap: 0;
+  }
+  .site-footer__cols > * {
+    width: max-content;
+    max-width: 100%;
   }
 }
 .site-footer h4 {
