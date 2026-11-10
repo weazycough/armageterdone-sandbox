@@ -40,7 +40,7 @@ export default function About(): React.ReactNode {
     <article className="page about-page">
       <BracketHero
         maxWidth="56rem"
-        eyebrow="Cogitare extra caveam"
+        eyebrow="Think Outside the Cage"
         title="Think outside the cage."
         lede="Canary Cry News Talk is a podcast and streaming show that analyzes and deconstructs news and current events as reported by Legacy Corporate Media and Alternative Media — all from a Biblical worldview."
       />

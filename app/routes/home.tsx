@@ -32,7 +32,7 @@ export function loader() {
 }
 
 export function meta(): Route.MetaDescriptors {
-  return [{ title: "Canary Cry News Talk — Cogitare extra caveam" }];
+  return [{ title: "Canary Cry News Talk — Think Outside the Cage" }];
 }
 
 export default function Home({ loaderData }: Route.ComponentProps): React.ReactNode {

@@ -90,7 +90,7 @@ export default function Gospel(): React.ReactNode {
 
       <ProseSection width="42rem" center>
         <span className="eyebrow">Soli Deo Gloria</span>
-        <h2>Cogitare extra caveam.</h2>
+        <h2>Think outside the cage.</h2>
         <p>The cage is real. The way out has a Name.</p>
       </ProseSection>
     </article>

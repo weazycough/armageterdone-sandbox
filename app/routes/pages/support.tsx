@@ -316,7 +316,7 @@ export default function Support(): React.ReactNode {
       </ProseSection>
 
       <ProseSection width="42rem" center>
-        <span className="eyebrow">Cogitare extra caveam</span>
+        <span className="eyebrow">Think Outside the Cage</span>
         <h2>Thank you for keeping the canary singing.</h2>
         <p>
           Every producer — at every tier — is the reason this show exists outside the cage of
