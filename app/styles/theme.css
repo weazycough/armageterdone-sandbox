@@ -5065,8 +5065,8 @@ h2 {
 
 
 /* -------------------------------------------------------------------------
-   Shows hero: centered CANARYCRY + NETWORK, punch line, description, and
-   crest bird. No show cards here — they live in the sections below.
+   Shows hero: crest bird above centered CANARYCRY + NETWORK, punch line,
+   and description. No show cards here — they live in the sections below.
    padding-block only so .container inline pad = nav content edges.
    ------------------------------------------------------------------------- */
 .shows-hero .shows-hero__inner {
@@ -5075,7 +5075,7 @@ h2 {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  padding-block: 1.75rem 2rem;
+  padding-block: 1.875rem;
 }
 .shows-hero__stage {
   display: flex;
@@ -5243,13 +5243,14 @@ h2 {
   height: auto;
   aspect-ratio: 1;
   object-fit: contain;
-  margin: 0.75rem 0 0;
+  /* Gap under the bird, before the title block. */
+  margin: 0 0 0.75rem;
   pointer-events: none;
 }
 
 @media (max-width: 767px) {
   .shows-hero .shows-hero__inner {
-    padding-block: 1.35rem 1.75rem;
+    padding-block: 1.55rem;
   }
   .shows-hero__brand {
     --shows-network-size: clamp(3.16rem, 16.5vw, 4.77rem);
@@ -5270,7 +5271,7 @@ h2 {
 
 @media (min-width: 900px) {
   .shows-hero .shows-hero__inner {
-    padding-block: 2rem 2.25rem;
+    padding-block: 2.125rem;
   }
   /* Ink-width tokens live on the stage so the sibling pitch can use them. */
   .shows-hero__stage {

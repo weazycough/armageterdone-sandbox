@@ -10,8 +10,8 @@ export const SHOWS_HERO_PITCH = {
 } as const;
 
 /**
- * Shows-page hero: CANARYCRY + NETWORK wordmark, punch line, description,
- * and the crest bird. Show cards live in the sections below, not here.
+ * Shows-page hero: crest bird above the CANARYCRY + NETWORK wordmark,
+ * punch line, and description. Show cards live in the sections below, not here.
  */
 export function ShowsControlRoom() {
   return (
@@ -19,6 +19,14 @@ export function ShowsControlRoom() {
       <MissionHeroFloor />
       <div className="container mission-hero__inner shows-hero__inner">
         <div className="shows-hero__stage">
+          <img
+            className="shows-hero__crest"
+            src={asset("images/cc-bird-v3.webp")}
+            alt=""
+            width={800}
+            height={800}
+            decoding="async"
+          />
           <header className="shows-hero__brand">
             <div className="shows-hero__title-stack">
               <span className="shows-hero__mark-wrap">
@@ -39,14 +47,6 @@ export function ShowsControlRoom() {
             <span className="shows-hero__pitch-rule" aria-hidden="true" />
             <p className="shows-hero__pitch-body">{SHOWS_HERO_PITCH.description}</p>
           </aside>
-          <img
-            className="shows-hero__crest"
-            src={asset("images/cc-bird-v3.webp")}
-            alt=""
-            width={800}
-            height={800}
-            decoding="async"
-          />
         </div>
       </div>
     </section>

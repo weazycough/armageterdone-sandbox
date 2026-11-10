@@ -30,6 +30,8 @@ describe("Shows hero, Other Works, and V4V", () => {
     expect(shows).toContain("NETWORK");
     expect(shows).toContain("images/cc-bird-v3.webp");
     expect(shows).toContain("shows-hero__crest");
+    // Bird sits above the title block.
+    expect(shows.indexOf("shows-hero__crest")).toBeLessThan(shows.indexOf("shows-hero__brand"));
     expect(shows).toContain("M.02,26.46C.02,11.76");
 
     // No pyramid / show cards in the hero.
@@ -124,9 +126,15 @@ describe("Shows hero, Other Works, and V4V", () => {
     expect(css).toContain("shows-hero__crest");
     expect(css).toContain("aspect-ratio:1");
     expect(css).toContain("object-fit:contain");
-    expect(css).toContain("padding-block:1.75rem 2rem");
-    expect(css).toContain("padding-block:1.35rem 1.75rem");
-    expect(css).toContain("padding-block:2rem 2.25rem");
+    expect(css.includes("padding-block:1.875rem") || css.includes("padding-block: 1.875rem")).toBe(
+      true,
+    );
+    expect(css.includes("padding-block:1.55rem") || css.includes("padding-block: 1.55rem")).toBe(
+      true,
+    );
+    expect(css.includes("padding-block:2.125rem") || css.includes("padding-block: 2.125rem")).toBe(
+      true,
+    );
     expect(css).not.toContain("shows-hero__flank");
     expect(css).not.toContain("shows-hero__center");
     expect(css).not.toContain("--shows-title-pad-top");
