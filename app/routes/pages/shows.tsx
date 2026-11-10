@@ -1,5 +1,5 @@
-// shows.tsx — Canary Cry Network Shows page: hero (wordmark + NETWORK + tile grid),
-// then The Big Three / Other Works catalog and the Value for Value band.
+// shows.tsx — Canary Cry Network Shows page: hero (wordmark + NETWORK +
+// pitch), then The Big Three / Other Works catalog and the Value for Value band.
 
 import type * as React from "react";
 import type { Route } from "./+types/shows";
@@ -17,6 +17,13 @@ import { SHOWS } from "../../lib/shows";
 
 const BIG_THREE_SLUGS = new Set<string>(SHOWS.map((s) => s.slug));
 
+/** Same-origin square covers used elsewhere on the site (hero tiles, catalog). */
+const WORKS_SQUARE_ART: Record<string, string> = {
+  joyspiracy: "images/show-joyspiracy.webp",
+  "burning-man-research": "content/images/e2f8d5c0-83360211-6a87-d7bf-6741-59b8ca567492.jpg",
+  "basils-bunker": "images/show-basils-bunker.webp",
+};
+
 function otherWorkItems(tiles: NetworkShowTile[]): ShowsStripItem[] {
   return tiles
     .filter((t) => !BIG_THREE_SLUGS.has(t.slug))
@@ -26,13 +33,7 @@ function otherWorkItems(tiles: NetworkShowTile[]): ShowsStripItem[] {
         (t.latest?.slug ? episodePath(t.latest.slug) : null) ??
         t.latest?.externalUrl ??
         null;
-      // Basil's Bunker has no roster art; use a same-origin copy of the
-      // show logo (latest episode cover) so the round frame isn't a
-      // cross-origin Libsyn URL that can fail to paint.
-      const art =
-        t.slug === "basils-bunker"
-          ? (t.art ?? "images/show-basils-bunker.webp")
-          : (t.art ?? t.latest?.artUrl ?? null);
+      const art = WORKS_SQUARE_ART[t.slug] ?? t.art ?? t.latest?.artUrl ?? null;
       return {
         slug: t.slug,
         title: t.title,
@@ -55,7 +56,7 @@ export default function ShowsPage({ loaderData }: Route.ComponentProps): React.R
   const otherWorks = otherWorkItems(tiles);
   return (
     <article className="page shows-page">
-      <ShowsControlRoom tiles={tiles} />
+      <ShowsControlRoom />
 
       <Section>
         <div className="shows-catalog">
@@ -63,7 +64,7 @@ export default function ShowsPage({ loaderData }: Route.ComponentProps): React.R
             <WallHead title="The Big Three" />
             <ShowsStrip />
           </div>
-          <div className="shows-catalog__block">
+          <div className="shows-catalog__block shows-catalog__works">
             <WallHead title="Other Works" />
             <ShowsStrip shows={otherWorks} append={<FaceLikeTheSunCard />} />
           </div>

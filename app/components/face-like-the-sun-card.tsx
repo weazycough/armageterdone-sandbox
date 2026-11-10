@@ -1,6 +1,6 @@
-// face-like-the-sun-card.tsx — Other Works card for Gonz's FaceLikeTheSun
-// work (YouTube, site, and the Inhuman collaboration). Spans 2/3 of the
-// 3-col row, left-aligned under the three show cards.
+// face-like-the-sun-card.tsx — Other Works cell for Gonz's FaceLikeTheSun
+// work (YouTube, site, and the Inhuman collaboration). Sits in the 2×2
+// grid with the other three works; the transparent lion art is unchanged.
 
 import type * as React from "react";
 import { asset } from "../lib/asset";
@@ -31,7 +31,7 @@ const LINKS: { href: string; label: string; note?: string; art: string; fit?: "c
 
 export function FaceLikeTheSunCard(): React.ReactNode {
   return (
-    <div className="show-card show-card--wide" aria-label="FaceLikeTheSun">
+    <div className="show-card" aria-label="FaceLikeTheSun">
       <span className="show-card__logo show-card__logo--text">FaceLikeTheSun</span>
       <img
         className="show-card__art show-card__art--logo"
@@ -60,8 +60,8 @@ export function FaceLikeTheSunCard(): React.ReactNode {
                   }
                   src={asset(link.art)}
                   alt=""
-                  width={48}
-                  height={48}
+                  width={32}
+                  height={32}
                   loading="lazy"
                   decoding="async"
                 />

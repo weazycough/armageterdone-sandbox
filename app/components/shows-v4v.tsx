@@ -1,17 +1,18 @@
-// shows-v4v.tsx — full-bleed Value for Value band under Other Works on
-// the Shows page: buttons left, copy middle, V4V mark right (spills up).
+// shows-v4v.tsx — Shows-page Value for Value band: wordmark + kicker left,
+// copy in the middle, stacked Give / Patreon buttons on the right. Home
+// V4V is unchanged.
 
 import type * as React from "react";
+import { Link } from "react-router";
 import { asset } from "../lib/asset";
-import { V4V_EYEBROW, V4vActions, V4vDescription } from "./v4v-copy";
+import { buttonVariants } from "./ui/button";
+import { cn } from "../lib/utils";
 
 export function ShowsV4v(): React.ReactNode {
   return (
     <section className="shows-v4v" aria-label="Value for Value">
       <div className="container shows-v4v__inner">
-        <V4vActions className="shows-v4v__actions mission-hero__v4v-actions" />
-        <div className="shows-v4v__copy">
-          <span className="mission-hero__v4v-eyebrow">{V4V_EYEBROW}</span>
+        <div className="shows-v4v__brand">
           <h2 className="shows-v4v__heading">
             <img
               className="shows-v4v__wordmark"
@@ -22,18 +23,25 @@ export function ShowsV4v(): React.ReactNode {
               decoding="async"
             />
           </h2>
-          <V4vDescription />
+          <p className="shows-v4v__kicker">No advertisers, just producers.</p>
         </div>
-        <div className="shows-v4v__art-wrap">
-          <img
-            className="shows-v4v__art"
-            src={asset("images/v4v-mark.svg")}
-            alt=""
-            width={111}
-            height={54}
-            aria-hidden="true"
-            decoding="async"
-          />
+        <div className="shows-v4v__copy">
+          <p>
+            Canary Cry doesn’t take corporate ad money. It runs on producers: the
+            listeners who give back with <strong>time, talent, or treasure</strong>.
+          </p>
+        </div>
+        <div className="shows-v4v__actions">
+          <Link className={cn(buttonVariants(), "shows-v4v__give")} to="/support/">
+            Give
+          </Link>
+          <a
+            className={cn(buttonVariants({ variant: "ghost" }), "shows-v4v__patreon")}
+            href="https://www.patreon.com/ccnt"
+            rel="noopener"
+          >
+            Patreon
+          </a>
         </div>
       </div>
     </section>
