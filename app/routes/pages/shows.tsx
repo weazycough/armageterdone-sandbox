@@ -5,6 +5,7 @@ import type { Route } from "./+types/shows";
 import { WallHead } from "../../components/episode-wall";
 import { ShowsControlRoom } from "../../components/shows-control-room";
 import { Section } from "../../components/page-parts";
+import { FaceLikeTheSunCard } from "../../components/face-like-the-sun-card";
 import { ShowsStrip, type ShowsStripItem } from "../../components/shows-strip";
 import { SmartLink } from "../../components/smart-link";
 import { loadEpisodes } from "../../lib/content.server";
@@ -63,7 +64,7 @@ export default function ShowsPage({ loaderData }: Route.ComponentProps): React.R
           </div>
           <div className="shows-catalog__block">
             <WallHead title="Other Works" />
-            <ShowsStrip shows={otherWorks} />
+            <ShowsStrip shows={otherWorks} append={<FaceLikeTheSunCard />} />
           </div>
         </div>
       </Section>

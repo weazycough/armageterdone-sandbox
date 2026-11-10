@@ -86,9 +86,12 @@ function ShowCardBody({
 export function ShowsStrip({
   blank = false,
   shows,
+  append,
 }: {
   blank?: boolean;
   shows?: ShowsStripItem[];
+  /** Extra node after the cards (Other Works full-width feature). */
+  append?: React.ReactNode;
 } = {}): React.ReactNode {
   const items: ShowsStripItem[] =
     shows ??
@@ -145,6 +148,7 @@ export function ShowsStrip({
           </SmartLink>
         );
       })}
+      {append}
     </div>
   );
 }

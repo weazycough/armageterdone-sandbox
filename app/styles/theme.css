@@ -3737,6 +3737,86 @@ p {
 .shows-strip .show-card__body {
   grid-area: body;
 }
+/* Full-width FaceLikeTheSun card under the Other Works row. */
+.shows-catalog .show-card--wide {
+  grid-column: 1 / -1;
+}
+.shows-catalog .show-card--wide .show-card__logo--text {
+  /* Full-width column; keep the same cap height as the other titles. */
+  font-size: calc(1.35rem / 0.7);
+}
+.shows-catalog .show-card--wide .show-card__art--logo {
+  width: 128px;
+  height: 128px;
+  border-radius: 0;
+  object-fit: contain;
+  background: none;
+  justify-self: start;
+}
+.show-card__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3) var(--space-5);
+  list-style: none;
+  margin: var(--space-3) 0 0;
+  padding: 0;
+}
+.show-card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  color: var(--fg-primary);
+  text-decoration: none;
+  min-width: 0;
+}
+.show-card__link:hover {
+  color: var(--accent-on-bg);
+  text-decoration: none;
+}
+.show-card__thumb {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  background: var(--bg-surface);
+  display: block;
+}
+.show-card__thumb--contain {
+  object-fit: contain;
+  padding: 6px;
+  box-sizing: border-box;
+}
+.show-card__link-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.05rem;
+  min-width: 0;
+}
+.show-card__link-label {
+  font-size: 0.88rem;
+  line-height: 1.3;
+}
+.show-card__link-note {
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-secondary);
+}
+.show-card__link:hover .show-card__link-note {
+  color: var(--accent-on-bg);
+}
+@media (max-width: 767px) {
+  .shows-catalog .show-card--wide .show-card__art--logo {
+    width: 88px;
+    height: 88px;
+  }
+  .show-card__links {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-3);
+  }
+}
 .signal-rule {
   border: 0;
   height: 4px;
