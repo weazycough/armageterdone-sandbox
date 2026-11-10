@@ -4181,7 +4181,7 @@ h2 {
 }
 @media (min-width: 900px) {
   .mission-hero--v4v .mission-hero__v4v {
-    grid-template-columns: 21rem minmax(11rem, 14rem) minmax(0, 1fr);
+    grid-template-columns: 15rem minmax(11rem, 14rem) minmax(0, 1fr);
     align-items: center;
   }
   /* Desktop: buttons sit between the art and the copy. */
@@ -4394,17 +4394,17 @@ h2 {
   -webkit-mask-image: linear-gradient(to bottom, transparent 0%, transparent 3%, rgba(0,0,0,.15) 10%, rgba(0,0,0,.4) 22%, rgba(0,0,0,.75) 36%, #000 52%, #000 100%);
   mask-image: linear-gradient(to bottom, transparent 0%, transparent 3%, rgba(0,0,0,.15) 10%, rgba(0,0,0,.4) 22%, rgba(0,0,0,.75) 36%, #000 52%, #000 100%);
 }
-/* V4V: larger mascot art. */
-.mission-hero__v4v-art { max-width: 19rem; }
-@media (min-width: 900px) { .mission-hero__v4v-art { max-width: 21rem; } }
+/* V4V: mascot art ~28% smaller than the 19/21/16rem sizes. */
+.mission-hero__v4v-art { max-width: 14rem; }
+@media (min-width: 900px) { .mission-hero__v4v-art { max-width: 15rem; } }
 /* V4V: wordmark fills copy column; already one-line letterforms. */
 @media (min-width: 900px) {
   .mission-hero__v4v-mark { max-width: min(100%, 34rem); }
   .mission-hero--v4v .mission-hero__v4v { column-gap: 2rem; }
 }
 @media (min-width: 900px) and (max-width: 1199px) {
-  .mission-hero--v4v .mission-hero__v4v { grid-template-columns: 16rem minmax(10rem, 12rem) minmax(0, 1fr); }
-  .mission-hero__v4v-art { max-width: 16rem; }
+  .mission-hero--v4v .mission-hero__v4v { grid-template-columns: 11.5rem minmax(10rem, 12rem) minmax(0, 1fr); }
+  .mission-hero__v4v-art { max-width: 11.5rem; }
 }
 /* V4V: raise art and pull the bottom rule up with it (desktop). */
 @media (min-width: 900px) {
