@@ -3649,21 +3649,29 @@ p {
   -webkit-mask-repeat: no-repeat;
   -webkit-mask-position: left center;
 }
-/* Title fallback when a show has no mask logo (Other Works cards). */
+/* Title fallback when a show has no mask logo (Other Works cards).
+   Bebas cap height is ~0.70em; the Big Three wordmarks fill their 1.35rem
+   box, so the text is sized so its caps match that height. */
 .show-card__logo--text {
   background: none;
   mask-image: none;
   -webkit-mask-image: none;
   height: auto;
   font-family: var(--font-title);
-  font-size: 1.35rem;
+  font-size: calc(1.35rem / 0.7); /* 30.857px; cap height ≈ 1.35rem / 21.6px */
   font-weight: 400;
   letter-spacing: 0.03em;
-  line-height: 1;
+  line-height: 0.7; /* box stays 1.35rem so the 16px gap under the title matches */
   color: var(--accent-on-bg);
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  overflow: visible; /* hidden clips cap glyphs; titles shrink to fit instead */
+}
+/* In a tight 3-col strip, shrink so the longest title stays on one line. */
+.shows-catalog .show-card {
+  container-type: inline-size;
+}
+.shows-catalog .show-card__logo--text {
+  font-size: min(calc(1.35rem / 0.7), calc(100cqi / 8.2));
 }
 .show-card--soon {
   cursor: default;
@@ -3678,6 +3686,7 @@ p {
    (default align-items:center drops the shorter body and opens a visual gap). */
 .shows-catalog .shows-strip .show-card {
   align-items: start;
+  align-content: start; /* don't stretch rows when 3-col cards share a tall neighbor */
 }
 :root:not([data-theme="light"]) .show-card__logo {
   background: var(--accent-on-bg);
