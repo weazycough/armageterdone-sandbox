@@ -47,8 +47,10 @@ export function SiteFooter({ year }: { year: number }): React.ReactNode {
       <div className="container">
         <div className="site-footer__cols">
           <div>
-            <SiteBrand className="site-brand--footer" />
-            <p className="site-footer__motto">THINK OUTSIDE THE CAGE</p>
+            <div className="site-footer__brand-stack">
+              <SiteBrand className="site-brand--footer" />
+              <p className="site-footer__motto">THINK OUTSIDE THE CAGE</p>
+            </div>
             <div className="site-footer__socials" aria-label="Social channels">
               {SOCIALS.map((s) => (
                 <a key={s.label} href={s.href} rel="noopener" aria-label={s.label} title={s.label}>

@@ -1544,9 +1544,17 @@ p {
   color: var(--accent-on-bg);
   text-decoration: none;
 }
+.site-footer__brand-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* tagline ink centered under the wordmark */
+  width: fit-content; /* shrink to the wordmark; stay left in the column */
+}
 .site-footer__motto {
   margin: 0.3rem 0 0; /* ~5px under the wordmark */
+  margin-inline-end: -0.03em; /* cancel trailing letter-spacing so ink, not the box, is centered */
   padding: 0;
+  width: max-content;
   font-family: var(--font-title); /* Bebas Neue, unstretched */
   font-weight: 400;
   font-style: normal;
