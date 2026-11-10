@@ -5333,13 +5333,13 @@ h2 {
     container-name: shows-pitch;
   }
   .shows-hero__center .shows-hero__pitch-headline {
-    /* Fit "EVERY SHOW • EVERY PROJECT" across NETWORK ink width (advance ≈9.51×). */
+    /* Fit "EVERY SHOW • EVERY PROJECT" to the yellow rule's ink ends. */
     font-size: calc(var(--shows-network-ink-width) / 9.51);
     line-height: 0.95;
   }
   .shows-hero__center .shows-hero__pitch-line {
-    /* Match NETWORK's optical translateX (em is NETWORK size, not headline size). */
-    transform: translateX(calc(var(--shows-network-size) * -0.0235));
+    /* Cancel trailing letter-spacing after the last glyph. */
+    margin-inline-end: -0.01em;
   }
 }
 
