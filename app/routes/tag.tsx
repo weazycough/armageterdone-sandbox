@@ -3,7 +3,7 @@
 // belongs to is worked out in app/lib/shows.ts.
 
 import type * as React from "react";
-import { data, Link } from "react-router";
+import { data } from "react-router";
 import type { Route } from "./+types/tag";
 import { EpisodeWall } from "../components/episode-wall";
 import { Pagination } from "../components/pagination";
@@ -57,7 +57,7 @@ export default function Tag({ loaderData }: Route.ComponentProps): React.ReactNo
             <span className="ep-wall__rule" aria-hidden="true" />
           </div>
           <p className="muted ep-wall__count">
-            <span className="ep-wall__kicker">{show.kicker}</span> · {show.desc} <Link to="/episodes/">All episodes →</Link>
+            <span className="ep-wall__kicker">{show.kicker}</span> · {show.desc}
           </p>
           <EpisodeWall
             featured={page === 1 ? episodes[0] : undefined}
