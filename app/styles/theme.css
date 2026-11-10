@@ -3649,6 +3649,31 @@ p {
   -webkit-mask-repeat: no-repeat;
   -webkit-mask-position: left center;
 }
+/* Title fallback when a show has no mask logo (Other Works cards). */
+.show-card__logo--text {
+  background: none;
+  mask-image: none;
+  -webkit-mask-image: none;
+  height: auto;
+  font-family: var(--font-title);
+  font-size: 1.35rem;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  line-height: 1;
+  color: var(--accent-on-bg);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.show-card--soon {
+  cursor: default;
+}
+.shows-catalog__block + .shows-catalog__block {
+  margin-top: var(--space-4);
+}
+.shows-catalog .shows-strip {
+  padding-top: 0;
+}
 :root:not([data-theme="light"]) .show-card__logo {
   background: var(--accent-on-bg);
 }
@@ -3656,6 +3681,26 @@ p {
   :root:not([data-theme]) .show-card__logo {
     background: var(--fg-primary);
   }
+}
+/* Text titles must not inherit the mask-logo background (yellow-on-yellow on dark). */
+:root:not([data-theme="light"]) .show-card__logo--text {
+  background: none;
+  color: var(--accent-on-bg);
+}
+:root[data-theme="light"] .show-card__logo--text,
+:root:not([data-theme]) .show-card__logo--text {
+  background: none;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) .show-card__logo--text {
+    color: var(--fg-primary);
+  }
+}
+:root[data-theme="light"] .show-card__logo--text {
+  color: var(--fg-primary);
+}
+:root[data-theme="dark"] .show-card__logo--text {
+  color: var(--accent-on-bg);
 }
 @media (max-width: 767px) {
   .shows-strip {
