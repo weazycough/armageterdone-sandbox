@@ -62,7 +62,7 @@ export default function ShowsPage({ loaderData }: Route.ComponentProps): React.R
             <WallHead title="The Big Three" />
             <ShowsStrip />
           </div>
-          <div className="shows-catalog__block shows-catalog__works">
+          <div className="shows-catalog__block">
             <WallHead title="Other Works" />
             <ShowsStrip shows={otherWorks} append={<FaceLikeTheSunCard />} />
           </div>
