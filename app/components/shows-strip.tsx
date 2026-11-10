@@ -90,7 +90,7 @@ export function ShowsStrip({
 }: {
   blank?: boolean;
   shows?: ShowsStripItem[];
-  /** Extra node after the cards (Other Works full-width feature). */
+  /** Extra node after the cards (Other Works FaceLikeTheSun card). */
   append?: React.ReactNode;
 } = {}): React.ReactNode {
   const items: ShowsStripItem[] =

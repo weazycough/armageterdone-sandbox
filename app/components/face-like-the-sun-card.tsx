@@ -1,5 +1,5 @@
-// face-like-the-sun-card.tsx — full-width Other Works card for Gonz's
-// FaceLikeTheSun work (YouTube, site, and the Inhuman collaboration).
+// face-like-the-sun-card.tsx — Other Works card for Gonz's FaceLikeTheSun
+// work (YouTube, site, and the Inhuman collaboration).
 
 import type * as React from "react";
 import { asset } from "../lib/asset";
@@ -12,7 +12,7 @@ const LINKS: { href: string; label: string; note?: string; art: string; fit?: "c
   {
     href: "https://youtube.com/@facelikethesun?si=xGgwu6XmwoGWYCAr",
     label: "YouTube Channel",
-    art: "images/show-facelikethesun.webp",
+    art: "images/youtube-play.svg",
     fit: "contain",
   },
   {
@@ -30,14 +30,14 @@ const LINKS: { href: string; label: string; note?: string; art: string; fit?: "c
 
 export function FaceLikeTheSunCard(): React.ReactNode {
   return (
-    <div className="show-card show-card--wide" aria-label="FaceLikeTheSun">
+    <div className="show-card" aria-label="FaceLikeTheSun">
       <span className="show-card__logo show-card__logo--text">FaceLikeTheSun</span>
       <img
-        className="show-card__art show-card__art--logo"
+        className="show-card__art"
         src={asset("images/show-facelikethesun.webp")}
         alt=""
-        width={128}
-        height={128}
+        width={96}
+        height={96}
         loading="lazy"
         decoding="async"
       />
@@ -59,8 +59,8 @@ export function FaceLikeTheSunCard(): React.ReactNode {
                   }
                   src={asset(link.art)}
                   alt=""
-                  width={48}
-                  height={48}
+                  width={36}
+                  height={36}
                   loading="lazy"
                   decoding="async"
                 />

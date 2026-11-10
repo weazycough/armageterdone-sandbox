@@ -3737,34 +3737,31 @@ p {
 .shows-strip .show-card__body {
   grid-area: body;
 }
-/* Full-width FaceLikeTheSun card under the Other Works row. */
-.shows-catalog .show-card--wide {
-  grid-column: 1 / -1;
+/* Other Works: 4 equal columns on desktop, 2x2 at tablet, stacked on mobile.
+   Same overall width as The Big Three row (do not change the 3-col home strip). */
+@media (min-width: 768px) {
+  .shows-catalog__works .shows-strip {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
-.shows-catalog .show-card--wide .show-card__logo--text {
-  /* Full-width column; keep the same cap height as the other titles. */
-  font-size: calc(1.35rem / 0.7);
-}
-.shows-catalog .show-card--wide .show-card__art--logo {
-  width: 128px;
-  height: 128px;
-  border-radius: 0;
-  object-fit: contain;
-  background: none;
-  justify-self: start;
+@media (min-width: 1280px) {
+  .shows-catalog__works .shows-strip {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 .show-card__links {
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
-  gap: var(--space-3) var(--space-5);
+  gap: 0.4rem;
   list-style: none;
   margin: var(--space-3) 0 0;
   padding: 0;
 }
 .show-card__link {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 0.65rem;
+  gap: 0.5rem;
   color: var(--fg-primary);
   text-decoration: none;
   min-width: 0;
@@ -3774,8 +3771,8 @@ p {
   text-decoration: none;
 }
 .show-card__thumb {
-  width: 48px;
-  height: 48px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   object-fit: cover;
   flex-shrink: 0;
@@ -3784,7 +3781,7 @@ p {
 }
 .show-card__thumb--contain {
   object-fit: contain;
-  padding: 6px;
+  padding: 5px;
   box-sizing: border-box;
 }
 .show-card__link-text {
@@ -3794,28 +3791,17 @@ p {
   min-width: 0;
 }
 .show-card__link-label {
-  font-size: 0.88rem;
-  line-height: 1.3;
+  font-size: 0.75rem;
+  line-height: 1.25;
 }
 .show-card__link-note {
-  font-size: 0.7rem;
+  font-size: 0.62rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--fg-secondary);
 }
 .show-card__link:hover .show-card__link-note {
   color: var(--accent-on-bg);
-}
-@media (max-width: 767px) {
-  .shows-catalog .show-card--wide .show-card__art--logo {
-    width: 88px;
-    height: 88px;
-  }
-  .show-card__links {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-3);
-  }
 }
 .signal-rule {
   border: 0;
