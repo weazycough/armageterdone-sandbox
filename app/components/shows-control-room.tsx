@@ -167,7 +167,6 @@ export function ShowsControlRoom({ tiles }: { tiles: NetworkShowTile[] }): React
               </p>
               <span className="shows-hero__pitch-rule" aria-hidden="true" />
               <p className="shows-hero__pitch-body">{SHOWS_HERO_PITCH.description}</p>
-              <span className="shows-hero__pitch-rule" aria-hidden="true" />
             </aside>
             {/* ≥900: under pitch. &lt;900 uses --mid instead. */}
             <img

@@ -5317,14 +5317,8 @@ h2 {
     max-width: 90%;
     height: auto;
     aspect-ratio: 1;
-    /* Prior 0.75rem + former 0.1rem pitch margin + two rules' 0.35rem→4px thinning
-       + headline line-box shrink (8.9→9.51 divisor) so the bird stays put. */
-    margin: calc(
-      0.85rem
-      + 2 * (0.35rem - var(--hero-accent-rule-height))
-      - var(--shows-network-headline-pull)
-      + var(--shows-network-ink-width) * 0.95 * (1 / 8.9 - 1 / 9.51)
-    ) 0 0;
+    /* Tight gap under the description (bottom pitch rule removed). */
+    margin: 0.75rem 0 0;
     z-index: 1;
     pointer-events: none;
     flex: 0 0 auto;
