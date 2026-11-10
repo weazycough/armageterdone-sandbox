@@ -11,12 +11,11 @@ import { PreviewForm } from "../components/preview-form";
 import { MissionHeroBody } from "../components/mission-hero-body";
 import { MissionHeroFloor } from "../components/mission-hero-floor";
 import { V4vWordmark } from "../components/v4v-wordmark";
-import { buttonVariants } from "../components/ui/button";
+import { V4V_EYEBROW, V4vActions, V4vDescription } from "../components/v4v-copy";
 import { Input } from "../components/ui/input";
 import { asset } from "../lib/asset";
 import { loadEpisodes } from "../lib/content.server";
 import { ART_RIBBON } from "../lib/fan-art";
-import { cn } from "../lib/utils";
 
 export function loader() {
   const episodes = loadEpisodes();
@@ -68,32 +67,14 @@ export default function Home({ loaderData }: Route.ComponentProps): React.ReactN
               loading="lazy"
             />
             <div className="mission-hero__v4v-copy">
-              <span className="mission-hero__v4v-eyebrow">No advertisers. Just producers</span>
+              <span className="mission-hero__v4v-eyebrow">{V4V_EYEBROW}</span>
               <h2 className="mission-hero__v4v-heading">
                 <span className="sr-only">Value for Value</span>
                 <V4vWordmark className="mission-hero__v4v-mark" decorative />
               </h2>
-              <p>
-                Canary Cry doesn’t take corporate ad money. It runs on producers: the
-                listeners who give back with <strong>time, talent, or treasure</strong>. Patreon, one-time
-                gifts, Cage Rattler Coffee, art, and Speak Pipe calls all count.
-              </p>
+              <V4vDescription />
             </div>
-            <div className="mission-hero__v4v-actions">
-              <Link
-                className={cn(buttonVariants(), "mission-hero__give")}
-                to="/support/"
-              >
-                $ Give
-              </Link>
-              <a
-                className={cn(buttonVariants({ variant: "blue" }), "mission-hero__patreon")}
-                href="https://www.patreon.com/ccnt"
-                rel="noopener"
-              >
-                Patreon
-              </a>
-            </div>
+            <V4vActions className="mission-hero__v4v-actions" />
           </div>
         </div>
       </section>

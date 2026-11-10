@@ -3821,6 +3821,195 @@ p {
     gap: var(--space-3);
   }
 }
+
+/* ---------- Shows page: Value for Value band under Other Works ---------- */
+/* Always-dark full-bleed band. Blue glow rises from the bottom; the V4V
+   mark on the right is sized large so it slightly spills past the top edge. */
+.shows-page > .section:has(+ .shows-v4v) {
+  /* Leave a short landing strip for the mark to spill into, not a 4rem gap. */
+  padding-bottom: 1.75rem;
+}
+.shows-v4v {
+  --bg-canvas: #0a0a0a;
+  --bg-surface: #141414;
+  --fg-primary: #f5efe2;
+  --fg-secondary: #c9c2b3;
+  --fg-tertiary: #8b867a;
+  --fg-inverse: #0a0a0a;
+  --accent-on-bg: var(--accent);
+  --brand-mark: var(--accent);
+  position: relative;
+  isolation: isolate;
+  overflow: visible;
+  color: var(--fg-primary);
+  color-scheme: dark;
+  background: var(--bg-canvas);
+}
+.shows-v4v::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 110% 90% at 50% 120%, rgba(30, 74, 173, 0.95), transparent 62%),
+    linear-gradient(
+      180deg,
+      transparent 0%,
+      rgba(30, 74, 173, 0.18) 32%,
+      rgba(30, 74, 173, 0.55) 68%,
+      rgba(20, 55, 140, 0.88) 100%
+    );
+}
+.shows-v4v__inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 1.15rem 1.75rem;
+  align-items: center;
+  /* padding-block only — keep .container's horizontal inset. */
+  padding-block: 1.5rem 1.35rem;
+}
+.shows-v4v__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  max-width: 14rem;
+  width: 100%;
+}
+.shows-v4v__copy {
+  min-width: 0;
+}
+.shows-v4v__heading {
+  margin: 0 0 0.55rem;
+  max-width: 100%;
+  line-height: 0;
+}
+.shows-v4v__wordmark {
+  display: block;
+  width: 100%;
+  max-width: min(100%, 28rem);
+  height: auto;
+  aspect-ratio: 367.12 / 55.17;
+}
+.shows-v4v__copy p {
+  margin: 0;
+  max-width: 36rem;
+  color: var(--fg-secondary);
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+.shows-v4v__copy strong {
+  color: var(--fg-primary);
+}
+.shows-v4v__art-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 14rem;
+  height: 5.5rem;
+  justify-self: end;
+  pointer-events: none;
+}
+.shows-v4v__art {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: auto;
+  display: block;
+}
+@media (min-width: 768px) {
+  .shows-v4v__inner {
+    grid-template-columns: minmax(10rem, 13rem) minmax(0, 1fr);
+    gap: 1.25rem 2rem;
+    padding-block: 1.35rem 1.5rem;
+  }
+  .shows-v4v__actions {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .shows-v4v__copy {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  /* Mark sits under the copy, right-aligned — 2-col is too tight for overlap. */
+  .shows-v4v__art-wrap {
+    grid-column: 2;
+    grid-row: 2;
+    justify-self: end;
+    align-self: end;
+    max-width: 16rem;
+    width: 16rem;
+    height: 5.5rem;
+    margin-top: -0.5rem;
+  }
+}
+@media (min-width: 1024px) {
+  .shows-v4v__inner {
+    grid-template-columns: 13rem minmax(18rem, 1fr) minmax(16rem, 22rem);
+    align-items: center;
+    padding-block: 0.7rem 1.35rem;
+  }
+  .shows-v4v__actions {
+    grid-column: 1;
+    grid-row: 1;
+    max-width: 13rem;
+  }
+  .shows-v4v__copy {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .shows-v4v__art-wrap {
+    grid-column: 3;
+    grid-row: 1;
+    justify-self: end;
+    align-self: stretch;
+    max-width: 22rem;
+    width: 100%;
+    height: auto;
+    min-height: 100%;
+    margin-top: 0;
+  }
+  .shows-v4v__art {
+    /* Pull the mark up so it slightly crosses the band's top edge. */
+    top: -2.75rem;
+    bottom: auto;
+  }
+}
+@media (min-width: 1280px) {
+  .shows-v4v__inner {
+    grid-template-columns: 13rem minmax(20rem, 1fr) minmax(22rem, 30rem);
+    padding-block: 0.65rem 1.35rem;
+  }
+  .shows-v4v__art-wrap {
+    max-width: 30rem;
+  }
+  .shows-v4v__art {
+    top: auto;
+    bottom: 0;
+    /* 30rem-wide mark is taller than the compact band, so it spills naturally. */
+  }
+}
+@media (max-width: 767px) {
+  .shows-v4v__inner {
+    justify-items: start;
+    padding-block: 1.5rem 1.25rem;
+  }
+  .shows-v4v__actions {
+    margin-inline: 0;
+    max-width: 12rem;
+  }
+  .shows-v4v__wordmark {
+    max-width: 22rem;
+  }
+  .shows-v4v__art-wrap {
+    justify-self: end;
+    max-width: 14rem;
+    height: 5.5rem;
+    margin-top: 0.15rem;
+  }
+}
+
 .signal-rule {
   border: 0;
   height: 4px;
