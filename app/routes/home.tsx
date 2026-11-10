@@ -74,10 +74,9 @@ export default function Home({ loaderData }: Route.ComponentProps): React.ReactN
                 <V4vWordmark className="mission-hero__v4v-mark" decorative />
               </h2>
               <p>
-                Canary Cry doesn&apos;t take corporate ad money. The show runs on producers —
-                listeners who return value with their <strong>time, talent, or treasure</strong> for
-                the value the show puts out. Patreon, one-time gifts, Cage Rattler Coffee, art
-                submissions, Speak Pipe calls — they all count.
+                Canary Cry doesn’t take corporate ad money. It runs on producers: the
+                listeners who give back with time, talent, or treasure. Patreon, one-time
+                gifts, Cage Rattler Coffee, art, and Speak Pipe calls all count.
               </p>
             </div>
             <div className="mission-hero__v4v-actions">
