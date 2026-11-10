@@ -142,9 +142,13 @@ describe("Shows hero, Other Works, and V4V", () => {
 
     expect(css).toContain("shows-catalog__works");
     expect(css).toContain("shows-v4v__kicker");
+    expect(css.includes("white-space:nowrap") || css.includes("white-space: nowrap")).toBe(
+      true,
+    );
     expect(
-      css.includes("clamp(1.65rem, 2.4vw, 2.25rem)") ||
-        css.includes("clamp(1.65rem,2.4vw,2.25rem)"),
+      css.includes("100cqi / 11.56") ||
+        css.includes("100cqi/11.56") ||
+        css.includes("8.65052cqi"),
     ).toBe(true);
     expect(
       css.includes("shows-v4v::after") || css.includes("shows-v4v:after"),

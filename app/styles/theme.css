@@ -3831,6 +3831,10 @@ main:has(.shows-v4v) + .site-footer {
 }
 .shows-v4v__brand {
   min-width: 0;
+  width: 100%;
+  max-width: min(100%, 22rem);
+  container-type: inline-size;
+  container-name: v4v-brand;
 }
 .shows-v4v__heading {
   margin: 0;
@@ -3840,7 +3844,6 @@ main:has(.shows-v4v) + .site-footer {
 .shows-v4v__wordmark {
   display: block;
   width: 100%;
-  max-width: min(100%, 22rem);
   height: auto;
   aspect-ratio: 367.12 / 55.17;
 }
@@ -3848,10 +3851,13 @@ main:has(.shows-v4v) + .site-footer {
   margin: 0.45rem 0 0;
   font-family: var(--font-title);
   font-weight: 400;
-  font-size: clamp(1.65rem, 2.4vw, 2.25rem);
+  /* Bebas 400 + 0.03em tracking: this line measures ~11.551em. Size it
+     to the wordmark (the brand container) so it stays on one line. */
+  font-size: calc(100cqi / 11.56);
   letter-spacing: 0.03em;
   line-height: 1;
   color: #fff;
+  white-space: nowrap;
 }
 .shows-v4v__copy {
   min-width: 0;
@@ -3883,7 +3889,7 @@ main:has(.shows-v4v) + .site-footer {
     border-left: 1px solid var(--line-strong);
     padding-left: 2rem;
   }
-  .shows-v4v__wordmark {
+  .shows-v4v__brand {
     max-width: min(100%, 26rem);
   }
   .shows-v4v__actions {
@@ -3899,8 +3905,8 @@ main:has(.shows-v4v) + .site-footer {
     justify-self: start;
     max-width: 14rem;
   }
-  .shows-v4v__wordmark {
-    max-width: 22rem;
+  .shows-v4v__brand {
+    max-width: min(100%, 22rem);
   }
 }
 
