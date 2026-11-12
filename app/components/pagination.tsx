@@ -6,7 +6,7 @@
 import type * as React from "react";
 import { Link } from "react-router";
 
-function PagerButton({
+export function PagerButton({
   to,
   className,
   children,

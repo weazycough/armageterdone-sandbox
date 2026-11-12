@@ -1351,6 +1351,208 @@ p {
   font-size: 0.9em;
 }
 
+
+/* ---------- Episode page ---------- */
+.episode-hero {
+  padding: var(--space-7) 0 var(--space-6);
+  text-align: center;
+  background: var(--hero-glow), var(--bg-canvas);
+}
+.episode-hero__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 44rem;
+}
+.episode-hero .eyebrow {
+  text-decoration: none;
+}
+.episode-hero .eyebrow:hover {
+  color: var(--accent-2);
+}
+.episode-hero__title {
+  margin: 0 0 var(--space-3);
+  max-width: 22ch;
+  text-wrap: balance;
+}
+.episode-hero__meta {
+  margin: 0;
+  font-family: var(--font-title);
+  font-weight: 400;
+  font-size: 1.15rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-on-bg);
+}
+/* Same 5px yellow bar and 3px rounded caps as .ep-wall__rule. */
+.episode-hero__rule,
+.episode-notes__rule {
+  display: block;
+  width: 5.5rem;
+  height: 5px;
+  background: var(--accent);
+  border-radius: 3px;
+  flex: none;
+}
+.episode-hero__rule {
+  margin: var(--space-5) 0 0;
+}
+.episode-hero__art {
+  margin-top: var(--space-6);
+  width: min(100%, 22rem);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--bg-surface);
+}
+.episode-hero__art img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+  display: block;
+}
+.episode-player {
+  width: min(100%, 22rem);
+  margin-top: var(--space-4);
+}
+.episode-player audio {
+  width: 100%;
+  display: block;
+}
+.episode-player a {
+  display: inline-block;
+  margin-top: var(--space-2);
+  font-family: var(--font-title);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent-on-bg);
+}
+.episode-pager {
+  width: 100%;
+  padding: var(--space-5) 0 0;
+  gap: var(--space-3);
+}
+.episode-notes {
+  padding: var(--space-7) 0 var(--space-8);
+}
+.episode-notes__head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  max-width: var(--max-w-prose);
+  margin: 0 auto var(--space-6);
+}
+.episode-notes__head h2 {
+  margin: 0;
+  white-space: nowrap;
+}
+.episode-notes .prose {
+  max-width: var(--max-w-prose);
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: var(--fg-primary);
+}
+.episode-notes .prose > div,
+.episode-notes .prose > p {
+  margin: 0 0 0.7rem;
+}
+.episode-notes .prose a {
+  color: var(--accent-on-bg);
+  border-bottom: 1px solid currentColor;
+}
+.episode-notes .prose a:hover {
+  color: var(--accent-2);
+}
+.episode-notes .prose hr {
+  border: 0;
+  height: 5px;
+  width: 5.5rem;
+  background: var(--accent);
+  border-radius: 3px;
+  margin: 1.6rem 0;
+}
+.episode-notes .prose img {
+  margin: var(--space-5) auto;
+  border-radius: var(--radius-sm);
+}
+.episode-notes .prose iframe {
+  width: 100%;
+  border: 0;
+  border-radius: var(--radius-sm);
+}
+.episode-notes .prose ul,
+.episode-notes .prose ol {
+  padding-left: var(--space-5);
+  margin: 0 0 var(--space-5);
+}
+.episode-notes .prose li {
+  margin-bottom: var(--space-2);
+}
+/* Full-width V4V band that meets the footer with no gap. */
+.episode-v4v {
+  background: var(--bg-surface);
+  padding: var(--space-7) 0;
+  border-top: 1px solid var(--line);
+}
+.episode-v4v__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-5);
+}
+.episode-v4v__copy h2 {
+  margin: 0 0 var(--space-3);
+}
+.episode-v4v__copy p {
+  margin: 0;
+  max-width: 36rem;
+  color: var(--fg-secondary);
+}
+.episode-v4v__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+.episode-v4v__actions .mission-hero__give,
+.episode-v4v__actions .mission-hero__patreon {
+  width: auto;
+  min-width: 10rem;
+}
+@media (min-width: 768px) {
+  .episode-v4v__inner {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .episode-hero__art,
+  .episode-player {
+    width: min(100%, 26rem);
+  }
+}
+@media (max-width: 599px) {
+  .episode-hero {
+    padding: var(--space-6) 0 var(--space-5);
+  }
+  .episode-hero__title {
+    max-width: 100%;
+  }
+  .episode-pager .pagination__btn {
+    flex: 1 1 auto;
+  }
+  .episode-v4v__actions {
+    width: 100%;
+  }
+  .episode-v4v__actions .mission-hero__give,
+  .episode-v4v__actions .mission-hero__patreon {
+    width: 100%;
+  }
+}
+main:has(.episode-page) + .site-footer {
+  border-top: 0;
+}
+
 /* Ghost editor cards */
 .kg-embed-card {
   margin: var(--space-6) 0;
