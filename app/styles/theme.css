@@ -304,11 +304,14 @@ p {
   }
 }
 .site-brand--footer {
+  width: 100%;
   margin-bottom: 0; /* tight gap to the tagline is owned by .site-footer__motto */
 }
 .site-brand--footer .site-brand__mark {
-  height: 1.45rem;
-  max-width: 17rem;
+  width: 100%;
+  height: auto;
+  max-width: none;
+  aspect-ratio: 376.56 / 53.04; /* CcWordmark viewBox */
 }
 
 /* ---------- Primary nav (desktop) ---------- */
@@ -1574,23 +1577,35 @@ p {
   }
 }
 .site-footer__brand-stack {
+  /* Wordmark viewBox 376.56 × 53.04; motto advance measured on
+     "THINK OUTSIDE THE CAGE" in Bebas 400 with 0.03em tracking
+     (trailing spacing cancelled). Stack is a container sized to the
+     mark so the tagline scales to the same left/right edges. */
+  --footer-mark-height: 1.45rem;
+  --footer-mark-width: calc(var(--footer-mark-height) * 376.56 / 53.04);
+  --footer-motto-advance: 8.135;
   display: flex;
   flex-direction: column;
-  align-items: center; /* tagline ink centered under the wordmark */
-  width: fit-content; /* shrink to the wordmark; stay left in the column */
+  align-items: stretch;
+  width: var(--footer-mark-width);
+  max-width: 100%;
+  container-type: inline-size;
+  container-name: footer-brand;
 }
 .site-footer__motto {
   margin: 0.3rem 0 0; /* ~5px under the wordmark */
-  margin-inline-end: -0.03em; /* cancel trailing letter-spacing so ink, not the box, is centered */
+  margin-inline-end: -0.03em; /* cancel trailing letter-spacing so ink, not the box, matches the mark */
   padding: 0;
-  width: max-content;
+  width: 100%;
   font-family: var(--font-title); /* Bebas Neue, unstretched */
   font-weight: 400;
   font-style: normal;
-  font-size: 1.2rem;
+  font-size: calc(100cqi / var(--footer-motto-advance));
   letter-spacing: 0.03em;
   line-height: 1;
   text-transform: uppercase;
+  text-align: center;
+  white-space: nowrap;
   color: #fff; /* dark footer */
 }
 :root[data-theme="light"] .site-footer__motto {
