@@ -3913,6 +3913,14 @@ p {
     width: var(--shows-works-art);
     height: var(--shows-works-art);
   }
+  /* One-column grid only: ~25% smaller than the shared cap, still
+     clamped to the text-column width so long titles never overflow. */
+  .shows-catalog__works .shows-strip .show-card__logo--text {
+    font-size: min(
+      calc(1.35rem / 0.7 * 0.75),
+      calc((100cqi - var(--shows-works-art) - var(--shows-works-title-gap)) / 8.1)
+    );
+  }
 }
 
 /* ---------- Shows page: Value for Value band under Other Works ---------- */
