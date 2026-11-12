@@ -28,7 +28,7 @@ describe("Shows hero, Other Projects, and V4V", () => {
     expect(shows).toContain("shows-hero__title-stack");
     expect(shows).toMatch(/<h1 class="shows-hero__network"/);
     expect(shows).toContain("NETWORK");
-    expect(shows).toContain("images/cc-bird-v3.webp");
+    expect(shows).toContain("images/shows-hero-crest.webp");
     expect(shows).toContain("shows-hero__crest");
     // Bird sits above the title block.
     expect(shows.indexOf("shows-hero__crest")).toBeLessThan(shows.indexOf("shows-hero__brand"));

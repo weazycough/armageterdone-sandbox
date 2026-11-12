@@ -24,10 +24,10 @@ export function ShowsControlRoom() {
           <div className="shows-hero__stage">
             <img
               className="shows-hero__crest"
-              src={asset("images/cc-bird-v3.webp")}
+              src={asset("images/shows-hero-crest.webp")}
               alt=""
-              width={800}
-              height={800}
+              width={260}
+              height={258}
               decoding="async"
             />
             <header className="shows-hero__brand">

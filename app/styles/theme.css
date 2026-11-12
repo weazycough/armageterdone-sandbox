@@ -5300,7 +5300,7 @@ h2 {
   width: 6.5rem;
   max-width: 40%;
   height: auto;
-  aspect-ratio: 1;
+  aspect-ratio: 260 / 258; /* shows-hero-crest.webp */
   object-fit: contain;
   /* Gap under the bird, before the title block. */
   margin: 0 auto 0.75rem;
