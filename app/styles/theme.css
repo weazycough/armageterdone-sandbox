@@ -3997,10 +3997,23 @@ h2 {
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
-  border-left: 6px solid var(--accent-on-bg);
-  padding-left: var(--space-4);
+  position: relative;
+  /* 6px bar + original padding, so content stays where the border-left left it. */
+  padding-left: calc(6px + var(--space-4));
   color: var(--fg-primary);
   text-decoration: none;
+}
+/* Vertical accent bar with the same rounded caps as .ep-wall__rule (3px). */
+.ep-wall__feature::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 6px;
+  background: var(--accent-on-bg);
+  border-radius: 3px;
+  pointer-events: none;
 }
 .ep-wall__feature:hover {
   text-decoration: none;
