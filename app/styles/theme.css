@@ -3736,18 +3736,20 @@ p {
   }
 }
 .shows-catalog__works .shows-strip .show-card {
-  grid-template-columns: 7.5rem minmax(0, 1fr);
+  --shows-works-art: 7.5rem;
+  --shows-works-title-gap: 1rem;
+  grid-template-columns: var(--shows-works-art) minmax(0, 1fr);
   grid-template-areas:
     "art logo"
     "art body";
-  column-gap: 1rem;
+  column-gap: var(--shows-works-title-gap);
   row-gap: 0.35rem;
   align-items: start;
 }
 .shows-catalog__works .shows-strip .show-card__art {
   grid-area: art;
-  width: 7.5rem;
-  height: 7.5rem;
+  width: var(--shows-works-art);
+  height: var(--shows-works-art);
   border-radius: var(--radius-sm);
   object-fit: cover;
   background: var(--bg-elevated);
@@ -3760,27 +3762,34 @@ p {
 .shows-catalog__works .shows-strip .show-card__logo,
 .shows-catalog__works .shows-strip .show-card__logo--text {
   grid-area: logo;
-  /* Same cap height as The Big Three wordmarks (1.35rem), then a slight vertical stretch. */
-  font-size: calc(1.35rem / 0.7);
+  /* Same cap height as The Big Three wordmarks (1.35rem), then a slight vertical stretch.
+     Shrink with the text column (card minus art and gap) so the longest titles
+     ('Burning Man Research' ≈ 8.04em) stay on one line. 8.1 leaves a hair of slack. */
+  font-size: min(
+    calc(1.35rem / 0.7),
+    calc((100cqi - var(--shows-works-art) - var(--shows-works-title-gap)) / 8.1)
+  );
   justify-self: start;
+  max-width: 100%;
   transform: scaleY(1.2);
   /* Grow upward from the baseline so the description gap stays clear. */
   transform-origin: left bottom;
   overflow: visible;
-  /* Reserve the 20% upward overflow from scaleY (0.2 × 1.35rem cap box). */
-  margin-top: calc(1.35rem * 0.2);
+  /* Reserve the 20% upward overflow from scaleY; scales with the font size. */
+  margin-top: calc(0.7em * 0.2);
 }
 @media (max-width: 767px) {
   .shows-catalog__works .shows-strip {
     gap: 0;
   }
   .shows-catalog__works .shows-strip .show-card {
-    grid-template-columns: 5.5rem minmax(0, 1fr);
+    --shows-works-art: 5.5rem;
+    grid-template-columns: var(--shows-works-art) minmax(0, 1fr);
   }
   .shows-catalog__works .shows-strip .show-card__art,
   .shows-catalog__works .shows-strip .show-card__art--logo {
-    width: 5.5rem;
-    height: 5.5rem;
+    width: var(--shows-works-art);
+    height: var(--shows-works-art);
   }
 }
 
