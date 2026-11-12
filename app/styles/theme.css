@@ -5294,9 +5294,11 @@ h2 {
   .shows-hero__brand {
     width: var(--shows-mark-width);
     max-width: 100%;
-    /* Clear the scaled NETWORK ink so the tagline sits below it. */
+    /* Clear the scaled NETWORK ink, then pull the tagline up to a tight
+       gap (~half the previous ink-to-ink space) that scales with type size. */
     padding-bottom: calc(
       var(--shows-network-size) * var(--shows-network-lh) * (var(--shows-network-scale-y) - 1)
+      - var(--shows-network-size) * 0.097
     );
   }
   .shows-hero__title-stack {
