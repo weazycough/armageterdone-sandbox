@@ -26,7 +26,10 @@ export function loader({ params }: Route.LoaderArgs) {
   const neighbor = (e: (typeof episodes)[number]) => ({ slug: e.slug, title: e.title });
   return {
     episode,
-    show: show !== undefined ? { slug: show.slug, title: show.title } : null,
+    show:
+      show !== undefined
+        ? { slug: show.slug, title: show.title, logo: show.logo, logoSize: show.logoSize }
+        : null,
     newer: index > 0 ? neighbor(episodes[index - 1]!) : null,
     older: index < episodes.length - 1 ? neighbor(episodes[index + 1]!) : null,
   };
@@ -46,11 +49,23 @@ export default function Episode({ loaderData }: Route.ComponentProps): React.Rea
         <header className="episode-hero">
           <div className="container episode-hero__inner">
             {show ? (
-              <Link className="eyebrow" to={tagPath(show.slug)}>
-                {show.title}
+              <Link
+                className="episode-hero__show"
+                to={tagPath(show.slug)}
+                aria-label={show.title}
+              >
+                <span
+                  className="episode-hero__wordmark"
+                  aria-hidden="true"
+                  style={{
+                    maskImage: `url(${asset(show.logo)})`,
+                    WebkitMaskImage: `url(${asset(show.logo)})`,
+                    aspectRatio: `${String(show.logoSize[0])} / ${String(show.logoSize[1])}`,
+                  }}
+                />
               </Link>
             ) : (
-              <span className="eyebrow">Episode</span>
+              <span className="episode-hero__show-fallback">Episode</span>
             )}
             <h1 className="episode-hero__title">{episode.title}</h1>
             <p className="episode-hero__meta">
