@@ -42,7 +42,7 @@ export function Embed({
     <div className={className} style={style}>
       {url === null ? (
         <div className="embed-facade">
-          <span className="eyebrow eyebrow--no-rule">{service}</span>
+          <span className="eyebrow">{service}</span>
           <button
             className={buttonVariants()}
             type="button"
