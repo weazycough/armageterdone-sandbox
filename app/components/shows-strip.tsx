@@ -1,6 +1,6 @@
 // shows-strip.tsx — the three shows as cards, each linking to its episode
 // list (Ghost index.hbs and page-about-us-mojave.hbs). Also used on the
-// Shows page for The Big Three (default SHOWS) and Other Works (passed in).
+// Shows page for The Main Shows (default SHOWS) and Other Works (passed in).
 
 import type * as React from "react";
 import { Link } from "react-router";

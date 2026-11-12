@@ -1,4 +1,4 @@
-// Shows page: centered hero (wordmark, punch, description, bird — no cards),
+// Shows page: two-column hero (intro stack left, The Main Shows right),
 // Other Works 2×2, and a Shows-only V4V band. Home is unchanged.
 
 import { describe, expect, it } from "vite-plus/test";
@@ -8,7 +8,7 @@ const HOME = "index.html";
 const SHOWS = "shows/index.html";
 
 describe("Shows hero, Other Works, and V4V", () => {
-  it("keeps home unchanged and paints a card-free centered hero", () => {
+  it("keeps home unchanged and paints a two-column Shows hero", () => {
     const home = read(HOME);
     const shows = read(SHOWS);
 
@@ -33,8 +33,18 @@ describe("Shows hero, Other Works, and V4V", () => {
     // Bird sits above the title block.
     expect(shows.indexOf("shows-hero__crest")).toBeLessThan(shows.indexOf("shows-hero__brand"));
     expect(shows).toContain("M.02,26.46C.02,11.76");
+    expect(shows).toContain("shows-hero__layout");
+    expect(shows).toContain("shows-hero__main-shows");
+    expect(shows).toContain("The Main Shows");
+    expect(shows).not.toContain("The Big Three");
+    expect(shows.indexOf("shows-hero__stage")).toBeLessThan(
+      shows.indexOf("shows-hero__main-shows"),
+    );
+    expect(shows.indexOf("The Main Shows")).toBeLessThan(shows.indexOf("Other Works"));
+    expect(home).not.toContain("The Main Shows");
+    expect(home).not.toContain("shows-hero__main-shows");
 
-    // No pyramid / show cards in the hero.
+    // No pyramid / leftover hero tile slots.
     expect(shows).not.toContain("shows-hero__flank");
     expect(shows).not.toContain("shows-hero__center");
     expect(shows).not.toContain("shows-hero__slot--tl");
@@ -48,7 +58,7 @@ describe("Shows hero, Other Works, and V4V", () => {
     expect(shows).not.toContain("shows-hero__desc");
 
     for (const label of [
-      "The Big Three",
+      "The Main Shows",
       "Other Works",
       "Canary Cry News Talk",
       "Canary Cry Radio",
@@ -113,7 +123,7 @@ describe("Shows hero, Other Works, and V4V", () => {
     expect(home).toContain("Patreon, one-time");
   });
 
-  it("styles a compact centered hero, 2×2 works, and ruled V4V band", () => {
+  it("styles a two-column hero, 2×2 works, and ruled V4V band", () => {
     const cssName = read(SHOWS).match(/assets\/(root-[^"]+\.css)/)?.[1];
     expect(cssName).toBeTruthy();
     const css = read(`assets/${cssName}`);
@@ -121,9 +131,13 @@ describe("Shows hero, Other Works, and V4V", () => {
     expect(css).toContain("scaleY(var(--shows-network-scale-y))");
     expect(css).toContain("--shows-network-scale-y:1.3");
     expect(css).toContain("--shows-network-size:clamp(3.16rem, 5.5vw, 5.95rem)");
-    expect(css).toContain("transform-origin:50% 0");
+    expect(css.includes("transform-origin:0 0") || css.includes("transform-origin: 0 0") || css.includes("transform-origin:top left")).toBe(
+      true,
+    );
     expect(css).toContain("shows-hero__stage");
     expect(css).toContain("shows-hero__crest");
+    expect(css).toContain("shows-hero__layout");
+    expect(css).toContain("shows-hero__main-shows");
     expect(css).toContain("aspect-ratio:1");
     expect(css).toContain("object-fit:contain");
     expect(css.includes("padding-block:1.875rem") || css.includes("padding-block: 1.875rem")).toBe(
@@ -146,7 +160,11 @@ describe("Shows hero, Other Works, and V4V", () => {
     expect(css.includes("@media (width>=900px)") || css.includes("@media (min-width: 900px)")).toBe(
       true,
     );
-    expect(css).toContain("text-align:center");
+    expect(
+      css.includes("minmax(0, 1.1fr) minmax(0, 0.9fr)") ||
+        css.includes("minmax(0,1.1fr) minmax(0,0.9fr)") ||
+        css.includes("minmax(0,1.1fr) minmax(0,.9fr)"),
+    ).toBe(true);
 
     expect(css).toContain("shows-catalog__works");
     expect(css).toContain("shows-v4v__kicker");
