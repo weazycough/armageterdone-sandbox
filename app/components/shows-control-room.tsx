@@ -13,7 +13,7 @@ export const SHOWS_HERO_PITCH = {
 /**
  * Shows-page hero: left column is the crest bird, CANARYCRY + NETWORK,
  * punch line and description, all on one centerline; the right column
- * is the three main shows, stacked. Other Works stays below.
+ * is the three main shows, stacked. Other Projects stays below.
  */
 export function ShowsControlRoom() {
   return (

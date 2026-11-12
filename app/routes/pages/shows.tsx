@@ -1,5 +1,5 @@
 // shows.tsx — Canary Cry Network Shows page: hero (wordmark + NETWORK +
-// pitch, with the three main shows in the right column), then Other Works
+// pitch, with the three main shows in the right column), then Other Projects
 // and the Value for Value band.
 
 import type * as React from "react";
@@ -62,7 +62,7 @@ export default function ShowsPage({ loaderData }: Route.ComponentProps): React.R
       <Section>
         <div className="shows-catalog">
           <div className="shows-catalog__block shows-catalog__works">
-            <WallHead title="Other Works" />
+            <WallHead title="Other Projects" />
             <ShowsStrip shows={otherWorks} append={<FaceLikeTheSunCard />} />
           </div>
         </div>

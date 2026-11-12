@@ -1,5 +1,5 @@
 // Shows page: two-column hero (centered intro stack left, three main
-// shows right), Other Works 2×2, and a Shows-only V4V band. Home is unchanged.
+// shows right), Other Projects 2×2, and a Shows-only V4V band. Home is unchanged.
 
 import { describe, expect, it } from "vite-plus/test";
 import { read } from "./dist-files";
@@ -7,7 +7,7 @@ import { read } from "./dist-files";
 const HOME = "index.html";
 const SHOWS = "shows/index.html";
 
-describe("Shows hero, Other Works, and V4V", () => {
+describe("Shows hero, Other Projects, and V4V", () => {
   it("keeps home unchanged and paints a two-column Shows hero", () => {
     const home = read(HOME);
     const shows = read(SHOWS);
@@ -40,7 +40,7 @@ describe("Shows hero, Other Works, and V4V", () => {
     expect(shows.indexOf("shows-hero__stage")).toBeLessThan(
       shows.indexOf("shows-hero__main-shows"),
     );
-    expect(shows.indexOf("shows-hero__main-shows")).toBeLessThan(shows.indexOf("Other Works"));
+    expect(shows.indexOf("shows-hero__main-shows")).toBeLessThan(shows.indexOf("Other Projects"));
     expect(home).not.toContain("shows-hero__main-shows");
 
     // No pyramid / leftover hero tile slots.
@@ -57,7 +57,7 @@ describe("Shows hero, Other Works, and V4V", () => {
     expect(shows).not.toContain("shows-hero__desc");
 
     for (const label of [
-      "Other Works",
+      "Other Projects",
       "Canary Cry News Talk",
       "Canary Cry Radio",
       "Canary Cry Clubhouse",
@@ -84,7 +84,7 @@ describe("Shows hero, Other Works, and V4V", () => {
     expect(shows).toContain("A collection of the shows and projects Basil and Gonz");
   });
 
-  it("lays out Other Works as a 2×2 grid with square covers", () => {
+  it("lays out Other Projects as a 2×2 grid with square covers", () => {
     const shows = read(SHOWS);
     expect(shows).toContain("shows-catalog__works");
     expect(shows).not.toContain("show-card--wide");
