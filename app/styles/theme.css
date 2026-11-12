@@ -1381,7 +1381,7 @@ p {
   width: auto;
   max-width: min(100%, 18rem);
   margin-inline: auto;
-  background: #fff;
+  background: var(--accent);
   mask-size: contain;
   mask-repeat: no-repeat;
   mask-position: center;
