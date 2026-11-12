@@ -1653,22 +1653,107 @@ p {
 }
 
 /* ---------- Pagination ---------- */
+/* Shared by the episode archive and every show tag list. Buttons follow
+   the home/V4V yellow pills (fill, hover, glow, rounded ends); labels and
+   the page counter use Bebas Neue. Disabled first/last controls stay in
+   place but are not links. */
 .pagination {
   display: flex;
+  align-items: center;
   justify-content: center;
-  gap: var(--space-3);
+  flex-wrap: wrap;
+  gap: var(--space-4);
   padding: var(--space-7) 0;
+  row-gap: var(--space-3);
 }
-.pagination a {
-  display: inline-block;
-  padding: var(--space-2) var(--space-4);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-sm);
+.pagination__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-height: 2.75rem; /* 44px tap target */
+  min-width: 2.75rem;
+  padding: 0.65rem 1.5rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-family: var(--font-title);
+  font-weight: 400;
+  font-size: 1.15rem;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-transform: uppercase;
   text-decoration: none;
+  box-shadow: 0 0 18px color-mix(in srgb, var(--accent) 40%, transparent);
+  transition:
+    background 0.15s var(--ease),
+    color 0.15s var(--ease),
+    border-color 0.15s var(--ease),
+    transform 0.15s var(--ease),
+    box-shadow 0.15s var(--ease),
+    opacity 0.15s var(--ease);
 }
-.pagination a:hover {
-  border-color: var(--accent-on-bg);
+.pagination__btn:hover {
+  background: var(--accent-2);
+  color: var(--on-accent);
   text-decoration: none;
+  transform: translateY(-1px);
+}
+.pagination__btn:focus-visible {
+  outline: 2px solid var(--accent-on-bg);
+  outline-offset: 3px;
+}
+.pagination__btn--disabled,
+.pagination__btn[aria-disabled="true"] {
+  background: transparent;
+  color: var(--fg-tertiary);
+  border-color: var(--line-strong);
+  box-shadow: none;
+  opacity: 0.7;
+  cursor: default;
+  pointer-events: none;
+  transform: none;
+}
+.pagination__status {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+}
+/* Same 5px yellow bar and 3px rounded caps as .ep-wall__rule. */
+.pagination__rule {
+  display: block;
+  width: 2.5rem;
+  height: 5px;
+  background: var(--accent);
+  border-radius: 3px;
+  flex: none;
+}
+.pagination .page-number {
+  font-family: var(--font-title);
+  font-weight: 400;
+  font-size: 1.35rem;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--accent-on-bg);
+  white-space: nowrap;
+}
+@media (max-width: 599px) {
+  .pagination {
+    gap: var(--space-3);
+  }
+  .pagination__rule {
+    display: none;
+  }
+  .pagination__btn {
+    padding: 0.6rem 1.15rem;
+    font-size: 1.05rem;
+  }
+  .pagination .page-number {
+    font-size: 1.15rem;
+  }
 }
 
 /* ---------- Pages (static) ---------- */

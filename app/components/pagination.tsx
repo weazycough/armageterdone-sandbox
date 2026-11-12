@@ -1,8 +1,34 @@
 // pagination.tsx — newer/older links between episode list pages (Ghost's
-// {{pagination}} helper).
+// {{pagination}} helper). Shared by the full archive and each show's tag
+// list; the chrome is the site's yellow pills and Bebas labels, but the
+// paths and page math stay the same.
 
 import type * as React from "react";
 import { Link } from "react-router";
+
+function PagerButton({
+  to,
+  className,
+  children,
+}: {
+  /** `null` renders a disabled, non-interactive stand-in so first/last pages keep their layout. */
+  to: string | null;
+  className: string;
+  children: React.ReactNode;
+}): React.ReactNode {
+  if (to === null) {
+    return (
+      <span className={`${className} pagination__btn--disabled`} aria-disabled="true">
+        {children}
+      </span>
+    );
+  }
+  return (
+    <Link className={className} to={to}>
+      {children}
+    </Link>
+  );
+}
 
 export function Pagination({
   page,
@@ -17,19 +43,25 @@ export function Pagination({
   if (pages <= 1) return null;
   return (
     <nav className="pagination" aria-label="Episode pages">
-      {page > 1 && (
-        <Link className="newer-posts" to={pathFor(page - 1)}>
-          ← Newer
-        </Link>
-      )}
-      <span className="page-number">
-        Page {page} of {pages}
+      <PagerButton
+        className="pagination__btn newer-posts"
+        to={page > 1 ? pathFor(page - 1) : null}
+      >
+        ← Newer
+      </PagerButton>
+      <span className="pagination__status">
+        <span className="pagination__rule" aria-hidden="true" />
+        <span className="page-number">
+          Page {page} of {pages}
+        </span>
+        <span className="pagination__rule" aria-hidden="true" />
       </span>
-      {page < pages && (
-        <Link className="older-posts" to={pathFor(page + 1)}>
-          Older →
-        </Link>
-      )}
+      <PagerButton
+        className="pagination__btn older-posts"
+        to={page < pages ? pathFor(page + 1) : null}
+      >
+        Older →
+      </PagerButton>
     </nav>
   );
 }
