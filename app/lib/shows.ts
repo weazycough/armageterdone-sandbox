@@ -122,7 +122,7 @@ export const NETWORK_SHOWS: NetworkShow[] = [
   {
     slug: "basils-bunker",
     title: "Basil's Bunker",
-    desc: null,
+    desc: "Basil's call-in livestream about bunkers, prepping, off-grid life and collapse, all from a Christian angle.",
     href: null,
     art: null,
   },
