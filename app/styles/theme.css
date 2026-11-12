@@ -5065,10 +5065,10 @@ h2 {
 
 
 /* -------------------------------------------------------------------------
-   Shows hero: two columns in the site container. Left: crest bird, then
-   left-aligned CANARYCRY + NETWORK, punch line, and description. Right:
-   The Main Shows (former Big Three) in one column of three. Stacked on
-   tablet/mobile (intro first, then The Main Shows).
+   Shows hero: two columns in the site container. Left: crest bird,
+   CANARYCRY + NETWORK, punch line, and description, all centered on one
+   shared vertical axis. Right: the three main shows in one column.
+   Stacked on tablet/mobile (intro first, then the shows).
    padding-block only so .container inline pad = nav content edges.
    ------------------------------------------------------------------------- */
 .shows-hero .shows-hero__inner {
@@ -5082,25 +5082,25 @@ h2 {
 .shows-hero__stage {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   width: 100%;
   min-width: 0;
   margin-inline: 0;
   overflow: visible;
-  text-align: left;
+  text-align: center;
 }
 
 .shows-hero__brand {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
   gap: 0.3rem;
   width: 100%;
   max-width: 100%;
   min-width: 0;
   margin-inline: 0;
-  text-align: left;
+  text-align: center;
   overflow: visible;
   z-index: 2;
   /* Cap so NETWORK ink width ≈ prior center column; mark tracks 1:1 via stack. */
@@ -5115,11 +5115,11 @@ h2 {
 .shows-hero__title-stack {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   width: max-content;
   max-width: 100%;
   min-width: 0;
-  margin-inline: 0;
+  margin-inline: auto;
 }
 .shows-hero__mark-wrap {
   display: block;
@@ -5147,11 +5147,11 @@ h2 {
   line-height: var(--shows-network-lh);
   letter-spacing: var(--shows-network-tracking);
   text-transform: uppercase;
-  text-align: left;
+  text-align: center;
   color: var(--accent);
   text-shadow: 0 0 22px color-mix(in srgb, var(--accent) 50%, transparent);
   transform: translateX(var(--shows-network-optical-x)) scaleY(var(--shows-network-scale-y));
-  transform-origin: top left;
+  transform-origin: top center;
   white-space: nowrap;
 }
 
@@ -5164,7 +5164,7 @@ h2 {
   width: min(100%, 22rem);
   max-width: 100%;
   min-width: 0;
-  text-align: left;
+  text-align: center;
   color: #f5efe2;
   gap: 0.05rem;
   margin-top: 0.15rem;
@@ -5182,7 +5182,7 @@ h2 {
   line-height: 0.95;
   letter-spacing: 0.01em;
   text-transform: uppercase;
-  text-align: left;
+  text-align: center;
   color: #f5efe2;
   width: 100%;
 }
@@ -5190,7 +5190,7 @@ h2 {
   display: block;
   width: 100%;
   white-space: nowrap;
-  text-align: left;
+  text-align: center;
 }
 .shows-hero__pitch-dot {
   /* Inline-block 1cap strut (baseline = cap bottom); bullet absolutely centered. */
@@ -5233,7 +5233,7 @@ h2 {
   font-size: 0.85rem;
   font-weight: 400;
   line-height: 1.35;
-  text-align: left;
+  text-align: center;
   color: var(--fg-secondary);
   text-wrap: pretty;
   width: 100%;
@@ -5247,7 +5247,7 @@ h2 {
   aspect-ratio: 1;
   object-fit: contain;
   /* Gap under the bird, before the title block. */
-  margin: 0 0 0.75rem;
+  margin: 0 auto 0.75rem;
   pointer-events: none;
 }
 
@@ -5334,7 +5334,7 @@ h2 {
 }
 
 
-/* Two-column Shows hero: intro stack | The Main Shows. */
+/* Two-column Shows hero: centered intro stack | three main shows. */
 .shows-hero__layout {
   display: grid;
   grid-template-columns: 1fr;
@@ -5344,9 +5344,6 @@ h2 {
 }
 .shows-hero__main-shows {
   min-width: 0;
-}
-.shows-hero__main-shows .ep-wall__heading {
-  color: #fff;
 }
 .shows-hero__main-shows .shows-strip {
   display: grid;

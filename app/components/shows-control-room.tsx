@@ -1,6 +1,5 @@
 import { CcWordmark } from "./cc-wordmark";
 import { MissionHeroFloor } from "./mission-hero-floor";
-import { WallHead } from "./episode-wall";
 import { ShowsStrip } from "./shows-strip";
 import { asset } from "../lib/asset";
 
@@ -13,8 +12,8 @@ export const SHOWS_HERO_PITCH = {
 
 /**
  * Shows-page hero: left column is the crest bird, CANARYCRY + NETWORK,
- * punch line and description; the right column is The Main Shows (the
- * former Big Three), stacked in one column. Other Works stays below.
+ * punch line and description, all on one centerline; the right column
+ * is the three main shows, stacked. Other Works stays below.
  */
 export function ShowsControlRoom() {
   return (
@@ -53,7 +52,6 @@ export function ShowsControlRoom() {
             </aside>
           </div>
           <div className="shows-hero__main-shows">
-            <WallHead title="The Main Shows" />
             <ShowsStrip />
           </div>
         </div>

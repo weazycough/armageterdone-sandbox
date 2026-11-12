@@ -1,6 +1,6 @@
 // shows.tsx — Canary Cry Network Shows page: hero (wordmark + NETWORK +
-// pitch, with The Main Shows in the right column), then Other Works and
-// the Value for Value band.
+// pitch, with the three main shows in the right column), then Other Works
+// and the Value for Value band.
 
 import type * as React from "react";
 import type { Route } from "./+types/shows";

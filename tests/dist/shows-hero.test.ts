@@ -1,5 +1,5 @@
-// Shows page: two-column hero (intro stack left, The Main Shows right),
-// Other Works 2×2, and a Shows-only V4V band. Home is unchanged.
+// Shows page: two-column hero (centered intro stack left, three main
+// shows right), Other Works 2×2, and a Shows-only V4V band. Home is unchanged.
 
 import { describe, expect, it } from "vite-plus/test";
 import { read } from "./dist-files";
@@ -35,13 +35,12 @@ describe("Shows hero, Other Works, and V4V", () => {
     expect(shows).toContain("M.02,26.46C.02,11.76");
     expect(shows).toContain("shows-hero__layout");
     expect(shows).toContain("shows-hero__main-shows");
-    expect(shows).toContain("The Main Shows");
+    expect(shows).not.toContain("The Main Shows");
     expect(shows).not.toContain("The Big Three");
     expect(shows.indexOf("shows-hero__stage")).toBeLessThan(
       shows.indexOf("shows-hero__main-shows"),
     );
-    expect(shows.indexOf("The Main Shows")).toBeLessThan(shows.indexOf("Other Works"));
-    expect(home).not.toContain("The Main Shows");
+    expect(shows.indexOf("shows-hero__main-shows")).toBeLessThan(shows.indexOf("Other Works"));
     expect(home).not.toContain("shows-hero__main-shows");
 
     // No pyramid / leftover hero tile slots.
@@ -58,7 +57,6 @@ describe("Shows hero, Other Works, and V4V", () => {
     expect(shows).not.toContain("shows-hero__desc");
 
     for (const label of [
-      "The Main Shows",
       "Other Works",
       "Canary Cry News Talk",
       "Canary Cry Radio",
@@ -131,9 +129,11 @@ describe("Shows hero, Other Works, and V4V", () => {
     expect(css).toContain("scaleY(var(--shows-network-scale-y))");
     expect(css).toContain("--shows-network-scale-y:1.3");
     expect(css).toContain("--shows-network-size:clamp(3.16rem, 5.5vw, 5.95rem)");
-    expect(css.includes("transform-origin:0 0") || css.includes("transform-origin: 0 0") || css.includes("transform-origin:top left")).toBe(
-      true,
-    );
+    expect(
+      css.includes("transform-origin:50% 0") ||
+        css.includes("transform-origin: 50% 0") ||
+        css.includes("transform-origin:top center"),
+    ).toBe(true);
     expect(css).toContain("shows-hero__stage");
     expect(css).toContain("shows-hero__crest");
     expect(css).toContain("shows-hero__layout");
