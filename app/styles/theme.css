@@ -3922,7 +3922,8 @@ main:has(.shows-v4v) + .site-footer {
     justify-items: start;
   }
   .shows-v4v__actions {
-    justify-self: start;
+    justify-self: center;
+    margin-inline: auto;
     max-width: 14rem;
   }
   .shows-v4v__brand {

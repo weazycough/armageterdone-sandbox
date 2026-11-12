@@ -112,7 +112,7 @@ describe("Shows hero, Other Projects, and V4V", () => {
     expect(shows).toContain("mission-hero__patreon");
     expect(shows).toContain('href="/armageterdone-sandbox/support/"');
     expect(shows).toContain("https://www.patreon.com/ccnt");
-    expect(shows).not.toContain("$ Give");
+    expect(shows).toContain("$ Give");
     expect(shows).not.toContain("images/v4v-mark.svg");
     expect(shows).not.toContain("Patreon, one-time");
 
