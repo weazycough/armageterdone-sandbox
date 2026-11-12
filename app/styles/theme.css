@@ -3758,6 +3758,19 @@ p {
   grid-area: logo;
   /* Same cap height as The Big Three wordmarks (1.35rem). */
   font-size: calc(1.35rem / 0.7);
+  /* Shrink to the title ink so scaleX stretches only the letters, not the cell. */
+  width: max-content;
+  justify-self: start;
+  transform-origin: left center;
+  overflow: visible;
+}
+/* Stretch only when the card is wide enough that the longest title still fits
+   after scaleX(1.14) (~419px card: 7.5rem art + 1rem gap + 283px ink). */
+@container (min-width: 26.25rem) {
+  .shows-catalog__works .shows-strip .show-card__logo,
+  .shows-catalog__works .shows-strip .show-card__logo--text {
+    transform: scaleX(1.14);
+  }
 }
 @media (max-width: 767px) {
   .shows-catalog__works .shows-strip {
@@ -5380,6 +5393,10 @@ h2 {
     grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
     gap: 3rem;
     align-items: center;
+  }
+  /* Nudge the three shows down slightly (~20px @1920) without growing the hero. */
+  .shows-hero__main-shows {
+    transform: translateY(clamp(1rem, 1.05vw, 1.5rem));
   }
 }
 

@@ -167,6 +167,16 @@ describe("Shows hero, Other Projects, and V4V", () => {
     ).toBe(true);
 
     expect(css).toContain("shows-catalog__works");
+    expect(
+      css.includes("translateY(clamp(1rem, 1.05vw, 1.5rem))") ||
+        css.includes("translateY(clamp(1rem,1.05vw,1.5rem))"),
+    ).toBe(true);
+    expect(css.includes("scaleX(1.14)")).toBe(true);
+    expect(
+      css.includes("@container (min-width: 26.25rem)") ||
+        css.includes("@container (width>=26.25rem)"),
+    ).toBe(true);
+
     expect(css).toContain("shows-v4v__kicker");
     expect(css.includes("white-space:nowrap") || css.includes("white-space: nowrap")).toBe(
       true,
