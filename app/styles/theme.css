@@ -3756,21 +3756,15 @@ p {
 .shows-catalog__works .shows-strip .show-card__logo,
 .shows-catalog__works .shows-strip .show-card__logo--text {
   grid-area: logo;
-  /* Same cap height as The Big Three wordmarks (1.35rem). */
+  /* Same cap height as The Big Three wordmarks (1.35rem), then a slight vertical stretch. */
   font-size: calc(1.35rem / 0.7);
-  /* Shrink to the title ink so scaleX stretches only the letters, not the cell. */
-  width: max-content;
   justify-self: start;
-  transform-origin: left center;
+  transform: scaleY(1.2);
+  /* Grow upward from the baseline so the description gap stays clear. */
+  transform-origin: left bottom;
   overflow: visible;
-}
-/* Stretch only when the card is wide enough that the longest title still fits
-   after scaleX(1.14) (~419px card: 7.5rem art + 1rem gap + 283px ink). */
-@container (min-width: 26.25rem) {
-  .shows-catalog__works .shows-strip .show-card__logo,
-  .shows-catalog__works .shows-strip .show-card__logo--text {
-    transform: scaleX(1.14);
-  }
+  /* Reserve the 20% upward overflow from scaleY (0.2 × 1.35rem cap box). */
+  margin-top: calc(1.35rem * 0.2);
 }
 @media (max-width: 767px) {
   .shows-catalog__works .shows-strip {
