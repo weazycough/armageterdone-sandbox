@@ -4199,6 +4199,34 @@ h2 {
   gap: var(--space-4) var(--space-3);
   grid-template-columns: repeat(2, 1fr);
 }
+/* Mobile 2-col grid only: page 1 has 15 tiles after the featured card
+   (16 per page, minus the lead), so the last row would have an empty
+   slot. Span the leftover last card and lay it out as a horizontal
+   tile so the image stays the same size as its neighbors. */
+@media (max-width: 599px) {
+  .ep-wall__grid > li:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+  .ep-wall__grid > li:last-child:nth-child(odd) .ep-wall__tile {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "art date"
+      "art title";
+    column-gap: var(--space-3);
+    row-gap: var(--space-1);
+    align-items: start;
+  }
+  .ep-wall__grid > li:last-child:nth-child(odd) .ep-wall__tile img {
+    grid-area: art;
+  }
+  .ep-wall__grid > li:last-child:nth-child(odd) .ep-wall__date {
+    grid-area: date;
+  }
+  .ep-wall__grid > li:last-child:nth-child(odd) .ep-wall__ttitle {
+    grid-area: title;
+  }
+}
 @media (min-width: 600px) {
   .ep-wall__grid {
     grid-template-columns: repeat(3, 1fr);
