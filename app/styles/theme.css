@@ -1503,7 +1503,9 @@ p {
 
 /* ---------- Footer ---------- */
 .site-footer {
-  margin-top: var(--space-9);
+  /* Last section padding is the page's bottom rhythm; a 6rem canvas
+     margin here left an empty band (especially after a colored block). */
+  margin-top: 0;
   background: var(--bg-deep);
   border-top: 1px solid var(--line);
   padding: var(--space-7) 0 var(--space-6);
