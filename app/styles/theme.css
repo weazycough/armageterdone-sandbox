@@ -3671,6 +3671,8 @@ p {
 :root[data-theme="dark"] .show-card__logo--text {
   color: var(--accent-on-bg);
 }
+
+
 @media (max-width: 767px) {
   .shows-strip {
     gap: 0;
@@ -5280,16 +5282,58 @@ h2 {
   pointer-events: none;
 }
 
+/* Below 900px: CANARYCRY, NETWORK, and the tagline share one width — the
+   current wordmark width, not the yellow rule. Title stack is a container
+   sized to the mark; NETWORK and the tagline scale to that width. Reserve
+   room for NETWORK's scaleY so it doesn't overlap the tagline. */
+@media (max-width: 899px) {
+  .shows-hero__stage {
+    --shows-network-size: clamp(3.16rem, 5.5vw, 5.95rem);
+    --shows-mark-width: calc(var(--shows-network-size) * 2.792);
+  }
+  .shows-hero__brand {
+    width: var(--shows-mark-width);
+    max-width: 100%;
+    /* Clear the scaled NETWORK ink so the tagline sits below it. */
+    padding-bottom: calc(
+      var(--shows-network-size) * var(--shows-network-lh) * (var(--shows-network-scale-y) - 1)
+    );
+  }
+  .shows-hero__title-stack {
+    width: 100%;
+    max-width: 100%;
+    container-type: inline-size;
+    container-name: shows-title;
+  }
+  .shows-hero__mark-wrap {
+    width: 100%;
+    min-width: 0;
+  }
+  .shows-hero__mark {
+    width: 100%;
+    max-width: none;
+    height: auto;
+  }
+  .shows-hero__network {
+    /* Same 2.792 advance used on desktop so ink width = the wordmark box. */
+    font-size: calc(100cqw / 2.792);
+  }
+  .shows-hero__pitch-headline {
+    /* Same 9.51 factor as desktop so the tagline ink matches the wordmark. */
+    font-size: calc(var(--shows-mark-width) / 9.51);
+  }
+}
 @media (max-width: 767px) {
   .shows-hero .shows-hero__inner {
     padding-block: 1.55rem;
   }
+  .shows-hero__stage,
   .shows-hero__brand {
     --shows-network-size: clamp(3.16rem, 16.5vw, 4.77rem);
   }
   .shows-hero__mark {
-    /* Mobile: keep a sensible cap (NETWORK is narrower). */
-    width: min(100%, 16rem);
+    width: 100%;
+    max-width: none;
     height: auto;
   }
   .shows-hero__crest {
