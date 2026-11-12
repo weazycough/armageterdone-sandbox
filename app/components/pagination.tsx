@@ -49,12 +49,8 @@ export function Pagination({
       >
         ← Newer
       </PagerButton>
-      <span className="pagination__status">
-        <span className="pagination__rule" aria-hidden="true" />
-        <span className="page-number">
-          Page {page} of {pages}
-        </span>
-        <span className="pagination__rule" aria-hidden="true" />
+      <span className="page-number">
+        Page {page} of {pages}
       </span>
       <PagerButton
         className="pagination__btn older-posts"

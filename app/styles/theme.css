@@ -1754,21 +1754,6 @@ p {
   box-shadow: none;
   opacity: 1;
 }
-.pagination__status {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  min-width: 0;
-}
-/* Same 5px yellow bar and 3px rounded caps as .ep-wall__rule. */
-.pagination__rule {
-  display: block;
-  width: 2.5rem;
-  height: 5px;
-  background: var(--accent);
-  border-radius: 3px;
-  flex: none;
-}
 .pagination .page-number {
   font-family: var(--font-title);
   font-weight: 400;
@@ -1782,9 +1767,6 @@ p {
 @media (max-width: 599px) {
   .pagination {
     gap: var(--space-3);
-  }
-  .pagination__rule {
-    display: none;
   }
   .pagination__btn {
     padding: 0.6rem 1.15rem;
