@@ -20,13 +20,15 @@ export function meta({ loaderData }: Route.MetaArgs): Route.MetaDescriptors {
 }
 
 export default function Episodes({ loaderData }: Route.ComponentProps): React.ReactNode {
-  const { page, pages, total, episodes } = loaderData;
+  const { page, pages, episodes } = loaderData;
   return (
     <>
       <section className="section">
         <div className="container">
           <WallHead title="Episodes" as="h1" />
-          <p className="muted ep-wall__count">{total} episodes, newest first.</p>
+          <p className="muted ep-wall__count">
+            Every episode from Canary Cry News Talk, Canary Cry Radio, and Canary Cry Clubhouse, newest first.
+          </p>
           <EpisodeWall
             featured={page === 1 ? episodes[0] : undefined}
             rest={page === 1 ? episodes.slice(1) : episodes}
