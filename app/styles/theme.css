@@ -2247,21 +2247,56 @@ main:has(.episode-page) + .site-footer {
   color: var(--fg-secondary);
 }
 
-/* ---------- Support page ---------- */
-.support-hero {
-  padding: var(--space-8) 0 var(--space-7);
-  background: var(--hero-glow), var(--bg-canvas);
+/* ---------- Interior page intro (shared BracketHero) ---------- */
+/* Same type language as home / Shows, but a simpler interior header:
+   no corner brackets, no radial glow, no stretched wordmark. */
+.about-hero,
+.support-hero,
+.meetups-hero {
+  padding: var(--space-7) 0 var(--space-6);
+  background: var(--bg-canvas);
   border-bottom: 1px solid var(--line);
 }
-.support-hero__lede {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-size: 1.2rem;
-  line-height: 1.55;
+@media (max-width: 599px) {
+  .about-hero,
+  .support-hero,
+  .meetups-hero {
+    padding: var(--space-6) 0 var(--space-5);
+  }
+}
+.page-intro__inner {
+  text-align: center;
+}
+.page-intro__title {
+  margin: 0 auto;
+  text-wrap: balance;
+}
+.page-intro__rule {
+  display: block;
+  width: 3.25rem;
+  height: var(--hero-accent-rule-height);
+  margin: 0.85rem auto 0;
+  background: var(--accent-on-bg);
+  border-radius: var(--hero-accent-rule-radius);
+}
+.page-intro__lede,
+.about-hero__lede,
+.support-hero__lede,
+.meetups-hero__lede {
+  font-family: var(--font-body);
+  font-style: normal;
+  font-size: 1.05rem;
+  line-height: 1.6;
   color: var(--fg-secondary);
   max-width: 40rem;
-  margin: var(--space-4) auto var(--space-5);
+  margin: var(--space-4) auto 0;
+  text-wrap: pretty;
 }
+.page-intro .page-buttons {
+  margin-top: var(--space-5);
+}
+
+/* ---------- Support page ---------- */
 
 /* Time / Talent / Treasure grid */
 .ttt-grid {
@@ -2437,20 +2472,6 @@ main:has(.episode-page) + .site-footer {
 }
 
 /* ---------- About page ---------- */
-.about-hero {
-  padding: var(--space-8) 0 var(--space-7);
-  background: var(--hero-glow), var(--bg-canvas);
-  border-bottom: 1px solid var(--line);
-}
-.about-hero__lede {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-size: 1.2rem;
-  line-height: 1.55;
-  color: var(--fg-secondary);
-  max-width: 40rem;
-  margin: var(--space-4) auto 0;
-}
 .hosts-grid {
   display: grid;
   gap: var(--space-5);
@@ -2609,20 +2630,6 @@ main:has(.episode-page) + .site-footer {
 }
 
 /* ---------- Meet-ups page ---------- */
-.meetups-hero {
-  padding: var(--space-8) 0 var(--space-7);
-  background: var(--hero-glow), var(--bg-canvas);
-  border-bottom: 1px solid var(--line);
-}
-.meetups-hero__lede {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-size: 1.15rem;
-  line-height: 1.55;
-  color: var(--fg-secondary);
-  max-width: 40rem;
-  margin: var(--space-4) auto var(--space-5);
-}
 
 .meetup-grid {
   display: grid;

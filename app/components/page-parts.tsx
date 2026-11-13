@@ -1,7 +1,7 @@
 // page-parts.tsx — the building blocks the Ghost page templates repeat
-// (page-*.hbs): the heraldic bracket frame, the centred hero, prose sections,
-// button links, producer tiers and feature cards. Class names are the Ghost
-// theme's, so app/styles/theme.css styles them unchanged.
+// (page-*.hbs): the interior page intro, an optional heraldic bracket frame
+// still used on a few custom heroes, prose sections, button links, producer
+// tiers and feature cards. Class names stay stable so theme.css can style them.
 
 import type * as React from "react";
 import { cn } from "../lib/utils";
@@ -32,7 +32,7 @@ export function BracketFrame({
   );
 }
 
-/** The centred, bracket-framed page hero most custom pages open with. */
+/** The centred interior-page intro most custom pages open with. */
 export function BracketHero({
   variant = "about",
   maxWidth,
@@ -53,18 +53,19 @@ export function BracketHero({
   children?: React.ReactNode;
 }): React.ReactNode {
   return (
-    <header className={`${variant}-hero`}>
+    <header className={`${variant}-hero page-intro`}>
       <div className="container">
-        <BracketFrame maxWidth={maxWidth}>
-          <div style={{ padding: "var(--space-3) var(--space-5)", textAlign: "center" }}>
-            <span className="eyebrow">{eyebrow}</span>
-            <h1 style={titleStyle}>{title}</h1>
-            <p className={`${variant}-hero__lede`}>{lede}</p>
-            {children !== undefined && (
-              <p className="page-buttons page-buttons--center">{children}</p>
-            )}
-          </div>
-        </BracketFrame>
+        <div className="page-intro__inner" style={{ maxWidth, margin: "0 auto" }}>
+          <span className="eyebrow">{eyebrow}</span>
+          <h1 className="page-intro__title" style={titleStyle}>
+            {title}
+          </h1>
+          <span className="page-intro__rule" aria-hidden="true" />
+          <p className={`${variant}-hero__lede page-intro__lede`}>{lede}</p>
+          {children !== undefined && (
+            <p className="page-buttons page-buttons--center">{children}</p>
+          )}
+        </div>
       </div>
     </header>
   );
