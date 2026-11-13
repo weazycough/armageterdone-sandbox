@@ -1888,12 +1888,12 @@ main:has(.episode-page) + .site-footer {
   --pager-newer-bg: #ffffff;
   --pager-newer-fg: #0a0a0a;
   --pager-newer-hover: #e8e8e8;
-  --pager-newer-glow: 0 0 16px color-mix(in srgb, #ffffff 28%, transparent);
+  --pager-newer-glow: 0 0 13px color-mix(in srgb, #ffffff 28%, transparent);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  gap: var(--space-4);
+  gap: 0.85rem;
   padding: var(--space-7) 0;
   row-gap: var(--space-3);
 }
@@ -1916,21 +1916,21 @@ main:has(.episode-page) + .site-footer {
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  min-height: 2.75rem; /* 44px tap target */
-  min-width: 2.75rem;
-  padding: 0.65rem 1.5rem;
+  min-height: 2.25rem; /* ~36px; mobile bumps to 40px */
+  min-width: 2.25rem;
+  padding: 0.55rem 1.25rem;
   border: 1px solid transparent;
   border-radius: 999px;
   background: var(--accent);
   color: var(--on-accent);
   font-family: var(--font-title);
   font-weight: 400;
-  font-size: 1.15rem;
+  font-size: 0.95rem;
   letter-spacing: 0.08em;
   line-height: 1;
   text-transform: uppercase;
   text-decoration: none;
-  box-shadow: 0 0 18px color-mix(in srgb, var(--accent) 40%, transparent);
+  box-shadow: 0 0 15px color-mix(in srgb, var(--accent) 40%, transparent);
   transition:
     background 0.15s var(--ease),
     color 0.15s var(--ease),
@@ -1984,7 +1984,7 @@ main:has(.episode-page) + .site-footer {
 .pagination .page-number {
   font-family: var(--font-title);
   font-weight: 400;
-  font-size: 1.35rem;
+  font-size: 1.1rem;
   letter-spacing: 0.08em;
   line-height: 1;
   text-transform: uppercase;
@@ -1996,11 +1996,13 @@ main:has(.episode-page) + .site-footer {
     gap: var(--space-3);
   }
   .pagination__btn {
-    padding: 0.6rem 1.15rem;
-    font-size: 1.05rem;
+    min-height: 2.5rem; /* 40px tap target */
+    min-width: 2.5rem;
+    padding: 0.5rem 0.95rem;
+    font-size: 0.9rem;
   }
   .pagination .page-number {
-    font-size: 1.15rem;
+    font-size: 0.95rem;
   }
 }
 
