@@ -77,7 +77,6 @@ export default function Episode({ loaderData }: Route.ComponentProps): React.Rea
                 </>
               )}
             </p>
-            <span className="episode-hero__rule" aria-hidden="true" />
             <div className="episode-hero__art">
               <img src={art} alt={`Episode artwork for ${episode.title}`} width={600} height={600} />
             </div>

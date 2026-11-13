@@ -1414,7 +1414,6 @@ p {
   color: var(--accent-on-bg);
 }
 /* Same 5px yellow bar and 3px rounded caps as .ep-wall__rule. */
-.episode-hero__rule,
 .episode-notes__rule {
   display: block;
   width: 5.5rem;
@@ -1422,9 +1421,6 @@ p {
   background: var(--accent);
   border-radius: 3px;
   flex: none;
-}
-.episode-hero__rule {
-  margin: var(--space-5) 0 0;
 }
 .episode-hero__art {
   margin-top: var(--space-6);
