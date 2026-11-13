@@ -67,11 +67,13 @@ function ShowCardBody({
         <span className="show-card__logo show-card__logo--text">{item.title}</span>
       )}
       <img
-        className="show-card__art"
+        className={
+          item.slug === "news-talk" ? "show-card__art show-card__art--crest" : "show-card__art"
+        }
         src={artSrc(item.art, blank)}
         alt=""
-        width={96}
-        height={96}
+        width={item.slug === "news-talk" ? 104 : 96}
+        height={item.slug === "news-talk" ? 104 : 96}
         loading={blank ? undefined : "lazy"}
         decoding="async"
       />

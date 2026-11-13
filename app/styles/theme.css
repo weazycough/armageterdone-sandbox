@@ -4040,6 +4040,15 @@ main:has(.episode-page) + .site-footer {
   background: none;
   object-fit: contain;
 }
+/* News Talk crest only: visually 104px (~18% over the 88px slot),
+   scaled from the same center so Radio and Clubhouse stay aligned. */
+.shows-strip .show-card__art--crest {
+  transform: scale(calc(104 / 88));
+  transform-origin: center center;
+}
+.shows-strip .show-card {
+  overflow: visible;
+}
 .shows-strip .show-card__body {
   grid-area: body;
 }
@@ -5645,18 +5654,6 @@ h2 {
   width: 100%;
 }
 
-.shows-hero__crest {
-  display: block;
-  width: 6.5rem;
-  max-width: 40%;
-  height: auto;
-  aspect-ratio: 260 / 258; /* shows-hero-crest.webp */
-  object-fit: contain;
-  /* Gap under the bird, before the title block. */
-  margin: 0 auto 0.75rem;
-  pointer-events: none;
-}
-
 /* Below 900px: CANARYCRY, NETWORK, and the tagline share one width — the
    current wordmark width, not the yellow rule. Title stack is a container
    sized to the mark; NETWORK and the tagline scale to that width. Reserve
@@ -5713,10 +5710,6 @@ h2 {
     max-width: none;
     height: auto;
   }
-  .shows-hero__crest {
-    width: min(24vw, 5.5rem);
-    max-width: 5.5rem;
-  }
   .shows-hero__pitch {
     width: min(100%, 20rem);
   }
@@ -5766,25 +5759,16 @@ h2 {
     /* Cancel trailing letter-spacing after the last glyph. */
     margin-inline-end: -0.01em;
   }
-  .shows-hero__crest {
-    /* Prior hang-crest size under the description (~130px). */
-    width: 8.125rem;
-    max-width: 90%;
-  }
 }
 
 @media (min-width: 1100px) {
   .shows-hero__brand {
     --shows-network-size: clamp(8.5rem, 7.3vw, 8.75rem);
   }
-  .shows-hero__crest {
-    width: 8.125rem;
-    max-width: 90%;
-  }
 }
 
 
-/* Two-column Shows hero: centered intro stack | three main shows. */
+/* Two-column Shows hero: intro stack left, three main shows right. */
 .shows-hero__layout {
   display: grid;
   grid-template-columns: 1fr;
@@ -5840,7 +5824,7 @@ h2 {
     /* 55/45: the left stack needs room for the NETWORK ink width. */
     grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
     gap: 3rem;
-    align-items: center;
+    align-items: start;
   }
   /* Nudge the three shows down slightly (~20px @1920) without growing the hero. */
   .shows-hero__main-shows {

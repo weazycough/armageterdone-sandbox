@@ -28,10 +28,8 @@ describe("Shows hero, Other Projects, and V4V", () => {
     expect(shows).toContain("shows-hero__title-stack");
     expect(shows).toMatch(/<h1 class="shows-hero__network"/);
     expect(shows).toContain("NETWORK");
-    expect(shows).toContain("images/shows-hero-crest.webp");
-    expect(shows).toContain("shows-hero__crest");
-    // Bird sits above the title block.
-    expect(shows.indexOf("shows-hero__crest")).toBeLessThan(shows.indexOf("shows-hero__brand"));
+    expect(shows).not.toContain("images/shows-hero-crest.webp");
+    expect(shows).not.toContain("shows-hero__crest");
     expect(shows).toContain("M.02,26.46C.02,11.76");
     expect(shows).toContain("shows-hero__layout");
     expect(shows).toContain("shows-hero__main-shows");
@@ -135,7 +133,7 @@ describe("Shows hero, Other Projects, and V4V", () => {
         css.includes("transform-origin:top center"),
     ).toBe(true);
     expect(css).toContain("shows-hero__stage");
-    expect(css).toContain("shows-hero__crest");
+    expect(css).not.toContain("shows-hero__crest");
     expect(css).toContain("shows-hero__layout");
     expect(css).toContain("shows-hero__main-shows");
     expect(css).toContain("aspect-ratio:1");

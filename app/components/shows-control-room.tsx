@@ -1,7 +1,6 @@
 import { CcWordmark } from "./cc-wordmark";
 import { MissionHeroFloor } from "./mission-hero-floor";
 import { ShowsStrip } from "./shows-strip";
-import { asset } from "../lib/asset";
 
 export const SHOWS_HERO_PITCH = {
   headline: "EVERY SHOW EVERY PROJECT",
@@ -11,9 +10,9 @@ export const SHOWS_HERO_PITCH = {
 } as const;
 
 /**
- * Shows-page hero: left column is the crest bird, CANARYCRY + NETWORK,
- * punch line and description, all on one centerline; the right column
- * is the three main shows, stacked. Other Projects stays below.
+ * Shows-page hero: left column is CANARYCRY + NETWORK, the punch line
+ * and description, all on one centerline; the right column is the three
+ * main shows, stacked. Other Projects stays below.
  */
 export function ShowsControlRoom() {
   return (
@@ -22,14 +21,6 @@ export function ShowsControlRoom() {
       <div className="container mission-hero__inner shows-hero__inner">
         <div className="shows-hero__layout">
           <div className="shows-hero__stage">
-            <img
-              className="shows-hero__crest"
-              src={asset("images/shows-hero-crest.webp")}
-              alt=""
-              width={260}
-              height={258}
-              decoding="async"
-            />
             <header className="shows-hero__brand">
               <div className="shows-hero__title-stack">
                 <span className="shows-hero__mark-wrap">
