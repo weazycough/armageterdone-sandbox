@@ -166,9 +166,10 @@ describe("Shows hero, Other Projects, and V4V", () => {
 
     expect(css).toContain("shows-catalog__works");
     expect(
-      css.includes("translateY(clamp(1rem, 1.05vw, 1.5rem))") ||
-        css.includes("translateY(clamp(1rem,1.05vw,1.5rem))"),
+      css.includes("align-items:center") || css.includes("align-items: center"),
     ).toBe(true);
+    expect(css).not.toContain("translateY(clamp(1rem, 1.05vw, 1.5rem))");
+    expect(css).not.toContain("translateY(clamp(1rem,1.05vw,1.5rem))");
     expect(css.includes("scaleY(1.2)")).toBe(true);
     expect(css).not.toContain("scaleX(1.14)");
 

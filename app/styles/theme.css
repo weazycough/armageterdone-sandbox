@@ -5824,11 +5824,8 @@ h2 {
     /* 55/45: the left stack needs room for the NETWORK ink width. */
     grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
     gap: 3rem;
-    align-items: start;
-  }
-  /* Nudge the three shows down slightly (~20px @1920) without growing the hero. */
-  .shows-hero__main-shows {
-    transform: translateY(clamp(1rem, 1.05vw, 1.5rem));
+    /* Vertically center the title stack against the three shows. */
+    align-items: center;
   }
 }
 
