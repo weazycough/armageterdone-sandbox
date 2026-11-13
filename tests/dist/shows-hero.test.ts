@@ -91,6 +91,9 @@ describe("Shows hero, Other Projects, and V4V", () => {
     expect(shows).toContain("images/show-basils-bunker.webp");
     expect(shows).toContain("images/show-facelikethesun.webp");
     expect(shows).toContain("FaceLikeTheSun");
+    expect(shows).toContain('href="https://gonzoshimura.com/"');
+    expect(shows).toContain('rel="noopener"');
+    expect(shows).toContain('target="_blank"');
     expect(shows).not.toContain("YouTube Channel");
     expect(shows).not.toContain("GonzoShimura.com");
     expect(shows).not.toContain("images/youtube-play.svg");
