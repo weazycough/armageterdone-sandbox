@@ -2351,9 +2351,30 @@ main:has(.episode-page) + .site-footer {
   min-height: 2.25rem;
   padding: 0.45rem 1rem;
   cursor: pointer;
+  background: transparent;
+  color: var(--fg-primary);
+  border-color: var(--accent);
+  box-shadow: none;
+}
+.search-page__pill:hover {
+  background: color-mix(in srgb, var(--accent) 18%, transparent);
+  color: var(--fg-primary);
+  border-color: var(--accent);
+  text-decoration: none;
+  transform: translateY(-1px);
 }
 .search-page__pill[aria-pressed="true"] {
   cursor: default;
+  background: var(--accent);
+  color: var(--on-accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 15px color-mix(in srgb, var(--accent) 40%, transparent);
+  transform: none;
+}
+.search-page__pill[aria-pressed="true"]:hover {
+  background: var(--accent);
+  color: var(--on-accent);
+  transform: none;
 }
 .search-page__count,
 .search-page__hint {

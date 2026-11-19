@@ -210,11 +210,7 @@ export default function SearchPage(): React.ReactNode {
                 <button
                   key={item.id}
                   type="button"
-                  className={
-                    item.id === filter
-                      ? "pagination__btn search-page__pill"
-                      : "pagination__btn newer-posts search-page__pill"
-                  }
+                  className="pagination__btn search-page__pill"
                   aria-pressed={item.id === filter}
                   onClick={() => update({ show: item.id, page: 1 })}
                 >
@@ -228,11 +224,7 @@ export default function SearchPage(): React.ReactNode {
                   <button
                     key={value}
                     type="button"
-                    className={
-                      value === sort
-                        ? "pagination__btn search-page__pill"
-                        : "pagination__btn newer-posts search-page__pill"
-                    }
+                    className="pagination__btn search-page__pill"
                     aria-pressed={value === sort}
                     onClick={() => update({ sort: value, page: 1 })}
                   >

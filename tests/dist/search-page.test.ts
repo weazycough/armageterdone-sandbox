@@ -14,6 +14,9 @@ describe("search page", () => {
     expect(html).not.toContain("bracket-frame");
     expect(html).not.toMatch(/Antarctica \(\d+\)/);
     expect(html).toContain('href="/armageterdone-sandbox/search/"');
+    expect(html).toMatch(/aria-pressed="true"[^>]*>\s*All\s*</);
+    expect(html).toMatch(/aria-pressed="false"[^>]*>\s*News Talk\s*</);
+    expect(html).toMatch(/aria-pressed="false"[^>]*>\s*FaceLikeTheSun\s*</);
   });
 
   it("ships a trimmed FaceLikeTheSun catalog without the borderline CCNT streams", () => {
