@@ -33,6 +33,7 @@ type CrawlItem = {
   release_date?: string;
   full_item_url?: string;
   image_url?: string;
+  image_content_id?: number | null;
   premium_state?: string;
   display_download_link?: boolean;
   primary_content?: Primary;
@@ -129,6 +130,28 @@ function showOfArchive(title: string, audioUrl: string): "news-talk" | "radio" |
   return null;
 }
 
+/** Unique episode covers live at /content/{image_content_id}. /item/{id} and
+ *  the show profile image are the default show art and must be skipped. */
+const DEFAULT_ART_IDS = new Set([209091609, 21082436]);
+
+function artUrlOf(item: CrawlItem): string | undefined {
+  const id = item.image_content_id;
+  if (id === undefined || id === null || DEFAULT_ART_IDS.has(id)) return undefined;
+  const raw = httpsUrl(item.image_url);
+  if (raw === undefined) return undefined;
+  try {
+    const host = new URL(raw).hostname;
+    const path = new URL(raw).pathname;
+    if (!/(?:^|\.)assets\.libsyn\.com$/i.test(host)) return undefined;
+    if (!path.includes(`/content/${String(id)}`)) return undefined;
+  } catch {
+    return undefined;
+  }
+  // Follow the content-id redirect later in this script (to static.libsyn.com,
+  // the same host the live RSS already uses). Keep a stable fallback here.
+  return `https://assets.libsyn.com/secure/content/${String(id)}`;
+}
+
 function toArchiveItem(item: CrawlItem): ArchiveItem | undefined {
   const title = item.item_title?.trim();
   const published = parseReleaseDate(item.release_date);
@@ -141,8 +164,7 @@ function toArchiveItem(item: CrawlItem): ArchiveItem | undefined {
   const notesHtml = sanitizeNotes(item.item_body ?? item.item_body_clean ?? "");
   const show = showOfArchive(title, audioUrl);
   const episodeNumber = episodeNumberOf(title, audioUrl);
-  const artRaw = httpsUrl(item.image_url);
-  const artUrl = artRaw !== undefined && new URL(artRaw).hostname === "static.libsyn.com" ? artRaw : undefined;
+  const artUrl = artUrlOf(item);
   const sourceUrl = httpsUrl(item.full_item_url);
   return {
     slug,
