@@ -2344,8 +2344,19 @@ main:has(.episode-page) + .site-footer {
 .search-page__controls {
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
+  gap: var(--space-4);
   margin-bottom: var(--space-5);
+}
+.search-page__control {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+}
+.search-page__control-label {
+  margin: 0;
+  padding: 0;
+  color: var(--fg-tertiary);
 }
 .search-page__pills {
   display: flex;
@@ -2380,6 +2391,32 @@ main:has(.episode-page) + .site-footer {
 .search-page__pill[aria-pressed="true"]:hover {
   background: var(--accent);
   color: var(--on-accent);
+  transform: none;
+}
+.search-page__pill--sort {
+  border-color: var(--shield);
+  background: transparent;
+  color: var(--fg-primary);
+  box-shadow: none;
+}
+.search-page__pill--sort:hover {
+  background: color-mix(in srgb, var(--shield) 18%, transparent);
+  color: var(--fg-primary);
+  border-color: var(--shield-2);
+  text-decoration: none;
+  transform: translateY(-1px);
+}
+.search-page__pill--sort[aria-pressed="true"] {
+  cursor: default;
+  background: var(--shield);
+  color: #fff;
+  border-color: var(--shield);
+  box-shadow: 0 0 15px color-mix(in srgb, var(--shield) 40%, transparent);
+  transform: none;
+}
+.search-page__pill--sort[aria-pressed="true"]:hover {
+  background: var(--shield);
+  color: #fff;
   transform: none;
 }
 .search-page__count,
@@ -2430,6 +2467,7 @@ main:has(.episode-page) + .site-footer {
 }
 .search-hit__btn {
   min-height: 2.25rem;
+  border-radius: 999px;
 }
 .search-hit__chapter {
   margin: 0 0 var(--space-2);

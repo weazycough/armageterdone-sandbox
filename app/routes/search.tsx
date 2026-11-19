@@ -97,17 +97,17 @@ function SearchHitCard({ hit, query }: { hit: SearchHit; query: ParsedQuery }): 
       </div>
       <div className="search-hit__actions">
         {hit.episodeHref !== undefined && (
-          <Link className={cn(buttonVariants({ size: "sm" }), "search-hit__btn")} to={hit.episodeHref}>
+          <Link className={cn(buttonVariants({ size: "sm" }), "search-hit__btn rounded-full")} to={hit.episodeHref}>
             Episode page
           </Link>
         )}
         {hit.youtubeHref !== undefined && (
-          <ButtonLink href={hit.youtubeHref} variant="ghost" newTab className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "search-hit__btn")}>
+          <ButtonLink href={hit.youtubeHref} variant="ghost" newTab className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "search-hit__btn rounded-full")}>
             Watch on YouTube
           </ButtonLink>
         )}
         {hit.rumbleHref !== undefined && (
-          <ButtonLink href={hit.rumbleHref} variant="ghost" newTab className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "search-hit__btn")}>
+          <ButtonLink href={hit.rumbleHref} variant="ghost" newTab className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "search-hit__btn rounded-full")}>
             Watch on Rumble
           </ButtonLink>
         )}
@@ -220,32 +220,42 @@ export default function SearchPage(): React.ReactNode {
       <section className="section">
         <div className="container search-page__body">
           <div className="search-page__controls">
-            <div className="search-page__pills" role="group" aria-label="Filter by show">
-              {SHOW_FILTERS.map((item) => (
-                <button
-                  key={item.id}
-                  type="button"
-                  className="pagination__btn search-page__pill"
-                  aria-pressed={item.id === filter}
-                  onClick={() => update({ show: item.id, page: 1 })}
-                >
-                  {item.label}
-                </button>
-              ))}
-            </div>
-            {!emptyQuery && (
-              <div className="search-page__pills" role="group" aria-label="Sort results">
-                {(["relevance", "newest"] as SearchSort[]).map((value) => (
+            <div className="search-page__control">
+              <p className="eyebrow search-page__control-label" id="search-filter-label">
+                Filters
+              </p>
+              <div className="search-page__pills" role="group" aria-labelledby="search-filter-label">
+                {SHOW_FILTERS.map((item) => (
                   <button
-                    key={value}
+                    key={item.id}
                     type="button"
                     className="pagination__btn search-page__pill"
-                    aria-pressed={value === sort}
-                    onClick={() => update({ sort: value, page: 1 })}
+                    aria-pressed={item.id === filter}
+                    onClick={() => update({ show: item.id, page: 1 })}
                   >
-                    {value === "relevance" ? "Relevance" : "Newest"}
+                    {item.label}
                   </button>
                 ))}
+              </div>
+            </div>
+            {!emptyQuery && (
+              <div className="search-page__control">
+                <p className="eyebrow search-page__control-label" id="search-sort-label">
+                  Sort
+                </p>
+                <div className="search-page__pills" role="group" aria-labelledby="search-sort-label">
+                  {(["relevance", "newest"] as SearchSort[]).map((value) => (
+                    <button
+                      key={value}
+                      type="button"
+                      className="pagination__btn search-page__pill search-page__pill--sort"
+                      aria-pressed={value === sort}
+                      onClick={() => update({ sort: value, page: 1 })}
+                    >
+                      {value === "relevance" ? "Relevance" : "Newest"}
+                    </button>
+                  ))}
+                </div>
               </div>
             )}
           </div>

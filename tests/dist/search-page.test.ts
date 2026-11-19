@@ -14,6 +14,7 @@ describe("search page", () => {
     expect(html).not.toContain("bracket-frame");
     expect(html).not.toMatch(/Antarctica \(\d+\)/);
     expect(html).toContain('href="/armageterdone-sandbox/search/"');
+    expect(html).toContain("Filters");
     expect(html).toMatch(/aria-pressed="true"[^>]*>\s*All\s*</);
     expect(html).toMatch(/aria-pressed="false"[^>]*>\s*News Talk\s*</);
     expect(html).toMatch(/aria-pressed="false"[^>]*>\s*FaceLikeTheSun\s*</);
