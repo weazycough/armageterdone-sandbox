@@ -2419,8 +2419,7 @@ main:has(.episode-page) + .site-footer {
   color: #fff;
   transform: none;
 }
-.search-page__count,
-.search-page__hint {
+.search-page__count {
   text-align: center;
   margin: 0 0 var(--space-5);
 }

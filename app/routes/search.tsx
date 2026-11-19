@@ -262,11 +262,6 @@ export default function SearchPage(): React.ReactNode {
           {state.status === "failed" && (
             <p className="muted">The search index didn&apos;t load. Try again later.</p>
           )}
-          {state.status === "ready" && !shouldSearch && (
-            <p className="muted search-page__hint">
-              Type a word or a quoted phrase, or pick a show to browse.
-            </p>
-          )}
           {state.status === "ready" && shouldSearch && (
             <>
               <p className="search-page__count" role="status">
