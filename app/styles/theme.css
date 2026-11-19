@@ -2311,7 +2311,7 @@ main:has(.episode-page) + .site-footer {
   flex-wrap: wrap;
   gap: var(--space-3);
   justify-content: center;
-  align-items: stretch;
+  align-items: center;
   margin: var(--space-5) auto 0;
   max-width: 40rem;
 }
@@ -2465,10 +2465,6 @@ main:has(.episode-page) + .site-footer {
   gap: 0.55rem 0.65rem;
   padding: 0 var(--space-5) var(--space-4);
 }
-.search-hit__btn {
-  min-height: 2.25rem;
-  border-radius: 999px;
-}
 .search-hit__chapter {
   margin: 0 0 var(--space-2);
   color: var(--accent-on-bg);
@@ -2510,7 +2506,6 @@ main:has(.episode-page) + .site-footer {
 }
 @media (max-width: 599px) {
   .search-page__input,
-  .search-page__submit,
   .search-page__pill {
     min-height: 2.5rem; /* 40px tap */
   }
@@ -2519,9 +2514,6 @@ main:has(.episode-page) + .site-footer {
   }
   .search-hit__actions {
     padding: 0 var(--space-4) var(--space-4);
-  }
-  .search-hit__btn {
-    min-height: 2.5rem; /* 40px tap */
   }
 }
 

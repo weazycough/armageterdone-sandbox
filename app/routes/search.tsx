@@ -97,17 +97,15 @@ function SearchHitCard({ hit, query }: { hit: SearchHit; query: ParsedQuery }): 
       </div>
       <div className="search-hit__actions">
         {hit.episodeHref !== undefined && (
-          <Link className={cn(buttonVariants({ size: "sm" }), "search-hit__btn rounded-full")} to={hit.episodeHref}>
-            Episode page
-          </Link>
+          <ButtonLink href={hit.episodeHref}>Episode page</ButtonLink>
         )}
         {hit.youtubeHref !== undefined && (
-          <ButtonLink href={hit.youtubeHref} variant="ghost" newTab className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "search-hit__btn rounded-full")}>
+          <ButtonLink href={hit.youtubeHref} variant="ghost" newTab>
             Watch on YouTube
           </ButtonLink>
         )}
         {hit.rumbleHref !== undefined && (
-          <ButtonLink href={hit.rumbleHref} variant="ghost" newTab className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "search-hit__btn rounded-full")}>
+          <ButtonLink href={hit.rumbleHref} variant="ghost" newTab>
             Watch on Rumble
           </ButtonLink>
         )}
@@ -206,7 +204,7 @@ export default function SearchPage(): React.ReactNode {
                 placeholder="Search episodes and videos"
               />
               <button
-                className="pagination__btn search-page__submit"
+                className={cn(buttonVariants(), "search-page__submit")}
                 type="button"
                 onClick={() => update({ q: draft, page: 1 })}
               >
