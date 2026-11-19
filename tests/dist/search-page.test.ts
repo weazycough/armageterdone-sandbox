@@ -1,6 +1,12 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vite-plus/test";
-import { FLTS_EXCLUDED_IDS, FLTS_INDEX_FILE, fltsIndexSchema } from "../../app/lib/flts";
+import {
+  FLTS_EXCLUDED_IDS,
+  FLTS_INDEX_FILE,
+  findFltsEpisodeDuplicate,
+  fltsIndexSchema,
+  normalizeCatalogTitle,
+} from "../../app/lib/flts";
 import { SEARCH_INDEX_FILE, searchIndexSchema } from "../../app/lib/search";
 import { files, read } from "./dist-files";
 
@@ -23,7 +29,7 @@ describe("search page", () => {
   it("ships a trimmed FaceLikeTheSun catalog without the borderline CCNT streams", () => {
     expect(files).toContain(FLTS_INDEX_FILE);
     const catalog = fltsIndexSchema.parse(JSON.parse(readFileSync(`dist/${FLTS_INDEX_FILE}`, "utf8")));
-    expect(catalog.items.length).toBeGreaterThanOrEqual(1029);
+    expect(catalog.items.length).toBeGreaterThanOrEqual(1000);
     expect(catalog.meta.included).toBe(catalog.items.length);
     expect(catalog.items.filter((item) => FLTS_EXCLUDED_IDS.has(item.id))).toEqual([]);
     expect(catalog.items.filter((item) => item.chapters.length > 0).length).toBeGreaterThanOrEqual(5);
@@ -49,4 +55,30 @@ describe("search page", () => {
     expect(html).toContain('rel="noopener"');
     expect(html).not.toContain("Watch on Rumble");
   });
+
+  it("does not list the same programme twice in the combined search catalog", () => {
+    const index = searchIndexSchema.parse(JSON.parse(read(SEARCH_INDEX_FILE)));
+    const episodes = index.filter((entry) => entry.kind === "episode");
+    const catalog = fltsIndexSchema.parse(JSON.parse(readFileSync(`dist/${FLTS_INDEX_FILE}`, "utf8")));
+
+    const youtubeIds = episodes.map((entry) => entry.youtubeId).filter((id): id is string => id !== undefined);
+    expect(new Set(youtubeIds).size).toBe(youtubeIds.length);
+
+    const fltsIds = catalog.items.map((item) => item.id);
+    expect(new Set(fltsIds).size).toBe(fltsIds.length);
+    expect(fltsIds.some((id) => youtubeIds.includes(id))).toBe(false);
+
+    const episodeKeys = episodes.map((entry) => `${normalizeCatalogTitle(entry.title)}|${(entry.date ?? "").slice(0, 10)}`);
+    expect(new Set(episodeKeys).size).toBe(episodeKeys.length);
+
+    const refs = episodes.map((entry) => ({
+      title: entry.title,
+      published: entry.date ?? "",
+      youtubeId: entry.youtubeId,
+      duration: entry.duration,
+    }));
+    const overlaps = catalog.items.filter((item) => findFltsEpisodeDuplicate(item, refs) !== null);
+    expect(overlaps).toEqual([]);
+  });
+
 });

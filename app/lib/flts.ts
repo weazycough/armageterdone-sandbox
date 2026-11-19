@@ -1,7 +1,9 @@
 // flts.ts — FaceLikeTheSun catalog helpers: chapter timestamps, YouTube URLs,
-// and the title rules that keep Canary Cry episode re-uploads out of search.
+// and the title / date / YouTube-id rules that keep Canary Cry episode
+// re-uploads out of search.
 
 import * as z from "zod/mini";
+import { fold } from "./search.ts";
 
 export const FLTS_CHANNEL_ID = "UCJ5PQfYe6er4rrt4LLu7EKg";
 export const FLTS_RSS_URL = `https://www.youtube.com/feeds/videos.xml?channel_id=${FLTS_CHANNEL_ID}`;
@@ -145,4 +147,139 @@ export function trimDescription(text: string, limit = FLTS_DESC_CHARS): string {
   const sliced = compact.slice(0, limit);
   const space = sliced.lastIndexOf(" ");
   return `${(space > limit * 0.6 ? sliced.slice(0, space) : sliced).trimEnd()}…`;
+}
+
+/** Strip show tags, episode numbers, and dates so "Title | CCNT 990" matches "Title!". */
+const TITLE_DECORATION =
+  /canary\s*cry\s*(news\s*talk|radio|clubhouse)|news\s*talk|\bccnt\b|\bccr\b|\bclubhouse\b|#\s*\d{1,4}\b|\b\d{1,2}[./-]\d{1,2}[./-]\d{2,4}\b|\blivestream\b|\b\(live\)\b|\*?live\*?\b|\bcall[- ]?in(?:\s+discussion)?\b/gi;
+const TITLE_STOP = new Set([
+  "the", "a", "an", "of", "and", "to", "in", "on", "for", "with", "from", "is", "it",
+  "its", "by", "at", "as", "or", "we", "you", "our", "w",
+]);
+
+export function normalizeCatalogTitle(title: string): string {
+  const folded = fold(title.replace(/['’]/g, "")).replace(TITLE_DECORATION, " ");
+  return fold(folded.replace(/[^a-z0-9\s]/g, " "));
+}
+
+export function catalogTitleTokens(title: string): string[] {
+  return normalizeCatalogTitle(title)
+    .split(" ")
+    .filter((word) => word.length > 1 && !TITLE_STOP.has(word));
+}
+
+/** iTunes ("1:31:42") or a positive length in seconds. 0 / empty means unknown. */
+export function parseClockDuration(value: string | number | undefined): number | undefined {
+  if (typeof value === "number" && Number.isFinite(value) && value > 0) return Math.floor(value);
+  if (typeof value !== "string") return undefined;
+  const match = /^(?:(\d+):)?(\d+):(\d+)$/.exec(value.trim());
+  if (!match) return undefined;
+  const hours = Number(match[1] ?? 0);
+  const minutes = Number(match[2]);
+  const seconds = Number(match[3]);
+  const total = hours * 3600 + minutes * 60 + seconds;
+  return total > 0 ? total : undefined;
+}
+
+/**
+ * A 10-minute highlight is not the same media as a two-hour episode. Unknown
+ * lengths (RSS items often have 0) do not block a title match.
+ */
+export function durationsCompatible(
+  left: string | number | undefined,
+  right: string | number | undefined,
+  minRatio = 0.4,
+): boolean {
+  const a = parseClockDuration(left);
+  const b = parseClockDuration(right);
+  if (a === undefined || b === undefined) return true;
+  const lo = Math.min(a, b);
+  const hi = Math.max(a, b);
+  return lo >= hi * minRatio;
+}
+
+export function daysBetween(left: string, right: string): number | undefined {
+  const a = Date.parse(left);
+  const b = Date.parse(right);
+  if (!Number.isFinite(a) || !Number.isFinite(b)) return undefined;
+  const startOfDay = (ms: number): number => {
+    const d = new Date(ms);
+    return Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate());
+  };
+  return Math.round(Math.abs(startOfDay(a) - startOfDay(b)) / 86_400_000);
+}
+
+export const TITLE_DATE_WINDOW_DAYS = 4;
+export const OVERLAP_DATE_WINDOW_DAYS = 1;
+
+export interface CatalogEpisode {
+  title: string;
+  published: string;
+  youtubeId?: string;
+  duration?: string | number;
+}
+
+export type FltsDuplicateReason = "youtube-id" | "title-date" | "overlap-date";
+
+export interface FltsDuplicate {
+  reason: FltsDuplicateReason;
+  episodeTitle: string;
+  days: number;
+}
+
+function titlesAlign(
+  videoTitle: string,
+  episodeTitle: string,
+): "exact" | "overlap" | null {
+  const videoCore = normalizeCatalogTitle(videoTitle);
+  const episodeCore = normalizeCatalogTitle(episodeTitle);
+  if (videoCore !== "" && (videoCore === episodeCore || fold(videoTitle) === fold(episodeTitle))) {
+    return "exact";
+  }
+  const shorter = videoCore.length <= episodeCore.length ? videoCore : episodeCore;
+  const longer = videoCore.length <= episodeCore.length ? episodeCore : videoCore;
+  if (shorter.length >= 20 && longer.includes(shorter)) return "overlap";
+  const videoTokens = catalogTitleTokens(videoTitle);
+  const episodeTokens = catalogTitleTokens(episodeTitle);
+  if (videoTokens.length === 0 || episodeTokens.length === 0) return null;
+  const right = new Set(episodeTokens);
+  let intersection = 0;
+  for (const token of videoTokens) if (right.has(token)) intersection += 1;
+  const overlap = intersection / Math.min(videoTokens.length, episodeTokens.length);
+  if (intersection >= 4 && overlap >= 0.7) return "overlap";
+  return null;
+}
+
+/** True when a FaceLikeTheSun upload is the same programme as a site episode. */
+export function findFltsEpisodeDuplicate(
+  item: { id: string; title: string; date: string; duration?: number },
+  episodes: readonly CatalogEpisode[],
+): FltsDuplicate | null {
+  for (const episode of episodes) {
+    if (episode.youtubeId !== undefined && episode.youtubeId === item.id) {
+      return { reason: "youtube-id", episodeTitle: episode.title, days: daysBetween(episode.published, item.date) ?? 0 };
+    }
+  }
+  let best: FltsDuplicate | null = null;
+  for (const episode of episodes) {
+    const days = daysBetween(episode.published, item.date);
+    if (days === undefined) continue;
+    const align = titlesAlign(item.title, episode.title);
+    if (align === null) continue;
+    const reason: FltsDuplicateReason = align === "exact" ? "title-date" : "overlap-date";
+    const window = reason === "title-date" ? TITLE_DATE_WINDOW_DAYS : OVERLAP_DATE_WINDOW_DAYS;
+    if (days > window) continue;
+    if (!durationsCompatible(episode.duration, item.duration)) continue;
+    if (best === null || days < best.days) {
+      best = { reason, episodeTitle: episode.title, days };
+    }
+  }
+  return best;
+}
+
+export function isFltsDuplicateOfEpisode(
+  item: { id: string; title: string; date: string; duration?: number },
+  episodes: readonly CatalogEpisode[],
+): boolean {
+  return findFltsEpisodeDuplicate(item, episodes) !== null;
 }

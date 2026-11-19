@@ -1,8 +1,10 @@
 import { describe, expect, it } from "vite-plus/test";
 import {
   FLTS_EXCLUDED_IDS,
+  findFltsEpisodeDuplicate,
   formatTimestamp,
   isCanaryCryDuplicateTitle,
+  isFltsDuplicateOfEpisode,
   parseChapters,
   timestampToSeconds,
   trimDescription,
@@ -61,5 +63,100 @@ describe("youtubeUrl and helpers", () => {
     expect(formatTimestamp(4798)).toBe("1:19:58");
     expect(trimDescription("a ".repeat(800)).endsWith("…")).toBe(true);
     expect(FLTS_EXCLUDED_IDS.size).toBe(4);
+  });
+});
+
+describe("findFltsEpisodeDuplicate", () => {
+  const episodes = [
+    {
+      title: "The THIELOCALYPSE is Here! Breeding gods for the Last Empire!",
+      published: "2026-11-10T12:00:00.000Z",
+      duration: "01:31:42",
+    },
+    {
+      title: "CYBER CHAOS EVE! November 17 Predictions | CCNT 990",
+      published: "2026-11-17T12:00:00.000Z",
+      duration: "02:49:40",
+    },
+    {
+      title: "Super Soldier Dogs, Palantir Monkeys & Dems Could Kill the UFO Hearings | CCNT 986",
+      published: "2026-10-29T12:00:00.000Z",
+      duration: "02:10:00",
+    },
+    {
+      title: "How JESUS defeated the NEPHILIM! *LIVE* Call in Discussion",
+      published: "2025-07-06T12:00:00.000Z",
+      duration: "01:50:57",
+      youtubeId: "yExp02xmmL4",
+    },
+    {
+      title: "FLYBY | Interview with Sen. Mike Moon | 01.30.2026",
+      published: "2026-01-31T12:00:00.000Z",
+      duration: "42:24",
+      youtubeId: "NH4HlE-RO7s",
+    },
+    {
+      title: "Nephilim in the Headlines, Part 1 | CCNT 900",
+      published: "2024-01-02T00:00:00.000Z",
+      duration: "02:00:00",
+    },
+    {
+      title: "Nephilim in the Headlines, Part 2 | CCNT 901",
+      published: "2024-01-03T00:00:00.000Z",
+      duration: "02:00:00",
+    },
+  ];
+
+  it("matches a FaceLikeTheSun re-upload of a site episode by title and date", () => {
+    const hit = findFltsEpisodeDuplicate(
+      {
+        id: "ApDz2gWcXaU",
+        title: "The THIELOCALYPSE is Here! Breeding gods for the Last Empire!",
+        date: "2026-11-11T00:00:00.000Z",
+        duration: 0,
+      },
+      episodes,
+    );
+    expect(hit?.reason).toBe("title-date");
+    expect(
+      isFltsDuplicateOfEpisode(
+        { id: "x", title: "CYBER CHAOS EVE! November 17 Predictions!", date: "2026-11-17", duration: 0 },
+        episodes,
+      ),
+    ).toBe(true);
+    expect(
+      isFltsDuplicateOfEpisode(
+        {
+          id: "B3CwVbUIIUE",
+          title: "They're UNLEASHING Super Soldier Dogs and Palantir Monkeys",
+          date: "2026-10-28",
+          duration: 7672,
+        },
+        episodes,
+      ),
+    ).toBe(true);
+  });
+
+  it("matches the same YouTube id even when the dates are a few days apart", () => {
+    const hit = findFltsEpisodeDuplicate(
+      { id: "NH4HlE-RO7s", title: "FLYBY | Sen. Mike Moon Interview", date: "2026-02-04", duration: 2544 },
+      episodes,
+    );
+    expect(hit?.reason).toBe("youtube-id");
+  });
+
+  it("keeps a short highlight that shares a title with a long call-in, and part 1 vs part 2", () => {
+    expect(
+      findFltsEpisodeDuplicate(
+        { id: "W0g1aj3R8JE", title: "HOW JESUS DEFEATED THE NEPHILIM!", date: "2025-07-06", duration: 600 },
+        episodes,
+      ),
+    ).toBeNull();
+    expect(
+      isFltsDuplicateOfEpisode(
+        { id: "p2", title: "Nephilim in the Headlines, Part 2", date: "2024-01-03", duration: 7200 },
+        [episodes[5]!],
+      ),
+    ).toBe(false);
   });
 });

@@ -10,12 +10,17 @@ import {
   FLTS_EXCLUDED_IDS,
   FLTS_INDEX_FILE,
   FLTS_RSS_URL,
+  type CatalogEpisode,
   type FltsItem,
   fltsIndexSchema,
   isCanaryCryDuplicateTitle,
+  isFltsDuplicateOfEpisode,
   parseChapters,
   trimDescription,
 } from "../app/lib/flts.ts";
+import { episodeListSchema } from "../app/lib/feed.ts";
+import { episodeVideosSchema } from "../app/lib/episode-videos.ts";
+import { EPISODE_VIDEOS, EPISODES_JSON } from "../app/lib/paths.ts";
 
 const FILE = `public/${FLTS_INDEX_FILE}`;
 
@@ -25,6 +30,57 @@ function asText(value: unknown): string {
     return value["#text"];
   }
   return "";
+}
+
+async function loadCatalogEpisodes(): Promise<CatalogEpisode[]> {
+  try {
+    const episodes = episodeListSchema.parse(JSON.parse(await readFile(EPISODES_JSON, "utf8")));
+    let bySlug = new Map<string, string>();
+    try {
+      const videos = episodeVideosSchema.parse(JSON.parse(await readFile(EPISODE_VIDEOS, "utf8")));
+      bySlug = new Map(
+        videos.items.flatMap((item) => (item.youtubeId !== undefined ? [[item.slug, item.youtubeId] as const] : [])),
+      );
+    } catch {
+      /* mapping file is optional; title+date matching still runs */
+    }
+    return episodes.map((episode) => ({
+      title: episode.title,
+      published: episode.published,
+      duration: episode.duration,
+      ...(bySlug.get(episode.slug) ? { youtubeId: bySlug.get(episode.slug) } : {}),
+    }));
+  } catch {
+    return [];
+  }
+}
+
+/** Drop FaceLikeTheSun rows that match a current site episode, and persist if needed. */
+export async function pruneFltsAgainstEpisodes(): Promise<{ removed: number }> {
+  const episodes = await loadCatalogEpisodes();
+  if (episodes.length === 0) return { removed: 0 };
+  let catalog: ReturnType<typeof fltsIndexSchema.parse>;
+  try {
+    catalog = fltsIndexSchema.parse(JSON.parse(await readFile(FILE, "utf8")));
+  } catch {
+    return { removed: 0 };
+  }
+  const kept = catalog.items.filter((item) => !isFltsDuplicateOfEpisode(item, episodes));
+  const removed = catalog.items.length - kept.length;
+  if (removed === 0) return { removed: 0 };
+  const next = {
+    meta: {
+      ...catalog.meta,
+      generatedAt: new Date().toISOString(),
+      source: catalog.meta.source.includes("deduped") ? catalog.meta.source : `${catalog.meta.source}+deduped`,
+      included: kept.length,
+    },
+    items: kept,
+  };
+  fltsIndexSchema.parse(next);
+  await writeFile(FILE, JSON.stringify(next));
+  console.log(`flts: removed ${String(removed)} Canary Cry duplicate(s) from ${FILE} (${String(kept.length)} remain)`);
+  return { removed };
 }
 
 export async function updateFltsFromRss(): Promise<{ added: number; skipped: boolean; reason?: string }> {
@@ -51,6 +107,8 @@ export async function updateFltsFromRss(): Promise<{ added: number; skipped: boo
     return { added: 0, skipped: true, reason };
   }
 
+  const episodes = await loadCatalogEpisodes();
+
   const parser = new XMLParser({ ignoreAttributes: false, attributeNamePrefix: "@_" });
   const doc = parser.parse(xml) as { feed?: { entry?: unknown } };
   const raw = doc.feed?.entry;
@@ -74,6 +132,7 @@ export async function updateFltsFromRss(): Promise<{ added: number; skipped: boo
         ? thumb["@_url"]
         : null;
     if (isCanaryCryDuplicateTitle(title, { date: published })) continue;
+    if (isFltsDuplicateOfEpisode({ id, title, date: published, duration: 0 }, episodes)) continue;
     const item: FltsItem = {
       id,
       title,
@@ -88,24 +147,25 @@ export async function updateFltsFromRss(): Promise<{ added: number; skipped: boo
     known.add(id);
   }
 
-  if (fresh.length === 0) {
+  if (fresh.length > 0) {
+    const items = [...fresh, ...catalog.items].sort((a, b) => b.date.localeCompare(a.date));
+    const next = {
+      meta: {
+        ...catalog.meta,
+        generatedAt: new Date().toISOString(),
+        source: `${catalog.meta.source}+rss`,
+        included: items.length,
+      },
+      items,
+    };
+    fltsIndexSchema.parse(next);
+    await writeFile(FILE, JSON.stringify(next));
+    console.log(`flts: added ${String(fresh.length)} upload(s) from RSS -> ${FILE}`);
+  } else {
     console.log("flts: RSS checked, no new uploads to add");
-    return { added: 0, skipped: false };
   }
 
-  const items = [...fresh, ...catalog.items].sort((a, b) => b.date.localeCompare(a.date));
-  const next = {
-    meta: {
-      ...catalog.meta,
-      generatedAt: new Date().toISOString(),
-      source: `${catalog.meta.source}+rss`,
-      included: items.length,
-    },
-    items,
-  };
-  fltsIndexSchema.parse(next);
-  await writeFile(FILE, JSON.stringify(next));
-  console.log(`flts: added ${String(fresh.length)} upload(s) from RSS -> ${FILE}`);
+  await pruneFltsAgainstEpisodes();
   return { added: fresh.length, skipped: false };
 }
 

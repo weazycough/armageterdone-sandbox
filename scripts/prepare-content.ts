@@ -173,3 +173,10 @@ try {
 } catch (err) {
   console.warn(`episode-videos: update skipped (${err instanceof Error ? err.message : String(err)})`);
 }
+
+try {
+  const { pruneFltsAgainstEpisodes } = await import("./update-flts.ts");
+  await pruneFltsAgainstEpisodes();
+} catch (err) {
+  console.warn(`flts: prune skipped (${err instanceof Error ? err.message : String(err)})`);
+}
