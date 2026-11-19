@@ -39,6 +39,7 @@ import {
   plainText,
   searchIndexSchema,
 } from "../app/lib/search.ts";
+import { loadEpisodeVideos } from "../app/lib/episode-videos.server.ts";
 import { SHOWS, showOf } from "../app/lib/shows.ts";
 import { THEME_KEY } from "../app/lib/theme.ts";
 import {
@@ -99,10 +100,12 @@ const pagePaths = [
   "/search/",
 ].sort();
 const episodes = episodeListSchema.parse(JSON.parse(await readFile(EPISODES_JSON, "utf8")));
+const videosBySlug = new Map(loadEpisodeVideos().items.map((item) => [item.slug, item]));
 const index = searchIndexSchema.parse([
   ...(await Promise.all(pagePaths.map(pageEntry))),
   ...episodes.map((e) => {
     const show = showOf(e);
+    const video = videosBySlug.get(e.slug);
     return {
       kind: "episode" as const,
       title: e.title,
@@ -111,6 +114,8 @@ const index = searchIndexSchema.parse([
       text: plainText(e.notesHtml).slice(0, SEARCH_TEXT_CHARS),
       ...(show ? { show } : {}),
       ...(e.duration !== undefined ? { duration: e.duration } : {}),
+      ...(video?.youtubeId ? { youtubeId: video.youtubeId } : {}),
+      ...(video?.rumbleUrl ? { rumbleUrl: video.rumbleUrl } : {}),
     };
   }),
 ]);

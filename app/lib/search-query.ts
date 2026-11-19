@@ -74,6 +74,12 @@ export interface SearchHit {
   snippet: string;
   chapter?: FltsChapter;
   typeLabel?: string;
+  /** Internal episode page, only for Canary Cry episodes. */
+  episodeHref?: string;
+  /** Official YouTube watch URL, when a real video match exists. */
+  youtubeHref?: string;
+  /** Official Rumble watch URL, when a real video match exists. */
+  rumbleHref?: string;
 }
 
 function escapeRegExp(value: string): string {
@@ -172,6 +178,9 @@ export function searchCatalog(
         date: entry.date,
         durationLabel: entry.duration !== undefined ? formatDuration(entry.duration) : "",
         snippet: emptyQuery ? entry.text : snippetAround(entry.text, query),
+        episodeHref: entry.path,
+        youtubeHref: entry.youtubeId !== undefined ? youtubeUrl(entry.youtubeId) : undefined,
+        rumbleHref: entry.rumbleUrl,
         score: emptyQuery ? dateValue(entry.date) : (titleHit ? 300 : 100) + dateValue(entry.date) / 1e13,
       });
     }
@@ -198,6 +207,7 @@ export function searchCatalog(
         snippet: emptyQuery ? snippetAround(item.description, query) : snippetAround(snippetSource, query),
         chapter,
         typeLabel: TYPE_LABEL[item.type],
+        youtubeHref: youtubeUrl(item.id, chapter?.seconds),
         score: emptyQuery
           ? dateValue(item.date)
           : (titleHit ? 300 : 0) + (chapter ? 200 : 0) + (titleHit || chapter ? 0 : 100) + dateValue(item.date) / 1e13,

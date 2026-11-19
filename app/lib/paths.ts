@@ -15,6 +15,8 @@ export const NETWORK_LATEST_JSON = ".cache/network-latest.json";
 export const PAGES_DIR = "content/pages";
 /** One-time Libsyn site backfill; merged with the live RSS (capped at 1,000). */
 export const EPISODES_ARCHIVE = "content/episodes-archive.json";
+/** Official YouTube/Rumble watch URLs keyed by episode slug. */
+export const EPISODE_VIDEOS = "content/episode-videos.json";
 
 export const EPISODES_PER_PAGE = 16;
 

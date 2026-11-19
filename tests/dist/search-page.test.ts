@@ -32,7 +32,20 @@ describe("search page", () => {
     const index = searchIndexSchema.parse(JSON.parse(read(SEARCH_INDEX_FILE)));
     expect(index.some((entry) => entry.path === "/search/")).toBe(true);
     expect(index.some((entry) => entry.path === "/episodes/episode-001/")).toBe(true);
+    const withYoutube = index.filter((entry) => entry.kind === "episode" && entry.youtubeId !== undefined);
+    expect(withYoutube.length).toBeGreaterThan(800);
+    expect(withYoutube.some((entry) => entry.youtubeId === "r50Q2vtGAy8")).toBe(true);
     const html = read("search/index.html");
     expect(html).not.toContain("i.ytimg.com");
+  });
+
+  it("puts a YouTube button on a mapped episode page", () => {
+    const html = read(
+      "episodes/how-gta6-reveals-truths-about-reality-its-actually-biblical-ccnt-991/index.html",
+    );
+    expect(html).toContain("Watch on YouTube");
+    expect(html).toContain("https://www.youtube.com/watch?v=r50Q2vtGAy8");
+    expect(html).toContain('rel="noopener"');
+    expect(html).not.toContain("Watch on Rumble");
   });
 });

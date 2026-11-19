@@ -6,7 +6,10 @@ import { useEffect, useMemo, useState } from "react";
 import type * as React from "react";
 import { Link, useSearchParams } from "react-router";
 import { PagerButton } from "../components/pagination";
+import { ButtonLink } from "../components/page-parts";
+import { buttonVariants } from "../components/ui/button";
 import { asset } from "../lib/asset";
+import { cn } from "../lib/utils";
 import { formatCardDate } from "../lib/dates";
 import { type FltsItem, FLTS_INDEX_FILE, fltsIndexSchema, formatTimestamp } from "../lib/flts";
 import { pageTitle } from "../lib/meta";
@@ -63,40 +66,52 @@ function SearchHitCard({ hit, query }: { hit: SearchHit; query: ParsedQuery }): 
     hit.typeLabel ?? null,
   ].filter((x): x is string => x !== null);
 
-  const body = (
-    <>
-      <p className="eyebrow">{SHOW_LABELS[hit.show]}</p>
-      <h2 className="search-hit__title">{title}</h2>
-      {hit.chapter !== undefined && (
-        <p className="search-hit__chapter">
-          Chapter · {formatTimestamp(hit.chapter.seconds)}
-          {" · "}
-          <Highlight text={hit.chapter.title} query={query} />
-        </p>
-      )}
-      {meta.length > 0 && <p className="search-hit__meta">{meta.join(" · ")}</p>}
-      {hit.snippet !== "" && (
-        <p className="search-hit__snippet">
-          <Highlight text={hit.snippet} query={query} />
-        </p>
-      )}
-    </>
+  const heading = hit.external ? (
+    <a className="search-hit__title-link" href={hit.href} target="_blank" rel="noopener">
+      {title}
+    </a>
+  ) : (
+    <Link className="search-hit__title-link" to={hit.href}>
+      {title}
+    </Link>
   );
 
-  if (hit.external) {
-    return (
-      <article className="search-hit">
-        <a className="search-hit__link" href={hit.href} target="_blank" rel="noopener">
-          {body}
-        </a>
-      </article>
-    );
-  }
   return (
     <article className="search-hit">
-      <Link className="search-hit__link" to={hit.href}>
-        {body}
-      </Link>
+      <div className="search-hit__body">
+        <p className="eyebrow">{SHOW_LABELS[hit.show]}</p>
+        <h2 className="search-hit__title">{heading}</h2>
+        {hit.chapter !== undefined && (
+          <p className="search-hit__chapter">
+            Chapter · {formatTimestamp(hit.chapter.seconds)}
+            {" · "}
+            <Highlight text={hit.chapter.title} query={query} />
+          </p>
+        )}
+        {meta.length > 0 && <p className="search-hit__meta">{meta.join(" · ")}</p>}
+        {hit.snippet !== "" && (
+          <p className="search-hit__snippet">
+            <Highlight text={hit.snippet} query={query} />
+          </p>
+        )}
+      </div>
+      <div className="search-hit__actions">
+        {hit.episodeHref !== undefined && (
+          <Link className={cn(buttonVariants({ size: "sm" }), "search-hit__btn")} to={hit.episodeHref}>
+            Episode page
+          </Link>
+        )}
+        {hit.youtubeHref !== undefined && (
+          <ButtonLink href={hit.youtubeHref} variant="ghost" newTab className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "search-hit__btn")}>
+            Watch on YouTube
+          </ButtonLink>
+        )}
+        {hit.rumbleHref !== undefined && (
+          <ButtonLink href={hit.rumbleHref} variant="ghost" newTab className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "search-hit__btn")}>
+            Watch on Rumble
+          </ButtonLink>
+        )}
+      </div>
     </article>
   );
 }

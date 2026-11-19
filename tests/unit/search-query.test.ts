@@ -19,6 +19,7 @@ const episodes: SearchEntry[] = [
     text: "A News Talk look at the Nephilim story in current events.",
     show: "news-talk",
     duration: "02:10:00",
+    youtubeId: "abc123xyz00",
   },
   {
     kind: "page",
@@ -58,6 +59,9 @@ describe("searchCatalog", () => {
     expect(hits.map((h) => h.key)).toEqual(["/episodes/nephilim-headlines/"]);
     expect(hits[0]?.show).toBe("news-talk");
     expect(hits[0]?.external).toBe(false);
+    expect(hits[0]?.episodeHref).toBe("/episodes/nephilim-headlines/");
+    expect(hits[0]?.youtubeHref).toBe("https://www.youtube.com/watch?v=abc123xyz00");
+    expect(hits[0]?.rumbleHref).toBeUndefined();
   });
 
   it("links a chapter timestamp when the query matches the chapter title", () => {

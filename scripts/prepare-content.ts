@@ -166,3 +166,10 @@ try {
 } catch (err) {
   console.warn(`flts: update skipped (${err instanceof Error ? err.message : String(err)})`);
 }
+
+try {
+  const { updateEpisodeVideosFromRss } = await import("./update-episode-videos.ts");
+  await updateEpisodeVideosFromRss();
+} catch (err) {
+  console.warn(`episode-videos: update skipped (${err instanceof Error ? err.message : String(err)})`);
+}

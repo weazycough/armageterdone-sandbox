@@ -1440,6 +1440,12 @@ p {
   width: min(100%, 22rem);
   margin-top: var(--space-4);
 }
+.episode-hero__watch {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: var(--space-4);
+}
 .episode-player audio {
   width: 100%;
   display: block;
@@ -2391,18 +2397,13 @@ main:has(.episode-page) + .site-footer {
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
-.search-hit__link {
+.search-hit__body {
   display: block;
-  padding: var(--space-4) var(--space-5);
-  text-decoration: none;
+  padding: var(--space-4) var(--space-5) var(--space-3);
   color: inherit;
-}
-.search-hit__link:hover,
-.search-hit__link:focus-visible {
-  text-decoration: none;
-  color: inherit;
-  background: var(--bg-elevated);
 }
 .search-hit .eyebrow {
   padding-bottom: 0.2rem;
@@ -2411,6 +2412,24 @@ main:has(.episode-page) + .site-footer {
   margin: 0 0 var(--space-2);
   font-size: clamp(1.5rem, 3vw, 2rem);
   line-height: 1.1;
+}
+.search-hit__title-link {
+  color: inherit;
+  text-decoration: none;
+}
+.search-hit__title-link:hover,
+.search-hit__title-link:focus-visible {
+  color: var(--accent-on-bg);
+  text-decoration: none;
+}
+.search-hit__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem 0.65rem;
+  padding: 0 var(--space-5) var(--space-4);
+}
+.search-hit__btn {
+  min-height: 2.25rem;
 }
 .search-hit__chapter {
   margin: 0 0 var(--space-2);
@@ -2457,8 +2476,14 @@ main:has(.episode-page) + .site-footer {
   .search-page__pill {
     min-height: 2.5rem; /* 40px tap */
   }
-  .search-hit__link {
-    padding: var(--space-4);
+  .search-hit__body {
+    padding: var(--space-4) var(--space-4) var(--space-3);
+  }
+  .search-hit__actions {
+    padding: 0 var(--space-4) var(--space-4);
+  }
+  .search-hit__btn {
+    min-height: 2.5rem; /* 40px tap */
   }
 }
 

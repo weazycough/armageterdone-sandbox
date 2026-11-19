@@ -7,9 +7,12 @@ import { data, Link } from "react-router";
 import type { Route } from "./+types/episode";
 import { AudioPlayer } from "../components/audio-player";
 import { PagerButton } from "../components/pagination";
+import { ButtonLink } from "../components/page-parts";
 import { V4vActions } from "../components/v4v-copy";
 import { asset } from "../lib/asset";
 import { loadEpisodes } from "../lib/content.server";
+import { youtubeWatchUrl } from "../lib/episode-videos";
+import { episodeVideoOf } from "../lib/episode-videos.server";
 import { formatCardDate, isoDay } from "../lib/dates";
 import { formatDuration } from "../lib/duration";
 import { episodePath, tagPath } from "../lib/paths";
@@ -21,6 +24,7 @@ export function loader({ params }: Route.LoaderArgs) {
   const index = episodes.findIndex((e) => e.slug === params.slug);
   if (index < 0) throw data(null, { status: 404 });
   const episode = episodes[index]!;
+  const video = episodeVideoOf(episode.slug);
   const showSlug = showOf(episode);
   const show = showSlug !== null ? findShow(showSlug) : undefined;
   const neighbor = (e: (typeof episodes)[number]) => ({ slug: e.slug, title: e.title });
@@ -32,6 +36,8 @@ export function loader({ params }: Route.LoaderArgs) {
         : null,
     newer: index > 0 ? neighbor(episodes[index - 1]!) : null,
     older: index < episodes.length - 1 ? neighbor(episodes[index + 1]!) : null,
+    youtubeHref: video?.youtubeId !== undefined ? youtubeWatchUrl(video.youtubeId) : null,
+    rumbleHref: video?.rumbleUrl ?? null,
   };
 }
 
@@ -40,7 +46,7 @@ export function meta({ loaderData }: Route.MetaArgs): Route.MetaDescriptors {
 }
 
 export default function Episode({ loaderData }: Route.ComponentProps): React.ReactNode {
-  const { episode, show, newer, older } = loaderData;
+  const { episode, show, newer, older, youtubeHref, rumbleHref } = loaderData;
   const art = episode.artUrl ?? asset("images/cc-logo.webp");
   const notes = cleanShowNotes(episode.notesHtml);
   return (
@@ -83,6 +89,20 @@ export default function Episode({ loaderData }: Route.ComponentProps): React.Rea
             <div className="episode-player">
               <AudioPlayer src={episode.audioUrl} type={episode.audioType} title={episode.title} />
             </div>
+            {(youtubeHref !== null || rumbleHref !== null) && (
+              <div className="episode-hero__watch">
+                {youtubeHref !== null && (
+                  <ButtonLink href={youtubeHref} newTab>
+                    Watch on YouTube
+                  </ButtonLink>
+                )}
+                {rumbleHref !== null && (
+                  <ButtonLink href={rumbleHref} variant="ghost" newTab>
+                    Watch on Rumble
+                  </ButtonLink>
+                )}
+              </div>
+            )}
             <nav className="pagination episode-pager" aria-label="Nearby episodes">
               <PagerButton
                 className="pagination__btn newer-posts"

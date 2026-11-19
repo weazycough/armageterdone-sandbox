@@ -20,6 +20,10 @@ export const searchEntrySchema = z.object({
   show: z.optional(z.enum(["news-talk", "radio", "clubhouse"])),
   /** Episodes: itunes duration string ("1:52:00"). */
   duration: z.optional(z.string()),
+  /** Episodes: official YouTube video id when a real match exists. */
+  youtubeId: z.optional(z.string()),
+  /** Episodes: official Rumble watch URL when a real match exists. */
+  rumbleUrl: z.optional(z.string()),
 });
 export type SearchEntry = z.infer<typeof searchEntrySchema>;
 
