@@ -5,6 +5,7 @@
 
 import { useState } from "react";
 import type * as React from "react";
+import { Link, useNavigate } from "react-router";
 import {
   Button,
   Dialog,
@@ -15,7 +16,6 @@ import {
   ModalOverlay,
   SearchField,
 } from "react-aria-components";
-import { Link } from "react-router";
 import { asset } from "../../lib/asset";
 import { formatCardDate } from "../../lib/dates";
 import {
@@ -55,8 +55,15 @@ function SearchIcon(): React.ReactNode {
 }
 
 export function SiteSearch(): React.ReactNode {
+  const navigate = useNavigate();
   const [state, setState] = useState<IndexState>({ status: "idle" });
   const [query, setQuery] = useState("");
+
+  function openSearchPage(q: string, close: () => void): void {
+    close();
+    const trimmed = q.trim();
+    void navigate(trimmed === "" ? "/search/" : `/search/?q=${encodeURIComponent(trimmed)}`);
+  }
 
   function load(): void {
     if (state.status === "loading" || state.status === "ready") return;
@@ -96,6 +103,9 @@ export function SiteSearch(): React.ReactNode {
                   onChange={setQuery}
                   autoFocus
                   className="site-search__field"
+                  onSubmit={(value) => {
+                    openSearchPage(value, close);
+                  }}
                 >
                   <SearchIcon />
                   <Input placeholder="Search episodes and pages" />
@@ -127,6 +137,16 @@ export function SiteSearch(): React.ReactNode {
                         </li>
                       ))}
                     </ul>
+                  )}
+                  {query.trim() !== "" && (
+                    <p className="site-search__more">
+                      <Link
+                        to={`/search/?q=${encodeURIComponent(query.trim())}`}
+                        onClick={close}
+                      >
+                        Search the full catalog →
+                      </Link>
+                    </p>
                   )}
                 </div>
               </>

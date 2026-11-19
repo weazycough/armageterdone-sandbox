@@ -39,7 +39,7 @@ import {
   plainText,
   searchIndexSchema,
 } from "../app/lib/search.ts";
-import { SHOWS } from "../app/lib/shows.ts";
+import { SHOWS, showOf } from "../app/lib/shows.ts";
 import { THEME_KEY } from "../app/lib/theme.ts";
 import {
   NOTES_TEXT_CHARS,
@@ -96,17 +96,23 @@ const pagePaths = [
     .filter((f) => f.endsWith(".json"))
     .map((f) => `/${f.slice(0, -5)}/`),
   ...SHOWS.map((s) => tagPath(s.slug)),
+  "/search/",
 ].sort();
 const episodes = episodeListSchema.parse(JSON.parse(await readFile(EPISODES_JSON, "utf8")));
 const index = searchIndexSchema.parse([
   ...(await Promise.all(pagePaths.map(pageEntry))),
-  ...episodes.map((e) => ({
-    kind: "episode" as const,
-    title: e.title,
-    path: episodePath(e.slug),
-    date: e.published,
-    text: plainText(e.notesHtml).slice(0, SEARCH_TEXT_CHARS),
-  })),
+  ...episodes.map((e) => {
+    const show = showOf(e);
+    return {
+      kind: "episode" as const,
+      title: e.title,
+      path: episodePath(e.slug),
+      date: e.published,
+      text: plainText(e.notesHtml).slice(0, SEARCH_TEXT_CHARS),
+      ...(show ? { show } : {}),
+      ...(e.duration !== undefined ? { duration: e.duration } : {}),
+    };
+  }),
 ]);
 await writeFile(join(DIST, SEARCH_INDEX_FILE), JSON.stringify(index));
 

@@ -146,3 +146,10 @@ console.log(
     ? `joyspiracy: latest "${joyspiracy.title}" (${joyspiracy.published}) -> ${NETWORK_LATEST_JSON}`
     : `joyspiracy: no latest written -> ${NETWORK_LATEST_JSON}`,
 );
+
+try {
+  const { updateFltsFromRss } = await import("./update-flts.ts");
+  await updateFltsFromRss();
+} catch (err) {
+  console.warn(`flts: update skipped (${err instanceof Error ? err.message : String(err)})`);
+}

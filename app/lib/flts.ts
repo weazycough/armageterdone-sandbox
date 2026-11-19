@@ -1,0 +1,148 @@
+// flts.ts — FaceLikeTheSun catalog helpers: chapter timestamps, YouTube URLs,
+// and the title rules that keep Canary Cry episode re-uploads out of search.
+
+import * as z from "zod/mini";
+
+export const FLTS_CHANNEL_ID = "UCJ5PQfYe6er4rrt4LLu7EKg";
+export const FLTS_RSS_URL = `https://www.youtube.com/feeds/videos.xml?channel_id=${FLTS_CHANNEL_ID}`;
+/** File name under the site root (public/ → dist/), loaded only on /search/. */
+export const FLTS_INDEX_FILE = "flts-search.json";
+export const FLTS_DESC_CHARS = 1000;
+
+/**
+ * 2021 FaceLikeTheSun streams that look like unlabeled Canary Cry News Talk
+ * episodes (flagged "kept but arguably duplicates" in the catalog review).
+ * They stay out of the committed search file, and the RSS updater must not
+ * add them back.
+ */
+export const FLTS_EXCLUDED_IDS = new Set([
+  "dUQJmNkU8qw",
+  "ak_5ZeZ1aQw",
+  "Z-Re4LWQuFw",
+  "0zBB26_qxhQ",
+]);
+
+export const fltsChapterSchema = z.object({
+  title: z.string(),
+  seconds: z.number(),
+});
+export type FltsChapter = z.infer<typeof fltsChapterSchema>;
+
+export const fltsItemSchema = z.object({
+  id: z.string(),
+  title: z.string(),
+  date: z.string(),
+  type: z.enum(["video", "stream", "short"]),
+  duration: z.number(),
+  description: z.string(),
+  thumbnail: z.nullable(z.string()),
+  chapters: z.array(fltsChapterSchema),
+});
+export type FltsItem = z.infer<typeof fltsItemSchema>;
+
+export const fltsIndexSchema = z.object({
+  meta: z.object({
+    generatedAt: z.string(),
+    source: z.string(),
+    included: z.number(),
+    excludedBorderlineCcnt: z.number(),
+  }),
+  items: z.array(fltsItemSchema),
+});
+export type FltsIndex = z.infer<typeof fltsIndexSchema>;
+
+/** "1:02:33" or "0:00" → seconds. */
+export function timestampToSeconds(raw: string): number | null {
+  const parts = raw.split(":").map((p) => Number(p));
+  if (parts.length < 2 || parts.length > 3 || parts.some((n) => !Number.isFinite(n) || n < 0)) {
+    return null;
+  }
+  if (parts.length === 2) return parts[0]! * 60 + parts[1]!;
+  return parts[0]! * 3600 + parts[1]! * 60 + parts[2]!;
+}
+
+/** 5018 → "1:23:38"; 62 → "1:02". */
+export function formatTimestamp(seconds: number): string {
+  const s = Math.max(0, Math.floor(seconds));
+  const h = Math.floor(s / 3600);
+  const m = Math.floor((s % 3600) / 60);
+  const sec = s % 60;
+  if (h > 0) return `${String(h)}:${String(m).padStart(2, "0")}:${String(sec).padStart(2, "0")}`;
+  return `${String(m)}:${String(sec).padStart(2, "0")}`;
+}
+
+const CHAPTER_LINE =
+  /^\s*[-–—*•]?\s*\(?(\d{1,2}:\d{2}(?::\d{2})?)\)?\s*(?:[-–—:|]\s*)?(.*?)\s*$/;
+
+/**
+ * Chapter timestamps from a YouTube description. Accepts lines like
+ * "0:00 Intro", "1:02:33 Topic", "(12:34)", "12:34 - Topic". Skips Bible
+ * verse lines, which don't start with a timestamp.
+ */
+export function parseChapters(description: string): FltsChapter[] {
+  const lines = description.replace(/\r\n/g, "\n").replace(/\r/g, "\n").split("\n");
+  const chapters: FltsChapter[] = [];
+  const seen = new Set<number>();
+  for (const line of lines) {
+    const m = CHAPTER_LINE.exec(line);
+    if (!m) continue;
+    const seconds = timestampToSeconds(m[1] ?? "");
+    if (seconds === null || seen.has(seconds)) continue;
+    let title = (m[2] ?? "").trim();
+    // "18:24–25" / "2:24-26" verse ranges, not a chapter title.
+    if (/^[-–—]\s*\d{1,3}$/.test(title) || /^\d{1,3}$/.test(title)) continue;
+    if (title === "") title = formatTimestamp(seconds);
+    seen.add(seconds);
+    chapters.push({ title, seconds });
+  }
+  return chapters;
+}
+
+const PROMO = /promo|soundtrack|music release|trailer|subs!/i;
+
+/**
+ * Title rules used to drop Canary Cry News Talk / Radio / Clubhouse
+ * re-uploads from the FaceLikeTheSun catalog. Promos and soundtrack videos
+ * that mention the show stay in.
+ */
+export function isCanaryCryDuplicateTitle(
+  title: string,
+  opts: { durationSeconds?: number; date?: string } = {},
+): boolean {
+  if (PROMO.test(title)) return false;
+  if (/\bCCNT\s*#?\d+/i.test(title)) return true;
+  if (/\bCCR\s*#?\d+/.test(title)) return true;
+  if (/Canary ?Cry Radio\s*(?:Ep\.?\s*|Episode\s*)?#?\d+\s*[:-]?/i.test(title)) return true;
+  if (/^News ?Talk\s*#?\d+/i.test(title)) return true;
+  if (/Canary ?Cry Clubhouse/i.test(title)) return true;
+  if (/\bCCNT\b/i.test(title)) return true;
+  const date = opts.date?.slice(0, 10);
+  const m = /^(\d{2,3})\s*[:-]\s*\S/.exec(title);
+  if (m && date !== undefined && date >= "2019-06-01") {
+    const n = Number(m[1]);
+    const mins = (opts.durationSeconds ?? 3600) / 60;
+    if (n >= 142 && n <= 1000 && mins >= 60) return true;
+  }
+  return false;
+}
+
+export function youtubeUrl(id: string, seconds?: number): string {
+  const base = `https://www.youtube.com/watch?v=${id}`;
+  return seconds !== undefined && seconds > 0 ? `${base}&t=${String(seconds)}s` : base;
+}
+
+/** Trim a description to about `limit` characters, on a word boundary when possible. */
+const EMAIL_RE = /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi;
+
+/** Drop personal emails from descriptions so the catalog can be committed. */
+export function scrubPublicText(text: string): string {
+  return text.replace(EMAIL_RE, "[email removed]");
+}
+
+export function trimDescription(text: string, limit = FLTS_DESC_CHARS): string {
+  const compact = scrubPublicText(text).replace(/\s+/g, " ").trim();
+  if (compact.length <= limit) return compact;
+  const sliced = compact.slice(0, limit);
+  const space = sliced.lastIndexOf(" ");
+  return `${(space > limit * 0.6 ? sliced.slice(0, space) : sliced).trimEnd()}…`;
+}

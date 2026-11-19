@@ -9,6 +9,7 @@ export default [
   route("episodes/:slug", "routes/episode.tsx"),
   route("tag/:tag", "routes/tag.tsx", { id: "tag" }),
   route("tag/:tag/page/:page", "routes/tag.tsx", { id: "tag-page" }),
+  route("search", "routes/search.tsx"),
   // Pages with their own design (Ghost page-<slug>.hbs), one file each.
   ...DESIGNED_PAGES.map((slug) => route(slug, `routes/pages/${slug}.tsx`)),
   // Every other page from content/pages, in the generic template.

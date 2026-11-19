@@ -54,6 +54,7 @@ export const PRIMARY_NAV: NavItem[] = [
     label: "About",
     menu: [
       { label: "About the Show", href: "/about-us-mojave/" },
+      { label: "Search", href: "/search/", meta: "Episodes and FaceLikeTheSun" },
       { label: "Contact", href: "/contact-us-mojave/" },
     ],
   },
@@ -65,6 +66,7 @@ export const FOOTER_COLUMNS: { heading: string; links: NavLink[] }[] = [
     heading: "Listen",
     links: [
       { label: "All episodes", href: "/episodes/" },
+      { label: "Search", href: "/search/" },
       { label: "RSS feed", href: "https://canarycry.libsyn.com/rss" },
       { label: "Transcripts", href: "/transcripts/" },
       { label: "Roundtable", href: "/roundtable/" },

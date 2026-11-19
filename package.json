@@ -9,6 +9,7 @@
     "gate": "react-router typegen && vp check && vp test --project unit && pnpm run build",
     "preview": "node scripts/serve-dist.ts",
     "feed:refresh": "node scripts/prepare-content.ts --refresh",
+    "flts:update": "node scripts/update-flts.ts",
     "extract-ghost": "node scripts/extract-ghost.ts",
     "fmt": "vp fmt"
   },

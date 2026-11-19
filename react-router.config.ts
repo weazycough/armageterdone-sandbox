@@ -30,6 +30,7 @@ export default {
     });
     return [
       "/",
+      "/search/",
       ...lists,
       ...tags,
       ...episodes.map((e) => episodePath(e.slug)),

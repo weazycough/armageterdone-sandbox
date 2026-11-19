@@ -24,6 +24,11 @@ describe("pages", () => {
     expect(read("404.html")).toContain("Page not found");
   });
 
+  it("has the search page", () => {
+    expect(files).toContain("search/index.html");
+    expect(read("search/index.html")).toContain("Topic Index");
+  });
+
   it("has every episode list page", () => {
     const lists = htmlFiles.filter(
       (f) => f === "episodes/index.html" || /^episodes\/page\/\d+\/index\.html$/.test(f),
@@ -72,6 +77,7 @@ describe("designed pages and show lists", () => {
     expect(pageSlugs.filter((s) => !paths.has(`/${s}/`))).toEqual([]);
     expect(episodes.filter((e) => !paths.has(`/episodes/${e.slug}/`))).toEqual([]);
     expect(index.find((e) => e.path === "/support/")?.title).toBe("Become a Producer");
+    expect(paths.has("/search/")).toBe(true);
   });
 
   it("has a transcript search index covering every episode's show notes", () => {

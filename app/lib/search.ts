@@ -16,6 +16,10 @@ export const searchEntrySchema = z.object({
   date: z.optional(z.string()),
   /** Plain text that is searched besides the title (cut short at build). */
   text: z.string(),
+  /** Episodes: which show, when the title or file name places it. */
+  show: z.optional(z.enum(["news-talk", "radio", "clubhouse"])),
+  /** Episodes: itunes duration string ("1:52:00"). */
+  duration: z.optional(z.string()),
 });
 export type SearchEntry = z.infer<typeof searchEntrySchema>;
 

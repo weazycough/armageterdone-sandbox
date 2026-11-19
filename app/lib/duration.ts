@@ -17,3 +17,17 @@ export function formatDuration(raw: string): string {
   if (chunks.length === 0 && seconds > 0) chunks.push(`${String(seconds)}s`);
   return chunks.length > 0 ? chunks.join(" ") : raw;
 }
+
+/** 7672 → "2h 7m"; 45 → "45s"; 0 → "". */
+export function formatDurationSeconds(seconds: number): string {
+  if (!Number.isFinite(seconds) || seconds <= 0) return "";
+  const s = Math.floor(seconds);
+  const hours = Math.floor(s / 3600);
+  const minutes = Math.floor((s % 3600) / 60);
+  const secs = s % 60;
+  const chunks: string[] = [];
+  if (hours > 0) chunks.push(`${String(hours)}h`);
+  if (minutes > 0) chunks.push(`${String(minutes)}m`);
+  if (chunks.length === 0 && secs > 0) chunks.push(`${String(secs)}s`);
+  return chunks.join(" ");
+}

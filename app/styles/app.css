@@ -272,6 +272,10 @@
     text-transform: uppercase;
     color: var(--accent-on-bg);
   }
+  .site-search__more {
+    margin: var(--space-3) 0 0;
+    font-size: 0.9rem;
+  }
   .site-search__title {
     display: block;
   }
