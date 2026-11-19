@@ -1,5 +1,6 @@
-// prepare-content.ts — fetch the Libsyn feed once and write the parsed,
-// validated, sanitised episode list for the build to read.
+// prepare-content.ts — fetch the Libsyn feed once, merge in the committed
+// Libsyn-site archive (the public RSS is capped at 1,000 items), and write
+// the parsed, validated, sanitised episode list for the build to read.
 //
 //   node scripts/prepare-content.ts            use .cache/libsyn-feed.xml if present
 //   node scripts/prepare-content.ts --refresh  always download a fresh copy
@@ -13,8 +14,10 @@
 import { mkdir, readFile, stat, writeFile } from "node:fs/promises";
 import { XMLParser } from "fast-xml-parser";
 import { z } from "zod";
+import { loadEpisodeArchive, mergeEpisodes } from "../app/lib/episode-archive.ts";
 import { parseFeed } from "../app/lib/feed.ts";
 import {
+  EPISODES_ARCHIVE,
   EPISODES_JSON,
   FEED_CACHE,
   FEED_URL,
@@ -125,8 +128,16 @@ async function loadJoyspiracyLatest(): Promise<{
   return { title: title.data, published, artUrl, ...(externalUrl ? { externalUrl } : {}) };
 }
 
-const episodes = parseFeed(await loadFeed());
-if (episodes.length === 0) throw new Error("feed: no episodes parsed");
+const live = parseFeed(await loadFeed());
+if (live.length === 0) throw new Error("feed: no episodes parsed");
+let archive: ReturnType<typeof loadEpisodeArchive> = [];
+if (await exists(EPISODES_ARCHIVE)) {
+  archive = loadEpisodeArchive();
+} else {
+  console.warn(`feed: no archive at ${EPISODES_ARCHIVE}`);
+}
+const episodes = mergeEpisodes(live, archive);
+const recovered = episodes.length - live.length;
 await mkdir(".cache", { recursive: true });
 await writeFile(EPISODES_JSON, JSON.stringify(episodes));
 const latest = episodes[0]!;
@@ -137,7 +148,9 @@ await writeFile(
     year: new Date().getUTCFullYear(),
   }),
 );
-console.log(`feed: ${String(episodes.length)} episodes -> ${EPISODES_JSON}`);
+console.log(
+  `feed: ${String(live.length)} live + ${String(recovered)} archive = ${String(episodes.length)} episodes -> ${EPISODES_JSON}`,
+);
 
 const joyspiracy = await loadJoyspiracyLatest();
 await writeFile(NETWORK_LATEST_JSON, JSON.stringify({ joyspiracy }));

@@ -31,6 +31,7 @@ describe("search page", () => {
   it("adds the page to the site search index and does not embed YouTube media", () => {
     const index = searchIndexSchema.parse(JSON.parse(read(SEARCH_INDEX_FILE)));
     expect(index.some((entry) => entry.path === "/search/")).toBe(true);
+    expect(index.some((entry) => entry.path === "/episodes/episode-001/")).toBe(true);
     const html = read("search/index.html");
     expect(html).not.toContain("i.ytimg.com");
   });

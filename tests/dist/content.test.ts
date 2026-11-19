@@ -38,7 +38,7 @@ describe("pages", () => {
   });
 
   it("has one page per RSS episode, with its audio", () => {
-    expect(episodes.length).toBeGreaterThan(900);
+    expect(episodes.length).toBeGreaterThan(1100);
     const missing = episodes.filter((e) => !files.includes(`episodes/${e.slug}/index.html`));
     expect(missing.map((e) => e.slug)).toEqual([]);
     const sample = episodes[0]!;

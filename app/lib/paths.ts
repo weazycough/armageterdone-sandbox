@@ -13,6 +13,8 @@ export const JOYSPIRACY_FEED_URL = "https://thejoyspiracytheory.libsyn.com/rss";
 export const JOYSPIRACY_FEED_CACHE = ".cache/joyspiracy-feed.xml";
 export const NETWORK_LATEST_JSON = ".cache/network-latest.json";
 export const PAGES_DIR = "content/pages";
+/** One-time Libsyn site backfill; merged with the live RSS (capped at 1,000). */
+export const EPISODES_ARCHIVE = "content/episodes-archive.json";
 
 export const EPISODES_PER_PAGE = 16;
 
