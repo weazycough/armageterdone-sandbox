@@ -111,10 +111,14 @@ export function snippetAround(text: string, query: ParsedQuery, width = 220): st
   if (compact === "") return "";
   const terms = query.terms.filter((t) => t.length > 0).sort((a, b) => b.length - a.length);
   let index = -1;
-  if (terms.length > 0) {
-    const re = new RegExp(terms.map(escapeRegExp).join("|"), "i");
-    const match = re.exec(compact);
-    if (match) index = match.index;
+  // Prefer the longest term so a short common word ("with") does not
+  // pull the window away from the distinctive match.
+  for (const term of terms) {
+    const match = new RegExp(escapeRegExp(term), "i").exec(compact);
+    if (match) {
+      index = match.index;
+      break;
+    }
   }
   if (index < 0) {
     return compact.length > width ? `${compact.slice(0, width).trimEnd()}…` : compact;

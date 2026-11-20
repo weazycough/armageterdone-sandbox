@@ -116,6 +116,12 @@ describe("highlight and urls", () => {
       { text: " story", mark: false },
     ]);
     expect(snippetAround("A News Talk look at the Nephilim story in current events.", q)).toContain("Nephilim");
+    const deep = parseQuery("Study Leaders' Guide with");
+    const window = snippetAround(
+      `${"earlier remarks with filler. ".repeat(20)}Later: Study Leaders' Guide with Scripture and prepared answers.`,
+      deep,
+    );
+    expect(window).toContain("Study Leaders' Guide with");
     expect(searchPagePath({ q: "nephilim", show: "facelikethesun", page: 2 })).toBe(
       "/search/?q=nephilim&show=facelikethesun&page=2",
     );
