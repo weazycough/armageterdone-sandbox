@@ -32,11 +32,12 @@ describe("search page", () => {
     expect(catalog.items.length).toBeGreaterThanOrEqual(1000);
     expect(catalog.meta.included).toBe(catalog.items.length);
     expect(catalog.items.filter((item) => FLTS_EXCLUDED_IDS.has(item.id))).toEqual([]);
-    const withChapters = catalog.items.filter((item) => item.chapters.length > 0);
-    expect(withChapters.length).toBeGreaterThanOrEqual(6);
+    const raw = JSON.parse(readFileSync(`dist/${FLTS_INDEX_FILE}`, "utf8")) as {
+      items: Record<string, unknown>[];
+    };
+    expect(raw.items.some((item) => "chapters" in item)).toBe(false);
     expect(catalog.items.filter((item) => item.description.length > 1000).length).toBeGreaterThan(500);
     const wait = catalog.items.find((item) => item.id === "cpM56RNwKFU");
-    expect(wait?.chapters.length).toBe(19);
     expect(wait?.description).toContain("Study Leaders' Guide with");
     expect(wait !== undefined && wait.description.indexOf("Study Leaders' Guide with") > 1000).toBe(true);
   });

@@ -16,7 +16,6 @@ import {
   fltsIndexSchema,
   isCanaryCryDuplicateTitle,
   isFltsDuplicateOfEpisode,
-  parseChapters,
 } from "../app/lib/flts.ts";
 import { episodeListSchema } from "../app/lib/feed.ts";
 import { episodeVideosSchema } from "../app/lib/episode-videos.ts";
@@ -141,7 +140,6 @@ export async function updateFltsFromRss(): Promise<{ added: number; skipped: boo
       duration: 0,
       description: compactDescription(description),
       thumbnail,
-      chapters: parseChapters(description),
     };
     fresh.push(item);
     known.add(id);

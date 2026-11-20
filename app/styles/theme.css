@@ -2488,30 +2488,6 @@ main:has(.episode-page) + .site-footer {
   gap: 0.55rem 0.65rem;
   padding: 0 var(--space-5) var(--space-4);
 }
-.search-hit__chapter {
-  margin: 0 0 var(--space-2);
-  color: var(--accent-on-bg);
-  font-size: 0.95rem;
-}
-.search-hit__chapters {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem 0.7rem;
-  margin: 0 0 var(--space-2);
-}
-.search-hit__ts {
-  color: var(--accent-on-bg);
-  font-size: 0.85rem;
-  font-variant-numeric: tabular-nums;
-  text-decoration: none;
-}
-.search-hit__ts:hover,
-.search-hit__ts:focus-visible {
-  text-decoration: underline;
-}
-.search-hit__ts.is-active {
-  font-weight: 700;
-}
 .search-hit__meta {
   margin: 0 0 var(--space-2);
   color: var(--fg-tertiary);

@@ -38,7 +38,6 @@ export const fltsItemSchema = z.object({
   duration: z.number(),
   description: z.string(),
   thumbnail: z.nullable(z.string()),
-  chapters: z.array(fltsChapterSchema),
 });
 export type FltsItem = z.infer<typeof fltsItemSchema>;
 

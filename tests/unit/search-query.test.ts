@@ -38,9 +38,6 @@ const videos: FltsItem[] = [
     duration: 6000,
     description: "Al Matthews describes a lifetime of strange encounters.",
     thumbnail: null,
-    chapters: [
-      { title: "Mapping the “Supernatural Ecosystem”: Spirits, UFOs, Portals & Technology", seconds: 4798 },
-    ],
   },
   {
     id: "deepDescVideo1",
@@ -50,10 +47,6 @@ const videos: FltsItem[] = [
     duration: 4000,
     description: `${"padding ".repeat(200)}Study Leaders' Guide with Scripture, discussion questions, and prepared answers.`,
     thumbnail: null,
-    chapters: [
-      { title: "Intro and why this week is a review", seconds: 0 },
-      { title: "The method: WAIT", seconds: 1809 },
-    ],
   },
 ];
 
@@ -77,12 +70,14 @@ describe("searchCatalog", () => {
     expect(hits[0]?.rumbleHref).toBeUndefined();
   });
 
-  it("links a chapter timestamp when the query matches the chapter title", () => {
-    const hits = searchCatalog(episodes, videos, parseQuery("supernatural ecosystem"), "facelikethesun", "relevance");
-    expect(hits).toHaveLength(1);
-    expect(hits[0]?.chapter?.seconds).toBe(4798);
-    expect(hits[0]?.href).toBe("https://www.youtube.com/watch?v=goxUOqxxhjE&t=4798s");
-    expect(hits[0]?.external).toBe(true);
+  it("does not attach chapter timestamps to FaceLikeTheSun hits", () => {
+    const hits = searchCatalog(episodes, videos, parseQuery("encounters"), "facelikethesun", "relevance");
+    expect(hits.some((h) => h.key === "goxUOqxxhjE")).toBe(true);
+    const hit = hits.find((h) => h.key === "goxUOqxxhjE");
+    expect(hit?.href).toBe("https://www.youtube.com/watch?v=goxUOqxxhjE");
+    expect(hit?.youtubeHref).toBe("https://www.youtube.com/watch?v=goxUOqxxhjE");
+    expect(hit).not.toHaveProperty("chapter");
+    expect(hit).not.toHaveProperty("chapters");
   });
 
   it("matches a phrase deep in a FaceLikeTheSun description and snippets around it", () => {
@@ -97,7 +92,6 @@ describe("searchCatalog", () => {
     expect(hits[0]?.key).toBe("deepDescVideo1");
     expect(hits[0]?.snippet).toContain("Study Leaders' Guide with");
     expect(hits[0]?.snippet.startsWith("Study Leaders'")).toBe(false);
-    expect(hits[0]?.chapters).toHaveLength(2);
     expect(hits[0]?.youtubeHref).toBe("https://www.youtube.com/watch?v=deepDescVideo1");
   });
 

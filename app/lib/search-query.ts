@@ -2,7 +2,7 @@
 // the dedicated /search/ page (episodes + FaceLikeTheSun).
 
 import { formatDuration, formatDurationSeconds } from "./duration";
-import { type FltsChapter, type FltsItem, youtubeUrl } from "./flts";
+import { type FltsItem, youtubeUrl } from "./flts";
 import { type SearchEntry, fold } from "./search";
 
 export const SEARCH_PAGE_SIZE = 12;
@@ -72,9 +72,6 @@ export interface SearchHit {
   date?: string;
   durationLabel: string;
   snippet: string;
-  chapter?: FltsChapter;
-  /** All chapters on a FaceLikeTheSun hit, for timestamp links. */
-  chapters?: FltsChapter[];
   typeLabel?: string;
   /** Internal episode page, only for Canary Cry episodes. */
   episodeHref?: string;
@@ -150,11 +147,6 @@ const TYPE_LABEL: Record<FltsItem["type"], string> = {
   short: "Short",
 };
 
-function matchingChapter(chapters: FltsChapter[], query: ParsedQuery): FltsChapter | undefined {
-  if (queryIsEmpty(query)) return undefined;
-  return chapters.find((ch) => matchesFolded(fold(ch.title), query));
-}
-
 export function searchCatalog(
   episodes: SearchEntry[],
   videos: FltsItem[],
@@ -194,30 +186,23 @@ export function searchCatalog(
 
   if (filter === "all" || filter === "facelikethesun") {
     for (const item of videos) {
-      const chapterText = item.chapters.map((ch) => ch.title).join(" ");
       const titleFolded = fold(item.title);
-      const allFolded = fold(`${item.title} ${item.description} ${chapterText}`);
+      const allFolded = fold(`${item.title} ${item.description}`);
       if (!emptyQuery && !matchesFolded(allFolded, query)) continue;
-      const chapter = matchingChapter(item.chapters, query);
       const titleHit = !emptyQuery && matchesFolded(titleFolded, query);
-      const snippetSource = chapter ? chapter.title : item.description;
       hits.push({
         key: item.id,
         source: "flts",
         show: "facelikethesun",
         title: item.title,
-        href: youtubeUrl(item.id, chapter?.seconds),
+        href: youtubeUrl(item.id),
         external: true,
         date: item.date,
         durationLabel: formatDurationSeconds(item.duration),
-        snippet: emptyQuery ? snippetAround(item.description, query) : snippetAround(snippetSource, query),
-        chapter,
-        chapters: item.chapters.length > 0 ? item.chapters : undefined,
+        snippet: snippetAround(item.description, query),
         typeLabel: TYPE_LABEL[item.type],
-        youtubeHref: youtubeUrl(item.id, chapter?.seconds),
-        score: emptyQuery
-          ? dateValue(item.date)
-          : (titleHit ? 300 : 0) + (chapter ? 200 : 0) + (titleHit || chapter ? 0 : 100) + dateValue(item.date) / 1e13,
+        youtubeHref: youtubeUrl(item.id),
+        score: emptyQuery ? dateValue(item.date) : (titleHit ? 300 : 100) + dateValue(item.date) / 1e13,
       });
     }
   }
