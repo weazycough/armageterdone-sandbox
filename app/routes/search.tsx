@@ -166,7 +166,7 @@ export default function SearchPage(): React.ReactNode {
 
   return (
     <article className="page search-page">
-      <header className="search-hero page-intro">
+      <header className="search-hero page-intro hero-top-glow">
         <div className="container">
           <div className="page-intro__inner" style={{ maxWidth: "52rem", margin: "0 auto" }}>
             <span className="eyebrow">Archive</span>
