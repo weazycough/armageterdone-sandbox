@@ -46,6 +46,22 @@ export const episodeVideosSchema = z.object({
 });
 export type EpisodeVideos = z.infer<typeof episodeVideosSchema>;
 
+export const episodeRumbleItemSchema = z.object({
+  slug: z.string(),
+  rumbleUrl: z.string(),
+});
+export type EpisodeRumbleItem = z.infer<typeof episodeRumbleItemSchema>;
+
+export const episodeRumbleSchema = z.object({
+  meta: z.object({
+    generatedAt: z.string(),
+    source: z.string(),
+    included: z.number(),
+  }),
+  items: z.array(episodeRumbleItemSchema),
+});
+export type EpisodeRumble = z.infer<typeof episodeRumbleSchema>;
+
 export function youtubeWatchUrl(id: string, seconds?: number): string {
   const base = `https://www.youtube.com/watch?v=${id}`;
   return seconds !== undefined && seconds > 0 ? `${base}&t=${String(seconds)}s` : base;

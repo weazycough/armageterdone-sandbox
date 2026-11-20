@@ -17,6 +17,8 @@ export const PAGES_DIR = "content/pages";
 export const EPISODES_ARCHIVE = "content/episodes-archive.json";
 /** Official YouTube/Rumble watch URLs keyed by episode slug. */
 export const EPISODE_VIDEOS = "content/episode-videos.json";
+/** Official Rumble watch URLs keyed by episode slug; merged at load time. */
+export const EPISODE_RUMBLE = "content/episode-rumble.json";
 
 export const EPISODES_PER_PAGE = 16;
 

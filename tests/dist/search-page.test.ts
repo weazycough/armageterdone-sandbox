@@ -53,7 +53,8 @@ describe("search page", () => {
     expect(html).toContain("Watch on YouTube");
     expect(html).toContain("https://www.youtube.com/watch?v=r50Q2vtGAy8");
     expect(html).toContain('rel="noopener"');
-    expect(html).not.toContain("Watch on Rumble");
+    expect(html).toContain("Watch on Rumble");
+    expect(html).toContain("https://rumble.com/v7ijoia-how-gta6-reveals-truths-about-reality.-its-actually-biblical.html");
   });
 
   it("does not list the same programme twice in the combined search catalog", () => {
@@ -79,6 +80,17 @@ describe("search page", () => {
     }));
     const overlaps = catalog.items.filter((item) => findFltsEpisodeDuplicate(item, refs) !== null);
     expect(overlaps).toEqual([]);
+  });
+
+
+  it("attaches unique official Rumble URLs to mapped episodes in the search index", () => {
+    const index = searchIndexSchema.parse(JSON.parse(read(SEARCH_INDEX_FILE)));
+    const rumble = index
+      .filter((entry) => entry.kind === "episode" && entry.rumbleUrl !== undefined)
+      .map((entry) => entry.rumbleUrl as string);
+    expect(rumble.length).toBeGreaterThan(700);
+    expect(rumble.every((url) => /^https:\/\/(?:www\.)?rumble\.com\/v[0-9a-z]+/i.test(url))).toBe(true);
+    expect(new Set(rumble).size).toBe(rumble.length);
   });
 
 });
