@@ -32,7 +32,13 @@ describe("search page", () => {
     expect(catalog.items.length).toBeGreaterThanOrEqual(1000);
     expect(catalog.meta.included).toBe(catalog.items.length);
     expect(catalog.items.filter((item) => FLTS_EXCLUDED_IDS.has(item.id))).toEqual([]);
-    expect(catalog.items.filter((item) => item.chapters.length > 0).length).toBeGreaterThanOrEqual(5);
+    const withChapters = catalog.items.filter((item) => item.chapters.length > 0);
+    expect(withChapters.length).toBeGreaterThanOrEqual(6);
+    expect(catalog.items.filter((item) => item.description.length > 1000).length).toBeGreaterThan(500);
+    const wait = catalog.items.find((item) => item.id === "cpM56RNwKFU");
+    expect(wait?.chapters.length).toBe(19);
+    expect(wait?.description).toContain("Study Leaders' Guide with");
+    expect(wait !== undefined && wait.description.indexOf("Study Leaders' Guide with") > 1000).toBe(true);
   });
 
   it("adds the page to the site search index and does not embed YouTube media", () => {

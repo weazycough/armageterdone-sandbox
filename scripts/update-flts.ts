@@ -7,6 +7,7 @@
 import { readFile, writeFile } from "node:fs/promises";
 import { XMLParser } from "fast-xml-parser";
 import {
+  compactDescription,
   FLTS_EXCLUDED_IDS,
   FLTS_INDEX_FILE,
   FLTS_RSS_URL,
@@ -16,7 +17,6 @@ import {
   isCanaryCryDuplicateTitle,
   isFltsDuplicateOfEpisode,
   parseChapters,
-  trimDescription,
 } from "../app/lib/flts.ts";
 import { episodeListSchema } from "../app/lib/feed.ts";
 import { episodeVideosSchema } from "../app/lib/episode-videos.ts";
@@ -139,7 +139,7 @@ export async function updateFltsFromRss(): Promise<{ added: number; skipped: boo
       date: published || new Date().toISOString(),
       type: "video",
       duration: 0,
-      description: trimDescription(description),
+      description: compactDescription(description),
       thumbnail,
       chapters: parseChapters(description),
     };

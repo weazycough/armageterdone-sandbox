@@ -42,6 +42,19 @@ const videos: FltsItem[] = [
       { title: "Mapping the “Supernatural Ecosystem”: Spirits, UFOs, Portals & Technology", seconds: 4798 },
     ],
   },
+  {
+    id: "deepDescVideo1",
+    title: "A later FaceLikeTheSun study",
+    date: "2023-07-01T00:00:00.000Z",
+    type: "video",
+    duration: 4000,
+    description: `${"padding ".repeat(200)}Study Leaders' Guide with Scripture, discussion questions, and prepared answers.`,
+    thumbnail: null,
+    chapters: [
+      { title: "Intro and why this week is a review", seconds: 0 },
+      { title: "The method: WAIT", seconds: 1809 },
+    ],
+  },
 ];
 
 describe("parseQuery", () => {
@@ -72,8 +85,24 @@ describe("searchCatalog", () => {
     expect(hits[0]?.external).toBe(true);
   });
 
+  it("matches a phrase deep in a FaceLikeTheSun description and snippets around it", () => {
+    const hits = searchCatalog(
+      episodes,
+      videos,
+      parseQuery("Study Leaders' Guide with"),
+      "facelikethesun",
+      "relevance",
+    );
+    expect(hits).toHaveLength(1);
+    expect(hits[0]?.key).toBe("deepDescVideo1");
+    expect(hits[0]?.snippet).toContain("Study Leaders' Guide with");
+    expect(hits[0]?.snippet.startsWith("Study Leaders'")).toBe(false);
+    expect(hits[0]?.chapters).toHaveLength(2);
+    expect(hits[0]?.youtubeHref).toBe("https://www.youtube.com/watch?v=deepDescVideo1");
+  });
+
   it("filters by show and sorts newest first", () => {
-    expect(searchCatalog(episodes, videos, parseQuery(""), "facelikethesun", "newest")).toHaveLength(1);
+    expect(searchCatalog(episodes, videos, parseQuery(""), "facelikethesun", "newest")).toHaveLength(2);
     expect(searchCatalog(episodes, videos, parseQuery("nephilim"), "radio", "relevance")).toEqual([]);
   });
 });

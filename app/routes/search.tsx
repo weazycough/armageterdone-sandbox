@@ -11,7 +11,7 @@ import { buttonVariants } from "../components/ui/button";
 import { asset } from "../lib/asset";
 import { cn } from "../lib/utils";
 import { formatCardDate } from "../lib/dates";
-import { type FltsItem, FLTS_INDEX_FILE, fltsIndexSchema, formatTimestamp } from "../lib/flts";
+import { type FltsItem, FLTS_INDEX_FILE, fltsIndexSchema, formatTimestamp, youtubeUrl } from "../lib/flts";
 import { pageTitle } from "../lib/meta";
 import {
   type ParsedQuery,
@@ -86,6 +86,24 @@ function SearchHitCard({ hit, query }: { hit: SearchHit; query: ParsedQuery }): 
             Chapter · {formatTimestamp(hit.chapter.seconds)}
             {" · "}
             <Highlight text={hit.chapter.title} query={query} />
+          </p>
+        )}
+        {hit.chapters !== undefined && hit.chapters.length > 0 && (
+          <p className="search-hit__chapters">
+            {hit.chapters.map((ch) => (
+              <a
+                key={ch.seconds}
+                className={
+                  hit.chapter?.seconds === ch.seconds ? "search-hit__ts is-active" : "search-hit__ts"
+                }
+                href={youtubeUrl(hit.key, ch.seconds)}
+                target="_blank"
+                rel="noopener"
+                title={ch.title}
+              >
+                {formatTimestamp(ch.seconds)}
+              </a>
+            ))}
           </p>
         )}
         {meta.length > 0 && <p className="search-hit__meta">{meta.join(" · ")}</p>}

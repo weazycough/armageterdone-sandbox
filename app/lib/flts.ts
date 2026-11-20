@@ -74,12 +74,37 @@ export function formatTimestamp(seconds: number): string {
 }
 
 const CHAPTER_LINE =
-  /^\s*[-–—*•]?\s*\(?(\d{1,2}:\d{2}(?::\d{2})?)\)?\s*(?:[-–—:|]\s*)?(.*?)\s*$/;
+  /^\s*[-–—*•]?\s*\(?(\d{1,2}:\d{2}(?::\d{2})?)\)?\s*(?:[-–—:|]+\s*)?(.*?)\s*$/;
+const CHAPTER_LINE_TRAILING =
+  /^\s*(?:\d{1,2}[.)]+\s*)?(.+?)\s+(\d{1,2}:\d{2}(?::\d{2})?)\s*$/;
+const BIBLE_BOOK_TITLE =
+  /^(?:(?:[123]|1st|2nd|3rd|first|second|third)\s+)?(?:genesis|exodus|leviticus|numbers|deuteronomy|deut|joshua|judges|ruth|samuel|kings|chronicles|ezra|nehemiah|esther|job|psalms?|proverbs|ecclesiastes|song(?: of (?:solomon|songs))?|isaiah|jeremiah|lamentations|ezekiel|daniel|hosea|joel|amos|obadiah|jonah|micah|nahum|habakkuk|zephaniah|haggai|zechariah|malachi|matthew|matt|mark|luke|john|acts|romans|corinthians|galatians|ephesians|philippians|colossians|thessalonians|timothy|titus|philemon|hebrews|james|peter|jude|revelation|rev)\.?$/i;
+
+function isBibleVerseTitle(title: string): boolean {
+  return BIBLE_BOOK_TITLE.test(title.trim());
+}
+
+function pushChapter(
+  chapters: FltsChapter[],
+  seen: Set<number>,
+  seconds: number,
+  rawTitle: string,
+): void {
+  if (seen.has(seconds)) return;
+  let title = rawTitle.trim().replace(/^[-–—*•|:\s]+/, "").trim();
+  // "18:24–25" / "2:24-26" verse ranges, not a chapter title.
+  if (/^[-–—]\s*\d{1,3}$/.test(title) || /^\d{1,3}$/.test(title)) return;
+  if (isBibleVerseTitle(title)) return;
+  if (title === "") title = formatTimestamp(seconds);
+  seen.add(seconds);
+  chapters.push({ title, seconds });
+}
 
 /**
- * Chapter timestamps from a YouTube description. Accepts lines like
- * "0:00 Intro", "1:02:33 Topic", "(12:34)", "12:34 - Topic". Skips Bible
- * verse lines, which don't start with a timestamp.
+ * Chapter timestamps from a YouTube description. Accepts leading times
+ * ("0:00 Intro", "1:02:33 Topic", "(12:34)", "12:34 - Topic") and numbered
+ * lists with the time at the end ("1.) Prologue 0:48"). Skips Bible verse
+ * lines.
  */
 export function parseChapters(description: string): FltsChapter[] {
   const lines = description.replace(/\r\n/g, "\n").replace(/\r/g, "\n").split("\n");
@@ -89,15 +114,25 @@ export function parseChapters(description: string): FltsChapter[] {
     const m = CHAPTER_LINE.exec(line);
     if (!m) continue;
     const seconds = timestampToSeconds(m[1] ?? "");
-    if (seconds === null || seen.has(seconds)) continue;
-    let title = (m[2] ?? "").trim();
-    // "18:24–25" / "2:24-26" verse ranges, not a chapter title.
-    if (/^[-–—]\s*\d{1,3}$/.test(title) || /^\d{1,3}$/.test(title)) continue;
-    if (title === "") title = formatTimestamp(seconds);
-    seen.add(seconds);
-    chapters.push({ title, seconds });
+    if (seconds === null) continue;
+    pushChapter(chapters, seen, seconds, m[2] ?? "");
   }
-  return chapters;
+  if (chapters.length >= 2) return chapters;
+
+  const trailing: FltsChapter[] = [];
+  const trailingSeen = new Set<number>();
+  for (const line of lines) {
+    if (CHAPTER_LINE.exec(line)) continue;
+    const m = CHAPTER_LINE_TRAILING.exec(line);
+    if (!m) continue;
+    const seconds = timestampToSeconds(m[2] ?? "");
+    if (seconds === null) continue;
+    pushChapter(trailing, trailingSeen, seconds, m[1] ?? "");
+  }
+  if (trailing.length < 3) return chapters;
+  const increasing = trailing.every((ch, i) => i === 0 || ch.seconds > trailing[i - 1]!.seconds);
+  const startsEarly = trailing[0]!.seconds <= 180;
+  return increasing && startsEarly ? trailing : chapters;
 }
 
 const PROMO = /promo|soundtrack|music release|trailer|subs!/i;
@@ -141,8 +176,13 @@ export function scrubPublicText(text: string): string {
   return text.replace(EMAIL_RE, "[email removed]");
 }
 
+/** Full description for search: emails scrubbed, whitespace compacted, not capped. */
+export function compactDescription(text: string): string {
+  return scrubPublicText(text).replace(/\s+/g, " ").trim();
+}
+
 export function trimDescription(text: string, limit = FLTS_DESC_CHARS): string {
-  const compact = scrubPublicText(text).replace(/\s+/g, " ").trim();
+  const compact = compactDescription(text);
   if (compact.length <= limit) return compact;
   const sliced = compact.slice(0, limit);
   const space = sliced.lastIndexOf(" ");

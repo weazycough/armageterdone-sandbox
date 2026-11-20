@@ -73,6 +73,8 @@ export interface SearchHit {
   durationLabel: string;
   snippet: string;
   chapter?: FltsChapter;
+  /** All chapters on a FaceLikeTheSun hit, for timestamp links. */
+  chapters?: FltsChapter[];
   typeLabel?: string;
   /** Internal episode page, only for Canary Cry episodes. */
   episodeHref?: string;
@@ -206,6 +208,7 @@ export function searchCatalog(
         durationLabel: formatDurationSeconds(item.duration),
         snippet: emptyQuery ? snippetAround(item.description, query) : snippetAround(snippetSource, query),
         chapter,
+        chapters: item.chapters.length > 0 ? item.chapters : undefined,
         typeLabel: TYPE_LABEL[item.type],
         youtubeHref: youtubeUrl(item.id, chapter?.seconds),
         score: emptyQuery

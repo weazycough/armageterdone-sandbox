@@ -5,6 +5,7 @@ import {
   formatTimestamp,
   isCanaryCryDuplicateTitle,
   isFltsDuplicateOfEpisode,
+  compactDescription,
   parseChapters,
   timestampToSeconds,
   trimDescription,
@@ -28,6 +29,37 @@ Leviticus 18:24–25`);
       { title: "12:34", seconds: 754 },
       { title: "Topic", seconds: 901 },
     ]);
+  });
+
+  it("reads numbered lists with the timestamp at the end of the line", () => {
+    const chapters = parseChapters(`Intro text
+1.) Prologue 0:48
+2.) As in the Days of Noah 4:20
+3.) Death, Famine, War, and the Conquering King 7:01
+4.) Control, Evolve, Transcend 18:16`);
+    expect(chapters).toEqual([
+      { title: "Prologue", seconds: 48 },
+      { title: "As in the Days of Noah", seconds: 260 },
+      { title: "Death, Famine, War, and the Conquering King", seconds: 421 },
+      { title: "Control, Evolve, Transcend", seconds: 1096 },
+    ]);
+  });
+
+  it("still finds chapters after a long preface, and ignores Bible verse lists", () => {
+    const preface = `${"Word ".repeat(250)}\n`;
+    expect(preface.length).toBeGreaterThan(1000);
+    const chapters = parseChapters(`${preface}0:00 Intro\n6:35 The story so far\n13:33 The problem`);
+    expect(chapters).toEqual([
+      { title: "Intro", seconds: 0 },
+      { title: "The story so far", seconds: 395 },
+      { title: "The problem", seconds: 813 },
+    ]);
+    expect(
+      parseChapters(`2 Kings 2:11
+Mark 16:14
+John 20:19
+Luke 24:31`),
+    ).toEqual([]);
   });
 });
 
@@ -62,6 +94,8 @@ describe("youtubeUrl and helpers", () => {
     expect(timestampToSeconds("1:02:33")).toBe(3753);
     expect(formatTimestamp(4798)).toBe("1:19:58");
     expect(trimDescription("a ".repeat(800)).endsWith("…")).toBe(true);
+    expect(compactDescription("a ".repeat(800)).endsWith("…")).toBe(false);
+    expect(compactDescription("a ".repeat(800)).length).toBeGreaterThan(1000);
     expect(FLTS_EXCLUDED_IDS.size).toBe(4);
   });
 });
