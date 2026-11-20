@@ -176,7 +176,7 @@ export default function SearchPage(): React.ReactNode {
       <header className="search-hero page-intro">
         <div className="container">
           <div className="page-intro__inner" style={{ maxWidth: "52rem", margin: "0 auto" }}>
-            <span className="eyebrow">Episodes and FaceLikeTheSun</span>
+            <span className="eyebrow">Archive</span>
             <h1 className="page-intro__title">Search</h1>
             <span className="page-intro__rule" aria-hidden="true" />
             <p className="page-intro__lede">
