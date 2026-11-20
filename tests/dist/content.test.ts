@@ -47,6 +47,15 @@ describe("pages", () => {
     );
   });
 
+  it("puts the compact V4V monogram in the Become a producer band", () => {
+    const html = read(`episodes/${episodes[0]!.slug}/index.html`);
+    expect(html).toContain("Become a producer");
+    expect(html).toContain("episode-v4v__mark");
+    expect(html).toContain('aria-label="Value for Value"');
+    expect(html).toContain('viewBox="0 0 111.48 54.02"');
+    expect(html).not.toContain('viewBox="0 0 462.32 56.09"');
+  });
+
   it("has every page extracted from Ghost", () => {
     expect(pageSlugs.length).toBeGreaterThan(30);
     expect(pageSlugs.filter((s) => !files.includes(`${s}/index.html`))).toEqual([]);

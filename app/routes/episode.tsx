@@ -9,6 +9,7 @@ import { AudioPlayer } from "../components/audio-player";
 import { PagerButton } from "../components/pagination";
 import { ButtonLink } from "../components/page-parts";
 import { V4vActions } from "../components/v4v-copy";
+import { V4vMark } from "../components/v4v-mark";
 import { asset } from "../lib/asset";
 import { loadEpisodes } from "../lib/content.server";
 import { youtubeWatchUrl } from "../lib/episode-videos";
@@ -133,11 +134,14 @@ export default function Episode({ loaderData }: Route.ComponentProps): React.Rea
       </article>
       <section className="episode-v4v" aria-label="Value for Value">
         <div className="container episode-v4v__inner">
+          <div className="episode-v4v__brand">
+            <V4vMark className="episode-v4v__mark" decorative />
+          </div>
           <div className="episode-v4v__copy">
             <h2>Become a producer</h2>
             <p>
-              Canary Cry doesn&apos;t run ads. The show survives on producers — people returning
-              value for the value they got — in <strong>time, talent, or treasure</strong>.
+              Canary Cry doesn&apos;t run ads. The show survives on producers, people who return
+              value for the value they received in <strong>time, talent, or treasure</strong>.
             </p>
           </div>
           <V4vActions className="episode-v4v__actions" />
