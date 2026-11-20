@@ -479,7 +479,8 @@ p {
     border-color 0.15s var(--ease),
     color 0.15s var(--ease);
 }
-.theme-toggle:hover {
+.theme-toggle:hover,
+.search-toggle[aria-current="page"] {
   border-color: var(--accent-on-bg);
   color: var(--accent-on-bg);
 }

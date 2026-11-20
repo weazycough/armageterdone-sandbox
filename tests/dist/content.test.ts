@@ -123,5 +123,8 @@ describe("404 page", () => {
     expect(html).not.toMatch(/<script\b[^>]*type="module"/);
     expect(html).not.toContain("modulepreload");
     expect(html).not.toContain("__reactRouterContext");
+    expect(html).toMatch(
+      /aria-label="Search the show"[^>]*href="\/armageterdone-sandbox\/search\/"|href="\/armageterdone-sandbox\/search\/"[^>]*aria-label="Search the show"/,
+    );
   });
 });

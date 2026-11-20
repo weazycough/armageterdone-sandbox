@@ -26,6 +26,20 @@ describe("search page", () => {
     expect(html).toMatch(/aria-pressed="false"[^>]*>\s*FaceLikeTheSun\s*</);
   });
 
+  it("makes the header search button a link to this page, marked current", () => {
+    const search = read("search/index.html");
+    expect(search).toMatch(
+      /aria-label="Search the show"[^>]*href="\/armageterdone-sandbox\/search\/"|href="\/armageterdone-sandbox\/search\/"[^>]*aria-label="Search the show"/,
+    );
+    expect(search).toMatch(/class="[^"]*search-toggle[^"]*"[^>]*aria-current="page"|aria-current="page"[^>]*class="[^"]*search-toggle[^"]*"/);
+    const home = read("index.html");
+    expect(home).toMatch(
+      /aria-label="Search the show"[^>]*href="\/armageterdone-sandbox\/search\/"|href="\/armageterdone-sandbox\/search\/"[^>]*aria-label="Search the show"/,
+    );
+    expect(home).not.toMatch(/class="[^"]*search-toggle[^"]*"[^>]*aria-current="page"|aria-current="page"[^>]*class="[^"]*search-toggle[^"]*"/);
+    expect(home).not.toContain('class="site-search"');
+  });
+
   it("ships a trimmed FaceLikeTheSun catalog without the borderline CCNT streams", () => {
     expect(files).toContain(FLTS_INDEX_FILE);
     const catalog = fltsIndexSchema.parse(JSON.parse(readFileSync(`dist/${FLTS_INDEX_FILE}`, "utf8")));

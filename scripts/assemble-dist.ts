@@ -11,8 +11,8 @@
 // 404.html ships as plain HTML, without the app's scripts: Pages serves it at
 // whatever URL was missing, so the router would hydrate it against a route it
 // wasn't rendered for (a hydration mismatch, then an error page). The inline
-// theme script stays, and the `static-page` class hides the two header
-// buttons that need the app (theme toggle, mobile menu, search).
+// theme script stays, and the `static-page` class hides the header
+// buttons that need the app (theme toggle and mobile menu).
 //
 // Last, it writes the site search index (dist/search-index.json, see
 // app/lib/search.ts): every page, read back from its built HTML so designed

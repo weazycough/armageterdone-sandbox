@@ -64,11 +64,11 @@ into the Ghost editor" instructions are gone.
 place (Basil's Bunker, X Spaces, FlyBys, specials: about 30) appear only in the full list. The Shows menu, the
 homepage and the About page link to the three lists.
 
-**Search.** `scripts/assemble-dist.ts` writes `dist/search-index.json` (about 1,040 entries, 150 KB gzipped): every
-page, read back from its built HTML (title and the start of its `<main>`), and every episode (title, date and the
-start of the notes). The header's search button (`app/components/layout/site-search.tsx`) downloads it the first
-time it opens and filters it in the browser (`app/lib/search.ts`: every word must match, accents and case ignored,
-title matches first). No query leaves the page and there is no search service.
+**Search.** The header's search button (`app/components/layout/site-search.tsx`) is a link to the dedicated
+`/search/` page. `scripts/assemble-dist.ts` writes `dist/search-index.json` (about 1,040 entries, 150 KB gzipped):
+every page, read back from its built HTML (title and the start of its `<main>`), and every episode (title, date and
+the start of the notes). That file, plus the FaceLikeTheSun catalog, is searched in the browser on `/search/`
+(`app/lib/search-query.ts`). No query leaves the page and there is no search service.
 
 **Embeds.** Where a Ghost template had a player (Twitch on `/watch/`, Restream on `/livestream/`, SoundCloud on
 `/mixtape/`), the page shows a "Load the … player" button instead (`app/components/embed.tsx`). The iframe is
@@ -90,8 +90,8 @@ contact through the show's inbox with the place in the subject line.
 
 **404.html is static.** Pages serves it at whatever URL was missing, so its URL never matches the route it was
 rendered for; hydrating it would mismatch and then show an error. `assemble-dist.ts` therefore removes the app's
-scripts from it (the inline theme script stays) and the `static-page` class hides the three header buttons that need
-the app.
+scripts from it (the inline theme script stays) and the `static-page` class hides the header buttons that need
+the app (theme toggle and mobile menu).
 
 ## Content sources
 
@@ -135,7 +135,7 @@ Components in `app/components/ui/` are copied shadcn-style React Aria components
 the theme's tokens. Copy further ones the same way when a page needs them: keep the React Aria primitive, replace
 the colours with the theme's. Where the theme already styles a widget, use the React Aria primitive with the
 theme's classes instead: the fan-art modal (`app/components/art-gallery.tsx`) is React Aria's `ModalOverlay` with
-the theme's `.art-modal` classes, and the search dialog works the same way.
+the theme's `.art-modal` classes.
 
 ## Privacy guards
 
