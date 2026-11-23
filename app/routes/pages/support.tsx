@@ -168,7 +168,7 @@ export default function Support(): React.ReactNode {
 
       <Section id="monthly">
         <div className="section__head">
-          <span className="eyebrow">Treasure · monthly recurring</span>
+          <span className="eyebrow">Treasure</span>
           <h2>Monthly producer</h2>
         </div>
         <p style={{ maxWidth: "36rem" }}>
@@ -212,7 +212,7 @@ export default function Support(): React.ReactNode {
         </p>
       </Section>
 
-      <Section alt>
+      <Section alt id="executive">
         <div className="section__head">
           <span className="eyebrow">Per-episode tiers</span>
           <h2>Associate &amp; Executive Producership</h2>

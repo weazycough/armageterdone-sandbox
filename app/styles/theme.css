@@ -6544,48 +6544,105 @@ h2 {
   }
 }
 
-/* One-time gift: stacked left-aligned title; cards match the model
-   (Time/Talent/Treasure) treatment, painted in canvas so they sit on
-   the alt (grey / surface) section background. */
-#one-time .section__head {
+/* Support giving sections (one-time, monthly, executive): stacked
+   left-aligned titles and model-like cards. Grey alt sections get
+   canvas (black) cards; canvas sections get surface cards. */
+#one-time .section__head,
+#monthly .section__head,
+#executive .section__head {
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
   gap: 0;
   text-align: left;
 }
-#one-time .section__head h2 {
+#one-time .section__head h2,
+#monthly .section__head h2,
+#executive .section__head h2 {
   margin: 0;
   white-space: nowrap;
   max-width: 100%;
 }
+/* Long executive title stays one line by shrinking on narrow viewports. */
+#executive .section__head h2 {
+  font-size: min(clamp(1.5rem, 4.2vw, 2.9rem), 5.8vw);
+}
 #one-time .producer-tier,
 #one-time .producer-tier--accent,
 #one-time .producer-tier--highlight,
-#one-time .producer-tier--open {
-  background: var(--bg-canvas);
+#one-time .producer-tier--open,
+#monthly .producer-tier,
+#monthly .producer-tier--accent,
+#monthly .producer-tier--highlight,
+#executive .producer-tier,
+#executive .producer-tier--accent,
+#executive .producer-tier--highlight {
   background-image: none;
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
   padding: var(--space-5);
   container-type: inline-size;
 }
-#one-time .producer-tier h3 {
+/* Alt (grey) sections: black / canvas cards, same as one-time. */
+#one-time .producer-tier,
+#one-time .producer-tier--accent,
+#one-time .producer-tier--highlight,
+#one-time .producer-tier--open,
+#executive .producer-tier,
+#executive .producer-tier--accent,
+#executive .producer-tier--highlight {
+  background-color: var(--bg-canvas);
+}
+/* Canvas section: surface cards, same contrast as the model cards. */
+#monthly .producer-tier,
+#monthly .producer-tier--accent,
+#monthly .producer-tier--highlight {
+  background-color: var(--bg-surface);
+}
+#one-time .producer-tier h3,
+#monthly .producer-tier h3,
+#executive .producer-tier h3 {
   margin: 0 0 var(--space-3);
   font-family: var(--font-title);
   font-weight: 400;
-  /* Model card title scale, ~15% smaller; pre-line so 3s/7s titles
-     can break after "Pockets". */
+  /* Same scale as the current one-time card titles. */
   font-size: calc(min(clamp(2.35rem, 3.2vw, 2.9rem), calc(100cqi / 4.8)) * 0.85);
   line-height: 0.9;
   letter-spacing: 0.03em;
   text-transform: uppercase;
   white-space: pre-line;
 }
-#one-time .producer-tier p {
+#one-time .producer-tier p,
+#monthly .producer-tier p,
+#executive .producer-tier p {
   font-size: 0.92rem;
 }
-#one-time .producer-tier__cta {
+#one-time .producer-tier__cta,
+#monthly .producer-tier__cta,
+#executive .producer-tier__cta {
   margin: auto 0 0;
   padding-top: var(--space-2);
+}
+/* Accent / highlight from the original monthly + executive cards,
+   restyled to sit on the new chrome: a quiet yellow border for
+   accent, a stronger border + soft glow + faint wash for highlight. */
+#monthly .producer-tier--accent,
+#executive .producer-tier--accent {
+  border: 1px solid var(--accent-on-bg);
+}
+#monthly .producer-tier--highlight,
+#executive .producer-tier--highlight {
+  border: 2px solid var(--accent-on-bg);
+  box-shadow: 0 0 32px color-mix(in srgb, var(--accent) 28%, transparent);
+  background-image: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--accent) 12%, transparent),
+    transparent 55%
+  );
+}
+/* Three monthly cards should fill the row at the 4-col breakpoint. */
+@media (min-width: 1100px) {
+  #monthly .producer-tiers {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
