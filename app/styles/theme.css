@@ -6615,8 +6615,8 @@ h2 {
   margin: 0 0 var(--space-3);
   font-family: var(--font-title);
   font-weight: 400;
-  /* Same scale as the current one-time card titles. */
-  font-size: calc(min(clamp(2.35rem, 3.2vw, 2.9rem), calc(100cqi / 4.8)) * 0.85);
+  /* Shared giving-card title scale (~15% smaller than the prior 0.85 size). */
+  font-size: calc(min(clamp(2.35rem, 3.2vw, 2.9rem), calc(100cqi / 4.8)) * 0.7225);
   line-height: 0.9;
   letter-spacing: 0.03em;
   text-transform: uppercase;
@@ -6676,7 +6676,7 @@ h2 {
   margin: 0 0 var(--space-3);
   font-family: var(--font-title);
   font-weight: 400;
-  font-size: calc(min(clamp(2.35rem, 3.2vw, 2.9rem), calc(100cqi / 4.8)) * 0.85);
+  font-size: calc(min(clamp(2.35rem, 3.2vw, 2.9rem), calc(100cqi / 4.8)) * 0.7225);
   line-height: 0.9;
   letter-spacing: 0.03em;
   text-transform: uppercase;
