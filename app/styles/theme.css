@@ -6200,3 +6200,226 @@ h2 {
   pointer-events: none;
   user-select: none;
 }
+
+/* -------------------------------------------------------------------------
+   Support hero: same mission-hero canvas, .mission-hero__grid columns, floor,
+   and teal/blue glows as home. Left: Value for Value kicker (one line),
+   yellow rules, existing lede, and the home V4V mascot art (spills past the
+   hero edge). Center: compact V4V monogram + producer CTAs. Right: TIME /
+   TALENT / TREASURE in the home tag treatment (white), capped so TREASURE
+   stays in its column.
+   ------------------------------------------------------------------------- */
+.support-page {
+  --support-art-spill: 5rem;
+}
+@media (max-width: 767px) {
+  .support-page {
+    --support-art-spill: 3.5rem;
+  }
+}
+.support-mission {
+  /* Let the mascot art hang into the next section. Floor/glows are clipped
+     by .support-mission__fx so the perspective grid does not leak. */
+  overflow: visible;
+  z-index: 2;
+}
+.support-mission__fx {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+.support-mission__title-col {
+  container-type: inline-size;
+  min-width: 0;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  order: 1;
+}
+.support-mission__tag {
+  color: #fff;
+  text-shadow: 0 0 22px color-mix(in srgb, #fff 40%, transparent);
+  /* Reserve scaleY(1.4) in layout; padding would be scaled and overflow. */
+  margin-bottom: calc(0.82em * 0.4 * 3);
+  /* Home clamp, capped so the 8-letter last line fits the column (~3.05em). */
+  font-size: min(clamp(3.25rem, 13.5vw, 5.2rem), calc(100cqi / 3.05));
+}
+/* Keep TIME / TALENT / TREASURE on three lines, including mobile
+   (home's tag rule inlines the first two visible words). */
+@media (max-width: 767px) {
+  .support-mission .mission-hero__tag > span:nth-child(2),
+  .support-mission .mission-hero__tag > span:nth-child(3) {
+    display: block;
+    margin-right: 0;
+  }
+}
+.support-mission__center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-width: 0;
+  order: 2;
+}
+.support-mission__stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  width: min(22rem, 82vw);
+  max-width: 100%;
+}
+.support-mission__mark-wrap {
+  color: var(--accent);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.support-mission__mark {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 111.48 / 54.02;
+  filter: drop-shadow(0 0 22px color-mix(in srgb, var(--accent) 45%, transparent));
+}
+.support-mission__intro {
+  order: 3;
+}
+.support-mission .mission-hero__kicker {
+  white-space: nowrap;
+}
+.support-mission__actions {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  max-width: 100%;
+  margin-inline: 0;
+}
+.support-mission__actions .mission-hero__give,
+.support-mission__actions .mission-hero__patreon {
+  max-width: none;
+  width: auto;
+  flex: 0 1 auto;
+  box-sizing: border-box;
+  white-space: nowrap;
+  text-align: center;
+  /* A touch under the home Latest Episode button (1.3rem / 0.7rem 1.6rem). */
+  padding: 0.45rem 1.05rem !important;
+  font-size: 1.1rem !important;
+  /* Tailwind button utilities otherwise override the home CTA type. */
+  font-family: var(--font-title) !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.06em !important;
+}
+@media (max-width: 389px) {
+  .support-mission__actions {
+    flex-wrap: wrap;
+  }
+}
+/* Mobile: art sits in flow under the lede, smaller, with a modest dip. */
+.support-mission__art-wrap {
+  width: min(10.5rem, 70%);
+  margin: 1rem auto 0;
+  margin-bottom: calc(-1 * var(--support-art-spill));
+}
+.support-mission__art {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 700 / 627;
+  pointer-events: none;
+  user-select: none;
+}
+@media (max-width: 767px) {
+  .support-mission__intro {
+    text-align: center;
+  }
+  .support-mission__intro .mission-hero__bar {
+    display: block;
+    margin-inline: auto;
+  }
+}
+@media (min-width: 768px) {
+  .support-mission__title-col {
+    align-items: flex-start;
+    order: 0;
+  }
+  .support-mission__tag {
+    text-align: left;
+    transform-origin: top left;
+    font-size: min(clamp(4.4rem, 7.2vw, 7.5rem), calc(100cqi / 3.05));
+  }
+  /* One content row, equal slack above/below, so the mark + buttons
+     sit in the vertical center of the hero row. The lede shares that
+     middle row; the kicker glyph top is aligned to the V4V mark ink. */
+  .support-mission .mission-hero__grid {
+    grid-template-rows: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: stretch;
+  }
+  .support-mission__intro,
+  .support-mission__center,
+  .support-mission__title-col {
+    grid-row: 1 / -1;
+  }
+  .support-mission__center {
+    display: grid;
+    grid-template-rows: subgrid;
+    justify-content: stretch;
+    order: 0;
+  }
+  .support-mission__stack {
+    grid-row: 2;
+    width: min(28rem, 100%);
+  }
+  .support-mission__intro {
+    position: relative;
+    display: grid;
+    grid-template-rows: subgrid;
+    align-self: stretch;
+    order: 0;
+    padding-top: 0;
+  }
+  .support-mission__copy {
+    grid-row: 2;
+    align-self: start;
+    padding-top: 0;
+  }
+  /* Bebas caps sit ~3px below the line box at the 1.85rem cap (29.6px).
+     Nudge the box up so the visible glyph top meets the V4V mark ink. */
+  .support-mission .mission-hero__kicker {
+    margin-top: calc(3 / 29.6 * -1em);
+  }
+  .support-mission__title-col {
+    /* Keep TIME at the top; spanning would otherwise center it. */
+    justify-content: flex-start;
+  }
+  /* Horizontally center the art in the left column and pin it to the
+     hero's bottom edge (grid pad 1.5rem + designed spill). */
+  .support-mission__art-wrap {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: auto;
+    width: min(13rem, 100%);
+    margin: 0 auto;
+    bottom: calc(-1 * (var(--support-art-spill) + 1.5rem));
+  }
+}
+@media (min-width: 1100px) {
+  .support-mission__tag {
+    font-size: min(clamp(5.5rem, 7.5vw, 8.3rem), calc(100cqi / 3.05));
+  }
+}
+/* Clear the spilled mascots so the following section stays readable. */
+.support-page > .support-mission + .section {
+  padding-top: calc(var(--space-8) + var(--support-art-spill, 5rem));
+}

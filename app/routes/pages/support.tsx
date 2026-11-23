@@ -4,7 +4,6 @@
 import type * as React from "react";
 import { Link } from "react-router";
 import {
-  BracketHero,
   ButtonLink,
   Buttons,
   ProseSection,
@@ -13,6 +12,7 @@ import {
   Tier,
   Tiers,
 } from "../../components/page-parts";
+import { SupportHero } from "../../components/support-hero";
 import { SmartLink } from "../../components/smart-link";
 import { pageTitle } from "../../lib/meta";
 
@@ -48,18 +48,7 @@ const OTHER_PATHS = [
 export default function Support(): React.ReactNode {
   return (
     <article className="page support-page">
-      <BracketHero
-        variant="support"
-        maxWidth="60rem"
-        eyebrow="Value for value"
-        title="Become a Producer"
-        lede="No advertisements. No affiliate codes. No vitamin-male-enhancement supplements. The global theology of the advertising industry has no place here."
-      >
-        <ButtonLink href="#one-time">Make a one-time gift</ButtonLink>
-        <ButtonLink href="#monthly" variant="ghost">
-          Become a monthly producer
-        </ButtonLink>
-      </BracketHero>
+      <SupportHero />
 
       <Section>
         <Prose>
