@@ -5,7 +5,9 @@
 import { useEffect, useMemo, useState } from "react";
 import type * as React from "react";
 import { Link, useSearchParams } from "react-router";
+import { NewsletterDispatch } from "../components/newsletter-dispatch";
 import { PagerButton } from "../components/pagination";
+import { V4vBand } from "../components/v4v-band";
 import { ButtonLink } from "../components/page-parts";
 import { buttonVariants } from "../components/ui/button";
 import { asset } from "../lib/asset";
@@ -319,6 +321,9 @@ export default function SearchPage(): React.ReactNode {
           </div>
         </div>
       </section>
+
+      <V4vBand />
+      <NewsletterDispatch />
     </article>
   );
 }

@@ -3,16 +3,13 @@
 // community art, and the newsletter signup (preview only).
 
 import type * as React from "react";
-import { TextField } from "react-aria-components";
 import { Link } from "react-router";
 import type { Route } from "./+types/home";
 import { EpisodeWall, WallHead } from "../components/episode-wall";
-import { PreviewForm } from "../components/preview-form";
 import { MissionHeroBody } from "../components/mission-hero-body";
 import { MissionHeroFloor } from "../components/mission-hero-floor";
-import { V4vWordmark } from "../components/v4v-wordmark";
-import { V4V_EYEBROW, V4vActions, V4vDescription } from "../components/v4v-copy";
-import { Input } from "../components/ui/input";
+import { NewsletterDispatch } from "../components/newsletter-dispatch";
+import { V4vBand } from "../components/v4v-band";
 import { asset } from "../lib/asset";
 import { loadEpisodes } from "../lib/content.server";
 import { ART_RIBBON } from "../lib/fan-art";
@@ -55,29 +52,7 @@ export default function Home({ loaderData }: Route.ComponentProps): React.ReactN
         </div>
       </section>
 
-      <section className="mission-hero mission-hero--v4v" aria-label="Value for Value">
-        <div className="container mission-hero__inner">
-          <div className="mission-hero__v4v">
-            <img
-              className="mission-hero__v4v-art"
-              src={asset("images/v4v-mascots.webp")}
-              alt="Crowned pixel dog holding a dollar bill beside a yellow canary"
-              width={700}
-              height={627}
-              loading="lazy"
-            />
-            <div className="mission-hero__v4v-copy">
-              <span className="mission-hero__v4v-eyebrow">{V4V_EYEBROW}</span>
-              <h2 className="mission-hero__v4v-heading">
-                <span className="sr-only">Value for Value</span>
-                <V4vWordmark className="mission-hero__v4v-mark" decorative />
-              </h2>
-              <V4vDescription />
-            </div>
-            <V4vActions className="mission-hero__v4v-actions" />
-          </div>
-        </div>
-      </section>
+      <V4vBand />
 
 
 
@@ -114,32 +89,7 @@ export default function Home({ loaderData }: Route.ComponentProps): React.ReactN
         </div>
       </section>
 
-      <section className="dispatch" aria-label="Canary Cry newsletter">
-        <div className="dispatch__strip" aria-hidden="true" />
-        <div className="container dispatch__inner">
-          <div className="dispatch__art dispatch__art--hosts">
-            <img src={asset("images/newsletter-hosts.webp")} alt="Sketch portraits of hosts basiL and gonZ" width="1100" height="638" loading="lazy" />
-          </div>
-          <div className="dispatch__copy">
-            <span className="dispatch__eyebrow">Canary Cry Newsletter</span>
-            <h2 className="dispatch__heading">Straight to your inbox</h2>
-            <p className="dispatch__text">
-              New episode notes, deeper-cut research, and dispatches from the news cycle worth your
-              attention. No spam, unsubscribe any time.
-            </p>
-            <PreviewForm>
-              <div className="dispatch__form">
-                <TextField aria-label="Email address" type="email" className="dispatch__field">
-                  <Input placeholder="you@email.com" className="dispatch__input" />
-                </TextField>
-                <button className="dispatch__btn" type="submit">
-                  Subscribe
-                </button>
-              </div>
-            </PreviewForm>
-          </div>
-        </div>
-      </section>
+      <NewsletterDispatch />
     </>
   );
 }

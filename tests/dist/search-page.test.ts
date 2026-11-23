@@ -24,6 +24,13 @@ describe("search page", () => {
     expect(html).toMatch(/aria-pressed="true"[^>]*>\s*All\s*</);
     expect(html).toMatch(/aria-pressed="false"[^>]*>\s*News Talk\s*</);
     expect(html).toMatch(/aria-pressed="false"[^>]*>\s*FaceLikeTheSun\s*</);
+    const topic = html.indexOf("Topic Index");
+    const v4v = html.indexOf("mission-hero--v4v");
+    const dispatch = html.indexOf('class="dispatch"');
+    expect(v4v).toBeGreaterThan(topic);
+    expect(dispatch).toBeGreaterThan(v4v);
+    expect(html).toContain("images/v4v-mascots.webp");
+    expect(html).toContain("images/newsletter-hosts.webp");
   });
 
   it("makes the header search button a link to this page, marked current", () => {
