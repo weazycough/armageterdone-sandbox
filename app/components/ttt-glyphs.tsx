@@ -52,20 +52,23 @@ export function TimeGlyph({ className }: { className?: string }): React.ReactNod
   );
 }
 
-/** Artist's paintbrush — rounded handle, banded ferrule, pointed tuft. */
+/** Artist's paintbrush — diagonal, slim handle, banded ferrule, pointed tuft. */
 export function TalentGlyph({ className }: { className?: string }): React.ReactNode {
   return (
     <svg className={className} {...svg}>
-      {/* Handle */}
-      <rect x="28.6" y="43.6" width="6.8" height="14.2" rx="3.4" />
-      {/* Ferrule */}
-      <rect x="27.2" y="35" width="9.6" height="10" rx="1.2" />
-      <path d="M27.2 38.2 H36.8" strokeWidth="1.5" />
-      <path d="M27.2 41.4 H36.8" strokeWidth="1.5" />
-      {/* Bristle tuft */}
-      <path d="M27.4 35 C24.8 26.8, 24.2 19.2, 32 10.6 C39.8 19.2, 39.2 26.8, 36.6 35 Z" />
-      <path d="M32 15.6 C30.4 22, 29.8 27.4, 29.8 33.2" strokeWidth="1.5" />
-      <path d="M32 15.6 C33.6 22, 34.2 27.4, 34.2 33.2" strokeWidth="1.5" />
+      <g transform="rotate(42 32 32)">
+        {/* Long slim handle, open at the ferrule, rounded butt */}
+        <path d="M30.4 33.2 V54.4 A1.6 1.6 0 0 0 33.6 54.4 V33.2" strokeLinecap="butt" />
+        {/* Metal ferrule with two crimp rings */}
+        <rect x="28.15" y="22.2" width="7.7" height="11" rx="0.7" />
+        <path d="M28.15 25.4 H35.85" strokeWidth="1.5" />
+        <path d="M28.15 29.8 H35.85" strokeWidth="1.5" />
+        {/* Bristle tuft tapering to a point */}
+        <path d="M28.15 22.2 L32 10.2 L35.85 22.2" strokeLinejoin="miter" />
+        <path d="M32 21.2 V13.6" strokeWidth="1.5" />
+        <path d="M30.3 21.4 L31.15 15.4" strokeWidth="1.25" />
+        <path d="M33.7 21.4 L32.85 15.4" strokeWidth="1.25" />
+      </g>
     </svg>
   );
 }
