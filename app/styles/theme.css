@@ -6549,7 +6549,10 @@ h2 {
    canvas (black) cards; canvas sections get surface cards. */
 #one-time .section__head,
 #monthly .section__head,
-#executive .section__head {
+#executive .section__head,
+#other-ways .section__head,
+#skills .section__head,
+#thanks .section__head {
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
@@ -6558,14 +6561,21 @@ h2 {
 }
 #one-time .section__head h2,
 #monthly .section__head h2,
-#executive .section__head h2 {
+#executive .section__head h2,
+#other-ways .section__head h2,
+#skills .section__head h2,
+#thanks .section__head h2 {
   margin: 0;
   white-space: nowrap;
   max-width: 100%;
 }
-/* Long executive title stays one line by shrinking on narrow viewports. */
-#executive .section__head h2 {
+/* Long executive / skills / thanks titles stay one line by shrinking. */
+#executive .section__head h2,
+#skills .section__head h2 {
   font-size: min(clamp(1.5rem, 4.2vw, 2.9rem), 5.8vw);
+}
+#thanks .section__head h2 {
+  font-size: min(clamp(1.35rem, 4.2vw, 2.9rem), 5.2vw);
 }
 #one-time .producer-tier,
 #one-time .producer-tier--accent,
@@ -6643,6 +6653,47 @@ h2 {
 /* Three monthly cards should fill the row at the 4-col breakpoint. */
 @media (min-width: 1100px) {
   #monthly .producer-tiers {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Other Ways to Produce: same card language, surface cards on the
+   canvas (black) section. Info cards lose the dashed inset so the
+   row reads as one set. */
+#other-ways .other-paths:first-of-type {
+  margin-top: 0;
+}
+#other-ways .other-path,
+#other-ways .other-path--info {
+  background: var(--bg-surface);
+  background-image: none;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+  container-type: inline-size;
+}
+#other-ways .other-path h3 {
+  margin: 0 0 var(--space-3);
+  font-family: var(--font-title);
+  font-weight: 400;
+  font-size: calc(min(clamp(2.35rem, 3.2vw, 2.9rem), calc(100cqi / 4.8)) * 0.85);
+  line-height: 0.9;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+#other-ways .other-path p {
+  font-size: 0.92rem;
+}
+#other-ways .other-path a {
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  color: var(--accent-on-bg);
+}
+@media (min-width: 1100px) {
+  #other-ways .other-paths:last-of-type {
     grid-template-columns: repeat(3, 1fr);
   }
 }

@@ -6,7 +6,6 @@ import { Link } from "react-router";
 import {
   ButtonLink,
   Buttons,
-  ProseSection,
   Section,
   Tier,
   Tiers,
@@ -245,9 +244,10 @@ export default function Support(): React.ReactNode {
         </Tiers>
       </Section>
 
-      <Section>
+      <Section id="other-ways">
         <div className="section__head">
-          <h2>Other paths to produce</h2>
+          <span className="eyebrow">Treasure</span>
+          <h2>Other Ways to Produce</h2>
         </div>
         <div className="other-paths">
           {OTHER_PATHS.map((p) => (
@@ -297,10 +297,12 @@ export default function Support(): React.ReactNode {
         </div>
       </Section>
 
-      <ProseSection alt>
-        <span className="eyebrow">Skills, talents, time</span>
-        <h2>Money isn&apos;t the only currency.</h2>
-        <p>
+      <Section alt id="skills">
+        <div className="section__head">
+          <span className="eyebrow">Skills, talents, time</span>
+          <h2>Money isn&apos;t the only currency.</h2>
+        </div>
+        <p style={{ maxWidth: "44rem" }}>
           Canary Cry News Talk grows and thrives thanks to the participation and skills of
           producers. Want to help out the show in ways that money can&apos;t buy — clip editing,
           art, transcripts, translation, code, design? Reach out and tell us what you&apos;ve got.
@@ -316,16 +318,18 @@ export default function Support(): React.ReactNode {
             Submit producer art
           </ButtonLink>
         </Buttons>
-      </ProseSection>
+      </Section>
 
-      <ProseSection width="42rem" center>
-        <span className="eyebrow">Think Outside the Cage</span>
-        <h2>Thank you for keeping the canary singing.</h2>
-        <p>
+      <Section id="thanks">
+        <div className="section__head">
+          <span className="eyebrow">Think Outside the Cage</span>
+          <h2>Thank you for keeping the canary singing.</h2>
+        </div>
+        <p style={{ maxWidth: "42rem" }}>
           Every producer — at every tier — is the reason this show exists outside the cage of
           corporate media. <strong>Soli Deo Gloria</strong>.
         </p>
-      </ProseSection>
+      </Section>
     </article>
   );
 }
