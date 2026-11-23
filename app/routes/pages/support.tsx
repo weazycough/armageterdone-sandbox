@@ -131,7 +131,7 @@ export default function Support(): React.ReactNode {
           <Tier
             href="https://www.paypal.com/donate?hosted_button_id=ZRPPGHKR9TF6L"
             amount="$3.33 · $33.33 · $333"
-            title="Pockets full of 3s"
+            title={"Pockets\nfull of 3s"}
             cta="PayPal →"
           >
             Producers seem to love signaling to the Illuminati Overlords by producing in sets of 3s.
@@ -149,7 +149,7 @@ export default function Support(): React.ReactNode {
           <Tier
             href="https://www.paypal.com/donate?hosted_button_id=4P66WSKQ9NBSY"
             amount="$7.77 · $77.77 · $777"
-            title="Pockets full of 7s"
+            title={"Pockets\nfull of 7s"}
             cta="PayPal →"
           >
             The perfect producership. A set of 7s — the Biblical number of perfection.

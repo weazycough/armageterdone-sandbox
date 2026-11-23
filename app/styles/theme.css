@@ -6574,11 +6574,13 @@ h2 {
   margin: 0 0 var(--space-3);
   font-family: var(--font-title);
   font-weight: 400;
-  /* Same scale as .ttt-card__head (glyph-less, so no 0.95em reserve). */
-  font-size: min(clamp(2.35rem, 3.2vw, 2.9rem), calc(100cqi / 4.8));
-  line-height: 0.85;
+  /* Model card title scale, ~15% smaller; pre-line so 3s/7s titles
+     can break after "Pockets". */
+  font-size: calc(min(clamp(2.35rem, 3.2vw, 2.9rem), calc(100cqi / 4.8)) * 0.85);
+  line-height: 0.9;
   letter-spacing: 0.03em;
   text-transform: uppercase;
+  white-space: pre-line;
 }
 #one-time .producer-tier p {
   font-size: 0.92rem;
