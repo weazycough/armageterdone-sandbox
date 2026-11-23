@@ -2636,12 +2636,14 @@ main:has(.episode-page) + .site-footer {
   border-radius: var(--hero-accent-rule-radius, 2px);
 }
 .support-model__copy {
-  max-width: 40rem;
-  margin: var(--space-4) auto 0;
+  /* Same width as the card row: flush with the first and last card. */
+  width: 100%;
+  max-width: none;
+  margin: var(--space-4) 0 0;
   text-align: left;
   color: var(--fg-secondary);
   font-size: 1.05rem;
-  line-height: 1.6;
+  line-height: 1.65;
   text-wrap: pretty;
 }
 .support-model__copy p:last-child {

@@ -1,6 +1,6 @@
 // ttt-glyphs.tsx — Time / Talent / Treasure marks for the Support model
 // cards. Stroke-based, currentColor (cards set the accent), consistent
-// weight, sized for a ~3rem slot.
+// weight, sized to pair with the card title.
 
 import type * as React from "react";
 
@@ -52,56 +52,32 @@ export function TimeGlyph({ className }: { className?: string }): React.ReactNod
   );
 }
 
-/** Ornate framed painting — stepped molding, corner rosettes, a landscape. */
+/** Artist's paintbrush — rounded handle, banded ferrule, pointed tuft. */
 export function TalentGlyph({ className }: { className?: string }): React.ReactNode {
   return (
     <svg className={className} {...svg}>
-      {/* Gallery nail and hanging wire */}
-      <circle cx="32" cy="6.25" r="1.35" fill="currentColor" stroke="none" />
-      <path d="M32 6.25 L16.5 14.25" strokeWidth="1.5" />
-      <path d="M32 6.25 L47.5 14.25" strokeWidth="1.5" />
-      {/* Stepped frame */}
-      <rect x="10" y="14.25" width="44" height="43.5" rx="1.25" />
-      <rect x="13.75" y="18" width="36.5" height="36" rx="0.75" strokeWidth="1.5" />
-      <rect x="17.25" y="21.5" width="29.5" height="29" rx="0.5" strokeWidth="1.35" />
-      {/* Corner rosettes on the mid molding */}
-      <path d="M13.75 18 L16.35 15.4 L18.95 18 L16.35 20.6 Z" fill="currentColor" stroke="none" />
-      <path d="M45.05 18 L47.65 15.4 L50.25 18 L47.65 20.6 Z" fill="currentColor" stroke="none" />
-      <path d="M13.75 54 L16.35 51.4 L18.95 54 L16.35 56.6 Z" fill="currentColor" stroke="none" />
-      <path d="M45.05 54 L47.65 51.4 L50.25 54 L47.65 56.6 Z" fill="currentColor" stroke="none" />
-      {/* Landscape on the canvas */}
-      <circle cx="39.25" cy="29.5" r="3" strokeWidth="1.5" />
-      <path
-        d="M18.75 42 C23.25 36.75, 27.25 38.5, 32 34 C36.25 39.25, 42.5 37, 45.25 42.75 V48.25 H18.75 Z"
-        strokeWidth="1.5"
-      />
+      {/* Handle */}
+      <rect x="28.6" y="43.6" width="6.8" height="14.2" rx="3.4" />
+      {/* Ferrule */}
+      <rect x="27.2" y="35" width="9.6" height="10" rx="1.2" />
+      <path d="M27.2 38.2 H36.8" strokeWidth="1.5" />
+      <path d="M27.2 41.4 H36.8" strokeWidth="1.5" />
+      {/* Bristle tuft */}
+      <path d="M27.4 35 C24.8 26.8, 24.2 19.2, 32 10.6 C39.8 19.2, 39.2 26.8, 36.6 35 Z" />
+      <path d="M32 15.6 C30.4 22, 29.8 27.4, 29.8 33.2" strokeWidth="1.5" />
+      <path d="M32 15.6 C33.6 22, 34.2 27.4, 34.2 33.2" strokeWidth="1.5" />
     </svg>
   );
 }
 
-/** Front-facing treasure chest with a banded lid, straps, lock, and feet. */
+/** Coin with a dollar sign, double rim like a minted piece. */
 export function TreasureGlyph({ className }: { className?: string }): React.ReactNode {
   return (
     <svg className={className} {...svg}>
-      {/* Lid dome + lip */}
-      <path d="M16.5 29 C16.5 18.25, 47.5 18.25, 47.5 29" />
-      <path d="M20 29 C20 22, 44 22, 44 29" strokeWidth="1.4" opacity="0.7" />
-      <line x1="14.5" y1="29" x2="49.5" y2="29" />
-      {/* Body */}
-      <path d="M14.5 29 H49.5 V47.75 C49.5 49.75, 47.75 51.25, 45.75 51.25 H18.25 C16.25 51.25, 14.5 49.75, 14.5 47.75 Z" />
-      {/* Horizontal band */}
-      <path d="M14.5 37.75 H49.5" strokeWidth="1.5" />
-      <path d="M14.5 41.75 H49.5" strokeWidth="1.5" />
-      {/* Straps */}
-      <path d="M22.25 20.25 V51.25" strokeWidth="1.5" />
-      <path d="M41.75 20.25 V51.25" strokeWidth="1.5" />
-      {/* Lock plate */}
-      <rect x="28.25" y="35.75" width="7.5" height="9.5" rx="1.1" />
-      <circle cx="32" cy="39.5" r="1.2" fill="currentColor" stroke="none" />
-      <path d="M32 39.5 V42.75" strokeWidth="1.5" />
-      {/* Feet */}
-      <path d="M18.5 51.25 V55.5 H23" />
-      <path d="M45.5 51.25 V55.5 H41" />
+      <circle cx="32" cy="32" r="22.5" />
+      <circle cx="32" cy="32" r="18.75" strokeWidth="1.5" />
+      <path d="M41 23.2 C40.6 18.4, 23.8 18.2, 23.8 25 C23.8 30.4, 40.2 30.6, 40.2 37.6 C40.2 44.8, 23.4 44.2, 23.4 39.2" />
+      <path d="M32 16.75 V47.25" />
     </svg>
   );
 }
