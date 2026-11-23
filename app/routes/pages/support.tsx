@@ -158,7 +158,7 @@ export default function Support(): React.ReactNode {
             href="https://www.paypal.com/donate/?hosted_button_id=L39EGRV9YQJWN"
             variant="open"
             amount="Any amount"
-            title="Open one-time gift"
+            title="One-time gift"
             cta="PayPal →"
           >
             Set your own number. Notes above $7.77 are read on air.
