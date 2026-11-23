@@ -6657,8 +6657,8 @@ h2 {
 }
 
 /* Other Ways to Produce: Art Wall blue texture (reuse .art-ribbon;
-   --aw-head: 0 drops the home black title band). Canvas cards so
-   they read on the blue in both themes. */
+   --aw-head: 0 drops the home black title band). Cards use the
+   newsletter grey so they read on the blue in both themes. */
 #other-ways.art-ribbon {
   --aw-head: 0rem;
   padding: var(--space-8) 0 !important;
@@ -6674,14 +6674,20 @@ h2 {
 }
 #other-ways .other-path,
 #other-ways .other-path--info {
-  background: var(--bg-canvas);
+  background: #d6d6db;
   background-image: none;
-  border: 1px solid var(--line);
+  border: 1px solid #b0b0b6;
   border-radius: var(--radius-md);
   padding: var(--space-5);
   container-type: inline-size;
   box-shadow: 0 10px 28px rgba(0, 0, 30, 0.35);
-  color: var(--fg-primary);
+  color: #2f2f38;
+}
+#other-ways .other-path:hover {
+  border-color: #1e4aad;
+}
+#other-ways .other-path .eyebrow {
+  color: #000;
 }
 #other-ways .other-path h3 {
   margin: 0 0 var(--space-3);
@@ -6691,9 +6697,13 @@ h2 {
   line-height: 0.9;
   letter-spacing: 0.03em;
   text-transform: uppercase;
+  color: #000;
 }
-#other-ways .other-path p {
+#other-ways .other-path p,
+#other-ways .other-path .muted,
+#other-ways .other-path address {
   font-size: 0.92rem;
+  color: #4a4a55;
 }
 #other-ways .other-path a {
   font-family: var(--font-display);
@@ -6701,7 +6711,8 @@ h2 {
   text-transform: uppercase;
   font-size: 0.75rem;
   letter-spacing: 0.12em;
-  color: var(--accent-on-bg);
+  /* Yellow on #d6d6db fails contrast; use dispatch blue. */
+  color: #1e4aad;
 }
 @media (min-width: 1100px) {
   #other-ways .other-paths:last-of-type {
@@ -6717,6 +6728,9 @@ h2 {
   font-family: "Bebas Neue", var(--font-display);
   font-weight: 400;
   text-transform: uppercase;
+}
+#skills.dispatch .ep-wall__rule {
+  background: #000;
 }
 /* Utilities beat the components layer, so these need !important
    to keep the ghost button readable on the always-light grey band. */
