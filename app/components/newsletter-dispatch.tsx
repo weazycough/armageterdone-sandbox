@@ -12,15 +12,6 @@ export function NewsletterDispatch(): React.ReactNode {
     <section className="dispatch" aria-label="Canary Cry newsletter">
       <div className="dispatch__strip" aria-hidden="true" />
       <div className="container dispatch__inner">
-        <div className="dispatch__art dispatch__art--basil">
-          <img
-            src={asset("images/newsletter-basil.webp")}
-            alt="Sketch portrait of Basil"
-            width={590}
-            height={647}
-            loading="lazy"
-          />
-        </div>
         <div className="dispatch__copy">
           <span className="dispatch__eyebrow">Canary Cry Newsletter</span>
           <h2 className="dispatch__heading">Straight to your inbox</h2>
@@ -39,14 +30,8 @@ export function NewsletterDispatch(): React.ReactNode {
             </div>
           </PreviewForm>
         </div>
-        <div className="dispatch__art dispatch__art--gonz">
-          <img
-            src={asset("images/newsletter-gonz.webp")}
-            alt="Sketch portrait of Gonz"
-            width={510}
-            height={612}
-            loading="lazy"
-          />
+        <div className="dispatch__art dispatch__art--hosts">
+          <img src={asset("images/newsletter-hosts.webp")} alt="Sketch portraits of hosts basiL and gonZ" width="1100" height="638" loading="lazy" />
         </div>
       </div>
     </section>
