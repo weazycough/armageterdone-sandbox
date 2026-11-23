@@ -2604,6 +2604,33 @@ main:has(.episode-page) + .site-footer {
   width: min(100%, 36rem);
   margin-inline: auto;
 }
+/* Desktop: start the spelled-out wordmark on the same left edge as the
+   hero's compact V4V mark, by reusing the hero grid tracks. The brand is
+   wider than the center track, so it spans into the third. Description
+   and cards stay full container width. */
+@media (min-width: 768px) {
+  .support-model {
+    display: grid;
+    grid-template-columns: minmax(11rem, 0.9fr) minmax(0, 1.15fr) minmax(10rem, 0.85fr);
+    column-gap: 1.75rem;
+    text-align: initial;
+  }
+  .support-model__brand {
+    grid-column: 2 / -1;
+    justify-self: start;
+    width: min(36rem, 100%);
+    margin-inline: 0;
+  }
+  .support-model__copy {
+    grid-column: 1 / -1;
+  }
+}
+@media (min-width: 1100px) {
+  .support-model {
+    grid-template-columns: minmax(14rem, 0.95fr) minmax(0, 1.2fr) minmax(12rem, 0.9fr);
+    column-gap: 2.25rem;
+  }
+}
 .support-model__heading {
   margin: 0;
   line-height: 0;
@@ -6504,7 +6531,8 @@ h2 {
     font-size: calc(min(clamp(5.5rem, 7.5vw, 8.3rem), calc(100cqi / 3.05)) * 0.78);
   }
 }
-/* Clear the spilled mascots so the following section stays readable. */
+/* Clear the spilled mascots so the following section stays readable,
+   but sit the model title closer to the hero's bottom edge. */
 .support-page > .support-mission + .section {
-  padding-top: calc(var(--space-8) + var(--support-art-spill, 5rem));
+  padding-top: calc(var(--support-art-spill, 5rem) + var(--space-5));
 }
