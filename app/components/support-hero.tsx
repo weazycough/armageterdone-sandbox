@@ -21,7 +21,7 @@ export function SupportHero(): React.ReactNode {
         <div className="mission-hero__grid">
           <div className="mission-hero__intro support-mission__intro">
             <div className="support-mission__copy">
-              <p className="mission-hero__kicker">Value for Value</p>
+              <p className="mission-hero__kicker">Community Produced</p>
               <span className="mission-hero__bar" aria-hidden="true" />
               <p className="mission-hero__about">{LEDE}</p>
               <span className="mission-hero__bar" aria-hidden="true" />
