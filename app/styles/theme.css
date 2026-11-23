@@ -6543,3 +6543,47 @@ h2 {
     padding-top: calc(var(--support-art-spill) + var(--space-5));
   }
 }
+
+/* One-time gift: stacked left-aligned title; cards match the model
+   (Time/Talent/Treasure) treatment, painted in canvas so they sit on
+   the alt (grey / surface) section background. */
+#one-time .section__head {
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 0;
+  text-align: left;
+}
+#one-time .section__head h2 {
+  margin: 0;
+  white-space: nowrap;
+  max-width: 100%;
+}
+#one-time .producer-tier,
+#one-time .producer-tier--accent,
+#one-time .producer-tier--highlight,
+#one-time .producer-tier--open {
+  background: var(--bg-canvas);
+  background-image: none;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+  container-type: inline-size;
+}
+#one-time .producer-tier h3 {
+  margin: 0 0 var(--space-3);
+  font-family: var(--font-title);
+  font-weight: 400;
+  /* Same scale as .ttt-card__head (glyph-less, so no 0.95em reserve). */
+  font-size: min(clamp(2.35rem, 3.2vw, 2.9rem), calc(100cqi / 4.8));
+  line-height: 0.85;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+#one-time .producer-tier p {
+  font-size: 0.92rem;
+}
+#one-time .producer-tier__cta {
+  margin: auto 0 0;
+  padding-top: var(--space-2);
+}

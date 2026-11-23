@@ -120,7 +120,7 @@ export default function Support(): React.ReactNode {
 
       <Section alt id="one-time">
         <div className="section__head">
-          <span className="eyebrow">Treasure · one-time</span>
+          <span className="eyebrow">Treasure</span>
           <h2>One-time gift</h2>
         </div>
         <p style={{ maxWidth: "36rem" }}>
