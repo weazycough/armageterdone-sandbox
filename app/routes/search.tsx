@@ -173,8 +173,9 @@ export default function SearchPage(): React.ReactNode {
             <h1 className="page-intro__title">Search</h1>
             <span className="page-intro__rule" aria-hidden="true" />
             <p className="page-intro__lede">
-              Find episodes from Canary Cry News Talk, Radio, and Clubhouse, plus Gonz&apos;s
-              FaceLikeTheSun videos. Put a phrase in quotes to match it exactly.
+              Find episodes from the entire Canary Cry archive. Search transcripts, titles, and
+              descriptions for topics, guests, keywords, etc. Put a phrase in quotes to match it
+              exactly.
             </p>
             <div className="search-page__form" role="search">
               <label className="sr-only" htmlFor="search-q">
