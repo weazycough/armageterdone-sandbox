@@ -6384,7 +6384,7 @@ h2 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.25rem;
+  gap: 1.875rem;
   width: min(22rem, 82vw);
   max-width: 100%;
 }
