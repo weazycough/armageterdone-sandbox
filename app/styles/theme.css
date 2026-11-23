@@ -6328,8 +6328,8 @@ h2 {
   text-shadow: 0 0 22px color-mix(in srgb, #fff 40%, transparent);
   /* Reserve scaleY(1.4) in layout; padding would be scaled and overflow. */
   margin-bottom: calc(0.82em * 0.4 * 3);
-  /* Home clamp, capped so the 8-letter last line fits the column (~3.05em). */
-  font-size: min(clamp(3.25rem, 13.5vw, 5.2rem), calc(100cqi / 3.05));
+  /* Home clamp * 0.78 (~22% smaller), still capped so TREASURE fits. */
+  font-size: calc(min(clamp(3.25rem, 13.5vw, 5.2rem), calc(100cqi / 3.05)) * 0.78);
 }
 /* Keep TIME / TALENT / TREASURE on three lines, including mobile
    (home's tag rule inlines the first two visible words). */
@@ -6439,7 +6439,7 @@ h2 {
   .support-mission__tag {
     text-align: left;
     transform-origin: top left;
-    font-size: min(clamp(4.4rem, 7.2vw, 7.5rem), calc(100cqi / 3.05));
+    font-size: calc(min(clamp(4.4rem, 7.2vw, 7.5rem), calc(100cqi / 3.05)) * 0.78);
   }
   /* One content row, equal slack above/below, so the mark + buttons
      sit in the vertical center of the hero row. The lede shares that
@@ -6482,8 +6482,8 @@ h2 {
     margin-top: calc(3 / 29.6 * -1em);
   }
   .support-mission__title-col {
-    /* Keep TIME at the top; spanning would otherwise center it. */
-    justify-content: flex-start;
+    /* Center the stack with the V4V mark + buttons in the hero row. */
+    justify-content: center;
   }
   /* Horizontally center the art in the left column and pin it to the
      hero's bottom edge (grid pad 1.5rem + designed spill). */
@@ -6499,7 +6499,7 @@ h2 {
 }
 @media (min-width: 1100px) {
   .support-mission__tag {
-    font-size: min(clamp(5.5rem, 7.5vw, 8.3rem), calc(100cqi / 3.05));
+    font-size: calc(min(clamp(5.5rem, 7.5vw, 8.3rem), calc(100cqi / 3.05)) * 0.78);
   }
 }
 /* Clear the spilled mascots so the following section stays readable. */
