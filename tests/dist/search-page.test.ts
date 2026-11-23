@@ -30,7 +30,10 @@ describe("search page", () => {
     expect(v4v).toBeGreaterThan(topic);
     expect(dispatch).toBeGreaterThan(v4v);
     expect(html).toContain("images/v4v-mascots.webp");
-    expect(html).toContain("images/newsletter-hosts.webp");
+    expect(html).toContain("images/newsletter-basil.webp");
+    expect(html).toContain("images/newsletter-gonz.webp");
+    expect(html).toContain("Sketch portrait of Basil");
+    expect(html).toContain("Sketch portrait of Gonz");
   });
 
   it("makes the header search button a link to this page, marked current", () => {
