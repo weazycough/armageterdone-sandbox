@@ -2594,7 +2594,64 @@ main:has(.episode-page) + .site-footer {
 
 /* ---------- Support page ---------- */
 
-/* Time / Talent / Treasure grid */
+/* Model section: spelled-out V4V wordmark, BracketHero rule, TTT cards */
+.support-model {
+  text-align: center;
+}
+/* Brand column is the wordmark's laid-out width so the yellow rule can
+   span the visible ink exactly (the SVG viewBox is flush with the paths). */
+.support-model__brand {
+  width: min(100%, 36rem);
+  margin-inline: auto;
+}
+.support-model__heading {
+  margin: 0;
+  line-height: 0;
+  max-width: 100%;
+}
+.support-model__mark {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 462.32 / 56.09;
+  /* White on dark; near-black ink on light. */
+  color: #fff;
+}
+:root[data-theme="light"] .support-model__mark {
+  color: var(--fg-primary);
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) .support-model__mark {
+    color: var(--fg-primary);
+  }
+}
+/* Same thickness, radius, and color as .page-intro__rule (BracketHero). */
+.support-model__rule {
+  display: block;
+  width: 100%;
+  /* Tokens live on .mission-hero; fall back to the same 4px / 2px values. */
+  height: var(--hero-accent-rule-height, 4px);
+  margin: 0.85rem 0 0;
+  background: var(--accent-on-bg);
+  border-radius: var(--hero-accent-rule-radius, 2px);
+}
+.support-model__copy {
+  max-width: 40rem;
+  margin: var(--space-4) auto 0;
+  text-align: left;
+  color: var(--fg-secondary);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+.support-model__copy p:last-child {
+  margin-bottom: 0;
+}
+.support-model__copy strong {
+  color: var(--fg-primary);
+}
+
+/* Time / Talent / Treasure grid — same card language as producer-tier / other-path */
 .ttt-grid {
   display: grid;
   gap: var(--space-5);
@@ -2604,35 +2661,61 @@ main:has(.episode-page) + .site-footer {
 @media (min-width: 768px) {
   .ttt-grid {
     grid-template-columns: repeat(3, 1fr);
+    align-items: stretch;
   }
 }
 .ttt-card {
+  display: flex;
+  flex-direction: column;
   background: var(--bg-surface);
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
   padding: var(--space-5);
-  position: relative;
+  color: var(--fg-primary);
+  container-type: inline-size;
 }
-.ttt-card__num {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 0.7rem;
-  letter-spacing: 0.2em;
+.ttt-card__head {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.22em;
+  /* Noticeably larger Bebas, capped so TREASURE + glyph fit the card. */
+  font-size: min(clamp(2.35rem, 3.2vw, 2.9rem), calc(100cqi / 4.8));
+  margin: 0 0 var(--space-3);
+}
+.ttt-card__glyph {
+  width: 0.95em;
+  height: 0.95em;
+  margin: 0;
   color: var(--accent-on-bg);
+  flex: 0 0 auto;
 }
 .ttt-card h3 {
-  margin: var(--space-2) 0 var(--space-3);
-  font-size: 1.4rem;
+  margin: 0;
+  font-family: var(--font-title);
+  font-weight: 400;
+  font-size: 1em;
+  line-height: 0.85;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 .ttt-card p {
   font-size: 0.92rem;
   color: var(--fg-secondary);
+  margin: 0 0 var(--space-3);
+}
+.ttt-card__cta {
+  margin: auto 0 0;
+  padding-top: var(--space-2);
 }
 .ttt-card a {
   font-family: var(--font-display);
+  font-weight: 700;
   text-transform: uppercase;
   font-size: 0.75rem;
   letter-spacing: 0.12em;
+  color: var(--accent-on-bg);
 }
 
 /* Producer tier cards */

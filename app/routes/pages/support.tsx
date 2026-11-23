@@ -7,13 +7,14 @@ import {
   ButtonLink,
   Buttons,
   ProseSection,
-  Prose,
   Section,
   Tier,
   Tiers,
 } from "../../components/page-parts";
 import { SupportHero } from "../../components/support-hero";
 import { SmartLink } from "../../components/smart-link";
+import { TalentGlyph, TimeGlyph, TreasureGlyph } from "../../components/ttt-glyphs";
+import { V4vWordmark } from "../../components/v4v-wordmark";
 import { pageTitle } from "../../lib/meta";
 
 export const meta = () => pageTitle("Become a Producer");
@@ -51,53 +52,66 @@ export default function Support(): React.ReactNode {
       <SupportHero />
 
       <Section>
-        <Prose>
-          <span className="eyebrow">The model</span>
-          <h2>Value for Value, not value for ads.</h2>
-          <p>
-            Big-tech Silicon Valley giants like Facebook and Google owe the lion&apos;s share of
-            their profits to advertising — and the price of that &quot;free&quot; content is your
-            attention, your data, and a constant nudge toward whatever the buyer wants you to feel.
-          </p>
-          <p>
-            <strong>Canary Cry doesn&apos;t run that play.</strong> The show is built on producers —
-            listeners who return value for the value they got. There are three currencies producers
-            use to do that:
-          </p>
-        </Prose>
+        <header className="support-model">
+          <div className="support-model__brand">
+            <h2 className="support-model__heading">
+              <span className="sr-only">Value for Value</span>
+              <V4vWordmark className="support-model__mark" decorative />
+            </h2>
+            <span className="support-model__rule" aria-hidden="true" />
+          </div>
+          <div className="support-model__copy">
+            <p>
+              Big-tech Silicon Valley giants like Facebook and Google owe the lion&apos;s share of
+              their profits to advertising — and the price of that &quot;free&quot; content is your
+              attention, your data, and a constant nudge toward whatever the buyer wants you to feel.
+            </p>
+            <p>
+              <strong>Canary Cry doesn&apos;t run that play.</strong> The show is built on producers —
+              listeners who return value for the value they got. There are three currencies producers
+              use to do that:
+            </p>
+          </div>
+        </header>
 
         <div className="ttt-grid">
           <article className="ttt-card">
-            <span className="ttt-card__num">01</span>
-            <h3>Time</h3>
+            <div className="ttt-card__head">
+              <TimeGlyph className="ttt-card__glyph" />
+              <h3>Time</h3>
+            </div>
             <p>
               Show up. Bring a friend. Attend a meet-up. Submit a Speak Pipe call. Comment in the
               Discord. The community is the show.
             </p>
-            <p>
+            <p className="ttt-card__cta">
               <Link to="/meet-ups/">Meet-ups →</Link>
             </p>
           </article>
           <article className="ttt-card">
-            <span className="ttt-card__num">02</span>
-            <h3>Talent</h3>
+            <div className="ttt-card__head">
+              <TalentGlyph className="ttt-card__glyph" />
+              <h3>Talent</h3>
+            </div>
             <p>
               Make art. Edit clips. Translate. Code something useful. Design a flyer. The Producer
               Art Wall is a few clicks away — and there&apos;s room for whatever skill you&apos;ve
               got.
             </p>
-            <p>
+            <p className="ttt-card__cta">
               <Link to="/artsubmission/">Submit your work →</Link>
             </p>
           </article>
           <article className="ttt-card">
-            <span className="ttt-card__num">03</span>
-            <h3>Treasure</h3>
+            <div className="ttt-card__head">
+              <TreasureGlyph className="ttt-card__glyph" />
+              <h3>Treasure</h3>
+            </div>
             <p>
               Patreon, PayPal, Stripe, Cage Rattler Coffee, the Supply Drop, the T-Shirt Council,
               crypto, snail mail. Producerships above <strong>$7.77 get read live on air</strong>.
             </p>
-            <p>
+            <p className="ttt-card__cta">
               <a href="#monthly">Pick a tier →</a>
             </p>
           </article>
