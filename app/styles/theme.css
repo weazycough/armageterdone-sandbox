@@ -55,6 +55,13 @@
   --hero-top-glow:
     radial-gradient(ellipse 70% 90% at 50% -10%, rgba(var(--hero-top-glow-teal), var(--hero-top-glow-teal-alpha)), transparent 60%),
     radial-gradient(ellipse 50% 70% at 70% 0%, rgba(var(--hero-top-glow-blue), var(--hero-top-glow-blue-alpha)), transparent 55%);
+  /* Blue wash along the bottom of a dark hero, fading upward. */
+  --hero-bottom-glow: linear-gradient(
+    to top,
+    rgba(var(--hero-top-glow-blue), 0.5) 0%,
+    rgba(var(--hero-top-glow-blue), 0.2) 45%,
+    transparent 100%
+  );
 
   /* Header glass */
   --header-bg: rgba(10, 10, 10, 0.92);
@@ -5369,6 +5376,66 @@ h2 {
 @media (min-width: 768px) { .dispatch__art--hosts { margin-top: -4.75rem; } .dispatch__inner { padding-bottom: 0; } .dispatch { margin-top: 0; } }
 /* Mobile: pull hosts up so the art-wall blue barely clips their heads, like desktop. */
 @media (max-width: 767px) { .dispatch__art--hosts { margin-top: -3.5rem; } }
+
+/* V4V: blue wash along the bottom edge, fading upward (shared --hero-bottom-glow). */
+.mission-hero--v4v::after {
+  display: block !important;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: min(9rem, 70%) !important;
+  pointer-events: none;
+  z-index: 0;
+  background: var(--hero-bottom-glow) !important;
+}
+
+/* Newsletter: copy and form on the left, host art on the right (desktop).
+   Mobile stacks text first, then a contained portrait. */
+.dispatch__inner {
+  transform: none;
+}
+@media (max-width: 767px) {
+  .dispatch__art--hosts {
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+    max-width: 18rem;
+    width: 100%;
+    justify-self: center;
+  }
+  .dispatch__art--hosts img {
+    width: 100%;
+    max-width: none;
+    margin-left: 0;
+  }
+}
+@media (min-width: 768px) {
+  .dispatch__inner {
+    grid-template-columns: minmax(0, 1.15fr) minmax(16rem, 0.95fr);
+    column-gap: 3rem;
+    padding-left: 0;
+    padding-bottom: 2.5rem;
+    transform: none;
+    align-items: center;
+  }
+  .dispatch__art--hosts {
+    align-self: center;
+    justify-self: end;
+    margin-top: 0;
+    margin-bottom: 0;
+    width: 100%;
+    max-width: none;
+  }
+  .dispatch__art--hosts img {
+    width: 100%;
+    max-width: none;
+    margin-left: 0;
+  }
+}
+@media (min-width: 1024px) {
+  .dispatch__inner {
+    transform: none;
+  }
+}
 /* Home shows strip: more room between cards on desktop. */
 @media (min-width: 768px) { .mission-hero__shows .shows-strip { column-gap: 2.75rem; } }
 /* Hero grid: reach a little further toward the horizon. */
