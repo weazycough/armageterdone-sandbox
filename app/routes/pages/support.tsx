@@ -140,7 +140,7 @@ export default function Support(): React.ReactNode {
             href="https://www.paypal.com/donate?hosted_button_id=JL8DL6FN9CDGL"
             variant="accent"
             amount="$11.11"
-            title="11:11"
+            title="Elevens"
             cta="PayPal →"
           >
             Are you seeing 11s everywhere you look? Maybe it&apos;s time to become an 11:11
@@ -179,7 +179,7 @@ export default function Support(): React.ReactNode {
           <Tier
             href="https://www.paypal.com/donate/?Z3JncnB0=&hosted_button_id=JL8DL6FN9CDGL"
             amount="$11.11 / month"
-            title="11:11 producer"
+            title={"Eleven Eleven\nProducer"}
             cta="PayPal subscription →"
           >
             The classic recurring tier. Signaling, sustained.
