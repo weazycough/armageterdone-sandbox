@@ -2601,7 +2601,7 @@ main:has(.episode-page) + .site-footer {
 /* Brand column is the wordmark's laid-out width so the yellow rule can
    span the visible ink exactly (the SVG viewBox is flush with the paths). */
 .support-model__brand {
-  width: min(100%, 36rem);
+  width: min(85%, 30.6rem);
   margin-inline: auto;
 }
 /* Desktop: start the spelled-out wordmark on the same left edge as the
@@ -2618,7 +2618,7 @@ main:has(.episode-page) + .site-footer {
   .support-model__brand {
     grid-column: 2 / -1;
     justify-self: start;
-    width: min(36rem, 100%);
+    width: min(30.6rem, 100%);
     margin-inline: 0;
   }
   .support-model__copy {
@@ -6535,8 +6535,11 @@ h2 {
     font-size: calc(min(clamp(5.5rem, 7.5vw, 8.3rem), calc(100cqi / 3.05)) * 0.78);
   }
 }
-/* Clear the spilled mascots (now 2/3 of the art height) plus ~1.5rem
-   so the model title stays close without overlapping the art. */
-.support-page > .support-mission + .section {
-  padding-top: calc(var(--support-art-spill) + var(--space-5));
+/* Mobile: keep the full-width wordmark clear of the spilled art.
+   Desktop: the title sits in column 2 beside the art, so use the
+   normal section pad (4rem) — well inside the art's column. */
+@media (max-width: 767px) {
+  .support-page > .support-mission + .section {
+    padding-top: calc(var(--support-art-spill) + var(--space-5));
+  }
 }
