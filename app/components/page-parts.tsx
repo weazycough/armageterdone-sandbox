@@ -96,14 +96,16 @@ export function PageHero({
 export function Section({
   alt = false,
   id,
+  className,
   children,
 }: {
   alt?: boolean;
   id?: string;
+  className?: string;
   children: React.ReactNode;
 }): React.ReactNode {
   return (
-    <section id={id} className={alt ? "section section--alt" : "section"}>
+    <section id={id} className={cn("section", alt && "section--alt", className)}>
       <div className="container">{children}</div>
     </section>
   );

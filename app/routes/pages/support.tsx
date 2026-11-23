@@ -10,6 +10,7 @@ import {
   Tier,
   Tiers,
 } from "../../components/page-parts";
+import { WallHead } from "../../components/episode-wall";
 import { SupportHero } from "../../components/support-hero";
 import { SmartLink } from "../../components/smart-link";
 import { TalentGlyph, TimeGlyph, TreasureGlyph } from "../../components/ttt-glyphs";
@@ -44,6 +45,24 @@ const OTHER_PATHS = [
     text: "The honored tier of long-standing producers.",
   },
 ];
+
+
+function SupportHead({
+  eyebrow,
+  title,
+  eyebrowClassName = "eyebrow",
+}: {
+  eyebrow: string;
+  title: string;
+  eyebrowClassName?: string;
+}): React.ReactNode {
+  return (
+    <>
+      <span className={eyebrowClassName}>{eyebrow}</span>
+      <WallHead title={title} />
+    </>
+  );
+}
 
 export default function Support(): React.ReactNode {
   return (
@@ -118,10 +137,7 @@ export default function Support(): React.ReactNode {
       </Section>
 
       <Section alt id="one-time">
-        <div className="section__head">
-          <span className="eyebrow">Treasure</span>
-          <h2>One-time gift</h2>
-        </div>
+        <SupportHead eyebrow="Treasure" title="One-time gift" />
         <p style={{ maxWidth: "36rem" }}>
           Choose any amount, or pick a suggestion below. Producerships above <strong>$7.77</strong>{" "}
           have their accompanying note read live on air.
@@ -166,10 +182,7 @@ export default function Support(): React.ReactNode {
       </Section>
 
       <Section id="monthly">
-        <div className="section__head">
-          <span className="eyebrow">Treasure</span>
-          <h2>Monthly producer</h2>
-        </div>
+        <SupportHead eyebrow="Treasure" title="Monthly producer" />
         <p style={{ maxWidth: "36rem" }}>
           Steady support keeps the lights on month after month. The right tier earns Roundtable
           Knighthood or Damehood faster than you&apos;d expect.
@@ -212,10 +225,7 @@ export default function Support(): React.ReactNode {
       </Section>
 
       <Section alt id="executive">
-        <div className="section__head">
-          <span className="eyebrow">Per-episode tiers</span>
-          <h2>Associate &amp; Executive Producership</h2>
-        </div>
+        <SupportHead eyebrow="Per-episode tiers" title="Associate & Executive Producership" />
         <p style={{ maxWidth: "40rem" }}>
           The title of <strong>Associate Executive Producer</strong> is granted to producers who
           support the show <strong>$100+ for any single episode</strong>. The title of{" "}
@@ -244,11 +254,8 @@ export default function Support(): React.ReactNode {
         </Tiers>
       </Section>
 
-      <Section id="other-ways">
-        <div className="section__head">
-          <span className="eyebrow">Treasure</span>
-          <h2>Other Ways to Produce</h2>
-        </div>
+      <Section id="other-ways" className="art-ribbon">
+        <SupportHead eyebrow="Treasure" title="Other Ways to Produce" />
         <div className="other-paths">
           {OTHER_PATHS.map((p) => (
             <SmartLink className="other-path" href={p.href} key={p.href}>
@@ -297,12 +304,13 @@ export default function Support(): React.ReactNode {
         </div>
       </Section>
 
-      <Section alt id="skills">
-        <div className="section__head">
-          <span className="eyebrow">Skills, talents, time</span>
-          <h2>Money isn&apos;t the only currency.</h2>
-        </div>
-        <p style={{ maxWidth: "44rem" }}>
+      <Section id="skills" className="dispatch">
+        <SupportHead
+          eyebrow="Skills, talents, time"
+          eyebrowClassName="dispatch__eyebrow"
+          title="Money isn't the only currency"
+        />
+        <p className="dispatch__text" style={{ maxWidth: "44rem" }}>
           Canary Cry News Talk grows and thrives thanks to the participation and skills of
           producers. Want to help out the show in ways that money can&apos;t buy — clip editing,
           art, transcripts, translation, code, design? Reach out and tell us what you&apos;ve got.
@@ -321,10 +329,10 @@ export default function Support(): React.ReactNode {
       </Section>
 
       <Section id="thanks">
-        <div className="section__head">
-          <span className="eyebrow">Think Outside the Cage</span>
-          <h2>Thank you for keeping the canary singing.</h2>
-        </div>
+        <SupportHead
+          eyebrow="Think Outside the Cage"
+          title="Thank you for keeping the canary singing"
+        />
         <p style={{ maxWidth: "42rem" }}>
           Every producer — at every tier — is the reason this show exists outside the cage of
           corporate media. <strong>Soli Deo Gloria</strong>.

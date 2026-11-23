@@ -6544,37 +6544,36 @@ h2 {
   }
 }
 
-/* Support giving sections (one-time, monthly, executive): stacked
-   left-aligned titles and model-like cards. Grey alt sections get
-   canvas (black) cards; canvas sections get surface cards. */
-#one-time .section__head,
-#monthly .section__head,
-#executive .section__head,
-#other-ways .section__head,
-#skills .section__head,
-#thanks .section__head {
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  gap: 0;
-  text-align: left;
+/* Support giving / closer sections: eyebrow above a WallHead
+   (same yellow rule as home Recent episodes). No .section__head,
+   so the thin grey underline is gone. */
+#one-time .ep-wall__head,
+#monthly .ep-wall__head,
+#executive .ep-wall__head,
+#other-ways .ep-wall__head,
+#skills .ep-wall__head,
+#thanks .ep-wall__head {
+  margin-top: 0;
+  margin-bottom: var(--space-6);
+  width: 100%;
 }
-#one-time .section__head h2,
-#monthly .section__head h2,
-#executive .section__head h2,
-#other-ways .section__head h2,
-#skills .section__head h2,
-#thanks .section__head h2 {
+#one-time .ep-wall__heading,
+#monthly .ep-wall__heading,
+#executive .ep-wall__heading,
+#other-ways .ep-wall__heading,
+#skills .ep-wall__heading,
+#thanks .ep-wall__heading {
   margin: 0;
   white-space: nowrap;
   max-width: 100%;
+  flex-shrink: 0;
 }
 /* Long executive / skills / thanks titles stay one line by shrinking. */
-#executive .section__head h2,
-#skills .section__head h2 {
+#executive .ep-wall__heading,
+#skills .ep-wall__heading {
   font-size: min(clamp(1.5rem, 4.2vw, 2.9rem), 5.8vw);
 }
-#thanks .section__head h2 {
+#thanks .ep-wall__heading {
   font-size: min(clamp(1.35rem, 4.2vw, 2.9rem), 5.2vw);
 }
 #one-time .producer-tier,
@@ -6657,20 +6656,32 @@ h2 {
   }
 }
 
-/* Other Ways to Produce: same card language, surface cards on the
-   canvas (black) section. Info cards lose the dashed inset so the
-   row reads as one set. */
+/* Other Ways to Produce: Art Wall blue texture (reuse .art-ribbon;
+   --aw-head: 0 drops the home black title band). Canvas cards so
+   they read on the blue in both themes. */
+#other-ways.art-ribbon {
+  --aw-head: 0rem;
+  padding: var(--space-8) 0 !important;
+}
+#other-ways.art-ribbon::after {
+  display: none;
+}
+#other-ways .ep-wall__heading {
+  color: #f2f4fa;
+}
 #other-ways .other-paths:first-of-type {
   margin-top: 0;
 }
 #other-ways .other-path,
 #other-ways .other-path--info {
-  background: var(--bg-surface);
+  background: var(--bg-canvas);
   background-image: none;
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
   padding: var(--space-5);
   container-type: inline-size;
+  box-shadow: 0 10px 28px rgba(0, 0, 30, 0.35);
+  color: var(--fg-primary);
 }
 #other-ways .other-path h3 {
   margin: 0 0 var(--space-3);
@@ -6696,4 +6707,26 @@ h2 {
   #other-ways .other-paths:last-of-type {
     grid-template-columns: repeat(3, 1fr);
   }
+}
+
+/* Skills: Newsletter (dispatch) grey band + type, own content/buttons.
+   WallHead keeps the yellow rule; heading uses dispatch blue so it
+   reads on the always-light grey in both themes. */
+#skills.dispatch .ep-wall__heading {
+  color: #2f5fd0;
+  font-family: "Bebas Neue", var(--font-display);
+  font-weight: 400;
+  text-transform: uppercase;
+}
+/* Utilities beat the components layer, so these need !important
+   to keep the ghost button readable on the always-light grey band. */
+#skills.dispatch .page-buttons a[class*="text-foreground"],
+#skills.dispatch .page-buttons a[class*="bg-transparent"] {
+  color: #2f2f38 !important;
+  border-color: #8a8a96 !important;
+}
+#skills.dispatch .page-buttons a[class*="text-foreground"]:hover,
+#skills.dispatch .page-buttons a[class*="bg-transparent"]:hover {
+  color: #1e4aad !important;
+  border-color: #1e4aad !important;
 }
