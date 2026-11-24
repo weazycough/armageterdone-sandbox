@@ -6026,6 +6026,9 @@ h2 {
   max-width: 100%;
   min-width: 0;
   margin-inline: auto;
+  /* Ink-to-ink at 1920: match the NETWORK ↔ “Every show…” gap (14px).
+     0.0929 × 140px NETWORK size = 13px CSS gap → 14px ink. */
+  gap: calc(var(--shows-network-size) * 0.0929);
 }
 .shows-hero__mark-wrap {
   display: block;
