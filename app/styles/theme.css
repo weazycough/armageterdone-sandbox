@@ -268,9 +268,7 @@ p {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: var(--header-bg);
-  backdrop-filter: saturate(140%) blur(10px);
-  -webkit-backdrop-filter: saturate(140%) blur(10px);
+  background: var(--bg-canvas);
   border-bottom: 1px solid var(--line);
 }
 .site-header__inner {
@@ -328,6 +326,7 @@ p {
   display: none;
   flex: 1;
   justify-content: flex-end;
+  align-self: stretch;
 }
 @media (min-width: 1280px) {
   .site-nav {
@@ -337,19 +336,22 @@ p {
 
 .site-nav .nav {
   display: flex;
-  align-items: center;
+  align-items: stretch;
   list-style: none;
   margin: 0;
   padding: 0;
-  gap: var(--space-2);
+  gap: 0;
+  height: 100%;
 }
 .site-nav .nav__item {
   position: relative;
+  display: flex;
+  align-items: stretch;
 }
 .site-nav .nav__link {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: 0.4rem;
   background: transparent;
   border: 0;
   color: var(--fg-secondary);
@@ -358,7 +360,7 @@ p {
   font-size: 0.78rem;
   letter-spacing: 0.12em;
   font-weight: 600;
-  padding: var(--space-2) var(--space-3);
+  padding: 0 var(--space-3);
   border-bottom: 2px solid transparent;
   border-radius: 0;
   text-decoration: none;
@@ -387,15 +389,17 @@ p {
 }
 
 .site-nav .nav__link--cta {
+  align-self: center;
+  height: auto;
   background: var(--accent);
   color: var(--on-accent);
   border-radius: var(--radius-sm);
-  border-bottom: 2px solid transparent;
-  padding-left: var(--space-4);
-  padding-right: var(--space-4);
-  margin-left: var(--space-2);
+  border-bottom: 0;
+  padding: 0.45rem 0.9rem;
+  margin-left: var(--space-3);
 }
-.site-nav .nav__link--cta:hover {
+.site-nav .nav__link--cta:hover,
+.site-nav .nav__link--cta[aria-current="page"] {
   background: var(--accent-2);
   color: var(--on-accent);
   border-bottom-color: transparent;
@@ -407,15 +411,15 @@ p {
   position: absolute;
   top: 100%;
   left: 0;
-  min-width: 260px;
+  min-width: 16.5rem;
   background: var(--bg-surface);
   border: 1px solid var(--line);
-  border-top: 3px solid var(--accent-on-bg);
+  border-top: 0;
   border-radius: 0 0 var(--radius-md) var(--radius-md);
   list-style: none;
   margin: 0;
-  padding: var(--space-2);
-  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.4);
+  padding: 0.375rem 0;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
   z-index: 10;
   display: none;
 }
@@ -442,14 +446,16 @@ p {
 .site-nav .nav__menu a {
   display: flex;
   flex-direction: column;
-  padding: var(--space-3) var(--space-3);
+  align-items: flex-start;
+  gap: 0.15rem;
+  padding: 0.55rem 0.75rem;
   color: var(--fg-primary);
-  border-radius: var(--radius-sm);
+  border-radius: 0;
   text-decoration: none;
   font-family: var(--font-display);
-  font-size: 0.95rem;
+  font-size: 0.88rem;
   font-weight: 600;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.04em;
   transition:
     background-color 0.15s var(--ease),
     color 0.15s var(--ease);
@@ -461,7 +467,7 @@ p {
 }
 .site-nav .nav__menu-meta {
   display: block;
-  margin-top: 2px;
+  margin-top: 0;
   font-family: var(--font-body);
   font-size: 0.72rem;
   font-weight: 400;
@@ -470,7 +476,7 @@ p {
   text-transform: none;
 }
 
-/* Header tools (theme toggle + mobile menu) */
+/* Header tools (theme toggle, search, mobile menu) */
 .site-tools {
   display: flex;
   align-items: center;
@@ -488,8 +494,8 @@ p {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 38px;
-  height: 38px;
+  width: 36px;
+  height: 36px;
   background: transparent;
   border: 1px solid var(--line);
   color: var(--fg-primary);
@@ -501,12 +507,14 @@ p {
 }
 .theme-toggle:hover,
 .search-toggle[aria-current="page"] {
+  background: var(--bg-surface);
   border-color: var(--accent-on-bg);
   color: var(--accent-on-bg);
+  text-decoration: none;
 }
 .theme-toggle .icon {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
 }
 .theme-toggle .icon--moon {
   display: block;
@@ -536,14 +544,18 @@ p {
   background: transparent;
   border: 1px solid var(--line);
   color: var(--fg-primary);
-  padding: var(--space-2) var(--space-3);
+  padding: 0.4rem 0.7rem;
+  height: 36px;
   border-radius: var(--radius-sm);
   font-family: var(--font-display);
   text-transform: uppercase;
   font-size: 0.75rem;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
+  font-weight: 600;
 }
-.nav-toggle:hover {
+.nav-toggle:hover,
+.nav-toggle[aria-expanded="true"] {
+  background: var(--bg-surface);
   border-color: var(--accent-on-bg);
   color: var(--accent-on-bg);
 }
@@ -558,7 +570,7 @@ p {
   display: none;
   border-top: 1px solid var(--line);
   background: var(--bg-canvas);
-  padding: var(--space-3) 0 var(--space-5);
+  padding: var(--space-2) 0 var(--space-5);
   max-height: calc(100vh - 68px);
   overflow-y: auto;
 }
@@ -574,7 +586,7 @@ p {
 .mobile-nav .nav {
   list-style: none;
   margin: 0;
-  padding: 0 var(--space-4);
+  padding: 0 var(--space-5);
 }
 .mobile-nav .nav__item {
   border-bottom: 1px solid var(--line);
@@ -587,25 +599,40 @@ p {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: var(--space-4) 0;
+  padding: 0.9rem 0;
   font-family: var(--font-display);
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  font-size: 0.95rem;
+  font-size: 0.88rem;
+  font-weight: 600;
   color: var(--fg-primary);
   background: transparent;
   border: 0;
   text-decoration: none;
 }
 .mobile-nav .nav__link:hover,
-.mobile-nav .nav__link[aria-current="page"] {
+.mobile-nav .nav__link[aria-current="page"]:not(.nav__link--cta) {
   color: var(--accent-on-bg);
   text-decoration: none;
+}
+.mobile-nav .nav__link--cta {
+  justify-content: center;
+  background: var(--accent);
+  color: var(--on-accent);
+  border-radius: var(--radius-sm);
+  padding: 0.7rem 1rem;
+  margin: 0.75rem 0 0;
+}
+.mobile-nav .nav__link--cta:hover,
+.mobile-nav .nav__link--cta[aria-current="page"] {
+  background: var(--accent-2);
+  color: var(--on-accent);
 }
 .mobile-nav .nav__menu {
   list-style: none;
   margin: 0 0 var(--space-3) 0;
-  padding: 0 0 var(--space-2) var(--space-4);
+  padding: 0.15rem 0 0.35rem 0.9rem;
+  border-left: 1px solid var(--line);
   display: none;
 }
 .mobile-nav .nav__trigger[aria-expanded="true"] + .nav__menu {
@@ -617,7 +644,7 @@ p {
 }
 .mobile-nav .nav__menu a {
   display: block;
-  padding: var(--space-3) 0;
+  padding: 0.5rem 0;
   color: var(--fg-secondary);
   font-family: var(--font-display);
   font-size: 0.88rem;

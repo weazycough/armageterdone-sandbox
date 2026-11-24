@@ -58,7 +58,7 @@ export const PRIMARY_NAV: NavItem[] = [
       { label: "Contact", href: "/contact-us-mojave/" },
     ],
   },
-  { label: "Support", href: "/support/" },
+  { label: "Support", href: "/support/", cta: true },
 ];
 
 export const FOOTER_COLUMNS: { heading: string; links: NavLink[] }[] = [
