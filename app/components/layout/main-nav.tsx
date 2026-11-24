@@ -57,7 +57,7 @@ export function MainNav({ onNavigate }: { onNavigate?: () => void }): React.Reac
           <li className="nav__item" key={item.label}>
             <NavLink
               to={item.href ?? "/"}
-              className={item.cta === true ? "nav__link nav__link--cta" : "nav__link"}
+              className="nav__link"
               onClick={followed}
             >
               {item.label}

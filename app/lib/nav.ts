@@ -15,7 +15,6 @@ export interface NavLink {
 export interface NavItem {
   label: string;
   href?: string;
-  cta?: boolean;
   menu?: NavLink[];
 }
 
@@ -58,7 +57,7 @@ export const PRIMARY_NAV: NavItem[] = [
       { label: "Contact", href: "/contact-us-mojave/" },
     ],
   },
-  { label: "Support", href: "/support/", cta: true },
+  { label: "Support", href: "/support/" },
 ];
 
 export const FOOTER_COLUMNS: { heading: string; links: NavLink[] }[] = [
