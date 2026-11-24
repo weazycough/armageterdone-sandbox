@@ -79,9 +79,9 @@ export function MainNav({ onNavigate }: { onNavigate?: () => void }): React.Reac
               {item.menu.map((link) => (
                 <li key={link.label}>
                   <SmartLink href={link.href} onClick={followed}>
-                    {link.label}
+                    <span className="nav__menu-label">{link.label}</span>
+                    {link.meta !== undefined && <span className="nav__menu-meta">{link.meta}</span>}
                   </SmartLink>
-                  {link.meta !== undefined && <span className="nav__menu-meta">{link.meta}</span>}
                 </li>
               ))}
             </ul>

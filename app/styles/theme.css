@@ -447,8 +447,11 @@ p {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0.15rem;
-  padding: 0.55rem 0.75rem;
+  width: 100%;
+  box-sizing: border-box;
+  gap: 2px;
+  padding: 0.6rem 0.875rem;
+  line-height: 1.2;
   color: var(--fg-primary);
   border-radius: 0;
   text-decoration: none;
@@ -456,6 +459,7 @@ p {
   font-size: 0.88rem;
   font-weight: 600;
   letter-spacing: 0.04em;
+  text-align: left;
   transition:
     background-color 0.15s var(--ease),
     color 0.15s var(--ease);
@@ -465,15 +469,28 @@ p {
   color: var(--accent-on-bg);
   text-decoration: none;
 }
+.site-nav .nav__menu-label {
+  display: block;
+  margin: 0;
+  padding: 0;
+  line-height: 1.2;
+}
 .site-nav .nav__menu-meta {
   display: block;
-  margin-top: 0;
+  margin: 0;
+  padding: 0;
+  align-self: stretch;
   font-family: var(--font-body);
   font-size: 0.72rem;
   font-weight: 400;
   letter-spacing: 0.02em;
+  line-height: 1.25;
   color: var(--fg-tertiary);
   text-transform: none;
+  text-indent: 0;
+}
+.site-nav .nav__menu a:hover .nav__menu-meta {
+  color: var(--fg-tertiary);
 }
 
 /* Header tools (theme toggle, search, mobile menu) */
