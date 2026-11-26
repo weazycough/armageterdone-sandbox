@@ -5732,16 +5732,18 @@ h2 {
 }
 
 /* Search newsletter only: copy and form on the left, host art on the right
-   (desktop). Mobile stacks text first, then a contained portrait.
-   Home keeps the original art-left layout (hosts overlapping the art wall). */
+   (desktop). Vertical padding, column width, art size, and Basil's head
+   overlap match the home newsletter. Mobile stays text-first. */
 .dispatch--search .dispatch__inner {
   transform: none;
 }
 @media (max-width: 767px) {
+  /* Art sits under the copy (flipped order), so do not use home's
+     negative top margin, which would pull the portraits into the text. */
   .dispatch--search .dispatch__art--hosts {
-    margin-top: 0.5rem;
+    margin-top: 0;
     margin-bottom: 0;
-    max-width: 18rem;
+    max-width: 22rem;
     width: 100%;
     justify-self: center;
   }
@@ -5753,25 +5755,24 @@ h2 {
 }
 @media (min-width: 768px) {
   .dispatch--search .dispatch__inner {
-    grid-template-columns: minmax(0, 1.15fr) minmax(16rem, 0.95fr);
-    column-gap: 3rem;
-    padding-left: 0;
-    padding-bottom: 2.5rem;
+    grid-template-columns: minmax(0, 1.2fr) minmax(14rem, 0.8fr);
+    column-gap: 5rem;
+    padding-left: 3rem;
+    padding-bottom: 0;
     transform: none;
-    align-items: center;
   }
   .dispatch--search .dispatch__art--hosts {
-    align-self: center;
+    align-self: start;
     justify-self: end;
-    margin-top: 0;
-    margin-bottom: 0;
+    margin-top: -4.75rem;
+    margin-bottom: 1.5rem;
     width: 100%;
-    max-width: none;
+    max-width: 22rem;
   }
   .dispatch--search .dispatch__art--hosts img {
-    width: 100%;
+    width: 155%;
     max-width: none;
-    margin-left: 0;
+    margin-left: -18%;
   }
 }
 @media (min-width: 1024px) {
