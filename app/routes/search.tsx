@@ -193,20 +193,20 @@ export default function SearchPage(): React.ReactNode {
                 >
                   <defs>
                     <linearGradient id="search-beam-shade-fade" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0.14" stopColor="#0a3a6a" stopOpacity="0.4" />
-                      <stop offset="0.24" stopColor="#0b2f5a" stopOpacity="0.94" />
-                      <stop offset="0.44" stopColor="#0b2f5a" stopOpacity="0.97" />
-                      <stop offset="0.56" stopColor="#0a3a6a" stopOpacity="0.75" />
-                      <stop offset="0.66" stopColor="#0b2f5a" stopOpacity="0" />
+                      <stop offset="0.08" stopColor="#0a3a6a" stopOpacity="0.4" />
+                      <stop offset="0.18" stopColor="#0b2f5a" stopOpacity="0.94" />
+                      <stop offset="0.62" stopColor="#0b2f5a" stopOpacity="0.97" />
+                      <stop offset="0.82" stopColor="#0a3a6a" stopOpacity="0.75" />
+                      <stop offset="1" stopColor="#0b2f5a" stopOpacity="0" />
                     </linearGradient>
                     <filter
                       id="search-beam-shade-blur"
-                      x="-40%"
-                      y="-12%"
-                      width="180%"
-                      height="130%"
+                      x="-80%"
+                      y="-30%"
+                      width="260%"
+                      height="180%"
                     >
-                      <feGaussianBlur stdDeviation="6" />
+                      <feGaussianBlur stdDeviation="14 9" />
                     </filter>
                     <filter
                       id="search-beam-rim-blur"
