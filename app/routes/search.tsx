@@ -379,7 +379,7 @@ export default function SearchPage(): React.ReactNode {
       </section>
 
       <V4vBand />
-      <NewsletterDispatch />
+      <NewsletterDispatch variant="search" />
     </article>
   );
 }

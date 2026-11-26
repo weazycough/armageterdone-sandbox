@@ -26,7 +26,7 @@ describe("search page", () => {
     expect(html).toMatch(/aria-pressed="false"[^>]*>\s*FaceLikeTheSun\s*</);
     const topic = html.indexOf("Topic Index");
     const v4v = html.indexOf("mission-hero--v4v");
-    const dispatch = html.indexOf('class="dispatch"');
+    const dispatch = html.indexOf('class="dispatch');
     expect(v4v).toBeGreaterThan(topic);
     expect(dispatch).toBeGreaterThan(v4v);
     expect(html).toContain("images/v4v-mascots.webp");
