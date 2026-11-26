@@ -2365,6 +2365,140 @@ main:has(.episode-page) + .site-footer {
     font-size: clamp(8.5rem, 7.3vw, 8.75rem);
   }
 }
+.search-hero .page-intro__rule {
+  display: none;
+}
+.search-hero .page-intro__inner {
+  position: relative;
+}
+/* UFO sits just under the title; the beam is CSS-only so it scales. */
+.search-hero__craft {
+  position: relative;
+  width: min(28rem, 92%);
+  margin: 0.35rem auto 0;
+}
+.search-hero__ufo {
+  display: block;
+  width: 100%;
+  height: auto;
+  position: relative;
+  z-index: 2;
+}
+/* Underside blue circle is ~49.7% across and ~92.9% down the art. */
+.search-hero {
+  --search-beam: 6, 186, 223;
+  --search-beam-hot: 180, 240, 255;
+}
+.search-hero {
+  padding-bottom: calc(var(--space-6) + 1.5rem);
+}
+.search-hero__beam {
+  position: absolute;
+  left: 50%;
+  top: 90%;
+  width: min(42rem, 160vw);
+  height: 18.5rem;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 0;
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 52%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 0%, #000 52%, transparent 100%);
+}
+.search-hero__beam-glow,
+.search-hero__beam-cone,
+.search-hero__beam-core {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.search-hero__beam-glow {
+  background: linear-gradient(
+    180deg,
+    rgba(var(--search-beam), 0.4) 0%,
+    rgba(var(--search-beam), 0.2) 42%,
+    rgba(var(--search-beam), 0.07) 72%,
+    transparent 100%
+  );
+  clip-path: polygon(42% 0, 58% 0, 100% 100%, 0 100%);
+  filter: blur(32px);
+  opacity: 0.85;
+}
+.search-hero__beam-cone {
+  background: linear-gradient(
+    180deg,
+    rgba(var(--search-beam), 0.55) 0%,
+    rgba(var(--search-beam), 0.26) 40%,
+    rgba(var(--search-beam), 0.1) 70%,
+    transparent 100%
+  );
+  clip-path: polygon(46% 0, 54% 0, 90% 100%, 10% 100%);
+  filter: blur(16px);
+  opacity: 0.85;
+}
+.search-hero__beam-core {
+  left: 50%;
+  right: auto;
+  width: 18%;
+  transform: translateX(-50%);
+  background: linear-gradient(
+    180deg,
+    rgba(var(--search-beam-hot), 0.8) 0%,
+    rgba(var(--search-beam), 0.4) 30%,
+    rgba(var(--search-beam), 0.12) 64%,
+    transparent 100%
+  );
+  clip-path: polygon(30% 0, 70% 0, 86% 100%, 14% 100%);
+  filter: blur(8px);
+  opacity: 0.9;
+}
+.search-hero .page-intro__lede,
+.search-hero .search-page__form {
+  position: relative;
+  z-index: 2;
+}
+@media (max-width: 599px) {
+  .search-hero {
+    padding-bottom: var(--space-7);
+  }
+  .search-hero__craft {
+    width: min(18rem, 92%);
+    margin-top: 0.25rem;
+  }
+  .search-hero__beam {
+    height: 22rem;
+    width: min(28rem, 180vw);
+  }
+}
+:root[data-theme="light"] .search-hero__beam-glow {
+  opacity: 0.5;
+}
+:root[data-theme="light"] .search-hero__beam-cone,
+:root[data-theme="light"] .search-hero__beam-core {
+  opacity: 0.55;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) .search-hero__beam-glow {
+    opacity: 0.5;
+  }
+  :root:not([data-theme]) .search-hero__beam-cone,
+  :root:not([data-theme]) .search-hero__beam-core {
+    opacity: 0.55;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .search-hero__beam-core {
+    animation: search-beam-breathe 6s ease-in-out infinite;
+  }
+}
+@keyframes search-beam-breathe {
+  0%,
+  100% {
+    filter: blur(8px) brightness(0.95);
+  }
+  50% {
+    filter: blur(9px) brightness(1.12);
+  }
+}
 .page-intro__rule {
   display: block;
   width: 3.25rem;

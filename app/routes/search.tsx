@@ -173,7 +173,20 @@ export default function SearchPage(): React.ReactNode {
           <div className="page-intro__inner" style={{ maxWidth: "52rem", margin: "0 auto" }}>
             <span className="eyebrow">Archive</span>
             <h1 className="page-intro__title">Search</h1>
-            <span className="page-intro__rule" aria-hidden="true" />
+            <div className="search-hero__craft" aria-hidden="true">
+              <img
+                className="search-hero__ufo"
+                src={asset("images/search-ufo.webp")}
+                alt=""
+                width={1400}
+                height={383}
+              />
+              <span className="search-hero__beam">
+                <span className="search-hero__beam-glow" />
+                <span className="search-hero__beam-cone" />
+                <span className="search-hero__beam-core" />
+              </span>
+            </div>
             <p className="page-intro__lede">
               Find episodes from the entire Canary Cry archive. Search transcripts, titles, and
               descriptions for topics, guests, keywords, etc. Put a phrase in quotes to match it
