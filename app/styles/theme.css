@@ -2388,21 +2388,30 @@ main:has(.episode-page) + .site-footer {
 .search-hero {
   --search-beam: 6, 186, 223;
   --search-beam-hot: 180, 240, 255;
-}
-.search-hero {
+  --search-beam-rise: 5rem;
+  --search-beam-fall: 21rem;
   padding-bottom: calc(var(--space-6) + 1.5rem);
+}
+.search-hero .page-intro__title {
+  position: relative;
+  z-index: 2;
+}
+.search-hero__craft {
+  overflow: visible;
 }
 .search-hero__beam {
   position: absolute;
   left: 50%;
-  top: 90%;
-  width: min(42rem, 160vw);
-  height: 18.5rem;
+  /* Anchor at the underside circle; rise gives blur room above so the
+     glow is not clipped into a hard shelf through the saucer. */
+  top: 92.9%;
+  width: min(46rem, 170vw);
+  height: calc(var(--search-beam-rise) + var(--search-beam-fall));
+  margin-top: calc(var(--search-beam-rise) * -1);
   transform: translateX(-50%);
   pointer-events: none;
   z-index: 0;
-  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 52%, transparent 100%);
-  mask-image: linear-gradient(180deg, #000 0%, #000 52%, transparent 100%);
+  overflow: visible;
 }
 .search-hero__beam-glow,
 .search-hero__beam-cone,
@@ -2411,45 +2420,41 @@ main:has(.episode-page) + .site-footer {
   inset: 0;
   pointer-events: none;
 }
+/* Gentle outer halo. */
 .search-hero__beam-glow {
-  background: linear-gradient(
-    180deg,
-    rgba(var(--search-beam), 0.4) 0%,
-    rgba(var(--search-beam), 0.2) 42%,
-    rgba(var(--search-beam), 0.07) 72%,
-    transparent 100%
+  background: radial-gradient(
+    ellipse 58% 70% at 50% var(--search-beam-rise),
+    rgba(var(--search-beam), 0.32) 0%,
+    rgba(var(--search-beam), 0.14) 34%,
+    rgba(var(--search-beam), 0.05) 58%,
+    transparent 76%
   );
-  clip-path: polygon(42% 0, 58% 0, 100% 100%, 0 100%);
-  filter: blur(32px);
-  opacity: 0.85;
-}
-.search-hero__beam-cone {
-  background: linear-gradient(
-    180deg,
-    rgba(var(--search-beam), 0.55) 0%,
-    rgba(var(--search-beam), 0.26) 40%,
-    rgba(var(--search-beam), 0.1) 70%,
-    transparent 100%
-  );
-  clip-path: polygon(46% 0, 54% 0, 90% 100%, 10% 100%);
-  filter: blur(16px);
-  opacity: 0.85;
-}
-.search-hero__beam-core {
-  left: 50%;
-  right: auto;
-  width: 18%;
-  transform: translateX(-50%);
-  background: linear-gradient(
-    180deg,
-    rgba(var(--search-beam-hot), 0.8) 0%,
-    rgba(var(--search-beam), 0.4) 30%,
-    rgba(var(--search-beam), 0.12) 64%,
-    transparent 100%
-  );
-  clip-path: polygon(30% 0, 70% 0, 86% 100%, 14% 100%);
-  filter: blur(8px);
+  filter: blur(56px);
   opacity: 0.9;
+}
+/* Soft cone of light, tight at the circle and widening as it falls. */
+.search-hero__beam-cone {
+  background: radial-gradient(
+    ellipse 22% 72% at 50% var(--search-beam-rise),
+    rgba(var(--search-beam), 0.58) 0%,
+    rgba(var(--search-beam), 0.28) 28%,
+    rgba(var(--search-beam), 0.1) 54%,
+    transparent 74%
+  );
+  filter: blur(44px);
+  opacity: 0.95;
+}
+/* Brighter core right under the blue circle. */
+.search-hero__beam-core {
+  background: radial-gradient(
+    ellipse 12% 22% at 50% var(--search-beam-rise),
+    rgba(var(--search-beam-hot), 0.95) 0%,
+    rgba(var(--search-beam), 0.5) 26%,
+    rgba(var(--search-beam), 0.12) 58%,
+    transparent 76%
+  );
+  filter: blur(30px);
+  opacity: 0.95;
 }
 .search-hero .page-intro__lede,
 .search-hero .search-page__form {
@@ -2458,6 +2463,8 @@ main:has(.episode-page) + .site-footer {
 }
 @media (max-width: 599px) {
   .search-hero {
+    --search-beam-rise: 4.25rem;
+    --search-beam-fall: 23rem;
     padding-bottom: var(--space-7);
   }
   .search-hero__craft {
@@ -2465,8 +2472,7 @@ main:has(.episode-page) + .site-footer {
     margin-top: 0.25rem;
   }
   .search-hero__beam {
-    height: 22rem;
-    width: min(28rem, 180vw);
+    width: min(32rem, 190vw);
   }
 }
 :root[data-theme="light"] .search-hero__beam-glow {
@@ -2493,10 +2499,10 @@ main:has(.episode-page) + .site-footer {
 @keyframes search-beam-breathe {
   0%,
   100% {
-    filter: blur(8px) brightness(0.95);
+    filter: blur(28px) brightness(0.96);
   }
   50% {
-    filter: blur(9px) brightness(1.12);
+    filter: blur(32px) brightness(1.1);
   }
 }
 .page-intro__rule {
