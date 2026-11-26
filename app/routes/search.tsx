@@ -193,11 +193,11 @@ export default function SearchPage(): React.ReactNode {
                 >
                   <defs>
                     <linearGradient id="search-beam-shade-fade" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0.14" stopColor="#061828" stopOpacity="0.75" />
-                      <stop offset="0.22" stopColor="#050f1c" stopOpacity="1" />
-                      <stop offset="0.46" stopColor="#050f1c" stopOpacity="1" />
-                      <stop offset="0.56" stopColor="#061828" stopOpacity="0.88" />
-                      <stop offset="0.66" stopColor="#050f1c" stopOpacity="0" />
+                      <stop offset="0.14" stopColor="#0a3a6a" stopOpacity="0.4" />
+                      <stop offset="0.24" stopColor="#0b2f5a" stopOpacity="0.94" />
+                      <stop offset="0.44" stopColor="#0b2f5a" stopOpacity="0.97" />
+                      <stop offset="0.56" stopColor="#0a3a6a" stopOpacity="0.75" />
+                      <stop offset="0.66" stopColor="#0b2f5a" stopOpacity="0" />
                     </linearGradient>
                     <filter
                       id="search-beam-shade-blur"
@@ -221,20 +221,16 @@ export default function SearchPage(): React.ReactNode {
                   <path
                     filter="url(#search-beam-rim-blur)"
                     fill="rgba(6, 186, 223, 0.32)"
-                    d="M428 152 L428 338 C428 372 382 388 330 408 L670 408 C618 388 572 372 572 338 L572 152 Z"
+                    d="M428 152 L428 260 C428 292 382 307 330 326 L670 326 C618 307 572 292 572 260 L572 152 Z"
                   />
                   <path
                     filter="url(#search-beam-shade-blur)"
                     fill="url(#search-beam-shade-fade)"
-                    d="M450 152 L450 345 C450 378 412 392 378 408 L622 408 C588 392 550 378 550 345 L550 152 Z"
+                    d="M450 152 L450 267 C450 298 412 311 378 326 L622 326 C588 311 550 298 550 267 L550 152 Z"
                   />
                 </svg>
               </span>
             </div>
-            <p className="page-intro__lede">
-              Search the full Canary Cry archive by transcript, title, or topic. Put a phrase in
-              quotes to match it exactly.
-            </p>
             <div className="search-page__form" role="search">
               <label className="sr-only" htmlFor="search-q">
                 Search episodes and videos
@@ -263,6 +259,10 @@ export default function SearchPage(): React.ReactNode {
                 Search
               </button>
             </div>
+            <p className="page-intro__lede">
+              Search the full Canary Cry archive by transcript, title, or topic. Put a phrase in
+              quotes to match it exactly.
+            </p>
           </div>
         </div>
       </header>

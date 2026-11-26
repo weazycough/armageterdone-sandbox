@@ -2473,8 +2473,7 @@ main:has(.episode-page) + .site-footer {
   opacity: 1;
 }
 /* Dark-blue column (Weazy's markup): straight sides from the underside
-   circle, flaring like a bell just above the search bar. Behind the lede
-   so the light text stays readable. */
+   circle, flaring like a bell just above the search bar. */
 .search-hero__beam-shade {
   position: absolute;
   inset: 0;
@@ -2489,6 +2488,12 @@ main:has(.episode-page) + .site-footer {
 .search-hero .search-page__form {
   position: relative;
   z-index: 2;
+}
+.search-hero .search-page__form {
+  margin-top: 3.5rem;
+}
+.search-hero .page-intro__lede {
+  margin-top: 2rem;
 }
 /* Soft pool of light wrapping the whole search bar (input + button). */
 .search-hero .search-page__form::before {
@@ -2513,7 +2518,7 @@ main:has(.episode-page) + .site-footer {
 @media (max-width: 599px) {
   .search-hero {
     --search-beam-rise: 4.25rem;
-    --search-beam-fall: 24rem;
+    --search-beam-fall: 18.125rem;
     padding-bottom: calc(var(--space-7) + 1.25rem);
   }
   .search-hero__craft {
@@ -2522,6 +2527,12 @@ main:has(.episode-page) + .site-footer {
   }
   .search-hero__beam {
     width: min(36rem, 200vw);
+  }
+  .search-hero .search-page__form {
+    margin-top: 2.75rem;
+  }
+  .search-hero .page-intro__lede {
+    margin-top: 1.75rem;
   }
   .search-hero .search-page__form::before {
     inset: -2.8rem -2.2rem;
