@@ -193,11 +193,11 @@ export default function SearchPage(): React.ReactNode {
                 >
                   <defs>
                     <linearGradient id="search-beam-shade-fade" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0.14" stopColor="#0a3a6a" stopOpacity="0.4" />
-                      <stop offset="0.24" stopColor="#0b2f5a" stopOpacity="0.94" />
-                      <stop offset="0.44" stopColor="#0b2f5a" stopOpacity="0.97" />
-                      <stop offset="0.56" stopColor="#0a3a6a" stopOpacity="0.75" />
-                      <stop offset="0.66" stopColor="#0b2f5a" stopOpacity="0" />
+                      <stop offset="0.14" stopColor="#061828" stopOpacity="0.75" />
+                      <stop offset="0.22" stopColor="#050f1c" stopOpacity="1" />
+                      <stop offset="0.46" stopColor="#050f1c" stopOpacity="1" />
+                      <stop offset="0.56" stopColor="#061828" stopOpacity="0.88" />
+                      <stop offset="0.66" stopColor="#050f1c" stopOpacity="0" />
                     </linearGradient>
                     <filter
                       id="search-beam-shade-blur"
@@ -232,9 +232,8 @@ export default function SearchPage(): React.ReactNode {
               </span>
             </div>
             <p className="page-intro__lede">
-              Find episodes from the entire Canary Cry archive. Search transcripts, titles, and
-              descriptions for topics, guests, keywords, etc. Put a phrase in quotes to match it
-              exactly.
+              Search the full Canary Cry archive by transcript, title, or topic. Put a phrase in
+              quotes to match it exactly.
             </p>
             <div className="search-page__form" role="search">
               <label className="sr-only" htmlFor="search-q">
