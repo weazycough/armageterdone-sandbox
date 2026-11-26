@@ -185,6 +185,50 @@ export default function SearchPage(): React.ReactNode {
                 <span className="search-hero__beam-glow" />
                 <span className="search-hero__beam-cone" />
                 <span className="search-hero__beam-core" />
+                <svg
+                  className="search-hero__beam-shade"
+                  viewBox="0 0 1000 800"
+                  preserveAspectRatio="none"
+                  focusable="false"
+                >
+                  <defs>
+                    <linearGradient id="search-beam-shade-fade" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0.14" stopColor="#0a3a6a" stopOpacity="0.4" />
+                      <stop offset="0.24" stopColor="#0b2f5a" stopOpacity="0.94" />
+                      <stop offset="0.44" stopColor="#0b2f5a" stopOpacity="0.97" />
+                      <stop offset="0.56" stopColor="#0a3a6a" stopOpacity="0.75" />
+                      <stop offset="0.66" stopColor="#0b2f5a" stopOpacity="0" />
+                    </linearGradient>
+                    <filter
+                      id="search-beam-shade-blur"
+                      x="-40%"
+                      y="-12%"
+                      width="180%"
+                      height="130%"
+                    >
+                      <feGaussianBlur stdDeviation="6" />
+                    </filter>
+                    <filter
+                      id="search-beam-rim-blur"
+                      x="-40%"
+                      y="-12%"
+                      width="180%"
+                      height="130%"
+                    >
+                      <feGaussianBlur stdDeviation="9" />
+                    </filter>
+                  </defs>
+                  <path
+                    filter="url(#search-beam-rim-blur)"
+                    fill="rgba(6, 186, 223, 0.32)"
+                    d="M428 152 L428 338 C428 372 382 388 330 408 L670 408 C618 388 572 372 572 338 L572 152 Z"
+                  />
+                  <path
+                    filter="url(#search-beam-shade-blur)"
+                    fill="url(#search-beam-shade-fade)"
+                    d="M450 152 L450 345 C450 378 412 392 378 408 L622 408 C588 392 550 378 550 345 L550 152 Z"
+                  />
+                </svg>
               </span>
             </div>
             <p className="page-intro__lede">
